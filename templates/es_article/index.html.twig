@@ -1,0 +1,39 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}EsArticle index{% endblock %}
+
+{% block body %}
+    <h1>EsArticle index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Image</th>
+                <th>Type</th>
+                <th>Category</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for es_article in es_articles %}
+            <tr>
+                <td>{{ es_article.id }}</td>
+                <td>{{ es_article.image }}</td>
+                <td>{{ es_article.type }}</td>
+                <td>{{ es_article.category }}</td>
+                <td>
+                    <a href="{{ path('es_article_show', {'id': es_article.id}) }}">show</a>
+                    <a href="{{ path('es_article_edit', {'id': es_article.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="5">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('es_article_new') }}">Create new</a>
+{% endblock %}

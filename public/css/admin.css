@@ -1,0 +1,311 @@
+.container_image_article_ {
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+    align-items: center;
+}
+.container_image_article_ img {
+    max-width: 100px;
+    height: 16px;
+    margin: 5px;
+    cursor: pointer;
+}
+
+ .container_logo img {
+    border-radius: 50%;
+    height: 47px;
+    width: 47px;
+    padding: 2px;
+    border: 2px solid white;
+}
+.loader{
+    display: none;
+    height: 20px;
+    width: 20px;
+}
+.list_produit {
+    position: relative;
+    height: 200px;
+    width: 100%;
+    display: inline-block;
+    margin-top: 8px;
+    cursor: pointer;
+    border: 1px solid 
+    rgba(0,0,0,0.1);
+}
+.image_produit {
+    width: 100%;
+    height: 85%;
+}
+#preview_image {
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+    object-position: center;
+}
+.preview_image{
+    height: 238px;
+    border: 1px solid beige;
+}
+#submitformarticle{
+    float: right;
+    margin-right: 26px;
+    margin-bottom: 5px;
+}
+.default_input {
+    background: white !important;
+}
+.block{
+    display: block;
+}
+img.header_boutique {
+    width: 100%;
+    height: 100%;
+}
+.container_header_boutique {
+    height: 155px;
+    border: 1px solid rgba(0,0,0,0.2);
+}
+.parametre_logo {
+    height: 200px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.parametre_logo img {
+    max-width: 100%;
+    height: 100%;
+}
+.container_image_logo .container_edit_form{
+    position: absolute;
+    background: white;
+    box-shadow: 0px 0px 5px black;
+    padding: 5px;
+    bottom: 0px;
+    width: 100%;
+    left: 0px;
+    display: none;
+}
+.container_images_listboutique {
+    box-shadow: 0px 0px 3px black;
+    border-radius: 6px;
+    padding: 4px;
+    margin-bottom: 5px;
+    display: flex;
+}
+.images_container_listboutique {
+    width: 130px;
+    height: 130px;
+    border: 1px solid black;
+}
+.close{
+    position: absolute;
+    right: 13px;
+    top: 17px;
+}
+.add_boutique_button, .h4_inline{
+    display: inline-block;
+
+}
+.add_boutique_button{
+  margin-bottom: 5px;
+}
+.en_cours{
+    position: absolute;
+    background-attachment: white;
+    color: black;
+}
+.preview_image {
+    height: 148px !important;
+}
+.loader_img_default{
+    height: 34px;
+}
+.name_menu{
+    display: inline-block;
+}
+.action_for_article {
+    position: absolute;
+    top: 0;
+    height: 100%;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    background: rgba(0,0,0,0.3);
+    transform: scale(0);
+    transition: 200ms;
+}
+.btn_detail_article, .bnt_delete_article{
+    margin-left: 4px;
+    margin-right: 4px;
+    background: radial-gradient(rgb(26, 24, 24), transparent);
+}
+.btn_detail_article:hover, .bnt_delete_article:hover{
+    background: radial-gradient(rgb(26, 24, 24), transparent) !important;
+}
+.list_produit:hover .action_for_article{
+    transform: scale(1);
+}
+.images_header_admin{
+    height: 200px;
+    overflow: hidden;
+    position: relative;
+}
+
+.images_header_admin img {
+    object-fit: cover;
+    object-position: center;
+    height: 100%;
+    width: 100%;
+    transition: 300ms all ease-in;
+    cursor: pointer;
+}
+.images_header_admin:hover img{
+    transform: scale(1.2);
+}
+.images_header_admin div{
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.2);
+    top: 50px;
+    opacity: 0;
+    transition: all 100ms ease-in;
+   cursor: pointer;
+}
+.images_header_admin:hover div{
+   
+    top: 0px;
+    opacity: 1;
+}
+.images_header_admin > div > button{
+   margin:5px
+}
+#_view_header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+#_view_header > img{
+    max-width: 100%;
+max-height: 100%;
+}
+/*reference */
+.image_slider_to{
+	height: 250px;
+	width: 200PX;
+}
+.slide_animation {
+    margin-right: 8px;
+    margin-top: 0px !important;
+    position: relative;
+}
+.scrol_slide_animation {
+    overflow-x: auto;
+    white-space: nowrap;
+    display: flex;
+}
+
+.edit_slide {
+    position: absolute;
+    height: 8%;
+    border: none;
+    color: white;
+    font-size: 15px;
+    background: cadetblue;
+    right: 0px;
+    bottom: 23px;
+}
+.save_slide {
+    position: absolute;
+    height: 8%;
+    border: none;
+    color: white;
+    font-size: 15px;
+    background: seagreen;
+    right: 0px;
+    bottom: 23px;
+    display: none;
+}
+.cc {
+    border: none;
+    opacity: 0.4;
+    transition: 200ms;
+}
+/*liste shop*/ 
+.liste_boutique {
+    cursor: pointer;
+    height: 200px;
+    margin: 8px;
+    position: relative;
+   /* border: 1px solid rgba(0,0,0,0.4);*/
+}
+.liste_boutique:hover{
+	box-shadow: 3px 3px 5px black;
+}
+.logo_botique {
+    width: 100%;
+    height: 100%;
+}
+.action_boutique {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 1;
+    display: none;
+    width: 100%;
+    height: 100%;
+}
+.liste_boutique:hover .nom_boutique{
+	display :none;
+}
+.liste_boutique:hover .action_boutique{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.supprimer_boutique:hover{
+	background: #000;
+    color: white;
+}
+
+.liste_boutique:hover .logo_botique{
+	filter: blur(1px);
+}
+.nom_boutique{
+	font-weight: bold;
+	background: rgba(255,255,255,0.6);
+	width: 100%;
+	padding: 10px;
+	margin: 0 0 10px;
+	position: absolute;
+	bottom: 0px;
+    text-align: center;
+    color: black;
+
+}
+.padding-0{
+	padding:0px !important;
+}
+.Administrer_boutique{
+background: #c9e50b;
+}
+.Administrer_boutique:hover{
+    background: #000;
+    color: white;
+}
+.supprimer_boutique{
+background: #e4087e;
+} 
+.supprimer_boutique, .Administrer_boutique{
+	border-radius: 14px;
+    padding: 7px;
+    font-weight: bold; 
+    color:black;
+}

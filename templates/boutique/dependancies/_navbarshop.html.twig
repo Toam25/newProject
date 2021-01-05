@@ -1,0 +1,47 @@
+<nav class="navbar navbar-default" id="GrandEcran1" style="background: #1875bc; margin-bottom:0px !important">
+
+	<div class="container-fluid">
+		<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-2">
+
+			<ul class="nav navbar-nav" id="menulistshop" style="margin-top: 3px;">
+				<li class='mode'>
+					<a href="#">MODE</a>
+					<ul class="submenu">
+						<li>
+							<a href="boutique.html">Habillement</a>
+						</li>
+						<li>
+							<a href="beauteetbienetre.html">Beauté Bien-être</a>
+						</li>
+						<li>
+							<a href="accessoire.html">Accessoires</a>
+						</li>
+						<li>
+							<a href="artmalagasy.html">Art Malagasy</a>
+						</li>
+					</ul>
+				</li>
+				<li class="high-tech">
+					<a href="hightech.html">HIGH-TECH</a>
+
+				</li>
+
+				<li class='ConnecterMembre'></li>
+				
+			</ul>
+			{#
+				<ul>
+				<div class="col-md-5 col-sm-5 col-xs-12">
+						<div class="header-search">
+							<form method="Get" action="{{path('list_product')}}">
+								<input class="input" name="q" placeholder="Recherche dans {{ boutique.name}}">
+								<button class="search-btn">Search</button>
+							</form>
+						</div>
+					</div>
+				</ul>
+			#}
+		</div>
+		<!-- /.navbar-collapse -->
+		<!-- /.container-fluid -->
+	</nav>

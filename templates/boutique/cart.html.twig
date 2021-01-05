@@ -1,0 +1,144 @@
+{% extends 'base.html.twig' %}
+
+{% block meta%}
+
+{% endblock %}
+{% block title %}{{ boutique.name }}{% endblock %}
+{% block stylesheets %}
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,500,700" rel="stylesheet">
+   
+    <link href="{{ asset('css/bootstrap3.3.css')}}" rel="stylesheet" type="text/css">
+    <!-- Slick -->
+    <link type="text/css" rel="stylesheet" href="{{asset('css/slick.css') }}"/>
+    <link type="text/css" rel="stylesheet" href="{{asset('css/slick-theme.css') }}"/>
+
+    <!-- nouislider -->
+    <link type="text/css" rel="stylesheet" href="{{asset('css/nouislider.min.css') }}"/>
+
+    <!-- Font Awesome Icon -->
+    <link rel="stylesheet" href="{{ asset('css/font-awesome.min.css') }}">
+
+    <!-- Custom stlylesheet -->
+    <link type="text/css" rel="stylesheet" href="{{ asset('css/style.css') }}"/>
+    <link type="text/css" rel="stylesheet" href="{{ asset('css/index.css') }}"/>
+    <link type="text/css" rel="stylesheet" href="{{ asset('css/cart.css') }}"/>
+{% endblock %}
+{% block body %}
+ {% include "boutique/dependancies/header.html.twig" %}
+
+
+{% if  type is same as('panier') or type is same as('wish') %}
+<div class="container">
+    <label style="font-size: 22px;padding-top: 12px;" class="title_C">
+        Mon
+        {% if type is same as('panier') %}
+            panier 
+        {% else %}
+            souhait
+        {% endif %}
+    </label>
+     
+    <div class="row">
+        <div class="col-md-8 container_cart">
+           {% if carts | length > 0 %}
+            {% for cart in carts %}
+            
+                <div class="cart_product">
+                    <div class="_containt_img_pr">
+                        <a class='containt_image_product' href="{{path('detail',{'id' : cart.articles[0].id }) }}">
+                            <img class="images_product" src="{{asset('images/'~cart.articles[0].images[0].name)}}" alt=""  loading="easi">
+                        </a>
+                    </div>
+                    
+                    
+                    <div class="action_product">
+                            <div class="price_and_name">
+                                <h2 class="price_cart">Prix : {{ cart.articles[0].price | number_format(0,',',' ') }} Ar</h2>
+                                <p class="name_boutique">vendu par <a href="" target="blank">{{ cart.user.boutiques[0].name}}</a></p>
+                            </div>
+                            <div>
+                                <p>
+                                    {{  cart.articles[0].description }}
+                                </p>
+                            </div>
+                            {% if  type is same as('panier') %}
+                            <div class="total_quatity">
+                                
+                                <div class="quantity"> 
+                                   <span>Quatité:</span> 
+                                   <span>
+                                       <div class="container_quatity">
+                                        <button class="btn button_control_quantity_cart delete_one_cart"  data-price="{{cart.articles[0].price}}" data-idcart="{{cart.id}}">-</button>
+                                           <span class="form-control cart-one-qty" type="text">{{cart.quantity}}</span>
+                                        <button class="btn button_control_quantity_cart add_cart"data-price="{{cart.articles[0].price}}" data-id-article="{{cart.articles[0].id}}">+</button>
+                                    </div>
+                                  </span> 
+                                </div>
+                                <div class="total">
+                                    <span>Total :</span>
+                                    <span> <h2 style="font-size: 18px;"class="total_on_article">{{ (cart.articles[0].price*cart.quantity) | number_format(0,',',' ') }} Ar</h2></span>
+                                </div>
+                            </div>
+                            {% elseif type is same as('wish') %}
+                               <div class="containt_btn_">
+                                    
+                                 <input class="price"type="hidden" value="{{  cart.articles[0].price }}">
+                                 <button class="btn btn-success redbutton update_cart" name ="{{ cart.id }}">Ajoute au panier</button> 
+                               </div>
+                            {% endif %}
+                            
+                    </div>
+                    <button class="delete_cart btn btn-danger" data-value="{{ cart.id }}">
+                            <span>X</span>
+                    </button>
+                </div>
+               
+        
+            {% endfor %} 
+        {% else %}
+            <h4 align="center"> Pas encore de produit </h4>
+         {% endif %}
+
+        </div>
+        <div class=" col-md-4" style="position: sticky;top: 0;">
+            <div class="cart_total">
+                 <label for="total_item">Total des produits :</label>
+                 {% if type is same as('wish') %}
+                     <h4 class="wish-qty">{{total.quantity}}</h4>
+                 {% elseif  type is same as('panier') %}
+                        <h4 class="cart-qty">{{total.quantity}}</h4>
+                 {% endif %}
+                 
+
+                 <label for="Totat_prix">Total prix</label>
+                  <input class="total_all_cart" type="hidden" autocomplete="false" value="{{total.totalCart}}" >
+                 <h4 id="total_all_cart">{{total.totalCart | number_format(0,',',' ') }}&nbspAr</h4>
+
+                 <div>
+                     <div>
+                        <button class="btn btn-success validat_command redbutton" style="width: 100%;">Valider les commade</button>
+                     </div>
+                     <a href="{{path('list_product')}}" style="text-align: center;width: 100%;display: block;padding: 7px;">Continuer les achats</a>
+                 </div>
+                
+            </div>
+        </div> 
+     </div>
+</div>
+{% else%}
+  <h4 align='center'> <i>{{ type }} </i>n'existe pas </h4> 
+{% endif %}
+
+{% include "boutique/dependancies/footer.html.twig" %}
+{% endblock %}
+
+{% block javascripts %}
+        <script src="{{ asset('js/slick.min.js') }}"></script>
+        <script src=" {{ asset('js/nouislider.min.js') }}"></script>
+        <script src="{{ asset('js/jquery.zoom.min.js') }}"></script>
+        <script src="{{ asset('js/index.js') }}"></script>
+		<script src="{{ asset('js/main.js') }}"></script>
+		<script src="{{ asset('js/vote.js') }}"></script>
+		<script src="{{ asset('js/cart.js') }}"></script>
+        
+{% endblock %}

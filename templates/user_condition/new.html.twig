@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New UserCondition{% endblock %}
+
+{% block body %}
+    <h1>Create new UserCondition</h1>
+
+    {{ include('user_condition/_form.html.twig') }}
+
+    <a href="{{ path('user_condition_index') }}">back to list</a>
+{% endblock %}

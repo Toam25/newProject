@@ -1,0 +1,7 @@
+   {% if filter == 'names' %}
+      <span> {{ results.name }}</span>
+  {% elseif filter =='images' %}
+     <img class="logo" src="{{asset('images/'~results.logo)}}" alt="">
+ {% elseif filter =='path' %}
+     {{ path('shop', {'type' : results.type, 'id': results.id}) }}
+  {% endif %}

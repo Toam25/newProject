@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>{% block title %}Welcome!{% endblock %}</title>
+        <meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        
+        
+        {% block meta%}{% endblock %}
+        <link rel="stylesheet" href="{{asset('toastr/toastr.css')}}">
+        {% block stylesheets %}{% endblock %}
+        <link rel="stylesheet" href="{{asset('css/connexion.css')}}">
+    </head>
+    <body>
+        {% block body %}{% endblock %}
+        <script src=" {{ asset ('vendor/jquery/jquery.min.js') }}"></script>
+        <script src="{{ asset ('vendor/bootstrap/js/bootstrap.bundle.min.js ') }}"></script>
+        <script src="{{ asset('toastr/toastr.min.js')}}"></script>
+        {% block javascripts %}{% endblock %}
+    </body>
+</html>

@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit Slider{% endblock %}
+
+{% block body %}
+    <h1>Edit Slider</h1>
+
+    {{ include('slider/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <a href="{{ path('slider_index') }}">back to list</a>
+
+    {{ include('slider/_delete_form.html.twig') }}
+{% endblock %}

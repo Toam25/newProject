@@ -1,0 +1,52 @@
+<ul class="my-carousel-items">
+{#
+{% for article in bord %}
+
+		<div id="" class="image" >
+			<!--ma modification-->
+			<li class="my-carousel-item">
+				<div class="card">
+		 			<div class="line">
+						<h3 class="card-title apropos_commentaire" ><?=$donner["apropos_image"] ; ?></h3>
+                        <a class='btn btn-success my-btn-boutique ' href="" target='blank'> Voir boutique</a>
+					</div>
+					<div class="liste_image">
+						<img  src="{{asset('assets/images/'~article.images)}}" class="image-content" name="comment<?=$donner['id'] ; ?>">
+					</div>
+					<div class="card-content">
+						<form class="form-inline back_ground_forme_containt" method="POST" action="">
+							<input type="hidden" class="nbr_vote" name="nbr_vote" value="<?php echo $donner['nbr_vote']  ;?>">
+							<input type="hidden" class="jour" name="jour" value="<?php echo $donner['jour']  ;?>">
+							<div class="btns">
+									<button class="hd">
+											<i class="glyphicon glyphicon-arrow-left"></i>
+									</button>
+									<p class="hd p" id="p<?=$donner['id'] ?>" align="center">
+							        </p>
+									<button  class="hd">
+										<i class="glyphicon glyphicon-arrow-right"></i>
+									</button>
+							    	<img src ="vote/asset/images/images_default/index.jpg" class="image-comment">';
+					    	</div>
+					    	<div class="l_comment">
+							<p id='g_comment' class="g_<?=$donner['id']; ?>"><?= $nbr_comment ?></p>
+							<button class="icon_comment" disabled="disabled">
+									<span class="glyphicon glyphicon-comment g_comment"></span>  
+							</button>
+							<input  id="comment<?=$donner['id']; ?>" type="text" name="commentaire" placeholder="votre commentaire" class="commentaire " >
+							<input type="hidden" name="image_content" value="<?=$donner['apropos_image']; ?>">
+							<button id="button_comment_submit<?=$donner['id']; ?>"class=' button_comment_submit' value="<?=$donner['id']; ?>" >
+									<span class="glyphicon glyphicon-send"></span>
+							</button>
+
+						</div>
+
+						</form>
+					</div>
+				</div>
+			</li>
+			<!--fin ma modification-->
+		</div>
+{% endfor %}
+#}
+</ul>

@@ -1,0 +1,35 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}UserCondition index{% endblock %}
+
+{% block body %}
+    <h1>UserCondition index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Descriptions</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for user_condition in user_conditions %}
+            <tr>
+                <td>{{ user_condition.id }}</td>
+                <td>{{ user_condition.descriptions }}</td>
+                <td>
+                    <a href="{{ path('user_condition_show', {'id': user_condition.id}) }}">show</a>
+                    <a href="{{ path('user_condition_edit', {'id': user_condition.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="3">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('user_condition_new') }}">Create new</a>
+{% endblock %}

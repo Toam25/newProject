@@ -1,0 +1,100 @@
+<ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
+
+    <!-- Sidebar - Brand -->
+    <a class="sidebar-brand d-flex align-items-center justify-content-center" about="_blank" href="{{my_boutique_twig(app.user,'path')}}">
+      <div class="sidebar-brand-icon container_logo">
+           {{ my_boutique_twig(app.user,'images') }}
+      </div>
+      <div class="sidebar-brand-text mx-3">{{ my_boutique_twig(app.user,'names') }}</div>
+    </a>
+
+    <!-- Divider -->
+    <hr class="sidebar-divider my-0">
+
+    <!-- Nav Item - Dashboard -->
+    <li class="nav-item">
+      <a class="nav-link" href="{{ path('home')}}">
+        <i class="fas fa-fw fa-tachometer-alt"></i>
+        <span>Dashboard</span></a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-link" href="{{ path('admin_boutique')}}">
+        <i class="fas fa-fw fa-tachometer-alt"></i>
+        <span>Parametre boutique</span></a>
+    </li>
+{#
+    <li class="nav-item">
+      <a class="nav-link" href="">
+        <i class="fas fa-fw fa-tachometer-alt"></i>
+        <span>Mon boutique</span></a>
+    </li>
+    #}
+    {% if 'ROLE_SUPER_ADMIN' in app.user.roles %}
+      <li class="nav-item">
+        <a class="nav-link" href="">
+          <i class="fas fa-fw fa-tachometer-alt"></i>
+          <span>Gestionniare de video</span></a>
+      </li>
+    {% endif %}
+    <hr class="sidebar-divider">
+    <!-- Heading -->
+    <div class="sidebar-heading">
+      Article
+    </div>
+
+    <!-- Nav Item - Pages Collapse Menu -->
+    {% if 'ROLE_SUPER_ADMIN' in app.user.roles %}
+          {% include "admin/menu_super_admin.html.twig" %}
+    {% else %}
+          {% include "admin/menu_admin.html.twig " with {'type': boutique.type}%}
+    {% endif %}
+     {#
+    <hr class="sidebar-divider">
+    <li class="nav-item">
+      <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages" aria-expanded="true" aria-controls="collapsePages">
+        <i class="fas fa-fw fa-folder"></i>
+        <span>Article</span>
+      </a>
+      <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
+        <div class="bg-white py-2 collapse-inner rounded">
+          <a class="collapse-item" href="{{path('article_new')}}">Ajout</a>
+          <a class="collapse-item" href="{{path('article_liste')}}">Liste</a>
+        </div>
+      </div>
+    </li>
+   
+   {#
+    <li class="nav-item">
+      <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseimages" aria-expanded="true" aria-controls="collapseimage">
+        <i class="fas fa-fw fa-folder"></i>
+        <span>Votre images</span>
+      </a>
+      <div id="collapseimages" class="collapse" aria-labelledby="headingImages" data-parent="#accordionSidebar">
+        <div class="bg-white py-2 collapse-inner rounded">
+          <a class="collapse-item" href="index.php?page=add_image">Ajout</a>
+          <a class="collapse-item" href="index.php?page=liste_image">Liste</a>
+        </div>
+      </div>
+    <li class="nav-item">
+      <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseuser" aria-expanded="true" aria-controls="collapseimage">
+        <i class="fas fa-fw fa-folder"></i>
+        <span>Utilisateur</span>
+      </a>
+      <div id="collapseuser" class="collapse" aria-labelledby="headingImages" data-parent="#accordionSidebar">
+        <div class="bg-white py-2 collapse-inner rounded">
+          <a class="collapse-item" href="{{path('admin_registration')}}">Ajout</a>
+          <a class="collapse-item" href="index.php?page=liste_utilisateur">Liste</a>
+        </div>
+      </div>
+    </li>
+#}
+    <!-- Divider -->
+    <hr class="sidebar-divider d-none d-md-block">
+
+    <!-- Sidebar Toggler (Sidebar) -->
+    <div class="text-center d-none d-md-inline">
+      <button class="rounded-circle border-0" id="sidebarToggle"></button>
+    </div>
+
+  </ul>

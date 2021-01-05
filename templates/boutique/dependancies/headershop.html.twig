@@ -1,0 +1,5 @@
+{% include "boutique/dependancies/_navbarshop.html.twig" %}
+{% include "boutique/dependancies/_shoplist.html.twig" with {'listshops': listShop} only %}
+{% if boutique %}
+    {% include "boutique/dependancies/_headershop.html.twig" %}
+{% endif %}

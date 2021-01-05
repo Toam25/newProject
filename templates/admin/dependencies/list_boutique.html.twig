@@ -1,0 +1,26 @@
+<div class="d-sm-flex align-items-center justify-content-between mb-4">
+            <h1 class="h3 mb-0 text-gray-800">Liste des boutiques :</h1>
+</div>
+<div class="row list_boutique_in">
+    {% for boutique in boutiques %}
+            
+            <div class="padding-0 col-md-2 col-sm-2 col-xs-12">
+                <div class="liste_boutique">
+                    <img class="logo_botique" src="{{asset('images/'~boutique.logo )}}">
+                
+                    <div class="action_boutique"><input type="hidden" name="id_boutique" value="{{boutique.id}}">
+                    <p class="Administrer_boutique">Administrer</p>
+                    <p class="supprimer_boutique">Supprimer</p>
+                    <a href="{{
+                        path('shop',{
+                            'type':boutique.type,
+                            'id' : boutique.id
+                            })
+                    }}" about="_blank">Voir la boutique</a>
+                </div>
+            <p class="nom_boutique">{{ boutique.name}}</p>
+            </div>
+            </div>
+    {% endfor %}
+
+ </div>

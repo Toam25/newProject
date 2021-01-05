@@ -1,0 +1,36 @@
+<div>
+	<p>
+		<button class="btn btn-success add_animation add_reference">Ajout</button>
+	</p>'
+</div>
+
+
+<div class="scrol_slide_animation">
+
+	{% for reference in references %}
+		<div id="{{reference.id}}" class="slide_animation">
+			<img class="image_slider_to" src="{{asset('images/'~reference.images)}}">
+			<div>
+				<label for="{{'description'~reference.id}}">Votre Déscription :
+				</label>
+				<textarea id="{{'description'~reference.id}}" class="form-control txta" type="text" name="" disabled>
+					{{ reference.description }}
+				</textarea>
+			</div>
+
+
+			<button class="cc edit_slide">
+				<span class="glyphicon glyphicon-edit"></span>
+				<span class="show_text">Editer la déscription</span>
+			</button>
+			<button class="cc  save_slide">
+				<span class="glyphicon glyphicon-ok"></span>
+				<span class="show_text">Enregistrer</span>
+			</button>
+			<button class="cc supp_slide">
+				<span class="glyphicon glyphicon-remove"></span>
+				<span class="show_text">Supprimer cette article</span>
+			</button>
+		</div>
+	{% endfor %}
+</div>

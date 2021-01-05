@@ -1,0 +1,98 @@
+{% extends "base.html.twig" %}
+
+{% block title %}
+	{{ 'Inother-boutique' }}
+{% endblock %}
+
+{% block stylesheets %}
+	 <link href="https://fonts.googleapis.com/css?family=Montserrat:400,500,700" rel="stylesheet">
+   
+    <link href="{{ asset('css/bootstrap3.3.css')}}" rel="stylesheet" type="text/css">
+    <!-- Slick -->
+    <link type="text/css" rel="stylesheet" href="{{asset('css/slick.css') }}"/>
+    <link type="text/css" rel="stylesheet" href="{{asset('css/slick-theme.css') }}"/>
+
+    <!-- nouislider -->
+    <link type="text/css" rel="stylesheet" href="{{asset('css/nouislider.min.css') }}"/>
+
+    <!-- Font Awesome Icon -->
+    <link rel="stylesheet" href="{{ asset('css/font-awesome.min.css') }}">
+
+    <!-- Custom stlylesheet -->
+    <link type="text/css" rel="stylesheet" href="{{ asset('css/style.css') }}"/>
+    <link type="text/css" rel="stylesheet" href="{{ asset('css/index.css') }}"/>
+{% endblock %}
+
+
+{% block body %}
+	<div id="image_header">
+		{% if header_image %}
+			<img src="{{asset('images/'~header_image)}}"/>
+		{% endif %}
+
+	</div>
+	{#  navbar #}
+	{% include "boutique/index.navbar.html.twig" %}
+
+	<div id="container_echatillon"> 
+	<div class="inother-ajax">
+               <div class="div-inother"></div>
+    </div>
+  	<div class="col-md-2">
+	   <div id="menu_detail">
+	   </div>
+	</div>
+	<div class="col-md-10 _container_all_echantillon">
+		<button class="remove"><span class="  glyphicon glyphicon-remove"></span></button>
+	     <div class="_container_echatillon">
+	     	<h4 align='center'> Recherche des resultats </h4>
+	     </div>
+	     <div class="_boutiqueContaintEchantillon">
+	     	
+	     </div>
+	</div>
+</div>
+
+	{% include "boutique/menumode.html.twig" %}
+	<div class="container-fluid">
+		<div class="row">
+			<div class="col-sm-2 col-md-2 left">
+				<div id="grant">
+					<div id="liste_commentaire">
+						<div class='liste_comment_data'></div>
+					</div>
+				</div>
+			</div>
+			<div
+				class="col-sm-7 col-md-7 image_set_image">
+				<!--SLIDER -->
+				{% include "boutique/articleslideindex.html.twig" %}
+			</div>
+			<div class="col-sm-3 col-md-3 pub-video">
+				<p id="p_video">TanaFit formes</p>
+				<div class="pub_video_pub">
+					<iframe width="100%" height="333px" src="https://www.youtube.com/embed/-YN612DOzno" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+				</div>
+				<div class='commentaire_video'>
+					<img id="video-comment"/>
+					<form class='from-inline' id="ajout_video_commentaire">
+						<input type="text" placeholder='Commentaire' name=""/>
+						<button id="btn-video-comment">
+							<span class="glyphicon glyphicon-send"></span>
+						</button>
+					</form>
+				</div>
+			</div>
+
+			{#  list des pube video #}
+			{% include "boutique/pubvideo.html.twig" %}
+		</div>
+	</div>
+	<p></p>
+	{% include "boutique/dependancies/footer.html.twig" %}
+{% endblock %}
+{% block javascripts %}
+	<script src="{{asset('js/jquery.js')}}"></script>
+	<script src="{{asset('js/bootstrap.min.js')}}"></script>
+	<script src="{{asset('js/index.js')}}"></script>
+{% endblock %}

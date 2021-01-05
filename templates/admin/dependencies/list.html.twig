@@ -1,0 +1,55 @@
+<div class="card shadow mb-4">
+    <div class="card-header py-3">
+      <h6 class=" "><span class="m-0 font-weight-bold text-primary">Nombre d'article {{ articles| length }} </span><a href="{{ path('article_new')}}" class="text-sucess">Ajouter un nouveau</a></h6>
+    </div>
+    <div class="card-body">
+      <div class="table-responsive">
+        <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+          <thead>
+            <tr>
+              <th>id</th>
+              <th>Images</th>
+              <th>Categorie</th>
+              <th>Prix</th>
+              <th>Date</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tfoot>
+            <tr>
+              <th>id</th>
+              <th>Images</th>
+              <th>Categorie</th>
+              <th>Prix</th>
+              <th>Date</th>
+              <th>Action</th>
+            </tr>
+          </tfoot>
+          <tbody>
+            {% for article in articles %}
+              <tr>
+                <td> {{ article.id }}</td>
+                <td>
+                  <div class="container_image_article_">
+                  
+                    {% for images in article.images %}
+                       <img src="{{ asset('images/'~images.name)}}" alt="images">
+                    {% endfor %}
+                  </div>
+              </td>
+                <td>{{ article.name }}</td>
+                <td>{{ article.price }}</td>
+                <td>{{ article.createdAt ? article.createdAt|date('Y-m-d H:i:s') : '' }}</td>
+                <td>
+                  <a class="btn btn-primary btn-sm" href="{{ path('article_show', {'id': article.id}) }}"><span class="fas fa-list"></span></a>
+                  <a class="btn btn-success btn-sm" href="{{ path('article_edit', {'id': article.id}) }}"><span class="fas fa-edit"></span></a>
+                  <button class="btn btn-danger btn-sm delete_article" name=""><span class="fas fa-trash"></span></button></td>
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+<!-- Page level plugins -->
+

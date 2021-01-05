@@ -1,0 +1,27 @@
+{% if (category != null ) %}
+		<h4 class="name_menu">{{menu}}</h4>
+		<div class="list_boutton_add">
+			{{ button_add_es | raw }}
+		</div>
+		<div class="row liste_article_in">
+			{% for article in es_articles %}
+				<div class="container_article col-xs-6 col-sm-3 col-md-2 col-lg-2">
+					<div class="list_produit">
+						<input type="hidden" name="id_image" value="{{article.id}}">
+						<img class="image_produit" src="{{asset('images/'~article.image)}}" alt="{{article.id}}">
+						<p class="name_article">
+							{{ article.type }}
+						</p>
+						<div class="action_for_article">
+							<button class="btn btn-success btn_detail_article">Détail</button>
+							<button class="btn btn-danger bnt_delete_article">Supprimer</button>
+						</div>
+					</div>
+				</div>
+			{% endfor %}
+
+		</div>
+	{% else %}
+		<p>La page que n'existe pas !</p>
+	{% endif %}
+	{% include "admin/dependencies/add_esarticle_modal.html.twig" %}

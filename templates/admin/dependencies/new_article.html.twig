@@ -1,0 +1,126 @@
+
+
+<div class="d-sm-flex align-items-center justify-content-between mb-4">
+    <h1 class="h3 mb-0 text-gray-800">Nouvel article</h1>
+</div>
+{{ form_start(form) }}
+<input type="hidden" name="add_new_article" valeu='newarticle'>
+ <div class="row">
+     
+   
+   <div class="col-md-6 col-xl-6 col-lg-6">
+
+      <!-- Area Chart -->
+      <div class="card shadow mb-4">
+        <div class="card-header py-3">
+          <h6 class="m-0 font-weight-bold text-primary">Caracteristiques</h6>
+        </div>
+        <div class="card-body">
+          <div class="container_add_article">
+                  <div class="form-group ">
+                
+                    {{ form_row(form.name) }}
+                    
+                  </div>
+                  <div class="form-group ">
+                    
+                    {{ form_row(form.marque) }}
+                    
+                  </div>
+                  <div class="form-group ">
+        
+                    {{ form_row(form.category)}}
+
+                  </div>
+                  <div class="form-group ">
+            
+                    {{ form_row(form.wordKey)}}
+
+                  </div>
+           </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-6 col-xl-6 col-lg-6">
+
+      <!-- Area Chart -->
+      <div class="card shadow mb-4">
+        <div class="card-header py-3">
+          <h6 class="m-0 font-weight-bold text-primary">Prix</h6>
+        </div>
+        <div class="card-body">
+                <div class="row">
+                 <div class="col-xs-12 col-sm-12 col-md-6">
+                     <div class="form-group ">
+                        
+                        {{ form_row(form.price)}}
+
+                    </div>
+                </div>
+                <div class="col-xs-12 col-md-6">
+                  <div class="form-group ">
+                   
+                    {{ form_row(form.price_global)}}
+
+                  </div>
+                </div>
+                <div class="col-xs-12 col-md-12">
+                  <div class="form-group">
+                   
+                    {{ form_row(form.quantity)}}
+
+                  </div>
+                </div>
+              
+          </div>
+          <div class="row">
+               <div class="col-sm-12 col-md-6">
+              <div class="form-group ">
+               
+                {{ form_row(form.promo)}}
+
+              </div>
+              </div>
+             <div class="col-md-6">
+                  <div class="form-group ">
+                    
+                    {{ form_row(form.price_promo)}}
+
+                  </div>
+              </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+</div>
+
+<div class="col-md-12 col-xl-12 col-lg-12">
+
+<div class="card shadow mb-4">
+<div class="card-header py-3">
+  <h6 class="m-0 font-weight-bold text-primary">Détail</h6>
+</div>
+<div class="card-body">
+   <h4>Détail</h4>
+       <div class="form-group ">
+        
+        {{ form_row(form.images)}}
+
+        <div class="_all_images">
+            
+        </div>
+      </div>
+      <div class="form-group">
+        
+        {{ form_row(form.description)}}
+        
+      </div>
+</div>
+</div>
+</div>
+<div class="col">
+<button class="btn btn-primary save_add_article">Enregistrer</button>
+</div>
+{{ form_end(form) }}

@@ -1,0 +1,117 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    {% if boutique %}
+        {{ boutique.name }}
+        {% else %}
+        Pas de resultat :( 
+    {% endif %}
+{% endblock %}
+
+{% block meta%}
+
+{% endblock %}
+{% block stylesheets %}
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,500,700" rel="stylesheet">
+   
+    <link href="{{ asset('css/bootstrap3.3.css')}}" rel="stylesheet" type="text/css">
+    <!-- Slick -->
+    <link type="text/css" rel="stylesheet" href="{{asset('css/slick.css') }}"/>
+    <link type="text/css" rel="stylesheet" href="{{asset('css/slick-theme.css') }}"/>
+
+    <!-- nouislider -->
+    <link type="text/css" rel="stylesheet" href="{{asset('css/nouislider.min.css') }}"/>
+
+    <!-- Font Awesome Icon -->
+    <link rel="stylesheet" href="{{ asset('css/font-awesome.min.css') }}">
+
+    <!-- Custom stlylesheet -->
+    <link type="text/css" rel="stylesheet" href="{{ asset('css/style.css') }}"/>
+    <link type="text/css" rel="stylesheet" href="{{ asset('css/boutique.css') }}"/>
+    <link type="text/css" rel="stylesheet" href="{{ asset('css/index.css') }}"/>
+    <link type="text/css" rel="stylesheet" href="{{ asset('css/jssor.slider.css') }}"/>
+    <link type="text/css" rel="stylesheet" href="{{ asset('css/cart.css') }}"/>
+{% endblock %}
+{% block body %}
+ 
+ {% include 'boutique/dependancies/headershop.html.twig' %}
+
+<div class='image_header'>
+    {% include 'boutique/dependancies/bannierboutique.html.twig' %}
+</div>
+ <div>
+    <div class="container-fluid">        
+        <div class="row">
+                <div class="col-md-2  col-lg-2 menu_v ">
+                    
+                   <div class="" style="margin-top: 3px;">
+                    <h3 class="title_C" style="display:table-cell">Filtres </h3>
+                        <input class="shop_type"type="hidden" name="shop_type" value="{{ type }}">
+                        {% if boutique %}
+                        <form action="" class="aside" style="margin-top: 13px;">
+                                <input type="hidden" name="shop_id" value="{{ boutique.id }}">
+                                
+                                {#{{ categorie(boutique) }}#}
+                        </form>
+                        {% endif %}
+                   </div>
+                </div>
+                <div class="col-md-8 col-sm-12 col-xs-12 col-lg-8">
+                    
+                    <h3 class="title_C" style="display:table-cell">Nos produit</h3>
+                    <div class="row js_list_article">
+                      {% if articles %}
+                        {% include "boutique/dependancies/_list.html.twig" with {'articles': articles} only %} 
+                      {% else %}
+                          Pas de resultat 
+                      {% endif %}
+                    </div>
+               </div>
+               <div class="col-md-2 col-sm-12 col-xs-12 col-lg-2">
+                   
+               </div>
+        </div>
+        <h3 class="title_C" style="display:table-cell">Nouveauté </h3>
+        {% include "boutique/dependancies/section.html.twig" with {'articles' : newArticles} %}
+
+        
+
+    </div>
+      
+ 
+
+      <div id="container_reference">
+         <h3 class="title_C" style="display:table-cell">Nos References </h3>
+            <div class="container_reference">
+           
+            {% for reference in boutique.shopReferences %}
+
+                    <div id="_reference">
+                        <div id="_container_images">
+                            <img src={{ asset('images/'~reference.images)}} alt="{{  reference.description }}"/>
+                        </div>
+                        <p id="container_description_reference">{{  reference.description }} </p>
+                    </div>
+            {% endfor %}
+            </div>   
+        </div>   
+</div>
+{% if not app.user%}
+    {% include 'boutique/dependancies/connexion.html.twig'%}
+ {% endif %}
+ {% include 'boutique/dependancies/footer.html.twig' %}
+ 
+{% endblock %}
+
+{% block javascripts %}
+        <script src="{{ asset('js/slick.min.js') }}"></script>
+        <script src=" {{ asset('js/nouislider.min.js') }}"></script>
+        <script src="{{ asset('js/jquery.zoom.min.js') }}"></script>
+        <script src="{{ asset('js/index.js') }}"></script>
+        <script src="{{ asset('js/jssor.slider.min.js') }}" ></script>
+        <script src="{{ asset('js/jssor.config.js') }}" ></script>
+        <script src="{{ asset('js/cart.js') }}"></script>    
+        <script src="{{ asset('js/connexion.js') }}"></script>    
+        <script src="{{ asset('js/shop.js') }}"></script>    
+        <script src="{{ asset('js/main.js') }}"></script>
+{% endblock %}

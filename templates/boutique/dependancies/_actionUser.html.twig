@@ -1,0 +1,160 @@
+<div class="usersPers">
+	<div class=" clearfix">
+		<div
+			id="header-ctn" class="header-ctn">
+			{# messages #}
+			<div id="message">
+				{% if app.user%}
+					<a href="">
+						<i class="fa fa-envelope"></i>
+						<span>Message</span>
+						<div class="qty qtymess">
+							0
+						</div>
+					</a>
+				{% else %}
+					<a href="" class="_connexion">
+						<i class="fa fa-envelope"></i>
+						<span>Message</span>
+						<div class="qty qtymess">
+							0
+						</div>
+					</a>
+				{% endif %}
+			</div>
+			{#fin messages#}
+			{# membre #}
+			<div id="membre">
+				{% if app.user%}
+					<a href="">
+						<i class="fa fa-user"></i>
+						<span>Membres</span>
+					</a>
+				{% else %}
+					<a href="" class="_connexion">
+						<i class="fa fa-user"></i>
+						<span>Membres</span>
+					</a>
+				{% endif %}
+			</div>
+			{#fin membre#}
+			<!-- Wishlist -->
+			{#
+			<div id="whishlist">
+				{% if app.user%}
+					<a href="{{ path('show_cart',{'type':'wish'})}}">
+						<i class="fa fa-heart-o"></i>
+						<span>Souhait</span>
+						<div class="qty qtywish">
+							{% if app.user %}
+								{{ mycart(app.user,'wish','quantity')}}
+							{% else %}
+								0
+							{% endif %}
+						</div>
+					</a>
+				{% else %}
+					<a href="" class="_connexion">
+						<i class="fa fa-heart-o"></i>
+						<span>Souhait</span>
+						<div class="qty qtywish">
+							{% if app.user %}
+								{{ mycart(app.user,'wish','quantity')}}
+							{% else %}
+								0
+							{% endif %}
+						</div>
+					</a>
+				{% endif %}
+			</div>
+			#}
+			<!-- /Wishlist -->
+			<div id="cart">
+				{% if app.user%}
+					<a href="{{ path('show_cart',{'type':'panier'})}}">
+						<i class="fa fa-shopping-cart"></i>
+						<span>
+							Panier
+						</span>
+						<div class="qty cart-qty">
+							{% if app.user %}
+								{{ mycart(app.user,'panier','quantity')}}
+							{% else %}
+								0
+							{% endif %}
+						</div>
+					</a>
+				{% else %}
+					<a href="" class="_connexion">
+						<i class="fa fa-shopping-cart"></i>
+						<span>
+							Panier
+						</span>
+						<div class="qty cart-qty">
+							{% if app.user %}
+								{{ mycart(app.user,'panier','quantity')}}
+							{% else %}
+								0
+							{% endif %}
+						</div>
+					</a>
+				{% endif %}
+			</div>
+			<!-- Cart -->
+			<div class="dropdown">
+
+				{% if app.user %}
+					<a class="dropdown-toggle " data-toggle="dropdown" aria-expanded="true">
+						<img src="{{asset('images/'~app.user.avatar)}}" class="_mylogo" alt="">
+						<span>Mon compte</span>
+					</a>
+					<div class="dropdown-menu dropdown-menu-right dropdown-default" aria-labelledby="userDropdown">
+						<p class="_myname" href="#">
+							{{ app.user.name}}
+							{{ app.user.firstname}}
+						</p>
+						<div class="dropdown-divider"></div>
+						<a class="dropdown-item" href="#">
+							<i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
+							Profile
+						</a>
+						<a class="dropdown-item" href="{{ path('home')}}">
+							<i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
+							Mon boutique
+						</a>
+						<a class="dropdown-item" href="{{ path('logout')}}">
+							<i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
+							Historique
+						</a>
+						<a class="dropdown-item" href="#">
+							<i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
+							Parametres
+						</a>
+						<div class="dropdown-divider"></div>
+						<a class="dropdown-item" href="{{ path('logout')}}">
+							<i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+							Déconnexion
+						</a>
+
+					</div>
+				{% else %}
+					<a class="_connexion">
+						<i class="fa fa-user-o"></i>
+						<span>My Count</span>
+					</a>
+				{% endif %}
+
+			</div>
+			<!-- /Cart -->
+
+			<!-- Menu Toogle -->
+			<div class="menu-toggle">
+				<a href="#">
+					<i class="fa fa-bars"></i>
+					<span>Menu</span>
+				</a>
+			</div>
+			<!-- /Menu Toogle -->
+		</div>
+	</div>
+</div>

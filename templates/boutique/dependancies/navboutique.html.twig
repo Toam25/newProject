@@ -1,0 +1,144 @@
+<div id="top-header">
+  <div class="container">
+      <ul class="header-cordinate">
+          <li><a href="#"><i class="fa fa-phone" style="color: #d0c40d;"></i>  {{ boutique.contact}}</a></li>
+          <li style="margin-left: 11px;margin-right: 11px;"><a href="#"><i class="fa fa-envelope-o"  style="color: #d0c40d;"></i>  {{ boutique.mail}}</a></li>
+          <li><a href="#"><i class="fa fa-map-marker" style="color: #d0c40d;"></i>  {{ boutique.address}}</a></li>
+      </ul>
+  </div>
+</div>
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <a style="display: flex;justify-content: center;align-items: center;flex-direction: column;" class="navbar-brand" href="{{ path('home')}}">
+        <img style="height: 3rem;width: 3rem;border-radius: 50%;"  src="{{asset('images/'~boutique.logo)}}" alt="">
+        <h1 class="name_boutique" style="font-size: 12px;">{{ boutique.name }}</h4>
+   </a>
+   <div class="search_boutique">
+        <div class="header-search">
+          <form method="Get" action="{{path('list_product')}}">
+              <input class="input" name="q" placeholder="Recherche dans {{ boutique.name}}">
+              <button class="search-btn">Search</button>
+          </form>
+       </div>
+   </div>
+   <div class="header-ctn">
+    <!-- Wishlist -->
+    <div id="whishlist">
+        <a href="#">
+            <i class="fa fa-heart-o"></i>
+            <span>Your Wishlist</span>
+            <div class="qty">2</div>
+        </a>
+    </div>
+    <!-- /Wishlist -->
+    <div id="cart">
+        <a href="#">
+            <i class="fa fa-shopping-cart"></i>
+            <span>
+                                                        26
+                                                </span>
+            <div class="qty cart-qty">
+                                                        40025
+                                                </div>
+        </a>
+    </div>
+    <!-- Cart -->
+    <div class="dropdown">
+        
+            <a class="dropdown-toggle " data-toggle="dropdown" aria-expanded="true">
+            <img src="" class="_mylogo" alt="">
+            <span>Mon compte</span>
+        </a>
+        <div class="dropdown-menu" aria-labelledby="userDropdown">
+            <p class="_myname" href="#">
+                Rakotoarimanana  
+                Rado Nirina
+            </p>
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item" href="#">
+              <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
+              Profile
+            </a>
+            <a class="dropdown-item" href="/admin">
+                <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
+                Mon boutique
+            </a>
+            <a class="dropdown-item" href="/logout">
+                <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
+                Historique
+            </a>
+            <a class="dropdown-item" href="#">
+              <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
+              Parametres
+            </a>
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item" href="/logout">
+              <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+                  Déconnexion
+            </a>
+         
+        </div>
+                                
+    </div>
+    <!-- /Cart -->
+
+    <!-- Menu Toogle -->
+    <div class="menu-toggle">
+        <a href="#">
+            <i class="fa fa-bars"></i>
+            <span>Menu</span>
+        </a>
+    </div>
+    <!-- /Menu Toogle -->
+</div>
+</nav>
+<!--nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <a class="navbar-brand" href="{{ path('home')}}">
+        <img style="height: 25px;width: 25px;border-radius: 50%;" src="{{asset('images/'~boutique.logo)}}" alt="">
+        <h4>{{ boutique.name }}</h4>
+    </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav mr-auto">
+      
+        <li class="nav-item">
+          <a class="nav-link" href="#">Categories</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">Promotion</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">Nouveauté</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">Nous contacté</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">Apropos de nous</a>
+        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Dropdown
+          </a>
+          <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <a class="dropdown-item" href="#">Action</a>
+            <a class="dropdown-item" href="#">Another action</a>
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item" href="#">Something else here</a>
+          </div>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link disabled" href="#">Disabled</a>
+        </li>
+      </ul>
+
+      <form class="form-inline my-2 my-lg-0">
+        <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+      </form>
+      
+    </div>
+  </nav!-->
+  
+  <div>critere</div>

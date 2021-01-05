@@ -1,0 +1,31 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Login{% endblock %}
+{% block stylesheets %}
+  <link rel="stylesheet" type="text/css" href="{{asset ('./assets/css/glyphicon.css')}}">
+  <link rel="stylesheet" type="text/css" href="{{asset ('./assets/css/bootstrap.min.css')}}">
+  <link rel="stylesheet" type="text/css" href="{{asset ('./assets/css/login.css')}}">
+{% endblock %}
+
+{% block body %}
+    
+    <img id="logo" src="./assets/images/defaults/logo_inother.png">
+   <div id='login'>
+       <p id="message"></p>
+       {% if error %}
+        <span class="alert alert-danger"> {{ error.message }}</span>
+       {% endif %}
+   	  <form  method='POST' class="login_form" action="{{ path('login') }}">
+    	 <label>Numéro de téléphone : </label><input  class="form-control identification" type="text" name="_username" placeholder='Votre numero de téléphone '>
+    	 <label>Mot de passe: </label><input class="form-control passeword" type="password" name="_password" placeholder='Mots de passe '>
+       <a href="recuperation.php" id="mdp_forget">Mots de  passe oublier ?</a>
+    	 <button id='login_validation' type='submit' class="btn btn-success" name='validate'>
+         Valider <img class="ajax"src="./assets/images/defaults/loader.gif">
+      </button>
+    </form>
+    <p id="inscription">Pas encore inscrit ? Cliquez<a href="{{path('registration')}}"> içi</a></p>
+   </div>
+{% endblock %}
+{% block javascripts %}
+    
+{% endblock %}

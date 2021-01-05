@@ -1,0 +1,48 @@
+{% for article in articles %}
+
+	<div class="col-md-4 col-sm-4 col-xs-6 col-lg-3 " style="margin-top: 3px;">
+		<div class="cart container_cart">
+			<a href="{{path('detail',{'id' : article.id})}}">
+				<div class="container_image">
+					<img src="{{ asset('images/'~article.images[0].name)}}" alt="">
+					<button class="add_cart_btn add_cart" data-id-article="{{ article.id }}">
+						<i class="fa fa-shopping-cart"></i>&nbsp Ajouter au panier</button>
+
+				</div>
+			</a>
+
+			<div class="detail">
+				<div class="product-rating">
+					{{ my_vote_twig(article.votes) }}
+				</div>
+				<h1 class="product-name">{{article.name}}</h1>
+				<h4 class="product-price">{{article.price| number_format(0,',',' ') }}&nbspAr</h4>
+
+			</div>
+			{#
+			           {% if app.user %}
+			                   {% if isWish(article.carts, app.user)=="true" %}
+			                           <button class="_wish-btn wish-btn delete_wish" data-id-cart = "{{ article.carts[0].id }}" data-id-article="{{ article.id }}">
+			                                   <i class="fa fa-heart"></i>
+			                           </button>
+			                           
+			                   {% else %}
+			                           <button class="_wish-btn wish-btn add_wish"  data-id-article="{{ article.id }}">
+			                                   <i class="fa fa-heart-o"></i>
+			                           </button>
+			                   {% endif %}
+			                   <button class="_cart-btn add_cart" data-id-article="{{ article.id }}">
+			                        <i class="fa fa-shopping-cart"></i>
+			                  </button>
+			            {% else %}
+			                   <button class="wish-btn _connexion" >
+			                           <i class="fa fa-heart-o"></i>
+			                   </button>
+			                   <button class="_cart-btn _connexion" >
+			                        <i class="fa fa-shopping-cart"></i>
+			                  </button>
+			           {% endif %}
+			          #}
+		</div>
+	</div>
+{% endfor %}

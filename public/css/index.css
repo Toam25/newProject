@@ -1,0 +1,405 @@
+#image_header {
+    height: 150px;
+}
+#image_header img {
+    width: 100%;
+    height: 100%;
+}
+nav {
+background-color : #202340 !important;
+}
+.navbar-default .navbar-nav > .open > a, .navbar-default .navbar-nav > .open > a:focus, .navbar-default .navbar-nav > .open > a:hover {
+    color: white !important;
+    background-color:  rgba(0,0,0,0.3)  !important;
+}
+.navbar-default .navbar-nav > li > a:focus, .navbar-default .navbar-nav > li > a:hover {
+    color: white !important;
+    background-color:  rgba(0,0,0,0.3)  !important;
+}
+#inscription{
+    background-color: 
+    rgba(0,0,0,0.6) !important;
+}
+.navbar-default .navbar-toggle:focus, .navbar-default .navbar-toggle:hover {
+    background-color: rgba(0,0,0,0.5) !important;
+}
+.navbar-default .navbar-nav > li > a {
+    color:  beige;
+}
+.containt_video {
+    overflow-y: scroll;
+    margin-top: 0px;
+    padding: 0px;
+    height: 250px !important;
+    border-top: 2px solid red;
+}
+.list_video {
+    width: 95%;
+    height: 200px;
+}
+.commentaire_video {
+    background: rgba(0,0,0,0.1);
+    padding: 8px;
+}
+#ajout_video_commentaire input {
+    border: none;
+    border-radius: 10px 0 0 10PX;
+    height: 29px;
+    margin: 0px;
+    width: 80%;
+    padding-left: 14px;
+}
+#btn-video-comment {
+    margin-left: -7px;
+    background: white;
+    border: none;
+    height: 29px;
+    border-radius: 0px 10px 10px 0PX;
+}
+.souligne {
+    font-size: 12px;
+    font-weight: bold;
+    padding-bottom: 2px!important;
+    border-bottom: 1px solid rgba(0,0,0,0.3);
+}
+.listeMode, .liste_high_teck {
+    border: 1px solid rgba(0,0,0,0.3);
+    position: absolute;
+    width: 100%;
+    z-index: 100;
+    background: white;
+    display: none;
+}
+
+.h4_menu {
+    font-size: 12px;
+    font-weight: bold;
+}
+.font_size_p {
+    font-size: 12px;
+    cursor: pointer;
+    width : 100%;
+}
+.image-content {
+    width: 100%;
+    height: 340px;
+    cursor: pointer;
+}
+.liste_image {
+    position: relative;
+}
+.line {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-pack: distribute;
+    justify-content: space-around;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+}
+.apropos_commentaire {
+    font-size: 31px;
+    font-weight: bold;
+    font-family: "Brush Script MT", "Brush Script Std", "cursive";
+    margin-top: 2px;
+    margin-left: 5px;
+    color: whitesmoke;
+}
+.my-btn-boutique {
+    margin-bottom: 2em;
+}
+.card {
+    border: 1px solid #bac6d3;
+    border-radius: 8px;
+    padding: 1rem;
+}
+.back_ground_forme_containt {
+    background: rgba(0,0,0,0.2);
+}
+.btns {
+    display: inline-block;
+}
+.hd {
+    border: none;
+    background: none;
+    margin-top: 10px;
+    padding: 0px;
+}
+.p {
+    display: inline-block;
+    width: 30px;
+}
+.image-comment, #user_nom {
+    display: inline-block;
+}
+.image-comment {
+    height: 40px;
+    width: 40px;
+    border-radius: 20px;
+}
+.l_comment {
+    display: inline-flex !important;
+}
+.l_comment {
+    display: inline-block;
+    width: 51%;
+    margin-top: 4px;
+    margin-right: 4px;
+}
+.my-carousel-item {
+    flex-basis: 450px;
+}
+.image {
+    display: inline-block;
+    display: contents;
+    position: relative;
+    padding: 0px;
+    width: 70%;
+    height: 240px;
+    margin: 0px;
+        margin-right: 0px;
+        margin-left: 0px;
+    padding: 0px;
+    margin-left: 10px;
+    margin-right: 10px;
+    background: rgba(0,0,0,0.2);
+}
+.my-carousel-items {
+    display: flex;
+    overflow-x: scroll;
+    padding: 1rem 0;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: thin;
+}
+.commentaire {
+    border-radius: 10px 0px 0px 10px;
+    width: 90%;
+    border: none;
+    padding-left: 6px;
+    height: 30px;
+}
+.icon_comment {
+    background: none;
+    border: none;
+    width: 25px;
+}
+#g_comment {
+    display: inline-block;
+}
+.l_comment {
+    display: inline-flex !important;
+}
+.my-carousel-item {
+    flex: 1 0 250px;
+    flex-basis: 250px;
+    margin-left: 1rem;
+    scroll-snap-align: start;
+}
+.echantillon {
+    width: 100%;
+    height: 130px;
+}
+.name {
+    position: absolute;
+    text-shadow: 0px 0px 5px black;
+    color: white;
+    font-size: 13px;
+    text-align: center;
+    width: 100%;
+    bottom: 0;
+    left: 0;
+    background: rgba(0,0,0,0.5);
+}
+.liste_categorie_vetement {
+    position: relative;
+    width: 131px;
+    display: inline-block;
+    margin-right: 3PX;
+    margin-left: 3PX;
+    background-color: white;
+    padding: 5PX;
+}
+._container_echatillon, ._boutiqueContaintEchantillon {
+    min-width: 100%;
+    overflow-x: auto;
+    white-space: nowrap;
+    margin-top: 8px;
+    overflow-y: hidden;
+    margin-bottom: 7px;
+}
+.remove {
+    padding: 0px;
+    width: 30px;
+    height: 30px;
+    border-radius: 100%;
+    border: none;
+    position: absolute;
+    right: -12px;
+    top: -21PX;
+    color: red;
+    cursor: pointer;
+    transition: 300ms;
+}
+#menu_detail {
+    box-shadow: 1px 3px 4px 1px rgba(0, 0, 255, .2);
+    height: auto;
+    margin-top: 16px;
+}
+#menu_detail h3 {
+    font-size: 14px;
+    height: auto;
+    padding: 5px;
+}
+#menu_detail h3{
+    margin: 0px;
+}
+.sous_menu {
+    border-bottom: 1px solid;
+    border-left: 1px solid;
+    border-right: 1px solid;
+}
+.h4_menu1 {
+    font-size: 12px;
+    font-weight: bold;
+    border: 1px solid;
+    height: auto;
+    padding: 5px;
+    text-align: center;
+    background-color: #131633;
+    color: white;
+    margin-bottom: 0px;
+    margin-top: 0px;
+}
+#container_echatillon {
+    position: absolute;
+    width: 90%;
+    z-index: 999;
+    display: none;
+    background: white;
+    left: 5%;
+    right: 5%;
+    padding: 5px;
+    box-shadow: 0px 0px 14px black;
+    top: 10%;
+}
+.liste_categorie_vetement {
+    cursor: pointer;
+}
+.container_boutique {
+    display: inline-block;
+    margin-left: 3px;
+    margin-right: 3px;
+    border: 1px solid black;
+    width: 263px;
+}
+.nom_boutique_vetement {
+    display: inline-block;
+    margin: 0px;
+        margin-bottom: 0px;
+    width: 100%;
+    text-align: center;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    box-shadow: 0PX 3px 5px rgba(0,0,0,0.8);
+    margin-bottom: 8px;
+}
+.boutique {
+    height: 320px;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    width: 100%;
+    white-space: initial;
+    text-align: center;
+}
+._my_aricle_in {
+    margin: 2px;
+    padding: 1px;
+}
+.image_vetement_boutique {
+    max-width: 100%;
+    transition: 500ms;
+    cursor: pointer;
+    height: 250PX;
+    display: inline-block;
+}
+.prix {
+    font-size: 23px;
+    font-weight: bold;
+    color: rgba(0,0,0,0.8);
+    text-align: center;
+}
+.border_click {
+    border: 1px solid aqua;
+    border-radius: 10px;
+}
+._my_aricle_in:hover{
+    box-shadow: 0px 0px 5px black;
+}
+.titre_menu_detail {
+    border: 1px solid;
+    text-align: center;
+    background-color: black;
+    color: white;
+}
+.font_size_p {
+    font-size: 12px;
+    margin-left: 10px;
+}
+.div-inother{
+	background-color: green;
+	display:none;
+}
+._container_all_echantillon{
+    box-shadow: 0 0 2px;
+    border-radius: 7px
+}
+.inother-ajax{
+position:relative;
+width:100%;
+height:2px;
+overflow:hidden;
+}
+.div-inother {
+position : absolute;
+height:100%;
+width:20%;
+
+-webkit-animation:moveMarquee 1s linear alternate infinite;
+   -moz-animation:moveMarquee 1s linear alternate  infinite;
+    -ms-animation:moveMarquee 1s linear  alternate infinite;
+     -o-animation:moveMarquee 1s linear alternate infinite;
+        animation:moveMarquee 1s linear alternate  infinite;
+}
+@-webkit-keyframes moveMarquee {
+  0%{
+     transform:translateX(10%);
+} 
+  100%{
+transform:translateX(600%);
+}
+}
+
+@-moz-keyframes moveMarquee {
+ 0%{
+transform:translateX(10%);
+} 
+  100%{
+transform:translateX(600%);
+}
+}
+
+@keyframes moveMarquee {
+ 0%{
+transform:translateX(-100%);
+width: 20%;
+} 
+50%{
+ transform:translateX(0);
+ width: 40%;
+} 
+  100%{
+transform:translateX(500%);
+width: 20%;
+}
+}

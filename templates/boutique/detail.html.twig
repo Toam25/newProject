@@ -1,0 +1,245 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ boutique.name }}{% endblock %}
+{% block meta%}
+
+{% endblock %}
+{% block stylesheets %}
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,500,700" rel="stylesheet">
+   
+    <link href="{{ asset('css/bootstrap3.3.css')}}" rel="stylesheet" type="text/css">
+    <!-- Slick -->
+    <link type="text/css" rel="stylesheet" href="{{asset('css/slick.css') }}"/>
+    <link type="text/css" rel="stylesheet" href="{{asset('css/slick-theme.css') }}"/>
+
+    <!-- nouislider -->
+    <link type="text/css" rel="stylesheet" href="{{asset('css/nouislider.min.css') }}"/>
+
+    <!-- Font Awesome Icon -->
+    <link rel="stylesheet" href="{{ asset('css/font-awesome.min.css') }}">
+
+    <!-- Custom stlylesheet -->
+    <link type="text/css" rel="stylesheet" href="{{ asset('css/style.css') }}"/>
+    <link type="text/css" rel="stylesheet" href="{{ asset('css/cart.css') }}"/>
+    <link type="text/css" rel="stylesheet" href="{{ asset('css/index.css') }}"/>
+{% endblock %}
+{% block body %}
+   {% include "boutique/dependancies/header.html.twig" %}
+   <!-- SECTION -->
+	
+   
+		<div class="section">
+			<!-- container -->
+			<div class="container">
+				<!-- row -->
+				<div class="row">
+					<!-- Product main img -->
+					<div class="col-md-5 col-md-push-2">
+						<div id="product-main-img">
+                            {% for image in article.images%}
+							<div class="product-preview">
+								<img src="{{asset('images/'~image.name)}}" alt="">
+                            </div>
+                            {% endfor %}
+						</div>
+					</div>
+					<!-- /Product main img -->
+
+					<!-- Product thumb imgs -->
+					<div class="col-md-2  col-md-pull-5">
+						<div id="product-imgs">
+							{% for image in article.images%}
+                                <div class="product-preview">
+                                    <img src="{{asset('images/'~image.name)}}" alt="">
+                                </div>
+                            {% endfor %}
+						</div>
+					</div>
+					<!-- /Product thumb imgs -->
+
+					<!-- Product details -->
+					<div class="col-md-5">
+						<div class="product-details">
+							<h2 class="product-name">{{ article.name}}</h2>
+							<div>
+								<div class="product-rating">
+									{{my_vote_twig(votes)}}
+								</div>
+								<a class="review-link" href="#avis">{{votes|length }} évaluation(s) | donner votre avis</a>
+							</div>
+							<div>
+								<h3 class="product-price">{{ article.price }} Ar </h3>
+							</div>
+							<p>{{ article.description}}</p>
+							<div class="add-to-cart">
+								<div class="qty-label">
+									<div class="input-number">
+										<input type="number" min=1 value=1>
+										<span class="qty-up">+</span>
+										<span class="qty-down">-</span>
+									</div>
+								</div>
+								
+								<button class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> add to cart</button>
+							</div>
+
+  --(ttr 
+
+						</div>
+					</div>
+					<!-- /Product details -->
+
+					<!-- Product tab -->
+					<div class="col-md-12">
+						<div id="product-tab">
+							<!-- product tab nav -->
+							
+								<label class="title_C"><a data-toggle="tab" href="#tab1">Nombre d'avis ( {{votes|length }} )</a></label>
+						
+							<!-- /product tab nav -->
+
+							<!-- product tab content -->
+							<div class="tab-content">
+								
+								<!-- tab3  -->
+								<div id="tab1">
+									<div class="row">
+										<!-- Rating -->
+										<div class="col-md-3">
+											<div id="rating">
+												<div class="rating-avg">
+													{% set totalVote = votes|length==0 ? 1 : votes|length %}
+													<span>{{ (valuevote['total']/ totalVote) | number_format(1,'.',' ') }}</span>
+													<div class="rating-stars">
+														{{my_vote_twig(votes)}}
+													</div>
+												</div>
+												<ul class="rating">
+													<li>
+														<div class="rating-stars">
+															{{ my_vote_twig(5) }}
+														
+														</div>
+														<div class="rating-progress">
+															<div style="width: {{ valuevote['five']/totalVote*100}}%"></div>
+														</div>
+														<span class="sum">{{valuevote['five']}}</span>
+													</li>
+													<li>
+														<div class="rating-stars">
+															{{ my_vote_twig(4) }}
+														</div>
+														<div class="rating-progress">
+															<div style="width: {{ valuevote['four']/totalVote*100}}%"></div>
+														</div>
+														<span class="sum">{{valuevote['four']}}</span>
+													</li>
+													<li>
+														<div class="rating-stars">
+															{{ my_vote_twig(3) }}
+														</div>
+														<div class="rating-progress">
+															<div style="width: {{ valuevote['tree']/totalVote*100}}%"></div>
+														</div>
+														<span class="sum">{{valuevote['tree']}}</span>
+													</li>
+													<li>
+														<div class="rating-stars">
+															{{ my_vote_twig(2) }}
+														</div>
+														<div class="rating-progress">
+															<div style="width: {{ valuevote['two']/totalVote*100}}%"></div>
+														</div>
+														<span class="sum">{{valuevote['two']}}</span>
+													</li>
+													<li>
+														<div class="rating-stars">
+															{{ my_vote_twig(1) }}
+														</div>
+														<div class="rating-progress">
+															<div style="width: {{ valuevote['one']/totalVote*100}}%"></div>
+														</div>
+														<span class="sum">{{valuevote['one']}}</span>
+													</li>
+												</ul>
+											</div>
+										</div>
+										<!-- /Rating -->
+
+										<!-- Reviews -->
+										<div class="col-md-6">
+											<div id="reviews">
+												<ul class="reviews">
+												    {% for vote in votes %}
+													<li>
+														<div class="review-heading">
+															<h5 class="name">{{ vote.user.name}}</h5>
+															<p class="date">dd</p>
+															<div class="review-rating">
+																{{my_vote_twig(vote.value)}}
+															</div>
+														</div>
+														<div class="review-body">
+															<p>{{ vote.comment}}</p>
+														</div>
+													</li>
+												  {% endfor %}
+												</ul>
+												<ul class="reviews-pagination">
+													<li class="active">1</li>
+													<li><a href="#">2</a></li>
+													<li><a href="#">3</a></li>
+													<li><a href="#">4</a></li>
+													<li><a href="#"><i class="fa fa-angle-right"></i></a></li>
+												</ul>
+											</div>
+										</div>
+										<!-- /Reviews -->
+
+										<!-- Review Form -->
+										<div id="avis" class="col-md-3">
+											<div id="review-form">
+												<form id="{{ article.id }}" class="review-form" >		
+													<div class="input-rating">
+														<span>Votre satisfaction : </span>
+														<br>
+														<div class="stars">
+															<input id="star5" name="rating" value="5" type="radio"><label for="star5"></label>
+															<input id="star4" name="rating" value="4" type="radio"><label for="star4"></label>
+															<input id="star3" name="rating" value="3" type="radio"><label for="star3"></label>
+															<input id="star2" name="rating" value="2" type="radio"><label for="star2"></label>
+															<input id="star1" name="rating" value="1" type="radio"><label for="star1"></label>
+														</div>
+														<textarea class="input comment" placeholder="Commentaire"></textarea>
+													</div>
+													<button class="primary-btn">Enregistrer</button>
+												</form>
+											</div>
+										</div>
+										<!-- /Review Form -->
+									</div>
+								</div>
+								<!-- /tab3  -->
+							</div>
+							<!-- /product tab content  -->
+						</div>
+					</div>
+					<!-- /product tab -->
+				</div>
+				<!-- /row -->
+			</div>
+			<!-- /container -->
+		</div>
+		<!-- /SECTION -->
+   {% include "boutique/dependancies/footer.html.twig" %}
+{% endblock %}
+
+{% block javascripts %}
+        <script src="{{ asset('js/slick.min.js') }}"></script>
+        <script src=" {{ asset('js/nouislider.min.js') }}"></script>
+        <script src="{{ asset('js/jquery.zoom.min.js') }}"></script>
+        <script src="{{ asset('js/index.js') }}"></script>
+		<script src="{{ asset('js/main.js') }}"></script>
+		<script src="{{ asset('js/vote.js') }}"></script>
+        
+{% endblock %}

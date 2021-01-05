@@ -1,0 +1,54 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}store{% endblock %}
+{% block meta%}
+
+{% endblock %}
+{% block stylesheets %}
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,500,700" rel="stylesheet">
+   
+    <link href="{{ asset('css/bootstrap3.3.css')}}" rel="stylesheet" type="text/css">
+    <!-- Slick -->
+    <link type="text/css" rel="stylesheet" href="{{asset('css/slick.css') }}"/>
+    <link type="text/css" rel="stylesheet" href="{{asset('css/slick-theme.css') }}"/>
+
+    <!-- nouislider -->
+    <link type="text/css" rel="stylesheet" href="{{asset('css/nouislider.min.css') }}"/>
+
+    <!-- Font Awesome Icon -->
+    <link rel="stylesheet" href="{{ asset('css/font-awesome.min.css') }}">
+
+    <!-- Custom stlylesheet -->
+    <link type="text/css" rel="stylesheet" href="{{ asset('css/style.css') }}"/>
+    <link type="text/css" rel="stylesheet" href="{{ asset('css/index.css') }}"/>
+{% endblock %}
+{% block body %}
+      
+        <!-- SECTION -->
+		<div class="section">
+			<!-- container -->
+			<div class="container">
+				<!-- row -->
+				<div class="row">
+					
+                    {% include "boutique/dependancies/section_product.html.twig" %}
+                    {% include "boutique/dependancies/store.html.twig" %}
+					
+					<!-- /STORE -->
+				</div>
+				<!-- /row -->
+			</div>
+			<!-- /container -->
+		</div>
+		<!-- /SECTION -->
+        
+{% endblock %}
+
+{% block javascripts %}
+        <script src="{{ asset('js/slick.min.js') }}"></script>
+        <script src=" {{ asset('js/nouislider.min.js') }}"></script>
+        <script src="{{ asset('js/jquery.zoom.min.js') }}"></script>
+        <script src="{{ asset('js/index.js') }}"></script>
+        <script src="{{ asset('js/main.js') }}"></script>
+        
+{% endblock %}

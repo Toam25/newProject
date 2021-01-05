@@ -1,0 +1,216 @@
+.cart_product, .cart_total {
+    margin: 11px 0px 20px 0px;
+    padding: 5px;
+    position: relative;
+    border: 1px solid rgba(0, 0, 0, 0.13);
+    background: white;
+    transition : 100ms ease-in-out all;
+}
+.cart_product:hover{
+    box-shadow: 0px 0px 6px black;
+
+}
+
+.add_cart_btn{
+    width: 100%;
+    position: absolute;
+    bottom: -10px;
+    border: 1px solid #0000001C;
+    padding: 4px;
+    background: #bf223d;
+    color: white;
+    opacity: 0;
+    transition: all 100ms ease-in;
+}
+.cart:hover .add_cart_btn {
+    opacity:1 !important;
+    bottom: 0px !important;
+}
+.delete_cart{
+    position: absolute;
+    right: -16.3px;
+    border: 1px solid rgba(0,0,0,0.1);
+    border-radius: 50%;
+    height: 35px;
+    width: 35px;
+    top:-16.3px;
+}
+.inother-ajax{
+    position:absolute;
+    width:100%;
+    height:5px;
+    overflow:hidden;
+    margin-top: 0px;
+}
+.div-inother{
+        background-color: green;
+        display:none;
+}
+.containt_btn_ {
+    display: flex;
+    justify-content: right;
+    align-items: center;
+}
+.title_C::after{
+    content: "";
+	border-bottom: 4px solid #ce4646;
+	width: 59%;
+	display: block; 
+}
+.title::after {
+	content: "";
+	border-bottom: 4px solid #ce4646;
+	width: 6%;
+	display: block;
+}
+.redbutton{
+    background: #d10024 !important;
+    color: white;
+    border: none !important;
+}
+.redbutton:hover{
+    background: #d10024 !important;
+    border: none !important;
+}
+.delete_cart{
+    transform: scale(0);
+    transition: 333ms;
+}
+.cart_product:hover .delete_cart{
+   transform: scale(1);
+}
+.cart-one-qty{
+    height: 22px;
+    padding: 0 24px 0 24px;
+}
+.images_product {
+    max-width: 100%;
+    max-height: 100%;
+}
+.addOne:after {
+    content: '+1';
+    position: absolute;
+    color: red;
+    font-size: 14px;
+    transition: 500ms;
+}
+.cart_total h4{
+    text-align: end;
+}
+.containt_image_product {
+    height: 179px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: white;
+    border-right: 1px solid rgba(0,0,0,0.3);
+    padding-right: 2px;
+}
+.action_product {
+    width: 70%;
+    padding: 5px;
+    display: grid;
+   grid-template-rows: 1fr 3fr 1fr;
+}
+.quantity {
+    margin-right: 7px;
+    display: flex;
+}
+.container_quatity{
+    display: flex;
+}
+.total{
+    display: flex;
+}
+.name_boutique{
+    margin-right: 37px;
+    color: gray;
+}
+.name_boutique p{
+    color: #5555bf;
+}
+.price_and_name {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+}
+.container_quatity input {
+
+    width: 52px;
+    text-align: end;
+    height: 22px;
+}
+._containt_img_pr {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 33%;
+}
+.cart_product {
+    display: flex;
+    cursor: pointer;
+}
+.price_cart{
+    font-size: 21px;
+    color: #000000c9;
+}
+.containt_image_product > a {
+    display: block;
+    height: 100%;
+    width: 100%;
+}
+.total_quatity{
+    display: flex;
+    justify-content: end;
+}
+.button_control_quantity_cart{
+    height: 22px;
+    padding: 0px 9px;
+}
+
+.div-inother {
+    position : absolute;
+    height:6px;
+    width:20%;
+    -webkit-animation:moveMarquee 1s linear alternate infinite;
+       -moz-animation:moveMarquee 1s linear alternate  infinite;
+        -ms-animation:moveMarquee 1s linear  alternate infinite;
+         -o-animation:moveMarquee 1s linear alternate infinite;
+            animation:moveMarquee 1s linear alternate  infinite;
+    }
+@-webkit-keyframes moveMarquee {
+      0%{
+         transform:translateX(10%);
+      } 
+      100%{
+         transform:translateX(600%);
+      }
+}
+    
+@-moz-keyframes moveMarquee {
+     0%{
+        transform:translateX(10%);
+    } 
+      100%{
+        transform:translateX(600%);
+    }
+}
+    
+@keyframes moveMarquee {
+     0%{
+      transform:translateX(-100%);
+      width: 20%;
+      background-color: green;
+    } 
+    50%{
+     transform:translateX(0);
+     width: 40%;
+     background-color: rgb(219, 74, 7);
+    } 
+    100%{
+      transform:translateX(500%);
+      width: 20%;
+      background-color: rgb(126, 128, 0);
+    }
+}

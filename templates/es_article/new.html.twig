@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New EsArticle{% endblock %}
+
+{% block body %}
+    <h1>Create new EsArticle</h1>
+
+    {{ include('es_article/_form.html.twig') }}
+
+    <a href="{{ path('es_article_index') }}">back to list</a>
+{% endblock %}

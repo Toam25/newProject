@@ -1,0 +1,14 @@
+.action_connexion {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    margin-top: 9px;
+}
+.ajax {
+    height: 20px;
+    width: 20px;
+    display: none;
+}
+.connexion_footer{
+    justify-content: center !important;
+}

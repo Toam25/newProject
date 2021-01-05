@@ -1,0 +1,174 @@
+<header>
+    <!-- TOP HEADER -->
+    <!--div id="top-header">
+        <div class="container">
+            <ul class="header-cordinate">
+                <li><a href="#"><i class="fa fa-phone"></i>  {{ boutique.contact}}</a></li>
+                <li style="margin-left: 11px;margin-right: 11px;"><a href="#"><i class="fa fa-envelope-o"></i>  {{ boutique.mail}}</a></li>
+                <li><a href="#"><i class="fa fa-map-marker"></i>  {{ boutique.address}}</a></li>
+            </ul>
+        </div>
+    </div-->
+    <!-- /TOP HEADER -->
+
+    <!-- MAIN HEADER -->
+    <div id="header">
+        <!-- container -->
+        <div class="container-fluid">
+            <!-- row -->
+            <div class="row">
+                <!-- LOGO -->
+                <div class="col-md-3 col-sm-3 col-xs-12">
+                    <div class="header-logo">
+                        <a href="/" class="logo">
+                            <img style="height: 68px;width: 68px;" src="{{asset('images/'~boutique.logo)}}" alt="">
+                        </a>
+                      <span class="shop_name"> {{boutique.name}} <br> 
+                        <i class="fa fa-phone" style="color:#df2121"></i> 
+                        <span class="contact_shop">{{boutique.contact}}</span></span>
+                    </div>
+                </div>
+                <!-- /LOGO -->
+
+                <!-- SEARCH BAR -->
+                <div class="col-md-5 col-sm-5 col-xs-12">
+                    <div class="header-search">
+                        <form method="Get" action="{{path('list_product')}}">
+                            <input class="input" name="q" placeholder="Recherche dans {{ boutique.name}}">
+                            <button class="search-btn">Search</button>
+                        </form>
+                    </div>
+                </div>
+                <!-- /SEARCH BAR -->
+
+                <!-- ACCOUNT -->
+                <div class="col-md-4 col-xs-12 col-sm-4 clearfix">
+                    <div class="header-ctn">
+                        <!-- Wishlist -->
+                        <div id="whishlist">
+                            {% if app.user%}
+                                <a href="{{ path('show_cart',{'type':'wish'})}}">
+                                    <i class="fa fa-heart-o"></i>
+                                    <span>Souhait</span>
+                                    <div class="qty qtywish">
+                                        {% if app.user %}
+                                            {{ mycart(app.user,'wish','quantity')}}
+                                        {% else %}
+                                            0
+                                        {% endif %}
+                                    </div>
+                                </a>
+                            {% else %}
+                                <a href="" class="_connexion">
+                                    <i class="fa fa-heart-o"></i>
+                                    <span>Souhait</span>
+                                    <div class="qty qtywish">
+                                        {% if app.user %}
+                                            {{ mycart(app.user,'wish','quantity')}}
+                                        {% else %}
+                                            0
+                                        {% endif %}
+                                    </div>
+                                </a>
+                            {% endif %}
+                        </div>
+                        <!-- /Wishlist -->
+                        <div id="cart">
+                            {% if app.user%}
+                                <a href="{{ path('show_cart',{'type':'panier'})}}">
+                                    <i class="fa fa-shopping-cart"></i>
+                                    <span>
+                                        Panier
+                                    </span>
+                                    <div  class="qty cart-qty">
+                                        {% if app.user %}
+                                            {{ mycart(app.user,'panier','quantity')}}
+                                        {% else %}
+                                            0
+                                        {% endif %}
+                                    </div>
+                                </a>
+                            {% else %}
+                            <a href=""class="_connexion">
+                                <i class="fa fa-shopping-cart"></i>
+                                <span>
+                                    Panier
+                                </span>
+                                <div  class="qty cart-qty">
+                                    {% if app.user %}
+                                        {{ mycart(app.user,'panier','quantity')}}
+                                    {% else %}
+                                        0
+                                    {% endif %}
+                                </div>
+                            </a>
+                            {% endif %}
+                        </div>
+                        <!-- Cart -->
+                        <div class="dropdown">
+                            
+                            {% if app.user %}
+                            <a class="dropdown-toggle " data-toggle="dropdown" aria-expanded="true">
+                                <img src="{{asset('images/'~app.user.avatar)}}" class="_mylogo" alt="">
+                                <span>Mon compte</span>
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-right dropdown-default" aria-labelledby="userDropdown">
+                                <p class="_myname" href="#">
+                                    {{ app.user.name}}  
+                                    {{ app.user.firstname}}
+                                </p>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" href="#">
+                                  <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
+                                  Profile
+                                </a>
+                                <a class="dropdown-item" href="{{ path('home')}}">
+                                    <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
+                                    Mon boutique
+                                </a>
+                                <a class="dropdown-item" href="{{ path('logout')}}">
+                                    <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
+                                    Historique
+                                </a>
+                                <a class="dropdown-item" href="#">
+                                  <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
+                                  Parametres
+                                </a>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" href="{{ path('logout')}}" >
+                                  <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+                                      Déconnexion
+                                </a>
+                             
+                            </div>
+                            {% else %}
+                            <a class="_connexion">
+                                <i class="fa fa-user-o"></i>
+                                <span>My Count</span>
+                            </a>
+                            {% endif %}
+                        
+                        </div>
+                        <!-- /Cart -->
+
+                        <!-- Menu Toogle -->
+                        <div class="menu-toggle">
+                            <a href="#">
+                                <i class="fa fa-bars"></i>
+                                <span>Menu</span>
+                            </a>
+                        </div>
+                        <!-- /Menu Toogle -->
+                    </div>
+                </div>
+                <!-- /ACCOUNT -->
+            </div>
+            <!-- row -->
+        </div>
+        <!-- container -->
+    </div>
+    <div class="inother-ajax">
+        <div class="div-inother"></div>
+    </div>
+    <!-- /MAIN HEADER -->
+</header>

@@ -1,0 +1,65 @@
+.header-cordinate{
+    display: flex;
+    justify-content: center;
+    margin-right: 15px;
+    font-size: 12px;
+}
+#top-header {
+    padding-top: 10px;
+    padding-bottom: 10px;
+    background-color: white;
+}
+
+header{
+    top: 0px;
+    position: sticky;
+    z-index: 999;
+}
+._mylogo{
+    height: 18px;
+    width: 18px;
+    border-radius: 50%;
+    display: block;
+    margin: auto;
+}
+._myname{
+    overflow: hidden;
+    white-space: normal;
+    text-align: center;
+    font-size: 11px;
+    margin: 0;
+}
+a:not([href]):hover {
+    
+}
+.header-ctn > div > a {
+    display: block;
+    position: relative;
+    width: 90px;
+    text-align: center;
+    color: #6c6767;
+}
+#header {
+    /*padding-top: 15px;
+    padding-bottom: 15px;*/
+    background: rgb(255, 255, 255);
+    box-shadow: 1px 1PX 6px -1px black;
+   
+}
+
+.header-search form .search-btn {
+ 
+}
+.navbar-light .navbar-nav .nav-link {
+    color: rgba(0, 0, 0, 0.87) !important;
+}
+.ajax {
+    height: 20px;
+    display: none;
+}
+.action_connexion {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+    align-items: center;
+}
