@@ -98,6 +98,11 @@ class Boutique
      */
     private $esArticles;
 
+    /**
+     * @ORM\Column(type="string", length=300, nullable=true)
+     */
+    private $user_condition;
+
     public function __construct()
     {
         $this->logo = "images_default/default_logo.png";
@@ -436,6 +441,18 @@ class Boutique
                 $esArticle->setBoutique(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getUserCondition(): ?string
+    {
+        return $this->user_condition;
+    }
+
+    public function setUserCondition(?string $user_condition): self
+    {
+        $this->user_condition = $user_condition;
 
         return $this;
     }
