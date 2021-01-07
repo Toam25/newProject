@@ -1,0 +1,21 @@
+<div>
+    <button class="btn btn-success add_vote" style="margin-bottom: 13px;">Ajouter </button>
+</div>
+<div class="row container_all_image_vote">
+    {% for vote in votes %}
+        <div  class="margin-top-5 col-xs-6 col-sm-3 col-md-2 col-lg-2">
+                <div class="container_image_for_header" style="background-color: #4d72de">
+                    {% if vote.headervote.images is defined  %}
+                             <img name="{{ vote.id }}" alt="images" class="image_for_header" src="{{ asset('images/'~vote.headervote.images )}}">
+                    {% else %}
+                          <img name="{{ vote.id }}" alt="images" class="image_for_header" src="{{ asset('images/images_default/default_image.jpg')}}">
+                    {% endif %}
+                     
+                </div>
+                <div class='container_image_for_body'>
+                <img name="{{vote.id }}"alt="" class="image_for_body" src="{{ asset('images/'~vote.images)}}">
+                </div>
+                <button class="remove_vote btn btn-danger" data-idartcle="{{ vote.id }}" style="width: 100%;border: 0;border-radius: 0px !important;">Supprimer</button>
+        </div>
+    {% endfor %}
+</div>
