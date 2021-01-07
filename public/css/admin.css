@@ -309,3 +309,31 @@ background: #e4087e;
     font-weight: bold; 
     color:black;
 }
+/*vote*/
+.image_for_body {
+    width: 100%;
+    position: absolute;
+    transition: 300ms;
+    height: 100%;
+    display: block;
+}
+.container_image_for_body {
+    position: relative;
+    height: 200px;
+}
+.image_for_header {
+    clip: rect(0px auto auto 0px);
+    transition: 300ms;
+    border-radius: 50%;
+    height: 100%;
+    width: 100%;
+}
+.container_image_for_header {
+    height: 33px;
+    position: absolute;
+    width: 33px;
+    z-index: 1;
+    padding: 2px;
+    border-radius: 50px;
+    cursor: pointer;
+}

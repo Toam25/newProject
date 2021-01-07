@@ -103,6 +103,11 @@ class Boutique
      */
     private $user_condition;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Vote", mappedBy="boutique")
+     */
+    private $vote;
+
     public function __construct()
     {
         $this->logo = "images_default/default_logo.png";
@@ -113,6 +118,7 @@ class Boutique
         $this->shopReferences = new ArrayCollection();
         $this->menus = new ArrayCollection();
         $this->esArticles = new ArrayCollection();
+        $this->vote= new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -453,6 +459,37 @@ class Boutique
     public function setUserCondition(?string $user_condition): self
     {
         $this->user_condition = $user_condition;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Vote[]
+     */
+    public function getVote(): Collection
+    {
+        return $this->create_at;
+    }
+
+    public function addVote(Vote $createAt): self
+    {
+        if (!$this->create_at->contains($createAt)) {
+            $this->create_at[] = $createAt;
+            $createAt->setBoutique($this);
+        }
+
+        return $this;
+    }
+
+    public function removeVote(Vote $createAt): self
+    {
+        if ($this->create_at->contains($createAt)) {
+            $this->create_at->removeElement($createAt);
+            // set the owning side to null (unless already changed)
+            if ($createAt->getBoutique() === $this) {
+                $createAt->setBoutique(null);
+            }
+        }
 
         return $this;
     }

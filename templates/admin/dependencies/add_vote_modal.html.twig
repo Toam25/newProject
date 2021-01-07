@@ -1,0 +1,32 @@
+<div class="modal fade" id="add_vote" tabindex="-1" role="dialog" aria-labelledby="ajout_modal" aria-hidden="true">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="label">Ajout article</h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			{{ form_start(form, {'attr': {'class' : 'form_article add_reference','action': path('vote_list') }}) }}
+			<div id="div_ajout_article" class="modal-body row" style="font-weight:none;">
+                <div class="col-md-4">
+					<div class="preview_image">
+						<img id="preview_image">
+					</div>
+				</div>
+				<div class="col-md-8">
+						{{ form_row(form.photos, {'attr': {'id' :'file_in', 'class':'file form-control'}}) }}
+						{{ form_row(form.description, {'attr': {'class':''}}) }}
+						
+				</div>
+
+			</div>
+			<div class="modal-footer">
+				<button type="submit" class="btn btn-success">
+							Enregisrer
+				</button>
+			</div>
+			{{ form_end(form)}}
+		</div>
+	</div>
+</div>

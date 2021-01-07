@@ -12,6 +12,7 @@ use App\Repository\BoutiqueRepository;
 use App\Repository\CartRepository;
 use App\Repository\HeaderRepository;
 use App\Repository\UserRepository;
+use App\Repository\VoteRepository;
 use App\Repository\VotesRepository;
 use App\Service\Cart\CartService;
 use App\Service\SearchService;
@@ -26,7 +27,7 @@ class BoutiqueController extends AbstractController
     /**
      * @Route("/", name="index")
      */
-    public function index(CartService $cart,HeaderRepository $headerRepository, BoutiqueRepository $boutiqueRepository,CartRepository $cartRepository, ArticleRepository $articleRepository)
+    public function index(VoteRepository $voteRepository, HeaderRepository $headerRepository, BoutiqueRepository $boutiqueRepository,CartRepository $cartRepository, ArticleRepository $articleRepository)
     {   
 
         $boutique = $boutiqueRepository->findOneBoutiqueByUserPerRole('ROLE_SUPER_ADMIN');
@@ -37,7 +38,8 @@ class BoutiqueController extends AbstractController
             'controller_name' => 'BoutiqueController',
             'boutique'=>$boutique,
             'articles'=> $articles,
-            'header_image'=>$header_image
+            'header_image'=>$header_image,
+            'votes'=>$voteRepository->findAll()
         ]);
     }
      /**

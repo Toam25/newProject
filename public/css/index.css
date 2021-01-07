@@ -403,3 +403,1582 @@ transform:translateX(500%);
 width: 20%;
 }
 }
+/*vote*/
+
+#profil_toggle{
+    padding: 10px;
+  }
+  .menu_profil_index{
+    text-align: center;
+    border: 1px solid #1875bc;
+    width: 100%;
+    color: black !important;
+    margin-top: 3px;
+    display: inline-block;
+    padding: 4px;
+  }
+  #icone_message{
+    border: 1px solid white;
+    border-radius: 50%;
+    color: white;
+  }
+  #icone_membre{
+    color: white;
+  }
+  .menu_profil_index:hover{
+    text-decoration: none;
+  }
+  .divider{
+    border: 1px solid;
+    width: 175%;
+  }
+  .image-comment,#user_nom{
+    display: inline-block;
+  }
+  #se_Connecter{
+    float: right;
+  }
+  .modal-header {
+      margin-top: 0px !important;
+  }
+  .high-tech-mobil{
+      display:none;
+  }
+  .achat_index_menu{
+    background: no-repeat;
+    border: none
+  }
+  .achat_index_menu:hover{
+    background: no-repeat;
+    border: none
+  }
+  .nbre_article{
+    border: 1px solid red;
+    background-color:red;
+    padding-bottom: 0;
+    padding-top: 0;
+    padding-left: 4px;
+    padding-right: 3px;
+    border-radius: 10px;
+  }
+  .nbre_suivis_client{
+    border: 1px solid red;
+    background-color:red;
+    padding-bottom: 0;
+    padding-top: 0;
+    padding-left: 4px;
+    padding-right: 3px;
+    border-radius: 10px;
+  }
+  .nbre_suivis_moi{
+    border: 1px solid red;
+    background-color:red;
+    padding-bottom: 0;
+    padding-top: 0;
+    padding-left: 4px;
+    padding-right: 3px;
+    border-radius: 10px;
+  }
+  .header_achat{
+    padding-bottom: 43px;
+  }
+  .block_nom_boutique{
+    margin-top: 7px !important
+  }
+  .menu_vertic_clicked{
+    border: 2px solid #375d81;
+    background: white !important;
+    color: black !important;
+  }
+  .fets{
+      cursor: pointer;
+      
+  }
+  .h4_menu_vertic {
+    cursor: pointer;
+  }
+  #confirmModal_suivis {
+      width: 50% !important;
+  }
+  @media(max-width: 1000px){
+    #se_Connecter{
+      float: right;
+      margin-right: 25px;
+    }
+    .block_nom_boutique{
+      /*margin-top: 0 !important;*/
+    }
+    #profil_index{
+    width: 130px;
+    z-index: 1;
+    }
+    #panier_7{
+      display: none;
+    }
+    .header_achat{
+   /*  padding-bottom: 0px;*/
+    }
+  
+  }
+  .p{  
+  
+    display: inline-block;
+  
+    width: 30px;
+  
+  }
+  .munu_vertic{
+    font-size: 12px;
+   /*margin-top: -5px;*/
+   /*margin-left: -20px;*/
+   transition: 500ms;
+  }
+  
+  .munu_vertic_ar{
+  font-size: 12px;
+  margin-top: -6px;
+  margin-left: 13px;
+  }
+  .h4_menu_vertic{
+  font-size: 14px;
+  width: 94px;
+  background: #375D81;
+  /*margin-left: -15px;*/
+  margin-top: 0;
+  color: white;
+  text-align: center;
+  }
+  .munu_vertic_b{
+    font-size: 12px;
+  
+  }
+  .h4_menu_vertic_b{
+    font-size: 14px;
+  
+  background-color: #375D81;
+  
+  color: white;
+  
+  width: 93px;
+  
+  margin-left: -15px;
+  
+  margin-top: -7px;
+  
+  height: 22px;
+  
+  text-align: center;
+  
+  padding-top: 2px;
+  
+  }
+  .h4_menu_vertic_a{
+    font-size: 14px;
+  background-color: #375D81;
+  color: white;
+  width: 93px;
+  margin-left: -15px;
+  margin-top: -7px;
+  height: auto;
+  text-align: center;
+  padding-top: 2px;
+  }
+  .h4_menu_vertic_ar{
+    font-size: 13px;
+    background-color: #375D81;
+    color: white;
+    width: 93px;
+    margin-left: 0;
+    margin-top: 0px;
+    margin-bottom: 1px;
+    height: auto;
+    text-align: center;
+    padding-top: 2px;
+  }
+  .flech{
+  
+    width: 0px;
+  
+    height: 0px;
+  
+    border-bottom: 15px solid white;
+  
+    border-top: 0px solid transparent;
+  
+    border-left: 15px solid transparent;
+  
+    border-right: 15px solid transparent;
+  
+    position: absolute;
+  
+    top: -15px;
+  
+    left: 15px;
+  
+  }
+  
+  .menu_sante{
+  
+       position: absolute;
+  
+      background: white;
+  
+      z-index: 1;
+  
+      border: 1px solid rgba(0,0,0,0.4);
+  
+      display: none;
+  
+      width: 200px;
+  
+      padding-left: 10PX;
+  
+      padding-right: 10px;
+  
+      padding-right: 10px;
+  
+      margin-left: 212px;
+      margin-top: -19px;
+  
+  }
+  
+  .sous_sous_menu h4{
+  
+    margin-left: 16px;
+  
+  }
+  
+  .header{
+  
+    height: 113px
+  
+  }
+  
+  .menu_col_m{
+  
+     margin: 0px !important;
+  
+     padding: 0px !important;
+  
+  }
+  
+  #resultat_click_vetement{
+  
+  overflow-x: scroll;
+  
+  white-space: nowrap;
+  
+  display: none;
+  
+  }
+  
+  .font_size_p{
+  
+    font-size: 12px;
+    margin-left: 10px
+  
+  }
+  
+  .listeMode{
+  
+    border: 1px solid rgba(0,0,0,0.3);
+  
+  }
+  .souligne_1{
+  font-size: 15px;
+  font-weight: bold;
+  padding-bottom: 2px !important;
+  margin-top: 0;
+  margin-bottom: 8px;
+  margin-left: -7px
+  
+  }
+  .souligne_2{
+  font-size: 15px;
+  font-weight: bold;
+  padding-bottom: 2px !important;
+  margin-top: 0;
+  margin-bottom: 8px;
+  /*margin-left: -7px*/
+  
+  
+  }
+  .souligne{
+  
+    font-size: 15px;
+  
+    font-weight: bold;
+    margin-top: 0;
+    padding-bottom: 2px!important;
+  
+  }
+  
+  .h4_menu{
+  
+    font-size: 12px;
+  
+    font-weight: bold;
+  
+  }
+  
+  .liste_categorie_vetement{
+  
+    border: 1px solid rgba(0,0,0,0.3);
+  
+    margin-right: 7px;
+  
+    cursor: pointer;
+  
+  }
+  
+  .fets:hover{
+  
+    cursor : pointer;
+  
+    color:red;
+  
+  }
+  
+  .fets:focus{
+  
+    color:red;
+  
+  }
+  
+  .name{
+  
+    position: absolute;
+  
+    bottom: 0px;
+  
+    text-shadow: 0px 0px 5px black;
+  
+    color: white;
+  
+    font-size: 17px;
+  
+    left: 12px;
+  
+    text-align: center;
+  
+  }
+  
+  .liste_image{
+  
+    position : relative;
+  
+  }
+  
+  .send_ajax img{
+  
+    height: 58px;
+  
+  }
+  
+  .acheter{
+  
+    display: none;
+  
+    position : absolute;
+  
+    bottom: 0px;
+  
+    background: rgba(0,0,0,0.5);
+  
+    width: 100%;
+  
+    padding: 9px;
+  
+  }
+  
+  .ajax_load_vetement{ 
+  
+    display: none;
+  
+    height: 37px;
+  
+    position: absolute;
+  
+    z-index: 1;
+  
+    top: 64px;
+  
+    left: 72px;
+  
+  }
+  
+  .image_set_image{
+  
+    padding-right: 2px;
+  
+  }
+  
+  .nom_boutique_vetement{
+  
+   display: inline-block;
+  
+   margin: 0px;
+  
+   width: 100%;
+  
+   text-align: center;
+  
+   padding-top: 5px;
+  
+   padding-bottom: 5px;
+  
+   box-shadow: 0PX 3px 5px rgba(0,0,0,0.8);
+  
+   margin-bottom: 8px;
+  
+  }
+  
+  .container_boutique{
+  
+    display: inline-block;
+  
+    margin-left: 3px;
+  
+    margin-right: 3px;
+  
+    border: 1px solid black;
+  
+    /*width: 263px;*/
+  
+  }
+  
+  .image_vetement_boutique{
+      max-width: 100%;
+      transition: 500ms;
+      cursor: pointer;
+      height: 250PX;
+      display: inline-block;
+  
+  }
+  .containt_image_vote {
+      width: 100%;
+      height: 260PX;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+  }
+  .image_min_recup_while{
+      max-width: 100%;
+      transition: 500ms;
+      cursor: pointer;
+      height: 136px !important;
+      display: inline-block;
+  }
+  
+  .image_min_recup_while:hover{
+    transform: scale(1.1);
+  }
+  
+  .boutique{
+      height: 320px;
+      overflow-y: scroll;
+      overflow-x: hidden;
+      width: 100%;
+      white-space: initial;
+      text-align: center;
+  
+  }
+  
+  .nbr_comment{
+  
+  
+  
+      width: 20px;
+  
+      padding: 0px;
+  
+      height: 30px;
+  
+      margin: 0px;
+  
+      background: white;
+  
+      border: none;
+  
+  }
+  
+  .send_ajax{
+  
+    font-size: 48px;
+  
+    color: #808080;
+  
+    display: none;
+  
+  }
+  
+  .image_comment_video{
+  
+     height:  85%;
+  
+     width:12%;
+  
+     border-radius: 100%;
+  
+  }
+  
+  .commentaire_video_pub_input{
+  
+    border-radius: 10px 0px 0px 10px;
+  
+    border: none;
+  
+    height: 30px;
+  
+    padding-left: 5px;
+  
+    margin-right: -1px;
+  
+    width: 70%;;
+  
+  }
+  
+  .commentaire_pub_video{
+  
+    background: #ccc;
+  
+    height: 44px;
+  
+    padding-left: 5px;
+  
+    padding-top: 6px;
+  
+  }
+  
+  .button_commentaire_video_pub_input{
+  
+    width: 12%;
+  
+    padding: 0px;
+  
+    height: 30px;
+  
+    margin-left: -3px;
+  
+    background: white;
+  
+    border: none;
+  
+    border-radius: 0 10px 10px 0;
+  
+  }
+  
+  
+  
+  .num{
+  
+    text-align: center;
+  
+  }
+  
+  #bup_image{
+  
+     background: rgba(0,0,0,0.02);
+     display: none;
+  }
+  
+  .pub_image{
+  
+     width:100%;
+  
+     height:100px;
+  
+  
+  }
+  
+  .apropos_commentaire{
+  
+    font-size: 31px;
+  
+    font-weight: bold;
+  
+    font-family: "Brush Script MT", "Brush Script Std", "cursive";
+  
+    margin-top: 2px;
+  
+    margin-left: 5px;
+  
+    /*color: whitesmoke;*/
+  
+  }
+  
+  .back_ground_forme_containt{
+  
+    background: rgba(0,0,0,0.2);
+  
+  }
+  
+  .voir_boutique{
+  
+    position : absolute;
+  
+    top: 5px;
+  
+    right : 5px;
+  
+  }
+  
+  .connection{
+  
+    width: 300px;
+  
+    background: rgba(255,255,255,0.8);
+  
+  }
+  
+  @media(max-width: 700px){
+    .connection{
+  
+    width: auto;
+  
+    background: rgba(255,255,255,0.8);
+  
+  }
+  }
+  
+  .bouster{
+  
+    display: inline-block;
+  
+    margin-left: 10px;
+  
+    margin-right: 5px;
+  
+    border: none;
+  
+    background: none;
+  
+    color: black;
+  
+  }
+  
+  .image-content{
+  
+    max-width: 100%;
+  
+    max-height: /*auto;*/100%; /*451px;*/
+  
+    cursor: pointer;
+  
+  }
+  
+  
+  
+  .image{
+  
+      /* display: inline-block; */
+      display: contents;
+  
+      position:relative;
+  
+      padding:0px;
+  
+      width: 70%;
+  
+  
+  
+      /*height: 240px;*/
+  
+      margin: 0px;
+  
+      padding: 0px;
+  
+      margin-left: 10px;
+  
+      margin-right: 10px;
+  
+      /*background: rgba(0,0,0,0.2)*/
+  
+    }
+  
+  .image:hover{
+  
+    box-shadow: 5px 10px 10px rgba(0,0,0,0.5);
+  
+  }
+  
+  .texte{
+  
+  
+  
+  }
+  
+  .titre_image{
+  
+  padding: 2px;  
+  
+  width: 42px;
+  
+  height: 42px;
+  
+  }
+  
+  .icon_comment{
+  
+    background: none;
+  
+    border: none;
+  
+    width: 25px;
+  
+  }
+  
+  #count_comment{
+  
+    display: inline-block;
+  
+  }
+  
+  .background_title_comment{
+  
+     background: rgba(0,0,0,0.04);
+  
+  }
+  
+  .commentaire{
+  
+    border-radius: 10px 0px 0px 10px;
+  
+    width: 90%;
+  
+    border: none;
+  
+    padding-left: 6px;
+  
+    height: 30px;
+  
+  }
+  
+  #content{
+  
+    width:80%;
+  
+    border: 1px solid black;
+  
+    overflow-y: hidden;
+  
+    overflow-x: hidden;
+  
+    
+  
+  }
+  
+  
+  
+  
+  
+  #p_video{
+  
+    font-size: 31px;
+  
+    font-weight: bold;
+  
+    font-family: "Brush Script MT", "Brush Script Std", "cursive";
+  
+    margin-top: -7px;
+  
+    margin-left: 1px;
+  
+  }
+  
+    .buttons_select{
+  
+     width: 4%;
+  
+     height: 20px
+  
+  
+  
+    }
+  
+  
+  
+  #btn-video-comment{
+  
+    margin-left: -7px;
+  
+    background: white;
+  
+    border: none;
+  
+    height: 29px;
+  
+    border-radius: 0px 10px 10px 0PX;
+  
+  }
+  
+  .navbar-default .navbar-nav > li > a {
+  
+      color: white;
+  
+  }
+  
+    .commentaire_video{
+  
+       background: rgba(0,0,0,0.1);
+  
+       padding: 8px;
+  
+    }
+  
+    #video-comment{
+  
+     width: 11%;
+  
+     border-radius: 100%;
+  
+     height: 26px;
+  
+     display: inline-block;
+  
+     margin-right: 5px;
+  
+    }
+  
+  #ajout_video_commentaire input{
+  
+    border: none;
+  
+   border-radius: 10px 0 0 10PX;
+  
+   height: 29px;
+  
+   margin: 0px;
+  
+   width: 80%;
+  
+  padding-left: 14px;
+  
+  }
+  
+  #ajout_video_commentaire{
+  
+   width: 86%;
+  
+  float: right;
+  
+  }
+  
+    .hd{
+  
+      border:none;
+  
+      background: none;
+  
+      margin-top: 10px;
+  
+      padding: 0px;
+  
+    }
+  
+    .containt{
+  
+      width: 100%;
+  
+      overflow-y: hidden;
+  
+      overflow-x: scroll;
+  
+      margin-left: auto;
+  
+      margin-right: auto;
+  
+      padding: 0px !important;
+  
+      padding-bottom: 6px !important;
+  
+      white-space: nowrap;
+  
+      border-radius: 3px;
+  
+      height: auto; /*557px;*/
+  
+    
+  
+    }
+  
+    .div_apropos_commentaire{
+  
+        border-right: 1px solid #e3d9d94d;
+  
+       border-left:1px solid #e3d9d94d;
+  
+       border-bottom: 1px solid #e3d9d94d;
+  
+       margin: 0px;
+  
+    }
+  
+  .left{
+  
+      padding-right: 2px;
+  
+    }
+  
+  .right{
+  
+    padding-left: 0px;
+  
+  }
+  
+  .image-comment{
+    height: 40px;
+    width: 40px;
+    border-radius: 20px;
+  }
+   .logo_profil{
+    height: 40px;
+    width: 40px;
+    border-radius: 20px;
+   }
+  
+  .btns{
+  
+    
+  
+    display: inline-block;
+  
+    
+  
+  }
+  
+  #pup_video_play{
+  
+  width:100% ;
+  
+  height:333px;
+  
+  }
+  
+  .button_comment_submit{
+  
+    background: white;
+  
+    border: none;
+  
+    height:30px;
+  
+    border-radius: 0px 10px 10px 0px;
+  
+    margin-left: -4px;
+  
+  }
+  
+  .back_ground_forme_containt{
+   /* display: inline; */
+   display: contents;
+   width: auto;
+  
+  }
+  
+  .button_comment_submit:hover{
+  
+    background: white;
+  
+    border: none;
+  
+    border-radius: 0px 10px 10px 0px;
+  
+    margin-left: -4px;
+  
+  }
+  
+  #g_comment{
+  
+    display: inline-block;
+  
+  }
+  
+  .l_comment{
+  
+    display: inline-block;
+  
+    width: 51%;
+  
+    margin-top:4px;
+  
+    margin-right:4px;
+  
+  }
+  
+  .overflow_commentaire_p{
+  
+    max-height: 257px;
+  
+    overflow: auto;
+  
+  }
+  
+  .nom{
+  
+    font-weight: bold;
+  
+  }
+  
+  .personne_ecrire{
+  
+    font-size: 8px;
+  
+    font-weight: bold;
+  
+    font-style: italic;
+  
+  }
+  
+  .personne_ecrire img{
+  
+    height: 15px;
+  
+  }
+  
+  .form-control[disabled]{
+  
+     cursor: default;
+  
+  }
+  
+  .btn[disabled]{
+  
+     cursor: default;
+  
+  }
+  
+  /******************css pub_video*********************/
+  
+  .table_video{
+  
+    margin-top: 5px;
+  
+    height: 250px;
+  
+    border-top: 1px solid rgba(0,0,0,0.1);
+  
+    border-bottom: 1px solid rgba(0,0,0,0.1);
+  
+    float: left;
+  
+  } 
+  
+  
+  
+  .list_video{
+  
+    width: 95%; 
+  
+    height: 200px;
+  
+  }
+  
+  .containt_video{
+  
+    overflow-y: scroll;
+  
+    margin-top: 0px;
+  
+    padding: 0px;
+  
+    height: 250px !important;
+  
+    border-top: 2px solid red;
+  
+  }
+  .block_achat{
+    background-color: gray;
+    color: white;
+  }
+  
+  .col-md-4{
+  
+    margin: 0px;
+  
+  }
+  
+  #petit{
+  
+    display: none;
+  
+  }
+  
+  
+  #panier{
+  
+  font-size: 15px;
+  
+  /*position: absolute;*/
+  
+  right: 20px;
+  
+  top: 157px;
+  
+  z-index: 1;
+  
+  }
+  .toggle_achat_mobil{
+    display: none;
+  }
+  @media(max-width: 1000px){
+    .toggle_achat_mobil{
+      display: block;
+    }
+    .menu_mobile_2,.toggle_achat_mobil{
+      display: inline-block;
+    }
+    .modal-dialog{
+      width: 95%;
+    }
+  
+  }
+  .liste_btn_achat{
+    display: inline-block;
+    float: right;
+    margin-top: 7px;
+    margin-right: 9px;
+  }
+  .row_detail_achat{
+    background-color:#008080;
+    color:white;
+    width: 100%;
+    margin-left: 0;
+    height: 38px;
+    padding-top: 7px;
+    font-size: 16px;
+    font-weight: bold;
+    margin-top: 5px;
+  }
+  
+  .row_detail_achat_boutique{
+    background-color:#008080;
+    color:white;
+    width: 100%;
+    margin-left: 0;
+    height: 38px;
+    padding-top: 7px;
+    font-size: 16px;
+    font-weight: bold;
+    margin-top: 5px;
+  }
+  .menu_deroulant_mobile_achat{
+    position: absolute;
+    margin-left: 90px;
+    display:none;
+    z-index: 1;
+    background-color: black;
+  }
+  #mobile_menu_achat{
+    background-color:
+  gray;
+  padding-left: 14px;
+  margin-left: 45px;
+  padding-right: 11px;
+  }
+  .dropdown-item{
+    list-style-type: none;
+    border: 2px solid #80C1C1;
+    text-align: center;
+  }
+  #panier_2{
+    color: white;
+  }
+  .btn_achat_mobil{
+    list-style-type: none;
+  }
+  .galerie_marchande_mobile{
+      display:none;
+    }
+  
+  .menu_mobile_2{
+      display:none;
+    }
+  
+  .panier_mobile{
+      display:none;
+    }
+  /**********controle video et css mobile************/
+  
+  @media (max-width: 768px ){
+  
+    /* #liste_commentaire, #p4, #p5,#p3, #p8, #grand{
+  
+       display:none;
+  
+     }*/
+  .containt_image_vote {
+      height: 180PX;
+  }
+  .send_ajax {
+      font-size: 17px;
+  }
+  .send_ajax img {
+      height: 33px;
+  }
+  #grand, #grant{
+     display:none;
+  }
+    .l_comment {
+      width: 100%;
+  
+  }
+   .commentaire, .button_comment_submit,.btns{
+    display:block }
+     #petit{;
+  
+  
+      display: block;
+      box-shadow: 0 0 5px;
+  padding: 5px
+  
+     }
+     .liste_categorie_selection{
+       height: 37px;
+     }
+     .header {
+  
+      height: 37px;
+  
+      }
+      .listeMode, .liste_high_teck {
+          width: 90% !important;
+  
+      }
+  
+       #panier {
+  
+      font-size: 7px;
+  
+      position: absolute;
+  
+      right: 10px;
+  
+      top: 41px;
+  
+      opacity : 0.8;
+  
+       }
+  
+      .image-content{
+  
+       width: 100%;
+  
+       height:181px;/*340px; /*451px;*/
+  
+        cursor: pointer;
+  
+      }
+       
+      .chargin_text{
+          display:none;
+      }
+      .send_ajax {
+  
+      font-size: 25px;
+  
+      color: #808080;
+  
+      display: none;
+  
+     }
+  
+     .voir_boutique {
+  
+        font-size: 11px;
+  
+       height: 25px;
+  
+       padding: 4px;
+  
+      position: absolute;
+  
+      top: 0px;
+  
+      right: 5px;
+  
+  
+  
+    }
+  
+    .apropos_commentaire {
+  
+  
+  
+      font-size: 21px;
+  
+      font-weight: bold;
+  
+      font-family: "Brush Script MT", "Brush Script Std", "cursive";
+  
+      margin-top: 2px;
+  
+      margin-left: 5px;
+  
+    }
+  
+  
+  
+     .pub-video {
+  
+        padding-left: 53px;
+  
+        padding-right: 57px;
+  
+      }
+  
+    .table_video {
+  
+        float: none;
+  
+        margin-left: 10px;
+  
+        margin-right: 10px;
+  
+      }
+  
+    .containt_video {
+  
+  
+  
+      padding: 6px;
+  
+      height: 250px !important;
+  
+      margin-bottom: 15px;
+  
+      border: 1px solid rgba(0,0,0,0.5);
+  
+  
+  
+    }
+  
+    #deux{
+  
+    font-size:10px;
+    display: none;
+  
+    }
+  
+    #se_connecter button,#se_connecter a {
+  
+    font-size : 9px;
+  
+    }
+  
+    #pup_video_play{
+  
+    width:100% ;
+  
+    height:auto;
+  
+    }
+  
+    .list_video {
+  
+      width: 100%;
+  
+      height: auto;
+  
+    }
+  
+  
+  
+    .containt {
+  
+      padding-bottom: 21px !important;
+  
+      border-bottom: 1px solid rgba(0,0,0,0.4);
+  
+      margin-bottom: 8px;
+  
+    }
+  
+    #panier{
+      display: none;
+    }
+    .menu_2{
+      display: none;
+    }
+    .menu_mobile_2{
+      display: inline;
+    }
+    .panier_mobile{
+      display: inline;
+    }
+  
+    #p1{
+      display: none;
+    }
+    .taille_text{
+      display: block;
+    }
+    .galerie_marchande_mobile{
+      display:inline;
+    }
+  
+    .menu_sante{
+      margin-left: 52px;
+      margin-top: 0px;
+    }
+  
+    .ajax_echantillon {
+      position: relative;
+      margin-top: -92px;;
+      z-index: 1;
+      width: 550px;
+      margin-left: -15px;
+    }
+  
+    .listeMode{
+    display: none;
+    }
+  
+  
+  }
+  
+  /*fin*/
+  
+    
+  .imagesUsersMember {
+      width: 30px;
+      height: 30px;
+      border-radius: 100%;
+      border: 1px solid black;
+  }
+  
+  .taille_texte{
+  
+    font-size:10px;
+  }
+  
+  .menu_deroulant_mobile{
+    position: absolute;
+    z-index: 1;
+    border: solid 1px #afafaf;
+    margin-left: 37px;
+    background-color: #c3c3c3;
+    cursor: pointer;
+    height: 0px;
+  }
+  
+  .menu_deroulant_mobile ul {
+    padding-left: 0px;
+  }
+  
+  .icone_habillement{
+    position:absolute;
+    display:block;
+    z-index:101;
+    margin-top: -2px;
+  }
+  .icone_habillement:hover{
+    cursor: pointer;
+  }
+  .icone_BB{
+    width: 25px;
+    position:absolute;
+    display:block;
+    z-index:101;
+    margin-top: 28px;
+  }
+  .icone_BB:hover{
+    cursor: pointer;
+  }
+  .icone_accessoires{
+    width:22px;
+    position:absolute;
+    display:block;
+    z-index:101;
+    margin-top: 58px;
+  }
+  
+  .icone_accessoires:hover{
+    cursor: pointer;
+  }
+  
+  .icone_art{
+    width: 25px;
+    position:absolute;
+    display:block;
+    z-index:101;
+    margin-top: 88px;
+  }
+  
+  
+  .sortie_icone{
+    position: absolute;
+    margin-top: 75px;
+    z-index: 101;
+    color: red;
+    border: 1px solid red;
+    background-color: red;
+    color: white;
+    width: 33px;
+    height: 29px;
+  
+  }
+  .sortie_icone:hover{
+    cursor: pointer;  
+  }
+  
+  .listeMode_mobile, .high-tech-mobil{
+    position:absolute;
+    margin-top: 0px;
+    margin-left: 33px;
+    width: 95px;
+    z-index: 3;
+    background-color: white;
+    }
+  .fe{
+    display:none;
+    border: 1px solid;
+  }
+    .ajax_echantillon{
+      margin-left: -16px;
+    }
+    .icone_mobile{
+      border-radius: 50%;
+      border: 2px solid white;
+      margin-left: -6px;
+  
+  background-color: white;
+    }
+    #liste_icone, .liste_icone_hight-tech{
+      width: 34px;
+      height: 175px;
+      z-index: 2;
+      position: absolute;
+      display: none;
+      border:1px solid black;
+      background-color:#375D81;
+      padding-top: 0px;
+      padding-left: 5px;
+      padding-right: 5px;
+    }
+    .icone_mobile:hover{
+      border-radius: 50%;
+      border: 2px solid red;
+      background-color: white;
+      width: 34px;
+      height: 30px;
+    }
+    .icone_habillement{
+      margin-top: 2px;
+    }
+    .icone_BB{
+      margin-top: 40px;
+    }
+    .icone_accessoires{
+      margin-top: 75px;
+      height: 33px;
+    }
+    .icone_art{
+      margin-top: 115px;
+    }
+    .sortie_icone{
+      margin-top: 155px;
+      height: 25px;
+      width: 32px;
+      background-color: red;
+    }

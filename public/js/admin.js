@@ -8,6 +8,12 @@ $('.add_reference').on('click',function(e){
     e.preventDefault(e);
     $("#add_reference").modal('show');
 });
+// add vote 
+ 
+$('.add_vote').on('click',function(e){
+  e.preventDefault(e); 
+  $('#add_vote').modal('show');
+});
 //delate header
 
 $('.delete_header').on('click',function(e){

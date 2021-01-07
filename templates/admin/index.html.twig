@@ -76,6 +76,9 @@
             {% include 'admin/dependencies/reseau.html.twig' %}
         {% elseif pages == 'condition' %}
             {% include 'admin/dependencies/condition.html.twig' %}
+         {% elseif pages == 'vote' %}
+            {% include 'admin/dependencies/vote.html.twig' %}
+            {% include 'admin/dependencies/add_vote_modal.html.twig' %}
         {% else %}
              {% include ("admin/dependencies/home.html.twig") %}
              {% include "admin/dependencies/add_header_modal.html.twig" %}
