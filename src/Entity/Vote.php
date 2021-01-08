@@ -71,6 +71,7 @@ class Vote
         $this->setNbrVote(0);
         $this->setCreateAt(new \DateTime());
         $this->header_vote = new ArrayCollection();
+        $this->placement = 0;
     }
 
     public function getId(): ?int

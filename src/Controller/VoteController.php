@@ -5,6 +5,8 @@ namespace App\Controller;
 use App\Entity\Vote;
 use App\Form\VoteType;
 use App\Repository\BoutiqueRepository;
+use App\Repository\HeaderRepository;
+use App\Repository\HeaderVoteRepository;
 use App\Repository\VoteRepository;
 use App\Service\InsertFileServices;
 use DateTime;
@@ -20,7 +22,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class VoteController extends AbstractController
 {
     /**
-     * @Route("/list", name="vote_list", methods={"GET"})
+     * @Route("/list", name="vote_list", methods={"GET","POST"})
      */
     public function index(VoteRepository $voteRepository, BoutiqueRepository $boutiqueRepository, Request $request, InsertFileServices $insertFileServices): Response
     {   
@@ -39,7 +41,9 @@ class VoteController extends AbstractController
             $entityManager->flush();
             $array = [
                 'status'=>'success',
-                'images'=>$file
+                'images'=>$file,
+                'id'=>$vote->getId(),
+                'apropos'=>$vote->getDescription()
             ];
             return new JsonResponse($array,Response::HTTP_OK);
         }
@@ -109,16 +113,26 @@ class VoteController extends AbstractController
     }
 
     /**
-     * @Route("/{id}", name="vote_delete", methods={"DELETE"})
+     * @Route("/delete/{id}", name="vote_delete", methods={"DELETE"})
      */
-    public function delete(Request $request, Vote $vote): Response
-    {
-        if ($this->isCsrfTokenValid('delete'.$vote->getId(), $request->request->get('_token'))) {
+    public function delete(Request $request, Vote $vote, HeaderVoteRepository $headerVoteRepository): Response
+    {    
+        
+        if ($this->getUser()!=null) {
             $entityManager = $this->getDoctrine()->getManager();
+            $header=$headerVoteRepository->findOneBy(['vote_header'=>$vote]);
+                if($header!=null){
+                    unlink('images/'.$header->getImages());
+                    $entityManager->remove($vote);
+                }
+               
+            unlink('images/'.$vote->getImages());
             $entityManager->remove($vote);
             $entityManager->flush();
+            return new JsonResponse(['status'=>'success'], Response::HTTP_OK);
         }
-
-        return $this->redirectToRoute('vote_index');
+       
+            return new JsonResponse(['status'=>'error'], Response::HTTP_UNAUTHORIZED);
+    
     }
 }

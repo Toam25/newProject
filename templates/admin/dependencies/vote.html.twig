@@ -3,7 +3,7 @@
 </div>
 <div class="row container_all_image_vote">
     {% for vote in votes %}
-        <div  class="margin-top-5 col-xs-6 col-sm-3 col-md-2 col-lg-2">
+        <div  class="image_vote margin-top-5 col-xs-6 col-sm-3 col-md-2 col-lg-2">
                 <div class="container_image_for_header" style="background-color: #4d72de">
                     {% if vote.headervote.images is defined  %}
                              <img name="{{ vote.id }}" alt="images" class="image_for_header" src="{{ asset('images/'~vote.headervote.images )}}">

@@ -320,6 +320,7 @@ background: #e4087e;
 .container_image_for_body {
     position: relative;
     height: 200px;
+    cursor:pointer;
 }
 .image_for_header {
     clip: rect(0px auto auto 0px);
@@ -336,4 +337,10 @@ background: #e4087e;
     padding: 2px;
     border-radius: 50px;
     cursor: pointer;
+}
+.margin-top-5{
+    margin-top: 5px !important;
+}
+.image_vote{
+    transition : all 500ms ease-out;
 }

@@ -7,7 +7,7 @@
 					<span aria-hidden="true">&times;</span>
 				</button>
 			</div>
-			{{ form_start(form, {'attr': {'class' : 'form_article add_reference','action': path('vote_list') }}) }}
+			{{ form_start(form, {'attr': {'class' : '_add_vote','action': path('vote_list') }}) }}
 			<div id="div_ajout_article" class="modal-body row" style="font-weight:none;">
                 <div class="col-md-4">
 					<div class="preview_image">
@@ -15,14 +15,15 @@
 					</div>
 				</div>
 				<div class="col-md-8">
-						{{ form_row(form.photos, {'attr': {'id' :'file_in', 'class':'file form-control'}}) }}
-						{{ form_row(form.description, {'attr': {'class':''}}) }}
+						{{ form_widget(form.photos, {'attr': {'id' :'file_in', 'class':'file form-control'}}) }}
+						<p></p>
+						{{ form_widget(form.description, {'attr': {'class':'form-control'}}) }}
 						
 				</div>
 
 			</div>
 			<div class="modal-footer">
-				<button type="submit" class="btn btn-success">
+				<button type="submit" class="btn btn-success btn-submit">
 							Enregisrer
 				</button>
 			</div>

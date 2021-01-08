@@ -9,10 +9,77 @@ $('.add_reference').on('click',function(e){
     $("#add_reference").modal('show');
 });
 // add vote 
- 
 $('.add_vote').on('click',function(e){
   e.preventDefault(e); 
   $('#add_vote').modal('show');
+});
+
+$('._add_vote').on('submit',function(e){
+    e.preventDefault();
+     $.ajax({
+       url : '/admin/vote/list',
+       type: 'POST',
+       data : new FormData(this),
+       contentType: false,
+       processData : false,
+       cache : false,
+       dataType : 'json',
+       beforeSend : function(){
+          $('.btn-submit').append('<span class="loader_ajax" style="height: 20px;width: 20px;display: inline-block;"><img src="/images/images_default/ajax-loader.gif" style="height: 100%;width: 100%;"></span>')
+          $('.btn-submit').prop('disabled',true);
+        },
+       success : (data)=>{
+          toastr.success('Enregistrer avec success');
+          $('.container_all_image_vote').prepend('<div  class="margin-top-5 image_vote col-xs-6 col-sm-4 col-md-2 col-lg-2"> <div class="container_image_for_header" style="background-color: '+data.color+'"> <img name="'+data.id+'" alt="'+data.apropos+'" class="image_for_header" src="/images/images_default/default_image.jpg"> </div> <div class="container_image_for_body"><img name="'+data.id+'" alt="'+data.apropos+'" class="image_for_body" src="/images/'+data.images+'"></div><button class="remove_vote btn btn-danger" data-idartcle="'+data.id+'" style="width: 100%;border: 0;border-radius: 0px !important;">Supprimer</button></div>');
+          $('#add_vote').modal('hide');
+
+          setTimeout(()=>{
+            $('.btn-submit').children('.loader_ajax').remove();
+            $('.btn-submit').prop('disabled',false);
+            $('#preview_image').prop('src','');
+            $(this)[0].reset();
+          },300);
+         
+          
+       },
+       error: function(){
+        toastr.error('Une error à été survenue'); 
+       },
+       complete : function(){
+         
+       }
+  });
+
+});
+//delete vote 
+$('body').on('click','.remove_vote ',function(e){
+    e.preventDefault();
+    var id=parseInt($(this).attr('data-idartcle'));
+    $.ajax({
+      url : '/admin/vote/delete/'+id,
+      type: 'DELETE',
+      data : {},
+      dataType : 'json',
+      beforeSend : ()=>{
+        $(this).prop('disabled',true)
+       },
+      success : (data)=>{
+         toastr.success('Supprimer avec avec success');
+        ; 
+         $(this).parents('.image_vote ').css('transform','scale(0)');
+         setTimeout(()=>{
+            $(this).parents('.image_vote ').remove();
+         },500);
+      },
+      error:()=>{
+        toastr.error('Une error à été survenue'); 
+        $(this).prop('disabled',true)
+      },
+      complete : function(){
+        
+      }
+ });
+
 });
 //delate header
 
