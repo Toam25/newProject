@@ -39,17 +39,18 @@ class ArticleController extends AbstractController
         $form = $this->createForm(ArticleType::class, $article);
         $form->handleRequest($request);
         $images= $form->get('images')->getData();
-        
+        $boutique = $boutiqueRepository->findOneBy(['user'=>$this->getUser()]);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager = $this->getDoctrine()->getManager();
-            $boutique = $boutiqueRepository->findOneBy(['user'=>$this->getUser()]);
+            
             
             foreach( $images as $image){
                 $fichier = $insertFileServices->insertFile($image);
                 $img= new Images();
                 $img->setName($fichier);
                 $article->addImage($img);
+
             }
 
            
@@ -63,6 +64,7 @@ class ArticleController extends AbstractController
 
         return $this->render('admin/index.html.twig', [
             'article' => $article,
+            'boutique'=>$boutique,
             'form' => $form->createView(),
             'pages'=> 'new'
         ]);

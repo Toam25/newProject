@@ -1,0 +1,26 @@
+<div class= "row">
+    <div class="col-md-5">
+        <h4>Ajout</h4>
+        {{ form_start(form,{'attr':{'class':'social_network'}})}}
+            {{ form_widget(form) }}
+            <p></p>
+            <button  class="btn btn-success btn-submit" type="submit">Enregistrer</button>
+        {{ form_end(form)}}
+    </div>
+    <div class="col-md-5">
+        <h4>Modele</h4>
+        <div class="container_model">
+            <div class="container_model_image" >
+                <label>Images :</label>
+                <div class="preview_image">
+                            <img id="preview_image" src="">
+                </div>
+            </div>
+            {#<div class="container_model_descrption">
+                    <label>Description :</label>
+                    <p class="p_social_description"></p>
+            </div>
+            #}
+        </div>
+    </div>
+</div>

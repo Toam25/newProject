@@ -1,0 +1,32 @@
+<div class="modal fade" id="edit_vote" tabindex="-1" role="dialog" aria-labelledby="ajout_modal" aria-hidden="true">
+	<div class="modal-dialog modal-lg" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="label">Article</h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<form class="_edit_vote" >
+                <div id="div_ajout_article" class="modal-body row" style="font-weight:none;">
+                    <div class="col-md-7">
+                        <div class="preview_image_cont">
+                            <img class="_preview_image" src="">
+                        </div>
+                        {#<input type="file" id="file_in" class= "file form-control">#}
+                    </div>
+                    <div class="col-md-5">
+                            <textarea class="form-control text_area_edit" style="height: 100%; !important" desabled></textarea>
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                   {# <button type="submit" class="btn btn-success btn-submit">
+                                Enregisrer
+                    </button>
+                  #}
+                </div>
+			</form>
+		</div>
+	</div>
+</div>

@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New HeaderVote{% endblock %}
+
+{% block body %}
+    <h1>Create new HeaderVote</h1>
+
+    {{ include('header_vote/_form.html.twig') }}
+
+    <a href="{{ path('header_vote_index') }}">back to list</a>
+{% endblock %}

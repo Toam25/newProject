@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit HeaderVote{% endblock %}
+
+{% block body %}
+    <h1>Edit HeaderVote</h1>
+
+    {{ include('header_vote/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <a href="{{ path('header_vote_index') }}">back to list</a>
+
+    {{ include('header_vote/_delete_form.html.twig') }}
+{% endblock %}

@@ -43,7 +43,7 @@ class VoteController extends AbstractController
                 'status'=>'success',
                 'images'=>$file,
                 'id'=>$vote->getId(),
-                'apropos'=>$vote->getDescription()
+                'description'=>$vote->getDescription()
             ];
             return new JsonResponse($array,Response::HTTP_OK);
         }
@@ -93,7 +93,7 @@ class VoteController extends AbstractController
     }
 
     /**
-     * @Route("/{id}/edit", name="vote_edit", methods={"GET","POST"})
+     * @Route("/edit/{id}", name="vote_edit", methods={"GET","POST"})
      */
     public function edit(Request $request, Vote $vote): Response
     {

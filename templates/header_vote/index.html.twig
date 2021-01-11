@@ -1,0 +1,35 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}HeaderVote index{% endblock %}
+
+{% block body %}
+    <h1>HeaderVote index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Images</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for header_vote in header_votes %}
+            <tr>
+                <td>{{ header_vote.id }}</td>
+                <td>{{ header_vote.images }}</td>
+                <td>
+                    <a href="{{ path('header_vote_show', {'id': header_vote.id}) }}">show</a>
+                    <a href="{{ path('header_vote_edit', {'id': header_vote.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="3">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('header_vote_new') }}">Create new</a>
+{% endblock %}

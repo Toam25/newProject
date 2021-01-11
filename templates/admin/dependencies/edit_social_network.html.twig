@@ -1,0 +1,19 @@
+ <a class="btn btn-primary" href=" {{path('social_network_index')}}">Liste des liens</a>
+<div class="row">
+    <div class="col-md-7 card border-left-success shadow py-2 margin-top-5 " >
+        {{ form_start(form,{'attr':{'class':'edit_form_social_network'}})}}
+             {{ form_row(form.photos)}}
+             {{ form_row(form.nameLink)}}
+             {{ form_row(form.link)}}
+             {{ form_row(form.description)}}
+             <input type="hidden" class="id_social_network" value="{{ socialNetwork.id }}">
+              <a class="margin-top-5 btn btn-danger" href=" {{path('social_network_index')}}">Annuler</a> <button type="submit " class="margin-top-5 btn btn-success btn-submit">Enregistrer</button>
+        {{ form_end(form)}}
+    </div>
+    <div class="col-md-5" >
+            <label>Images :</label>
+                <div class="preview_image">
+                            <img id="preview_image" src="{{ asset('images/'~socialNetwork.images)}}">
+                </div>
+    </div>
+</div>

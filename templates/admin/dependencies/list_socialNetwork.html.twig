@@ -1,0 +1,13 @@
+<div class="scrol_slide_animation">
+      {% for list_socialNetwork in list_socialNetworks %}
+ 	    <div id=""class="slide_animation">
+            <img class="image_slider_to"src="{{ asset('images/'~list_socialNetwork.images )}}">
+            <div>
+            <p class="_description_link">{{ list_socialNetwork.description}}&nbsp
+                    <a href="{{ list_socialNetwork.link}}" about="_blank">{{ list_socialNetwork.nameLink}}</a>
+            <p>
+            </div>
+            <a href="{{path('social_network_edit',{'id':list_socialNetwork.id })}}" class="btn btn-success" style="width: 100%;">Editer</a>
+        </div>
+    {% endfor %}
+</div>

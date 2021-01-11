@@ -76,9 +76,16 @@
             {% include 'admin/dependencies/reseau.html.twig' %}
         {% elseif pages == 'condition' %}
             {% include 'admin/dependencies/condition.html.twig' %}
+        {% elseif pages == "add_socialNetwork"%}
+            {% include 'admin/dependencies/add_social_network.html.twig' with { 'form' : form } only %}
+        {% elseif pages == "edit_socialNetwork"%}
+            {% include 'admin/dependencies/edit_social_network.html.twig' %}
+         {% elseif pages == "list_socialNetwork"%}
+            {% include 'admin/dependencies/list_socialNetwork.html.twig' with { 'list_socialNetworks' : list_socialNetworks } only %}
          {% elseif pages == 'vote' %}
             {% include 'admin/dependencies/vote.html.twig' %}
             {% include 'admin/dependencies/add_vote_modal.html.twig' %}
+            {% include 'admin/dependencies/edit_vote_modal.html.twig' %}
         {% else %}
              {% include ("admin/dependencies/home.html.twig") %}
              {% include "admin/dependencies/add_header_modal.html.twig" %}

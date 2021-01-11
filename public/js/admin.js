@@ -1,7 +1,93 @@
 $(function(){
 
 
+//edit social network
 
+$('.edit_form_social_network').on('submit',function(e){
+    e.preventDefault();
+    var id = $('.id_social_network').val();
+    $.ajax({
+      url : '/admin/social/network/'+id+'/edit',
+      type: 'POST',
+      data : new FormData(this),
+      contentType: false,
+      processData : false,
+      cache : false,
+      dataType : 'json',
+      beforeSend : function(){
+         $('.btn-submit').append('<span class="loader_ajax" style="height: 20px;width: 20px;display: inline-block;"><img src="/images/images_default/ajax-loader.gif" style="height: 100%;width: 100%;"></span>')
+         $('.btn-submit').prop('disabled',true);
+       },
+      success : (data)=>{
+         toastr.success('Enregistrer avec success'); 
+         setTimeout(()=>{
+           $('.btn-submit').children('.loader_ajax').remove();
+           $('.btn-submit').prop('disabled',false);
+         },300);
+        
+         
+      },
+      error: function(jqXHR,exception,error){
+        toastr.error('Une error à été survenue '+error); 
+        $('.btn-submit').children('.loader_ajax').remove();
+        $('.btn-submit').prop('disabled',false);
+      },
+      complete : function(){
+        
+      }
+ });
+
+});
+
+// add social network
+$('.namelink').on('keyup',function(e){
+  let description=$('.description').val();
+  let namelink = $('.namelink').val();
+  $('.p_social_description').html(description+" "+namelink);
+})
+$('.description').on('keyup',function(e){
+  let description=$('.description').val();
+  let namelink = $('.namelink').val();
+  $('.p_social_description').html(description+" "+namelink);
+})
+
+$('.social_network').on('submit',function(e){
+      e.preventDefault(e);
+
+      $.ajax({
+        url : '/admin/social/network/new',
+        type: 'POST',
+        data : new FormData(this),
+        contentType: false,
+        processData : false,
+        cache : false,
+        dataType : 'json',
+        beforeSend : function(){
+           $('.btn-submit').append('<span class="loader_ajax" style="height: 20px;width: 20px;display: inline-block;"><img src="/images/images_default/ajax-loader.gif" style="height: 100%;width: 100%;"></span>')
+           $('.btn-submit').prop('disabled',true);
+         },
+        success : (data)=>{
+           toastr.success('Enregistrer avec success'); 
+           setTimeout(()=>{
+             $('.btn-submit').children('.loader_ajax').remove();
+             $('.btn-submit').prop('disabled',false);
+             $('#preview_image').prop('src','');
+             $(this)[0].reset();
+           },300);
+          
+           
+        },
+        error: function(jqXHR,exception,error){
+         toastr.error('Une error à été survenue '+error); 
+         $('.btn-submit').children('.loader_ajax').remove();
+        $('.btn-submit').prop('disabled',false);
+        },
+        complete : function(){
+          
+        }
+   });
+
+});
 //add reference 
 
 $('.add_reference').on('click',function(e){
@@ -30,7 +116,7 @@ $('._add_vote').on('submit',function(e){
         },
        success : (data)=>{
           toastr.success('Enregistrer avec success');
-          $('.container_all_image_vote').prepend('<div  class="margin-top-5 image_vote col-xs-6 col-sm-4 col-md-2 col-lg-2"> <div class="container_image_for_header" style="background-color: '+data.color+'"> <img name="'+data.id+'" alt="'+data.apropos+'" class="image_for_header" src="/images/images_default/default_image.jpg"> </div> <div class="container_image_for_body"><img name="'+data.id+'" alt="'+data.apropos+'" class="image_for_body" src="/images/'+data.images+'"></div><button class="remove_vote btn btn-danger" data-idartcle="'+data.id+'" style="width: 100%;border: 0;border-radius: 0px !important;">Supprimer</button></div>');
+          $('.container_all_image_vote').prepend('<div  class="margin-top-5 image_vote col-xs-6 col-sm-4 col-md-2 col-lg-2"> <div class="container_image_for_header" style="background-color: '+data.color+'"> <img name="'+data.id+'" alt="'+data.apropos+'" class="image_for_header" src="/images/images_default/default_image.jpg"> </div> <div class="container_image_for_body"><img name="'+data.id+'" alt="'+data.apropos+'" class="image_for_body" src="/images/'+data.images+'"><input type="hidden" value="'+data.description+'"></div><button class="remove_vote btn btn-danger" data-idartcle="'+data.id+'" style="width: 100%;border: 0;border-radius: 0px !important;">Supprimer</button></div>');
           $('#add_vote').modal('hide');
 
           setTimeout(()=>{
@@ -51,6 +137,15 @@ $('._add_vote').on('submit',function(e){
   });
 
 });
+// edit vote 
+ $('body').on('click','.image_for_body',function(e){
+        e.preventDefault();
+        let src = $(this).attr('src');
+        let description=$(this).parent('div').children('input').val();
+        $('.text_area_edit').val(description);
+        $('._preview_image').prop('src',src);
+        $('#edit_vote').modal('show');
+ });
 //delete vote 
 $('body').on('click','.remove_vote ',function(e){
     e.preventDefault();

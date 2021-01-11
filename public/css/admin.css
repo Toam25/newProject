@@ -117,7 +117,7 @@ img.header_boutique {
     color: black;
 }
 .preview_image {
-    height: 148px !important;
+    height: 148px;
 }
 .loader_img_default{
     height: 34px;
@@ -337,6 +337,17 @@ background: #e4087e;
     padding: 2px;
     border-radius: 50px;
     cursor: pointer;
+    display: none;
+}
+._preview_image{
+    max-width: 100%;
+    max-height: 100%;
+}
+.preview_image_cont{
+    height: 247px !important;
+    display: flex;
+    align-items: center;
+    justify-content: center
 }
 .margin-top-5{
     margin-top: 5px !important;

@@ -4,47 +4,66 @@ namespace App\Controller;
 
 use App\Entity\SocialNetwork;
 use App\Form\SocialNetworkType;
+use App\Repository\BoutiqueRepository;
 use App\Repository\SocialNetworkRepository;
+use App\Service\InsertFileServices;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * @Route("/social/network")
+ * @Route("admin/social/network")
  */
 class SocialNetworkController extends AbstractController
 {
     /**
      * @Route("/", name="social_network_index", methods={"GET"})
      */
-    public function index(SocialNetworkRepository $socialNetworkRepository): Response
+    public function index(SocialNetworkRepository $socialNetworkRepository,  BoutiqueRepository $boutiqueRepository): Response
     {
-        return $this->render('social_network/index.html.twig', [
-            'social_networks' => $socialNetworkRepository->findAll(),
+         $boutique=$boutiqueRepository->findOneBy(['user'=>$this->getUser()]);
+        return $this->render('admin/index.html.twig', [
+            'pages'=>'list_socialNetwork',
+            'boutique'=>$boutique,
+            'list_socialNetworks'=>$socialNetworkRepository->findBy(['boutique'=>$boutique])
         ]);
+        
     }
 
     /**
      * @Route("/new", name="social_network_new", methods={"GET","POST"})
      */
-    public function new(Request $request): Response
+    public function new(Request $request, InsertFileServices $insertFileServices, BoutiqueRepository $boutiqueRepository): Response
     {
         $socialNetwork = new SocialNetwork();
         $form = $this->createForm(SocialNetworkType::class, $socialNetwork);
         $form->handleRequest($request);
+        $boutique= $boutiqueRepository->findOneBy(['user'=>$this->getUser()]);
 
-        if ($form->isSubmitted() && $form->isValid()) {
+        if ($form->isSubmitted() ) {
+            
+            $socialNetwork->setImages($insertFileServices->insertFile($socialNetwork->getPhotos()));
+            $socialNetwork->setBoutique($boutique);
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($socialNetwork);
             $entityManager->flush();
-
-            return $this->redirectToRoute('social_network_index');
+          
+            return new JsonResponse([
+                'status'=>'success',
+                'id'=>$socialNetwork->getId(),
+                'images'=>$socialNetwork->getImages(),
+                'description'=>$socialNetwork->getDescription(),
+                'nameLink'=>$socialNetwork->getNameLink(),
+                'link'=>$socialNetwork->getLink()                
+            ], Response::HTTP_OK);
         }
 
-        return $this->render('social_network/new.html.twig', [
-            'social_network' => $socialNetwork,
+        return $this->render('admin/index.html.twig', [
+            'pages'=>'add_socialNetwork',
             'form' => $form->createView(),
+            'boutique'=>$boutique
         ]);
     }
 
@@ -61,20 +80,31 @@ class SocialNetworkController extends AbstractController
     /**
      * @Route("/{id}/edit", name="social_network_edit", methods={"GET","POST"})
      */
-    public function edit(Request $request, SocialNetwork $socialNetwork): Response
-    {
+    public function edit(Request $request,InsertFileServices $insertFileServices, SocialNetwork $socialNetwork,BoutiqueRepository $boutiqueRepository): Response
+    {   
+        $image=$socialNetwork->getImages();
         $form = $this->createForm(SocialNetworkType::class, $socialNetwork);
         $form->handleRequest($request);
+        $boutique= $boutiqueRepository->findOneBy(['user'=>$this->getUser()]);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->getDoctrine()->getManager()->flush();
+            if($socialNetwork->getPhotos()){
+                $file=$insertFileServices->insertFile($socialNetwork->getPhotos());
+                $socialNetwork->setImages($file);
+            }
+            else{
+                $socialNetwork->setImages($image);
+            }
 
-            return $this->redirectToRoute('social_network_index');
+            $this->getDoctrine()->getManager()->flush();
+            return new JsonResponse(['status'=>'success'],200);
         }
 
-        return $this->render('social_network/edit.html.twig', [
-            'social_network' => $socialNetwork,
+        return $this->render('admin/index.html.twig', [
+            'pages'=>'edit_socialNetwork',
             'form' => $form->createView(),
+            'socialNetwork'=>$socialNetwork,
+            'boutique'=>$boutique
         ]);
     }
 
