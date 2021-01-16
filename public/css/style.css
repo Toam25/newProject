@@ -515,8 +515,10 @@ textarea.input {
   color: #FFF;
 }
 ._mylogo{
-  height: 19px;
-  border-radius: 50%;
+    height: 31px;
+    border-radius: 50%;
+    width: 31px;
+    cursor: pointer;
 }
 #header-ctn > .dropdown > a{
   display: flex;
@@ -1007,6 +1009,15 @@ textarea.input {
   bottom: 0;
   transform: translateY(0);
   transition: 0.2s all;
+}
+.dropdown>ul>li>a {
+  color :black !important;
+}
+.body_items {
+	margin-top: 3px;
+	background: white;
+	padding: 4px;
+	box-shadow: 2px 2px 6px 0px black;
 }
 .product-img:hover .product-btns{
   transform: translateY(0);

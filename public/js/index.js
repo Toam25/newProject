@@ -1,9 +1,6 @@
 $(function(){
 
-    $('body').on('click','._connexion',function(e){
-         e.preventDefault();
-         $('#connexion').modal('show');
-    });
+    
     var ESS_ARTICLE = "";
 
   $('.modenav').on('click', function (e) {

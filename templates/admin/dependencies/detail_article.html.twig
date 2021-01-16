@@ -1,0 +1,70 @@
+<a href="{{ path('article_list',{'category': article.category }) }}" class="btn btn-danger">Retour</a>
+{{ form_start(form,{
+                'attr':{
+                        'class':'edit_article_in_shop',
+                        'action': path('article_show',{'id': article.id})
+                     }
+                 })
+            }}
+<div id="div_ajout_article" class="modal-body row" style="font-weight:none;">
+
+	{{ form_row(form.sous_category) }}
+	{{ form_row(form.category) }}
+
+	<div class="row">
+		<div class="col-md-8">
+			<div class="row">
+				<div class="col-md-6">
+					{{ form_row(form.name)}}
+				</div>
+
+				<div class="col-md-6">
+					{{ form_row(form.quantity)}}
+				</div>
+				<div class="col-md-6">
+					{{ form_row(form.marque)}}
+				</div>
+				<div class="col-md-6">
+					{{ form_row(form.type)}}
+				</div>
+				<div class="col-md-6">
+					{{ form_row(form.promo)}}
+				</div>
+				<div class="col-md-6">
+					{{ form_row(form.wordKey)}}
+				</div>
+				<div class="col-md-12">
+					<div class="row">
+						<div class="col-md-4">
+							{{ form_row(form.price)}}
+						</div>
+						<div class="col-md-4">
+							{{ form_row(form.price_promo)}}
+						</div>
+						<div class="col-md-4">
+							{{ form_row(form.price_global)}}
+						</div>
+					</div>
+				</div>
+				<div class="col-md-12">
+					{{ form_row(form.images)}}
+				</div>
+				<div class="col-md-12">
+					{{ form_row(form.description)}}
+				</div>
+			</div>
+		</div>
+		<div class="col-md-4">
+          <label>Image</label>
+			<div class="preview_image">
+				<img id="preview_image" src="{{ asset('images/'~article.images[0].name) }}">
+			</div>
+		</div>
+
+
+	</div>
+</div>
+<div class="modal-footer">
+	<button class="btn btn-success submit_add_article margin-top-5 btn-submit" type="submit" name="submit_in">Enregitre</button>
+</div>
+{{ form_end(form) }}

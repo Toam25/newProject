@@ -2,6 +2,8 @@
   namespace App\Service;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Response;
 
 class InsertFileServices extends AbstractController{
        
@@ -16,7 +18,7 @@ class InsertFileServices extends AbstractController{
                     return $newFile;
                }
                else{
-                    return false;
+                    return new JsonResponse(['status'=>'error'],Response::HTTP_NOT_ACCEPTABLE);
                }
                
             }

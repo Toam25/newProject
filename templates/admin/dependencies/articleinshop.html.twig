@@ -1,0 +1,20 @@
+{{ add_button|raw }}
+<div class="row all_article">
+     {% for  article in articles %}
+       <div class="container_article col-xs-6 col-sm-3 col-md-2 col-lg-2">
+                <div class="list_produit">
+                     <input type="hidden" name="table" value="article_in">
+                     <input type="hidden" name="id_image" value="{{article.id}}">
+            
+                      <img class="image_produit" src="{{asset('images/' ~ article.images[0].name)}}" alt="{{article.name}}">
+                      <p class="name_article">{{ article.name}}</p>
+                      <span class="remove_article glyphicon glyphicon-remove"></span> 
+                      <div>
+                         <a class="btn btn-warning article_edit" href="{{ path('article_edit',{'id':article.id}) }}">Détail</a>
+                         <a class="btn btn-danger article_delete" href="{{ path('article_delete',{'id':article.id}) }}">Supprimer</a>
+                      </div>
+                 </div>
+       </div>
+            
+    {% endfor %}
+    </div>

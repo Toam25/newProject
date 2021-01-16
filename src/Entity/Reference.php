@@ -31,10 +31,6 @@ class Reference
      */
     private $boutique;
 
-     /** 
-     * @Assert\NotBlank(message="Please, upload the photo.") 
-     * @Assert\File(mimeTypes={ "image/png", "image/jpeg" }) 
-     */
     private $photos;
 
     public function getId(): ?int

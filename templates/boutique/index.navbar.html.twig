@@ -10,19 +10,13 @@
       </button>
       <!--a class="navbar-brand" href="#">Brand</a-->
     </div>
-
+    
     <!-- Collect the nav links, forms, and other content for toggling -->
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav">
-        <li><a href="" target ="blank">Galerie marchande</a></li>
-        <li class="dropdown">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Boutique<span class="caret"></span></a>
-          <ul class="dropdown-menu">
-            <li class="modenav"><a href="#">Mode</a></li>
-            <li role="separator" class="divider"></li>
-            <li class="hightechnav"><a href="#">High-tech</a></li>
-          </ul>
-        </li>
+        <li><a href="{{ path('shop',{'type':'habillement','id': 1})}}" target ="blank">Galerie marchande</a></li>
+        <li class="modenav"><a href="#">Mode</a></li>
+        <li class="hightechnav"><a href="#">High-tech</a></li>
       </ul>
       <!--form class="navbar-form navbar-left">
         <div class="form-group">
@@ -30,6 +24,8 @@
         </div>
         <button type="submit" class="btn btn-default">Submit</button>
       </form-->
+      {#
+
       <ul class="nav navbar-nav navbar-right">
         {% if app.user %}
         <li><a href="#"><span class="glyphicon glyphicon-shopping-cart panier"> Panier</a></li>
@@ -50,6 +46,8 @@
           <li id="inscription"><a href="">Inscription</a></li>
         {%  endif %}
       </ul>
+      #}
+      {% include "boutique/dependancies/_actionUser.html.twig"%}
     </div><!-- /.navbar-collapse -->
   </div><!-- /.container-fluid -->
 </nav>

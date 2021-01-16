@@ -89,25 +89,16 @@ background-color : #202340 !important;
     position: relative;
 }
 .line {
-    display: -webkit-box;
-    display: -ms-flexbox;
+    
     display: flex;
     -ms-flex-pack: distribute;
-    justify-content: space-around;
+    justify-content: space-between;
     width: 100%;
     margin: 0;
     padding: 0;
 }
-.apropos_commentaire {
-    font-size: 31px;
-    font-weight: bold;
-    font-family: "Brush Script MT", "Brush Script Std", "cursive";
-    margin-top: 2px;
-    margin-left: 5px;
-    color: whitesmoke;
-}
 .my-btn-boutique {
-    margin-bottom: 2em;
+    margin-bottom: 1em;
 }
 .card {
     border: 1px solid #bac6d3;
@@ -428,10 +419,7 @@ width: 20%;
   .menu_profil_index:hover{
     text-decoration: none;
   }
-  .divider{
-    border: 1px solid;
-    width: 175%;
-  }
+  
   .image-comment,#user_nom{
     display: inline-block;
   }
@@ -994,16 +982,10 @@ width: 20%;
   .apropos_commentaire{
   
     font-size: 31px;
-  
     font-weight: bold;
-  
     font-family: "Brush Script MT", "Brush Script Std", "cursive";
-  
     margin-top: 2px;
-  
     margin-left: 5px;
-  
-    /*color: whitesmoke;*/
   
   }
   
@@ -1450,43 +1432,13 @@ width: 20%;
   
   /******************css pub_video*********************/
   
-  .table_video{
-  
-    margin-top: 5px;
-  
-    height: 250px;
-  
-    border-top: 1px solid rgba(0,0,0,0.1);
-  
-    border-bottom: 1px solid rgba(0,0,0,0.1);
-  
-    float: left;
-  
-  } 
-  
-  
-  
+
+
   .list_video{
-  
     width: 95%; 
-  
     height: 200px;
-  
   }
   
-  .containt_video{
-  
-    overflow-y: scroll;
-  
-    margin-top: 0px;
-  
-    padding: 0px;
-  
-    height: 250px !important;
-  
-    border-top: 2px solid red;
-  
-  }
   .block_achat{
     background-color: gray;
     color: white;
@@ -1576,11 +1528,7 @@ width: 20%;
   margin-left: 45px;
   padding-right: 11px;
   }
-  .dropdown-item{
-    list-style-type: none;
-    border: 2px solid #80C1C1;
-    text-align: center;
-  }
+ 
   #panier_2{
     color: white;
   }
@@ -1625,7 +1573,7 @@ width: 20%;
   }
    .commentaire, .button_comment_submit,.btns{
     display:block }
-     #petit{;
+     #petit{
   
   
       display: block;
@@ -1726,31 +1674,11 @@ width: 20%;
         padding-right: 57px;
   
       }
-  
-    .table_video {
-  
-        float: none;
-  
-        margin-left: 10px;
-  
-        margin-right: 10px;
-  
-      }
-  
     .containt_video {
-  
-  
-  
       padding: 6px;
-  
       height: 250px !important;
-  
       margin-bottom: 15px;
-  
       border: 1px solid rgba(0,0,0,0.5);
-  
-  
-  
     }
   
     #deux{

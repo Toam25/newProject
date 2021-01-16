@@ -8,7 +8,7 @@
 					<div class="row">
 						<div class="col-md-4 col-xs-12">
 							<div class="footer">
-								<h3 class="footer-title">About Us</h3>
+								<h3 class="footer-title">Apropos de nous</h3>
 							  {% if boutique %}
 							
 								<p>{{ boutique.apropos }}</p>
@@ -27,18 +27,23 @@
 							<div class="footer">
 								<h3 class="footer-title">Information</h3>
 								<ul class="footer-links">
-									<li><a href="#">Privacy Policy</a></li>
-									<li><a href="#">Termes et Conditional</a></li>
+									<li><a href="#" class="condition_genral_d'utilisation">Condition generale</a></li>
 								</ul>
 							</div>
 						</div>
 
 						<div class="col-md-4 col-xs-12">
 							<div class="footer">
-								<h3 class="footer-title">Service</h3>
+								<h3 class="footer-title">Utiles</h3>
 								<ul class="footer-links">
+									<li> Siège : Ankadifotsy </li>
+									<li> Service en ligne  </li>
+									<li>Suivie nous sur notre page <a href="{{boutique.link}}" target="_blank" style="color:#46b1e6">facebook</a></li>
+
+									{#
 									<li><a href="{{ path('show_cart',{'type':'panier'})}}">View Cart</a></li>
 									<li><a href="{{ path('show_cart',{'type':'wish'})}}">Wishlist</a></li>
+									#}
 								</ul>
 							</div>
 						</div>

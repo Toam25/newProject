@@ -9,16 +9,16 @@
 			</div>
 			{{ form_start(form, {'attr': {'class' : 'form_article','action': path('es_article_list',{'category': category}) }}) }}
 			<div id="div_ajout_article" class="modal-body row" style="font-weight:none;">
-                <div class="col-md-4">
+				<div class="col-md-4">
 					<div class="preview_image">
 						<img id="preview_image">
 					</div>
 				</div>
 				<div class="col-md-8">
-				<label>Photo</label>
-						{{ form_widget(form.photos, {'attr': {'id' :'file_in', 'class':'file form-control'}}) }}
-						{{ form_widget(form.category, {'attr': {'class':'type_article_in'}}) }}
-						{{ form_row(form.type,{'attr': {'class':''} }) }}
+					<label>Photo</label>
+					{{ form_widget(form.photos, {'attr': {'id' :'file_in', 'class':'file form-control'}}) }}
+					{{ form_widget(form.category, {'attr': {'class':'type_article_in'}}) }}
+					{{ form_row(form.type,{'attr': {'class':''} }) }}
 				</div>
 
 			</div>

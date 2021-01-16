@@ -18,15 +18,16 @@ $(function(){
 
 
    }
-    $('form').on('change',function(e){ 
+    $('.aside').on('change',function(e){ 
         e.preventDefault(); 
-        let data = new FormData(this)
-        const url = new URL($(this).attr('action') || window.location.href );
+         let data = new FormData(this);
+/* 
+         const url = new URL($(this).attr('action') || window.location.href );
          const params = new URLSearchParams();
-
          data.forEach((value, key)=>params.append(key,value));
-      
          generateUrl(url.pathname+"?"+params.toString());
+
+*/
         $.ajax({
             url: "/product/list",
             type : 'POST',
@@ -37,10 +38,12 @@ $(function(){
             dataType :'html',
              beforeSend : ()=>{
                  $('.div-inother').show();  
+                 
              },
            error : ()=>{
-                //toastr.error('Erreur inconue'); 
-                //$("form[name='user']")[0].reset()
+                toastr.error('Erreur inconue'); 
+                $('.div-inother').hide(); 
+                //$("form")[0].reset()
            },
            success : (data)=>{
                $('.js_list_article').html(data);

@@ -23,14 +23,18 @@
 #_reference {
     background: white;
     margin: 4px;
+    box-shadow: 0px 0px 3px -1px black;
 }
-#container_reference {
-    background: #c8c5c5;
+#container_reference,#container_social_network {
+    background: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
 .container_reference {
     display: flex;
     justify-content:center;
-    background: #c8c5c5;
     align-items: center;
     padding: 10px;
 }
@@ -95,10 +99,7 @@
 
     text-align: center;
 }
-ul > ul > li, div>ul>li {
-    padding-left: 17px;
 
-}
 ul > ul > li input{
     margin-right: 2px;
 }

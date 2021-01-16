@@ -1,4 +1,11 @@
-{% if boutique.headers| length > 0%}
+{% if boutique.headers is defined %}
+  {% for images in boutique.headers %}
+            <div class="container_image_slider">
+                <img class="image_slider" src="{{asset('images/'~images.name )}}" />
+            </div>
+ {% endfor %}
+
+{#
 <div class="container">
     <div id="jssor_1" style="position:relative;margin:0 auto;top:0px;left:0px;width:980px;height:380px;overflow:hidden;visibility:hidden;">
         <!-- Loading Screen -->
@@ -38,5 +45,5 @@
         </div>
     </div>
 </div>
-
+#}
 {% endif %}

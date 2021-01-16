@@ -2,7 +2,10 @@
     <div class="col-md-5">
         <h4>Ajout</h4>
         {{ form_start(form,{'attr':{'class':'social_network'}})}}
-            {{ form_widget(form) }}
+             {{ form_row(form.photos,{'attr':{'required':'required'}})}}
+             {{ form_row(form.nameLink)}}
+             {{ form_row(form.link)}}
+             {{ form_row(form.description)}}
             <p></p>
             <button  class="btn btn-success btn-submit" type="submit">Enregistrer</button>
         {{ form_end(form)}}

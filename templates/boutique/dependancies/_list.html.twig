@@ -5,9 +5,10 @@
 			<a href="{{path('detail',{'id' : article.id})}}">
 				<div class="container_image">
 					<img src="{{ asset('images/'~article.images[0].name)}}" alt="">
+					{#
 					<button class="add_cart_btn add_cart" data-id-article="{{ article.id }}">
 						<i class="fa fa-shopping-cart"></i>&nbsp Ajouter au panier</button>
-
+				#}
 				</div>
 			</a>
 

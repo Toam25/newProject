@@ -2,9 +2,12 @@
 
 namespace App\Controller;
 
+use App\Entity\Article;
 use App\Entity\Boutique;
+use App\Entity\Images;
 use App\Entity\Reference;
 use App\Entity\User;
+use App\Form\ArticleType;
 use App\Form\BoutiqueType;
 use App\Form\ReferenceType;
 use App\Form\UserType;
@@ -16,6 +19,7 @@ use App\Repository\UserRepository;
 use App\Service\InsertFileServices;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -28,116 +32,169 @@ class AdminController extends AbstractController
      * @Route("/admin", name="home")
      */
     public function index(BoutiqueRepository $boutiqueRepository, HeaderRepository $headerRepository)
-    {   
-        
-       // $allArticle = $articleRepository->findBy(['boutique'=>$boutiqueRepository->findOneBy(['user'=>$this->getUser()])] );
-        $boutique = $boutiqueRepository->findOneBy(['user'=>$this->getUser()]);
-        $header = $headerRepository->findOneBy(['boutique'=>$boutique]);
+    {
+
+        // $allArticle = $articleRepository->findBy(['boutique'=>$boutiqueRepository->findOneBy(['user'=>$this->getUser()])] );
+        $boutique = $boutiqueRepository->findOneBy(['user' => $this->getUser()]);
+        $header = $headerRepository->findOneBy(['boutique' => $boutique]);
         $img_header = ($header) ? $header->getName() : 'images_default/default_image.jpg';
-        $id=($header) ? $header->getId() : false;
+        $id = ($header) ? $header->getId() : false;
         return $this->render('admin/index.html.twig', [
-            'pages'=>'home',
-            'img_header'=>$img_header,
-            'id'=>$id,
-            'boutique'=>$boutique
+            'pages' => 'home',
+            'img_header' => $img_header,
+            'id' => $id,
+            'boutique' => $boutique
+        ]);
+    }
+    /**
+     * @Route("/admin/article_list/{category}", name="article_list")
+     */
+    public function addArticleInShop($category, Request $request, BoutiqueRepository $boutiqueRepository, InsertFileServices $insertFileServices, ArticleRepository $articleRepository)
+    {
+
+        // $allArticle = $articleRepository->findBy(['boutique'=>$boutiqueRepository->findOneBy(['user'=>$this->getUser()])] );
+        $boutique = $boutiqueRepository->findOneBy(['user' => $this->getUser()]);
+        $article = new Article();
+        $form = $this->createForm(ArticleType::class, $article);
+        $form->handleRequest($request);
+        ////
+
+
+        if ($form->isSubmitted()) {
+            $allImages = [];
+            $entityManager = $this->getDoctrine()->getManager();
+            $images = $form->get('images')->getData();
+            foreach ($images as $image) {
+                $fichier = $insertFileServices->insertFile($image);
+                $img = new Images();
+
+                $img->setName($fichier);
+                $article->addImage($img);
+
+                array_push($allImages, $fichier);
+                break;
+            }
+
+
+            $article->setBoutique($boutique);
+            $entityManager->persist($article);
+            $entityManager->flush();
+
+            $array = [
+                'status' => 'success',
+                'images' => $allImages,
+                'name' => $article->getName(),
+                'id' => $article->getId()
+            ];
+            return new JsonResponse($array, Response::HTTP_OK);
+        }
+
+        ///
+
+        return $this->render('admin/index.html.twig', [
+            'pages' => 'articleinshop',
+            'articles' => $articleRepository->findBy(['boutique' => $boutique, 'category' => $category]),
+            'boutique' => $boutique,
+            'add_button' => $this->button_add_boutique($category, 'btn btn-success ajout_article_ev'),
+            'form' => $form->createView(),
+            'category' => $category
         ]);
     }
     /**
      * @Route("admin/reference", name="reference")
      */
-    public function reference(ReferenceRepository $referenceRepository,  BoutiqueRepository $boutiqueRepository,InsertFileServices $insertFileServices, Request $request, HeaderRepository $headerRepository)
-    {   
-        
-       // $allArticle = $articleRepository->findBy(['boutique'=>$boutiqueRepository->findOneBy(['user'=>$this->getUser()])] );
-       $boutique = $boutiqueRepository->findOneBy(['user'=>$this->getUser()]);
+    public function reference(ReferenceRepository $referenceRepository,  BoutiqueRepository $boutiqueRepository, InsertFileServices $insertFileServices, Request $request, HeaderRepository $headerRepository)
+    {
 
-       $reference = new Reference();
-       $form = $this->createForm(ReferenceType::class, $reference);
-       $form->handleRequest($request);
+        // $allArticle = $articleRepository->findBy(['boutique'=>$boutiqueRepository->findOneBy(['user'=>$this->getUser()])] );
+        $boutique = $boutiqueRepository->findOneBy(['user' => $this->getUser()]);
 
-       if($form->isSubmitted()){
-           $reference->setBoutique($boutique);
-           $file= $insertFileServices->insertFile($reference->getPhotos());
-           $reference->setImages($file);
-           $em= $this->getDoctrine()->getManager();
-           $em->persist($reference);
-           $em->flush();
-       }
+        $reference = new Reference();
+        $form = $this->createForm(ReferenceType::class, $reference);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted()) {
+            $reference->setBoutique($boutique);
+            $file = $insertFileServices->insertFile($reference->getPhotos());
+            $reference->setImages($file);
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($reference);
+            $em->flush();
+        }
         return $this->render('admin/index.html.twig', [
-            'pages'=>'reference',
-            'boutique'=>$boutique,
-            'form'=>$form->createView(),
-            'references'=>$referenceRepository->findBy(['boutique'=>$boutique])
+            'pages' => 'reference',
+            'boutique' => $boutique,
+            'form' => $form->createView(),
+            'references' => $referenceRepository->findBy(['boutique' => $boutique])
         ]);
     }
-     /**
+    /**
      * @Route("admin/condition", name="condition")
      */
     public function condition(BoutiqueRepository $boutiqueRepository, HeaderRepository $headerRepository)
-    {   
-        
-       // $allArticle = $articleRepository->findBy(['boutique'=>$boutiqueRepository->findOneBy(['user'=>$this->getUser()])] );
-        $boutique = $boutiqueRepository->findOneBy(['user'=>$this->getUser()]);
+    {
+
+        // $allArticle = $articleRepository->findBy(['boutique'=>$boutiqueRepository->findOneBy(['user'=>$this->getUser()])] );
+        $boutique = $boutiqueRepository->findOneBy(['user' => $this->getUser()]);
         return $this->render('admin/index.html.twig', [
-            'pages'=>'reference',
-            'boutique'=>$boutique
+            'pages' => 'reference',
+            'boutique' => $boutique
         ]);
     }
-     /**
+    /**
      * @Route("admin/reseau", name="reseaux")
      */
     public function reseaux(BoutiqueRepository $boutiqueRepository, HeaderRepository $headerRepository)
-    {   
-        
-       // $allArticle = $articleRepository->findBy(['boutique'=>$boutiqueRepository->findOneBy(['user'=>$this->getUser()])] );
-        $boutique = $boutiqueRepository->findOneBy(['user'=>$this->getUser()]);
+    {
+
+        // $allArticle = $articleRepository->findBy(['boutique'=>$boutiqueRepository->findOneBy(['user'=>$this->getUser()])] );
+        $boutique = $boutiqueRepository->findOneBy(['user' => $this->getUser()]);
         return $this->render('admin/index.html.twig', [
-            'pages'=>'reseaux',
-            'boutique'=>$boutique
+            'pages' => 'reseaux',
+            'boutique' => $boutique
         ]);
     }
     /**
      * @Route("/superadmin/inscription", name="admin_registration")
      */
-    public function registration(Request $request,UserRepository $userRepository, EntityManagerInterface $manager, UserPasswordEncoderInterface $encoder)
-    {    
-       $user= new User();
-       $boutique = new Boutique();
+    public function registration(Request $request, UserRepository $userRepository, EntityManagerInterface $manager, UserPasswordEncoderInterface $encoder)
+    {
+        $user = new User();
+        $boutique = new Boutique();
 
-      
 
-        $form = $this->createForm(UserType::class,$user);
+
+        $form = $this->createForm(UserType::class, $user);
         $form->handleRequest($request);
-    
-        if($form->isSubmitted() && $form->isValid()){
-            $allUsers = $userRepository->findOneBy(['email'=>$user->getEmail()]);
-            if($allUsers==NULL){
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $allUsers = $userRepository->findOneBy(['email' => $user->getEmail()]);
+            if ($allUsers == NULL) {
                 $hash = $encoder->encodePassword($user, $user->getPassword());
                 $user->setPassword($hash);
                 $user->setRoles(["ROLE_ADMIN"]);
-                
+
                 $boutique->setName('myBoutiqueName')
-                        ->setType($request->get('shop_type'))
-                        ->setAddress('myBoutiqueAdress')
-                        ->setLink('myLinkForSiteWeb')
-                        ->setMail('myBoutiqueAdressMailOf')
-                        ->setContact('myAdressContact')
-                        ->setApropos('DescriptionOfMyBoutque')
-                        ->setUser($user);
+                    ->setType($request->get('shop_type'))
+                    ->setAddress('myBoutiqueAdress')
+                    ->setLink('myLinkForSiteWeb')
+                    ->setMail('myBoutiqueAdressMailOf')
+                    ->setContact('myAdressContact')
+                    ->setApropos('DescriptionOfMyBoutque')
+                    ->setUser($user);
                 $manager->persist($user);
                 $manager->persist($boutique);
-                
+
                 $manager->flush();
-            }
-            else{
-                
-                return new Response(json_encode(['status'=>'ko','msg'=>'Adresse mail existe']),200,[
-                    'Content-Type'=>'application/json'
+            } else {
+
+                return new Response(json_encode(['status' => 'ko', 'msg' => 'Adresse mail existe']), 200, [
+                    'Content-Type' => 'application/json'
                 ]);
             }
-            
-            return new Response(json_encode(['status'=>'ok','msg'=>'Enregistrer avec succée']),200,[
-                'Content-Type'=>'application/json'
+
+            return new Response(json_encode(['status' => 'ok', 'msg' => 'Enregistrer avec succée']), 200, [
+                'Content-Type' => 'application/json'
             ]);
         }
 
@@ -151,48 +208,53 @@ class AdminController extends AbstractController
      * @Route("/admin/boutique", name="admin_boutique")
      */
 
-     public function editBoutique(BoutiqueRepository $boutiqueRepository, Request $request){
-       
-        $boutique = $boutiqueRepository->findOneBy(['user'=>$this->getUser()]);
+    public function editBoutique(BoutiqueRepository $boutiqueRepository, Request $request)
+    {
 
-        $form=$this->createForm(BoutiqueType::class,$boutique);
+        $boutique = $boutiqueRepository->findOneBy(['user' => $this->getUser()]);
+
+        $form = $this->createForm(BoutiqueType::class, $boutique);
         $form->handleRequest($request);
 
-        if($form->isSubmitted()  and $form->isValid()){
-            $image= $form->get('image')->getData();
-            if($image){
-               
-                $fichier = md5(uniqid()).'.'.$image->guessExtension();
-                $image->move($this->getParameter('images_directory'),
-                $fichier);
+        if ($form->isSubmitted()  and $form->isValid()) {
+            $image = $form->get('image')->getData();
+            if ($image) {
+
+                $fichier = md5(uniqid()) . '.' . $image->guessExtension();
+                $image->move(
+                    $this->getParameter('images_directory'),
+                    $fichier
+                );
                 $boutique->setLogo($fichier);
             }
-                    $em= $this->getDoctrine()->getManager();
-                    $em->persist($boutique);
-                    $em->flush();
-            }
-        
-        return $this->render('admin/index.html.twig',[
-            'pages'=>'edition_boutique',
-            'form'=>$form->createView(),
-            'boutique'=>$boutique
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($boutique);
+            $em->flush();
+        }
+
+        return $this->render('admin/index.html.twig', [
+            'pages' => 'edition_boutique',
+            'form' => $form->createView(),
+            'boutique' => $boutique
         ]);
-     }
-         /**
+    }
+    /**
      * @Route("/admin/boutique/list", name="list_boutique")
      */
 
-    public function listBoutique(BoutiqueRepository $boutiqueRepository, Request $request){
-       
-        $boutiques = $boutiqueRepository->findAll();
-          
-        return $this->render('admin/index.html.twig',[
-            'pages'=>'list_boutique',
-            'boutiques'=>$boutiques
-        ]);
-     }
+    public function listBoutique(BoutiqueRepository $boutiqueRepository, Request $request)
+    {
 
-     static function button_add_boutique(string $categorie, $class)
+        $boutiques = $boutiqueRepository->findAll();
+
+        return $this->render('admin/index.html.twig', [
+            'pages' => 'list_boutique',
+            'boutiques' => $boutiques
+        ]);
+    }
+
+
+    static function button_add_boutique(string $categorie, $class)
     {
 
         $button = " ";
@@ -338,7 +400,7 @@ class AdminController extends AbstractController
 
 
             default:
-            $button=" ";
+                $button = " ";
                 break;
         }
 
@@ -468,5 +530,4 @@ class AdminController extends AbstractController
                 break;
         }
     }
-    
 }

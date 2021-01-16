@@ -20,77 +20,97 @@ class ArticleRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Article::class);
     }
-    
-    
-    public function getArticleWithVote(){
+
+
+    public function getArticleWithVote()
+    {
         $query = $this->createQueryBuilder('a')
-        ->select('a','v')
-        ->leftjoin('a.votes','v');
+            ->select('a', 'v')
+            ->leftjoin('a.votes', 'v');
         return $query->getQuery()->getResult();
     }
-    public function getArticleWithVoteBy(Search $data){
-        
+    public function getArticleWithVoteBy(Search $data)
+    {
+
         $query = $this->createQueryBuilder('a')
-        ->select('a','b','v','i','c')
-        ->leftJoin('a.votes','v')
-        ->leftJoin('a.boutique','b')
-        ->leftJoin('a.images','i')
-        ->leftJoin('a.carts','c')
-        ;
-        if($data->q){
-          $query->andWhere('a.name LIKE :q')
-          ->orWhere('a.marque LIKE :q')
-          ->orWhere('a.category LIKE :q')
-          ->orWhere('a.wordKey LIKE :q')
-          ->orWhere('a.description LIKE :q')
-          ->setParameter('q','%'.$data->q.'%');
+            ->select('a', 'b', 'v', 'i', 'c')
+            ->leftJoin('a.votes', 'v')
+            ->leftJoin('a.boutique', 'b')
+            ->leftJoin('a.images', 'i')
+            ->leftJoin('a.carts', 'c');
+        if ($data->q) {
+            $query->andWhere('a.name LIKE :q')
+                ->orWhere('a.marque LIKE :q')
+                ->orWhere('a.category LIKE :q')
+                ->orWhere('a.wordKey LIKE :q')
+                ->orWhere('a.description LIKE :q')
+                ->setParameter('q', '%' . $data->q . '%');
         }
-        if($data->category){
+        if ($data->category) {
             $query->andWhere('a.category IN (:category)')
-                  ->setParameter('category',$data->category);
+                ->setParameter('category', $data->category);
         }
-        if($data->marque){
+        if ($data->marque) {
             $query->andWhere('a.marque IN (:marque)')
-                  ->setParameter('marque',$data->marque);
+                ->setParameter('marque', $data->marque);
         }
-        if($data->minPrice){
+        if ($data->minPrice) {
             $query->andWhere('a.price >= :minprice')
-                  ->setParameter('minprice',$data->minPrice);
+                ->setParameter('minprice', $data->minPrice);
         }
-        if($data->maxPrice){
+        if ($data->maxPrice) {
             $query->andWhere('a.price <= :maxprice')
-                  ->setParameter('maxprice',$data->maxPrice);
+                ->setParameter('maxprice', $data->maxPrice);
         }
-        if($data->boutique_id){
+        if ($data->boutique_id) {
             $query->andWhere('b.id = :boutiqueId')
-                  ->setParameter('boutiqueId',$data->boutique_id);
+                ->setParameter('boutiqueId', $data->boutique_id);
         }
- 
-     return $query->getQuery()->getResult();
+        if(isset($data->type)) {
+            $query->andWhere('a.type In (:type)')
+                ->setParameter('type', $data->type);
+        }
+
+        return $query->getQuery()->getResult();
     }
-    
-    public function findAllArticleByBoutique(? Boutique $boutique){
-        
-        if($boutique!=null){
+
+    public function findAllArticleByBoutique(?Boutique $boutique)
+    {
+
+        if ($boutique != null) {
             return $this->createQueryBuilder('a')
-            ->select('a','b','v','i','c')
-            ->leftJoin('a.votes','v')
-            ->leftJoin('a.boutique','b')
-            ->leftJoin('a.images','i')
-            ->leftJoin('a.carts','c')
-            ->andwhere('a.boutique = :boutiqueid')
-            ->setParameter('boutiqueid', $boutique->getId())
-            ->getQuery()
-            ->getResult()
-         ;
-         }
-         return [];
+                ->select('a', 'b', 'v', 'i', 'c')
+                ->leftJoin('a.votes', 'v')
+                ->leftJoin('a.boutique', 'b')
+                ->leftJoin('a.images', 'i')
+                ->leftJoin('a.carts', 'c')
+                ->andwhere('a.boutique = :boutiqueid')
+                ->setParameter('boutiqueid', $boutique->getId())
+                ->getQuery()
+                ->getResult();
         }
-    
-            
-        
-       
-       
+        return [];
+    }
+    public function findOneArticleByBoutiqueWithImage(Boutique $boutique, int $id){
+        return $this->createQueryBuilder('a')
+        ->select('a', 'b', 'v', 'i', 'c')
+        ->leftJoin('a.votes', 'v')
+        ->leftJoin('a.boutique', 'b')
+        ->leftJoin('a.images', 'i')
+        ->leftJoin('a.carts', 'c')
+        ->andwhere('a.boutique = :boutiqueid')
+        ->andwhere('a.id = :id')
+        ->setParameter('boutiqueid', $boutique->getId())
+        ->setParameter('id', $id)
+        ->getQuery()
+        ->getOneOrNullResult()
+        ;
+
+}
+
+
+
+
     // /**
     //  * @return Article[] Returns an array of Article objects
     //  */

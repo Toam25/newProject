@@ -1,0 +1,37 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ user.firstname }} {{ user.name }} {% endblock %}
+{% block stylesheets %}
+	 <link href="https://fonts.googleapis.com/css?family=Montserrat:400,500,700" rel="stylesheet">
+   
+    <link href="{{ asset('css/bootstrap3.3.css')}}" rel="stylesheet" type="text/css">
+    <!-- Font Awesome Icon -->
+    <link rel="stylesheet" href="{{ asset('css/font-awesome.min.css') }}">
+    <!-- Custom stlylesheet -->
+    <link type="text/css" rel="stylesheet" href="{{ asset('css/style.css') }}"/>
+    <link type="text/css" rel="stylesheet" href="{{ asset('css/index.css') }}"/>
+    <link type="text/css" rel="stylesheet" href="{{ asset('css/profil.css') }}"/>
+
+{% endblock %}
+{% block body %}
+
+{% include "boutique/index.navbar.html.twig" %}
+  <div class="profil">
+      <div class="image_profil">
+         <img src="{{ asset('images/'~ user.avatar) }}" alt="{{user.name }}">
+      </div>
+      <p>{{ user.firstname }} {{ user.name }}</p>
+       Date d'inscription : {{ user.createdat | date }}
+  </div>
+  	{% if not app.user %}
+		{% include 'boutique/dependancies/connexion.html.twig'%}
+	{% endif %}
+	{% include "boutique/dependancies/footer.html.twig" %}
+
+{% endblock %}
+{% block javascripts %}
+	<script src="{{asset('js/jquery.js')}}"></script>
+	<script src="{{asset('js/bootstrap.min.js')}}"></script>
+	<script src="{{ asset('js/connexion.js') }}"> </script>
+{% endblock %}
+

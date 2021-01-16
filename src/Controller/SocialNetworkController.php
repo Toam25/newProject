@@ -44,7 +44,7 @@ class SocialNetworkController extends AbstractController
 
         if ($form->isSubmitted() ) {
             
-            $socialNetwork->setImages($insertFileServices->insertFile($socialNetwork->getPhotos()));
+            $socialNetwork->setImages($insertFileServices->insertFile($socialNetwork->getPhotos(),['jpg,gif','jpeg','png']));
             $socialNetwork->setBoutique($boutique);
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($socialNetwork);
@@ -89,7 +89,7 @@ class SocialNetworkController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             if($socialNetwork->getPhotos()){
-                $file=$insertFileServices->insertFile($socialNetwork->getPhotos());
+                $file=$insertFileServices->insertFile($socialNetwork->getPhotos(),['jpg,gif','jpeg','png']);
                 $socialNetwork->setImages($file);
             }
             else{
@@ -109,16 +109,19 @@ class SocialNetworkController extends AbstractController
     }
 
     /**
-     * @Route("/{id}", name="social_network_delete", methods={"DELETE"})
+     * @Route("/delete/{id}", name="social_network_delete", methods={"DELETE"})
      */
     public function delete(Request $request, SocialNetwork $socialNetwork): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$socialNetwork->getId(), $request->request->get('_token'))) {
+        if ($this->getUser()) {
             $entityManager = $this->getDoctrine()->getManager();
+            unlink('images/'.$socialNetwork->getImages()) ;
             $entityManager->remove($socialNetwork);
             $entityManager->flush();
+
+            return new JsonResponse(['status'=>'success'], Response::HTTP_OK);
         }
 
-        return $this->redirectToRoute('social_network_index');
+        return new JsonResponse(['status'=>'error'], Response::HTTP_UNAUTHORIZED);
     }
 }

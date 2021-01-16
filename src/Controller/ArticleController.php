@@ -11,6 +11,7 @@ use App\Repository\BoutiqueRepository;
 use App\Repository\ImagesRepository;
 use App\Service\InsertFileServices;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -25,7 +26,7 @@ class ArticleController extends AbstractController
     {
         return $this->render('admin/index.html.twig', [
             'articles' => $articleRepository->findAll(),
-            'pages'=>'list'
+            'pages' => 'list'
         ]);
     }
 
@@ -35,27 +36,26 @@ class ArticleController extends AbstractController
     public function new(BoutiqueRepository $boutiqueRepository, Request $request, InsertFileServices $insertFileServices): Response
     {
         $article = new Article();
-        
+
         $form = $this->createForm(ArticleType::class, $article);
         $form->handleRequest($request);
-        $images= $form->get('images')->getData();
-        $boutique = $boutiqueRepository->findOneBy(['user'=>$this->getUser()]);
+        $images = $form->get('images')->getData();
+        $boutique = $boutiqueRepository->findOneBy(['user' => $this->getUser()]);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager = $this->getDoctrine()->getManager();
-            
-            
-            foreach( $images as $image){
+
+
+            foreach ($images as $image) {
                 $fichier = $insertFileServices->insertFile($image);
-                $img= new Images();
+                $img = new Images();
                 $img->setName($fichier);
                 $article->addImage($img);
-
             }
 
-           
+
             $article->setBoutique($boutique);
-            
+
             $entityManager->persist($article);
             $entityManager->flush();
 
@@ -64,25 +64,47 @@ class ArticleController extends AbstractController
 
         return $this->render('admin/index.html.twig', [
             'article' => $article,
-            'boutique'=>$boutique,
+            'boutique' => $boutique,
             'form' => $form->createView(),
-            'pages'=> 'new'
+            'pages' => 'new'
         ]);
     }
 
     /**
-     * @Route("/admin/{id}", name="article_show", methods={"GET"})
+     * @Route("/admin/article/{id}", name="article_show", methods={"GET","POST"})
      */
-    public function show(Article $article): Response
-    {
+    public function show($id,Request $request,InsertFileServices $insertFileServices, ArticleRepository $articleRepository, BoutiqueRepository $boutiqueRepository): Response
+    {   
+        $boutique = $boutiqueRepository->findOneBy(['user'=>$this->getUser()]);
+        $article= $articleRepository->findOneArticleByBoutiqueWithImage($boutique, $id);
+        $form=$this->createForm(ArticleType::class,$article);
+        $form->handleRequest($request);
+        if($form->isSubmitted()){
+            if($form->get('images')->getData()!=null){
+                $images=$form->get('images')->getData();
+                $newfile = $insertFileServices->insertFile($images[0],['png','jpeg','jpg','gif']);
+                $image=$article->getImages()[0];
+                $file=$image->getName();
+                $image->setName($newfile);
+                unlink('images/'.$file);
+                $this->getDoctrine()->getManager()->persist($image);
+            }
+            $this->getDoctrine()->getManager()->flush();
+
+            return new JsonResponse(['status'=>'success'],Response::HTTP_OK);
+        }
         return $this->render('admin/index.html.twig', [
             'article' => $article,
-            'pages'=> 'detail'
+            'form' => $form->createView(),
+            'pages' => 'detail_article',
+            'article'=>$article,
+            'boutique'=>$boutique
+
         ]);
     }
 
     /**
-     * @Route("/admin/{id}/edit", name="article_edit", methods={"GET","POST"})
+     * @Route("/admin/article/edit/{id}", name="article_edit", methods={"GET","POST"})
      */
     public function edit(Request $request, Article $article): Response
     {
@@ -98,25 +120,31 @@ class ArticleController extends AbstractController
         return $this->render('admin/index.html.twig', [
             'article' => $article,
             'form' => $form->createView(),
-            'pages'=> 'edit'
+            'pages' => 'edit'
         ]);
     }
 
     /**
-     * @Route("/admin/delete/{id}", name="article_delete")
+     * @Route("/admin/article/delete/{id}", name="article_delete")
      */
-    public function delete(Request $request, Article $article, ImagesRepository $imagesRepository): Response
+    public function delete(Request $request, Article $article, ImagesRepository $imagesRepository, BoutiqueRepository $boutiqueRepository): Response
     {
-       // if ($this->isCsrfTokenValid('delete'.$article->getId(), $request->request->get('_token'))) {
-            $images = $imagesRepository->findBy(['article'=>$article]);
+        // if ($this->isCsrfTokenValid('delete'.$article->getId(), $request->request->get('_token'))) {
+        $myboutique = $boutiqueRepository->findOneBy(['user' => $this->getUser()]);
+        $boutique = $article->getBoutique();
+        if ($myboutique->getId() === $boutique->getId()) {
+            $images = $imagesRepository->findBy(['article' => $article]);
             $entityManager = $this->getDoctrine()->getManager();
-           foreach ($images as $image) {
-             $entityManager->remove($image);
-           }
+            foreach ($images as $image) {
+                $entityManager->remove($image);
+                unlink('images/' . $image->getName());
+            }
             $entityManager->remove($article);
             $entityManager->flush();
-        
-
-        return $this->redirectToRoute('article_liste');
+            return new JsonResponse(['status'=>'success'],Response::HTTP_OK);
+        }
+        else{
+            return new JsonResponse(['status'=>'error'],Response::HTTP_UNAUTHORIZED);
+        }
     }
 }

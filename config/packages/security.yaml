@@ -22,7 +22,7 @@ security:
                 check_path : login
             logout:
                 path: logout
-                target: home
+                target: index
             guard:
                 authenticators:
                     - App\Security\AppCustomAuthenticator
@@ -39,5 +39,6 @@ security:
         ROLE_SUPER_ADMIN: ROLE_ADMIN
     access_control:
         - { path: ^/admin, roles: ROLE_ADMIN }
+        #- { path: ^/, roles: ROLE_ADMIN }
         - { path: ^/superadmin, roles: ROLE_SUPER_ADMIN }
         # - { path: ^/profile, roles: ROLE_USER }

@@ -8,7 +8,7 @@
 				<div class="card">
 		 			<div class="line">
 						<h3 class="card-title apropos_commentaire" >{{ vote.boutique.name}}</h3>
-						<a class='btn btn-success my-btn-boutique ' href="" target='_blank'> Voir boutique</a>
+						<a class='btn btn-success my-btn-boutique ' href="{{path('shop',{'type': vote.boutique.type, 'id' : vote.boutique.id})}}" target='_blank'> Voir boutique</a>
 					</div>
 					<div class="liste_image">
 						 <p id="title_{{ vote.id }}" title="">{{vote.description}}</p>
@@ -43,7 +43,7 @@
 									<button id="hd{{vote.id}}"class="hd" name="haut" value="{{vote.id}}"class="hd" 
 
 											{% if not app.user %}
-												{{ disabled}}
+												 disabled
 											{% endif %}
 										    style="margin-left: 5px;">
 
@@ -59,15 +59,18 @@
 
 											{% if not app.user %}
 
-												echo "disabled";
+												disabled
 
 											{% endif %}
 										>
 										<i class="fa fa-arrow-right"></i>
 
 										</button>
-
+									{% if not app  %}
 										<img src="{{ asset('images/'~app.user.avatar)}}" class="image-comment">
+									{% else %}
+										<img src="{{ asset('images/images_default/default_image.jpg')}}" class="image-comment">
+									{% endif %}
 
 						</div>
 
@@ -82,7 +85,7 @@
                     
 							<input  id="comment{{vote.id}}" type="text" name="commentaire" placeholder="votre commentaire" class="commentaire " 
 							 {% if not app.user %} 
-									 {{'disabled'}}
+									 disabled
 							 {% endif %}
 							>
 
@@ -90,7 +93,7 @@
 
 							<button id="button_comment_submit{{vote.id}}"class=' button_comment_submit' type="submit" value="{{vote.id}}"
 							 {% if not app.user %}
-									{{ disabled }}
+									disabled
 							 {% endif %}
 							 >
 

@@ -98,6 +98,16 @@ class Article
      */
     private $carts;
 
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $type;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $sous_category;
+
     public function __construct()
     {
         $this->images = new ArrayCollection();
@@ -373,6 +383,30 @@ class Article
             $this->carts->removeElement($cart);
             $cart->removeArticle($this);
         }
+
+        return $this;
+    }
+
+    public function getType(): ?string
+    {
+        return $this->type;
+    }
+
+    public function setType(?string $type): self
+    {
+        $this->type = $type;
+
+        return $this;
+    }
+
+    public function getSousCategory(): ?string
+    {
+        return $this->sous_category;
+    }
+
+    public function setSousCategory(?string $sous_category): self
+    {
+        $this->sous_category = $sous_category;
 
         return $this;
     }
