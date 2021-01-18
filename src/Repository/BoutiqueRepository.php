@@ -14,7 +14,10 @@ use Doctrine\Common\Persistence\ManagerRegistry;
  */
 class BoutiqueRepository extends ServiceEntityRepository
 {
-    
+    public function __construct(ManagerRegistry $registry)
+    {
+        parent::__construct($registry, Boutique::class);
+    }
     public function findOneByWithHeaderReference(string $type,int $id){
         return $this->createQueryBuilder('b')
                     ->select('b','h','r')
