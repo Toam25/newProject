@@ -11,6 +11,7 @@
                     <div class="action_boutique"><input type="hidden" name="id_boutique" value="{{boutique.id}}">
                     <p class="Administrer_boutique">Administrer</p>
                     <p class="supprimer_boutique">Supprimer</p>
+                    <button class="message-in btn btn-primary" data-id={{ boutique.user.id }}>Messages</button>
                     <a href="{{
                         path('shop',{
                             'type':boutique.type,

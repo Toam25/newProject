@@ -2,8 +2,10 @@
 
 namespace App\Controller;
 
+use App\Entity\Boutique;
 use App\Entity\User;
 use App\Form\UserType;
+use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request as HttpFoundationRequest;
@@ -17,21 +19,45 @@ class SecurityController extends AbstractController
      /**
      * @Route("/inscription", name="registration")
      */
-    public function registration(HttpFoundationRequest $request, EntityManagerInterface $manager, UserPasswordEncoderInterface $encoder)
+    public function registration(HttpFoundationRequest $request,UserRepository $userRepository, EntityManagerInterface $manager, UserPasswordEncoderInterface $encoder)
     {    
-       $user= new User();
+        $user = new User();
+        $boutique = new Boutique();
 
-        $form = $this->createForm(UserType::class,$user);
+
+
+        $form = $this->createForm(UserType::class, $user);
         $form->handleRequest($request);
 
-        if($form->isSubmitted() && $form->isValid()){
+        if ($form->isSubmitted() && $form->isValid()) {
+            $allUsers = $userRepository->findOneBy(['email' => $user->getEmail()]);
+            if ($allUsers == NULL) {
+                $hash = $encoder->encodePassword($user, $user->getPassword());
+                $user->setPassword($hash);
+                $user->setRoles(["ROLE_ADMIN"]);
 
-            $hash = $encoder->encodePassword($user, $user->getPassword());
-            $user->setPassword($hash);
-            $user->setRoles(["ROLE_USERS"]);
-            $manager->persist($user);
-            $manager->flush();
-           return $this->redirectToRoute('home');
+                $boutique->setName('myBoutiqueName')
+                    ->setType("SuperAdmin")
+                    ->setAddress('myBoutiqueAdress')
+                    ->setLink('myLinkForSiteWeb')
+                    ->setMail('myBoutiqueAdressMailOf')
+                    ->setContact('myAdressContact')
+                    ->setApropos('DescriptionOfMyBoutque')
+                    ->setUser($user);
+                $manager->persist($user);
+                $manager->persist($boutique);
+
+                $manager->flush();
+            } else {
+
+                return new Response(json_encode(['status' => 'ko', 'msg' => 'Adresse mail existe']), 200, [
+                    'Content-Type' => 'application/json'
+                ]);
+            }
+
+            return new Response(json_encode(['status' => 'ok', 'msg' => 'Enregistrer avec succée']), 200, [
+                'Content-Type' => 'application/json'
+            ]);
         }
 
         return $this->render('security/inscription.html.twig', [

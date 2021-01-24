@@ -44,6 +44,14 @@ class BoutiqueRepository extends ServiceEntityRepository
                     ->getOneOrNullResult()
         ;
     }
+    public function findAllBoutiqueByUser(){
+        return $this->createQueryBuilder('b')
+                    ->select('b','u')
+                    ->join('b.user', 'u')
+                    ->getQuery()
+                    ->getResult()
+        ;
+    }
     // /**
     //  * @return Boutique[] Returns an array of Boutique objects
     //  */
