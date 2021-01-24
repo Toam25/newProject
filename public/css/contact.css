@@ -1,0 +1,471 @@
+.mess {
+    border: 1px solid;
+    padding: 3px;
+}
+.image_p {
+
+    width: 100%;
+    height: 100%;
+    border-radius: 100%;
+
+}
+.nav_index_ {
+    background: #303350;
+    height: 34px;
+}
+.all_cont {
+    display: flex;
+    align-items: center;
+    margin-right: 5px;
+}
+.container_image_user {
+    height: 25px;
+width: 25px;
+display: flex;
+border-radius: 100%;
+margin: 5px;
+color: white;
+background: white;
+border: transparent;
+}
+.image_useer {
+    max-width: 100%;
+    max-height: 100%;
+}
+.all_cont p {
+   color: white;
+font-weight: 600;
+margin: 0;
+}
+#membre_user{
+   
+}
+.redirect{
+
+    box-shadow: 0px 0px 5px 
+
+    black;
+
+}
+.image_notification_in {
+    height: 34px;
+    border-radius: 100%;
+    margin-right: 9px;
+}
+#liste_membre{
+    border: none;
+    width: 152px;
+    display: inline-block;
+    height: 26px;
+    font-size: 12px;
+}
+._mess_{
+  width: 44px;
+  height: 44px;
+  border-radius: 100%;
+  padding-left: 8px;
+}
+
+._mess_:hover span {
+  display: block;
+}
+._mess_ span{
+  display: none;
+  position: absolute;
+  width: 255%;
+  background:#5cb85c;
+  right: 59px;
+  padding-bottom: 5px;
+  padding-top: 5px;
+  top: 8px;
+}
+._mess_ span::after {
+  content: "";
+  display: block;
+  position: absolute;
+  border-bottom: 9px solid  transparent;
+  border-top: 9px solid transparent;
+  border-left: 9px solid #5cb85c;
+  border-right: 9px solid transparent;
+  top: 5px;
+  right: -16px;
+}
+.container_membre_all{
+    height: 350px;
+    width: 266px;
+    position: fixed;
+    bottom: 0px;
+    left: 6px;
+    z-index: 5;
+    background:
+    white;
+    box-shadow: 0px 0px 2px rgba(0,0,0,0.6);
+    font-size: 12px;
+}
+.fermer_membre {
+    right: 12px;
+}
+#headeraddfriends{
+  height: 43px;
+  border-bottom: 1px solid
+  rgba(0,0,0,0.3);
+}
+#headeraddfriends p{
+  padding: 12px 11px 1PX;
+  display: inline-block;
+}
+.parametre_message_in {
+    position: absolute;
+    z-index: 1;
+    right: 6px;
+    background: white;
+    box-shadow: 2px 1px 3px  black;
+    display: none;
+}
+.block_message {
+    width: 100%;
+}
+.block_message span {
+   float: left;
+}
+.parametre{
+  right: 40PX;
+}
+.btn-control-message{
+  position: absolute;
+  top: 12px;
+  background: transparent;
+  border: none;
+  color: aliceblue;
+}
+.fermer{
+  right: 12px;
+}
+.imagep {
+
+    width: 60px;
+    height: 60px;
+    margin-right: 5px;
+    display: inline-block
+
+}
+.contrat {
+    text-align: center;
+}
+.imagec{
+  display: inline-block;
+}
+.me {
+  position : relative;
+}
+.text_condition{
+    height: 550px! important;
+}
+.list_message{
+  position: absolute;
+  z-index: 1;
+  background:
+  white;
+  border: 1px solid
+  rgba(0,0,0,0.2);
+  width: 168%;
+  list-style: none;
+  padding: 4px;
+  font-size: 14px;
+  display: none;
+}
+.newpass{
+	width: 50%;
+}
+.membre {
+    border: 1px solid
+    rgba(0,0,0,0.1);
+    padding: 3px;
+    width: 27%;
+    margin-bottom: 5px;
+}
+.membre_in{
+   border: 1px solid
+    rgba(0,0,0,0.1);
+    padding: 3px;
+    width: 100%;
+    margin-bottom: 5px;
+    display: flex;
+}
+.namemembre {
+    text-align: center;
+    border: 1px solid aliceblue;
+    background: aliceblue;
+    border-radius: 11px;
+    margin-bottom: 10px;
+    padding: 6px 11px 8px 11px;
+}
+.aspectButton{
+
+    height: 27px !important;
+    font-size: 12px  !important;
+
+}
+#name_and_logo_boutique {
+    height: 45px;
+    padding-top: 1px;
+    padding-left: 1px;
+    background: rgba(0,0,0,0.03);
+}
+#all{
+    display: inline-block;
+    width: 100%;
+    color:#1C1C1C;
+    font-size: 12px;
+}
+._image_{
+
+    height: 40px;
+    width: 40px;
+    border-radius: 100%;
+    margin-right: 7px;
+
+}
+.time{
+      font-size: 9px;
+      text-align: right;
+      font-weight: bold;
+      /*display: none*/
+  }
+
+  .my, .your{
+    width: 78%;
+    font-size: 12px;
+  }
+  .my{
+    margin-left: 20% !important;
+    background: #abffab;
+  }
+  .your{
+    background: #5fa6e3;
+    color: white;
+  }
+  #name_and_logo_boutique {
+    height: 45px;
+   }
+   #message {
+    max-height: 226px;
+    overflow-y: auto;
+    margin-top: 5px;
+    color: black !important;
+}
+._image_logo_in{
+    width: 39px;
+	height: 39px;
+	border-radius: 100%;
+	float: left;
+	margin-right: 5px;
+}
+.message_nav {
+    background: transparent;
+	border: transparent;
+	padding: 0px;
+	margin: 0px;
+	cursor: pointer;
+	font-size: 12PX;
+}
+.unread {
+
+    font-weight: bold;
+    background: rgba(0,0,0,0.4);
+   
+
+}
+.message_view{
+   margin-bottom: 1px;
+   padding: 3px 3PX 3px 3px;
+   cursor: pointer;
+}
+.name_in {
+    font-size: 14PX;
+    font-weight: bold;
+}
+.font_b {
+
+}
+.delete_message{
+  color: red;
+}
+
+.delete_all_message{
+  border: none;
+  color:#fff;
+  background-color: #d9534f;
+  border-color: #d43f3a;
+}
+#preview_image_for_article {
+    max-width: 100%;
+    margin-bottom: 5px;
+    height: 100%;
+}
+
+.container_preview_image_for_article {
+    position: absolute;
+    top: -33px;
+    height: 30px;
+    width: 53px;
+}
+.delete_image_preview_article {
+    position: absolute;
+    top: 0;
+    width: 100%;
+    display: none;
+    justify-content: center;
+    align-items: center;
+}
+._container_image_article img {
+  max-width: 100%;
+  height: 100%;
+  margin-bottom: 7px;
+}
+#preview_image_for_article:hover .delete_image_preview_article{
+  display: flex;
+}
+.block_message{
+  border: none;
+  color:#fff;
+  background-color: #f0ad4e;
+  border-color: #eea236;
+}
+.send_message, .file_image_uploid{
+    color:#fff;
+    background-color: #337ab7;
+    border: none;
+}
+.send_message, .block_message, .delete_all_message, .file_image_uploid{
+   height: 25px !important;
+  padding-top: 1px !important;
+}
+.container-message-debloqued{
+   display: flex;
+}
+.file_image_uploid{
+  padding-left: 5px;
+padding-right: 5px;
+cursor: pointer;
+}
+._Fullname{
+  font-weight: bold;
+  margin-bottom: 0px !important;
+}
+.debloqued {
+    background: white;
+    border: none;
+    color: blueviolet;
+}
+.delete_message {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    border: 1px solid
+    rgba(0,0,0,0.3);
+    border-radius: 100%;
+    width: 19px;
+    height: 19px;
+    padding: 0;
+    background:white;
+    display: none;
+}
+.contaitboutique:hover .delete_message{
+   display: block;
+}
+.head_message{
+     height: 350px;
+    width: 266px;
+    position: fixed;
+    bottom: 40px;
+    right: 6px;
+    z-index: 6;
+    background: white;
+    box-shadow: 0px 0px 2px rgba(0,0,0,0.6);
+    display:none
+   }
+.contaitboutique{
+  margin: 9px;
+  padding: 5px;
+  border-radius: 13px 13px 0PX 13px;
+  position:relative;
+}
+.action {
+position: absolute;
+bottom: 0px;
+margin: 0;
+width: 100%;
+padding: 5px;
+border-top: 1px solid rgba(0,0,0,0.4);
+}
+input[name="messageForBoutique"]{
+   margin-bottom: 4px;
+}
+input[name="EnvoyeMessage"]{
+
+}
+#formForMessageBoutique{
+  margin-bottom: 0px;
+  text-align: right;
+}
+.container-membre{
+
+}
+#container_membre_in {
+    overflow-y: scroll;
+    height: 307px;
+}
+
+.hvr-ripple-out {
+  display: inline-block;
+  vertical-align: middle;
+  -webkit-transform: perspective(1px) translateZ(0);
+  transform: perspective(1px) translateZ(0);
+  box-shadow: 0 0 1px rgba(0, 0, 0, 0);
+  position: relative;
+}
+.hvr-ripple-out:before {
+  content: '';
+  position: absolute;
+  border: #337ab7 solid 6px;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  border-radius: 100%;
+  -webkit-animation-duration: 1s;
+  animation-duration: 1s;
+}
+.hvr-ripple-out:before{
+  -webkit-animation-name: hvr-ripple-out ;
+  -webkit-animation-iteration-count: infinite;
+  -webkit-animation-timing-function: linear;
+  -webkit-animation-direction: normal;
+
+   animation-iteration-count: infinite;
+   animation-timing-function: linear;
+   animation-direction: normal;
+   animation-name: hvr-ripple-out;
+}
+.hvr-ripple-out:hover:before{
+  display: none;
+}
+@-webkit-keyframes hvr-ripple-out {
+  100% {
+    top: -12px;
+    right: -12px;
+    bottom: -12px;
+    left: -12px;
+    opacity: 0;
+  }
+}
+@keyframes hvr-ripple-out {
+  100% {
+    top: -12px;
+    right: -12px;
+    bottom: -12px;
+    left: -12px;
+    opacity: 0;
+  }
+}

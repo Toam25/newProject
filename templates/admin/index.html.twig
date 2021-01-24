@@ -8,6 +8,7 @@
     <link rel="stylesheet" type="text/css"href=" {{ asset('vendor/datatables/dataTables.bootstrap4.min.css') }}" >
     <link href="{{ asset('toastr/toastr.css') }}" rel="stylesheet" type="text/css">
     <link href="{{ asset('css/admin.css') }}" rel="stylesheet" type="text/css">
+    <link href="{{ asset('css/contact.css') }}" rel="stylesheet" type="text/css">
   
 {% endblock %}
 {% block body %}
@@ -119,6 +120,7 @@
   <a class="scroll-to-top rounded" href="#page-top">
     <i class="fas fa-angle-up"></i>
   </a>
+  {% include "membre_and_message/membre_and_message.html.twig" %}
 {% endblock %}
 
 {% block javascripts %}
@@ -131,4 +133,5 @@
 <script src="{{asset('js/demo/datatables-demo.js') }} "></script>
 <script src="{{asset('toastr/toastr.min.js') }} "></script>
 <script src="{{ asset('js/admin.js') }}"></script>
+<script src="{{ asset('js/membre_and_notification.js') }}"></script>
   {% endblock %}

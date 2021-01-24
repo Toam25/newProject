@@ -41,6 +41,8 @@
 	<div class='image_header'>
 		{% include 'boutique/dependancies/bannierboutique.html.twig' %}
 	</div>
+	{{ dump(null) }}
+	 {% if not boutique   %}
 	<div>
 		<div class="container-fluid">
 			<div class="row">
@@ -128,6 +130,9 @@
 			</div>
 		</div>
 	</div>
+	{% else %}
+       <p>La boutique n'existe pas</p>
+	{% endif %}
 	{% if not app.user%}
 		{% include 'boutique/dependancies/connexion.html.twig'%}
 	{% endif %}
