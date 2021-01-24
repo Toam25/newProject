@@ -1,0 +1,34 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Inscription{% endblock %}
+{% block stylesheets %}
+     <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/glyphicon.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/bootstrap.min.css')}}">
+    <link rel="stylesheet" href="./assets/css/parrainage.css" />
+    <link rel="stylesheet" href="./assets/css/inscription.css" />
+{% endblock %}
+
+{% block body %}
+   <div class="backgroundimage_connexion">
+     <div class="container">
+            <div class="row">
+               <div class="col-md-4 col-sm-6 col-xs-12 style_inscription">
+                    <h2 align="center">Inscription</h2>
+				               	<p class="enregistrer" style="width: 100%;display: inline-block;text-align: center;font-weight: bold;box-shadow: 0 0 5px rgb(255, 255, 255);"></p>
+                        {{form_start(forms)}}
+                            {{form_row(forms.name)}}
+                            {{form_row(forms.firstname)}}
+                            {{form_row(forms.birthday)}}
+                            {{form_row(forms.genre)}}
+                            {{form_row(forms.email)}}
+                            {{form_row(forms.password)}}
+                          <button id="bouton_inscr" class="btn btn-danger" type="submit">Inscription </button>
+                        {{form_end(forms)}}
+               </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+{% block javascripts %}
+	  <script type="text/javascript" src="./assets/js/inscription.js"></script>
+{% endblock %}
