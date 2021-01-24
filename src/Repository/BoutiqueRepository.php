@@ -18,7 +18,6 @@ class BoutiqueRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Boutique::class);
     }
-    
     public function findOneByWithHeaderReference(string $type,int $id){
         return $this->createQueryBuilder('b')
                     ->select('b','h','r')
