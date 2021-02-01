@@ -91,21 +91,22 @@ class ArticleRepository extends ServiceEntityRepository
         }
         return [];
     }
-    public function findOneArticleByBoutiqueWithImage(Boutique $boutique, int $id){
-        return $this->createQueryBuilder('a')
-        ->select('a', 'b', 'v', 'i', 'c')
+    public function findOneArticleByBoutiqueWithImage(int $id, Boutique $boutique=null){
+        $query= $this->createQueryBuilder('a')
+        ->select('a', 'b', 'v', 'i', 'c','u')
         ->leftJoin('a.votes', 'v')
+        ->leftJoin('v.user', 'u')
         ->leftJoin('a.boutique', 'b')
         ->leftJoin('a.images', 'i')
         ->leftJoin('a.carts', 'c')
-        ->andwhere('a.boutique = :boutiqueid')
         ->andwhere('a.id = :id')
-        ->setParameter('boutiqueid', $boutique->getId())
-        ->setParameter('id', $id)
-        ->getQuery()
-        ->getOneOrNullResult()
-        ;
-
+        ->setParameter('id', $id);
+    if($boutique != null){
+       $query->andwhere('a.boutique = :boutiqueid')
+            ->setParameter('boutiqueid', $boutique->getId());
+    }
+        
+    return  $query ->getQuery()->getOneOrNullResult();
 }
 
 

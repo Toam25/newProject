@@ -102,14 +102,15 @@ class AppCustomAuthenticator extends AbstractFormLoginAuthenticator implements P
     public function onAuthenticationSuccess(Request $request, TokenInterface $token, $providerKey)
     {
         
-        if ($targetPath = $this->getTargetPath($request->getSession(), $providerKey)) {
+        /*if ($targetPath = $this->getTargetPath($request->getSession(), $providerKey)) {
           
           return new JsonResponse(['status'=>'success'], Response::HTTP_ACCEPTED);
            // return new RedirectResponse($targetPath);
-        }
+        }*/
 
         // For example : return new RedirectResponse($this->urlGenerator->generate('some_route'));
-        throw new \Exception('TODO: provide a valid redirect inside '.__FILE__);
+        //throw new \Exception('TODO: provide a valid redirect inside '.__FILE__);//
+        return new JsonResponse(['status'=>'success'], Response::HTTP_ACCEPTED);
     }
     function onAuthenticationFailure(Request $request, AuthenticationException $exception)
     {    

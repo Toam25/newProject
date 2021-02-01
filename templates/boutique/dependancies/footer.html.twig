@@ -38,8 +38,9 @@
 								<ul class="footer-links">
 									<li> Siège : Ankadifotsy </li>
 									<li> Service en ligne  </li>
-									<li>Suivie nous sur notre page <a href="{{boutique.link}}" target="_blank" style="color:#46b1e6">facebook</a></li>
-
+									{% if boutique.link is defined %}
+										<li>Suivie nous sur notre page <a href="{{boutique.link}}" target="_blank" style="color:#46b1e6">facebook</a></li>
+									{% endif %}
 									{#
 									<li><a href="{{ path('show_cart',{'type':'panier'})}}">View Cart</a></li>
 									<li><a href="{{ path('show_cart',{'type':'wish'})}}">Wishlist</a></li>

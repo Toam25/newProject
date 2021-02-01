@@ -19,7 +19,7 @@
           </div>
            <div class="separate_connexion"></div>
           <div class="containt-btn-connexion">
-              <a href="" class="controle_view_connexion">Mot passe oublié ?</a> <a href="<?= $link_inscription ?>">Inscription</a>
+              <a href="" class="controle_view_connexion">Mot passe oublié ?</a> <a href="{{ path('registration')}}">Inscription</a>
           </div>
 
            <button id="login_validation"class="btn-connexion" type="submit">
@@ -35,7 +35,7 @@
           </div>
            <div class="separate_connexion"></div>
           <div class="containt-btn-connexion">
-              <a href="" class="controle_view_connexion">Connexion</a> <a href="<?= $link_inscription ?>">Inscription</a>
+              <a href="" class="controle_view_connexion">Connexion</a> <a href="{{ path('registration')}}">Inscription</a>
           </div>
            <button class="btn-connexion" type="submit">
             <img class="ajax" src="{{ asset('images/images_default/ajax-loader.gif')}}">

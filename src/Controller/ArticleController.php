@@ -22,11 +22,12 @@ class ArticleController extends AbstractController
     /**
      * @Route("/admin/list", name="article_liste", methods={"GET"})
      */
-    public function index(ArticleRepository $articleRepository): Response
+    public function index(ArticleRepository $articleRepository,BoutiqueRepository $boutiqueRepository): Response
     {
         return $this->render('admin/index.html.twig', [
             'articles' => $articleRepository->findAll(),
-            'pages' => 'list'
+            'pages' => 'list',
+            'boutique' => $boutiqueRepository->findOneBy(['user'=>$this->getUser()])
         ]);
     }
 
@@ -76,7 +77,7 @@ class ArticleController extends AbstractController
     public function show($id,Request $request,InsertFileServices $insertFileServices, ArticleRepository $articleRepository, BoutiqueRepository $boutiqueRepository): Response
     {   
         $boutique = $boutiqueRepository->findOneBy(['user'=>$this->getUser()]);
-        $article= $articleRepository->findOneArticleByBoutiqueWithImage($boutique, $id);
+        $article= $articleRepository->findOneArticleByBoutiqueWithImage($id, $boutique);
         $form=$this->createForm(ArticleType::class,$article);
         $form->handleRequest($request);
         if($form->isSubmitted()){
@@ -106,7 +107,7 @@ class ArticleController extends AbstractController
     /**
      * @Route("/admin/article/edit/{id}", name="article_edit", methods={"GET","POST"})
      */
-    public function edit(Request $request, Article $article): Response
+    public function edit(Request $request, Article $article,BoutiqueRepository $boutiqueRepository ): Response
     {
         $form = $this->createForm(ArticleType::class, $article);
         $form->handleRequest($request);
@@ -120,7 +121,8 @@ class ArticleController extends AbstractController
         return $this->render('admin/index.html.twig', [
             'article' => $article,
             'form' => $form->createView(),
-            'pages' => 'edit'
+            'pages' => 'edit',
+            'boutique' => $boutiqueRepository->findOneBy(['user'=>$this->getUser()])
         ]);
     }
 

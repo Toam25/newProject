@@ -62,6 +62,10 @@
         
         {% elseif pages == 'list_boutique' %}
             {% include ("admin/dependencies/list_boutique.html.twig") %}
+
+        {% elseif pages == 'category' %}
+            {% include ("admin/dependencies/category.html.twig") %}
+
         {% elseif pages == 'new_header' %}
             {% include pages %}
         {% elseif pages == 'list_header' %}
@@ -133,5 +137,4 @@
 <script src="{{asset('js/demo/datatables-demo.js') }} "></script>
 <script src="{{asset('toastr/toastr.min.js') }} "></script>
 <script src="{{ asset('js/admin.js') }}"></script>
-<script src="{{ asset('js/membre_and_notification.js') }}"></script>
   {% endblock %}

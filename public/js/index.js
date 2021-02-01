@@ -5,16 +5,21 @@ $(function(){
 
   $('.modenav').on('click', function (e) {
     e.preventDefault();
-    $('.menu_index').hide();
-    ESS_ARTICLE = "MODE";
+    //$('.menu_index').hide();
     $('.listeMode').toggle();
+    $('.liste_high_teck').hide();
+    ESS_ARTICLE = "MODE";
+  
   })
 
-  $('.hightechnav').on('click', function (e) {
+  $('body').on('click', '.hightechnav',function (e) {
     e.preventDefault();
-    $('.menu_index').hide();
-    ESS_ARTICLE = "HIGH-TECH";
+    //$('.menu_index').hide();
     $('.liste_high_teck').toggle();
+    $('.listeMode').hide();
+
+    ESS_ARTICLE = "HIGH-TECH";
+    
   });
 
   $('.hd').on('click', function (e) {
@@ -264,7 +269,7 @@ $(function(){
        </div>
    
    
-       <h3 class="titre_menu_detail" id="art_malagasy">Art Malagasy </h3>
+       <!--h3 class="titre_menu_detail" id="art_malagasy">Art Malagasy </h3>
        <div class="sous_menu" id="sous_menu_art" style="display: none ;" >
           <h4 id="bijoux_pp" class="h4_menu1">   Bijoux et pierre précieuse </h4>
                <p class="font_size_p menu1"> <span id="bijoux" class="echantillon_image"> Bijoux</span> </p>
@@ -279,7 +284,7 @@ $(function(){
            <p class="font_size_p menu1"> <span id="raphia" class="echantillon_image"> Raphia</span> </p>
          <p class="font_size_p menu1"> <span id="broderie" class="echantillon_image"> Broderie</span> </p>
          <p class="font_size_p menu1"> <span id="produit_en_soie" class="echantillon_image"> soie</span> </p>
-         <p class="font_size_p menu1"> <span id="sisal" span class="echantillon_image"> Sisal</span> </p>
+         <p class="font_size_p menu1"> <span id="sisal" span class="echantillon_image"> Sisal</span> </p-->
        </div>`;
   }
 

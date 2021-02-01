@@ -31,6 +31,7 @@ class BoutiqueController extends AbstractController
     {
 
         $boutique = $boutiqueRepository->findOneBoutiqueByUserPerRole('ROLE_SUPER_ADMIN');
+        $lastboutique = $boutiqueRepository->findAll();
         $header = $headerRepository->findOneBy(['boutique' => $boutique]);
         $header_image = ($header) ? $header->getName() : "images_default/default_image.jpg";
         $articles = $articleRepository->getArticleWithVote();
@@ -39,7 +40,8 @@ class BoutiqueController extends AbstractController
             'boutique' => $boutique,
             'articles' => $articles,
             'header_image' => $header_image,
-            'votes' => $voteRepository->findAll()
+            'votes' => $voteRepository->findAll(),
+            'lastboutique' => $lastboutique[1]
         ]);
     }
     /**
@@ -52,13 +54,18 @@ class BoutiqueController extends AbstractController
         $listShops = $this->getlistShop($boutiqueRepository->findBy(['type' => $type]), $type);
 
         $pageWasRefreshed = isset($_SERVER['HTTP_CACHE_CONTROL']) && $_SERVER['HTTP_CACHE_CONTROL'] === 'max-age=0';
-        if ($pageWasRefreshed) {
-            $shopId = $id;
+        if ($id == -1) {
+            $boutique = $boutiqueRepository->findOneBy(['type' => $type]);
         } else {
-            $shopId = $id; //$this->lastShopVisited($listShops['allShopId']);
-        }
 
-        $boutique = $boutiqueRepository->findOneByWithHeaderReference($type, $shopId);
+            if ($pageWasRefreshed) {
+                $shopId = $id;
+            } else {
+                $shopId = $id; //$this->lastShopVisited($listShops['allShopId']);
+            }
+
+            $boutique = $boutiqueRepository->findOneByWithHeaderReference($type,intval($shopId));
+        }
 
         if ($request->get('shop_id')) {
             $article = $searchService->getResultSearch($request);
@@ -83,17 +90,20 @@ class BoutiqueController extends AbstractController
     /**
      * @Route("/detail/{id}", name="detail")
      */
-    public function detail(int $id, BoutiqueRepository $boutiqueRepository, VotesRepository $votesRepository, ArticleRepository $articleRepository)
+    public function detail(int $id, Article $article, BoutiqueRepository $boutiqueRepository, VotesRepository $votesRepository)
     {
-        $article = $articleRepository->findOneBy(['id' => $id]);
+
         $votes = $votesRepository->findBy(['article' => $article]);
         $getNumberVote = $this->getNumberTotalVote($votes);
+
+
         return $this->render('boutique/detail.html.twig', [
             'controller_name' => 'BoutiqueController',
-            'boutique' => $boutiqueRepository->findOneBy(['id' => 1]),
+            'boutique' => $article->getBoutique(),
             'article' => $article,
             'votes' => $votes,
-            'valuevote' => $getNumberVote
+            'valuevote' => $getNumberVote["votes"],
+            'users' => $getNumberVote["user"],
         ]);
     }
 
@@ -164,6 +174,9 @@ class BoutiqueController extends AbstractController
         $two = 0;
         $one = 0;
         $array = [];
+        $user = [
+            'isComment' => false
+        ];
         for ($i = 0; $i < sizeof($votes); $i++) {
             if ($votes[$i]->getValue() == 5) {
                 $five++;
@@ -180,15 +193,25 @@ class BoutiqueController extends AbstractController
             if ($votes[$i]->getValue() == 1) {
                 $one++;
             }
+            if ($votes[$i]->getUser() == $this->getUser()) {
+                $user = [
+                    'isComment' => true,
+                    'comment' => $votes[$i]->getComment(),
+                    'value' => $votes[$i]->getValue()
+                ];
+            }
             $nbr += $votes[$i]->getValue();
         }
-        return $array = [
-            'five' => $five,
-            'four' => $four,
-            'tree' => $tree,
-            'two' => $two,
-            'one' => $one,
-            'total' => $nbr,
+        return [
+            'user' => $user,
+            'votes' => [
+                'five' => $five,
+                'four' => $four,
+                'tree' => $tree,
+                'two' => $two,
+                'one' => $one,
+                'total' => $nbr,
+            ]
         ];
     }
 
@@ -227,32 +250,29 @@ class BoutiqueController extends AbstractController
         $list = [];
         foreach ($articles as $article) {
 
-           $sous_category_existe=false;
-            foreach($list as $key=>$listcategory){
-                if(array_key_exists($article->getSousCategory(),$listcategory)){
-                    $sous_category_existe=true;
-                    $sous_category=$article->getSousCategory();
-                    $key_sous_category=$key;
+            $sous_category_existe = false;
+            foreach ($list as $key => $listcategory) {
+                if (array_key_exists($article->getSousCategory(), $listcategory)) {
+                    $sous_category_existe = true;
+                    $sous_category = $article->getSousCategory();
+                    $key_sous_category = $key;
                 }
             }
-            if($sous_category_existe){
-                    $type =  $article->getType() ?? 'pas de type';
-                  if(!in_array($type,$list[$key_sous_category][$sous_category])){
-                   array_push(
-                         $list[$key_sous_category][$sous_category],
+            if ($sous_category_existe) {
+                $type =  $article->getType() ?? 'pas de type';
+                if (!in_array($type, $list[$key_sous_category][$sous_category])) {
+                    array_push(
+                        $list[$key_sous_category][$sous_category],
                         $type
-                        
+
                     );
                 }
-               
-            }
-            else {
-                array_push($list,[
-                        $article->getSousCategory() => [
+            } else {
+                array_push($list, [
+                    $article->getSousCategory() => [
                         $article->getType()
-                      ]
+                    ]
                 ]);
-                
             }
         }
         return $this->htlmCategory($list);

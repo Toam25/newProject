@@ -29,7 +29,8 @@
 
 	<!-- Custom stlylesheet -->
 	<link type="text/css" rel="stylesheet" href="{{ asset('css/style.css') }}"/>
-	<link type="text/css" rel="stylesheet" href="{{ asset('css/boutique.css') }}"/>
+	<link
+	type="text/css" rel="stylesheet" href="{{ asset('css/boutique.css') }}"/>
 	{# link type="text/css" rel="stylesheet" href="{{ asset('css/index.css') }}" #}
 	<link type="text/css" rel="stylesheet" href="{{ asset('css/jssor.slider.css') }}"/>
 	<link type="text/css" rel="stylesheet" href="{{ asset('css/cart.css') }}"/>
@@ -41,14 +42,14 @@
 	<div class='image_header'>
 		{% include 'boutique/dependancies/bannierboutique.html.twig' %}
 	</div>
-	{{ dump(null) }}
-	 {% if not boutique   %}
-	<div>
-		<div class="container-fluid">
-			<div class="row">
-				<div class="col-md-2  col-lg-2 menu_v ">
 
-					
+	{% if  boutique   %}
+		<div>
+			<div class="container-fluid">
+				<div class="row">
+					<div class="col-md-2  col-lg-2 menu_v ">
+
+
 						<h3 class="title_C" style="display:table-cell">Filtres
 						</h3>
 						<input class="shop_type" type="hidden" name="shop_type" value="{{ type }}">
@@ -59,79 +60,79 @@
 								{# {{ categorie(boutique) }} #}
 							</form>
 						{% endif %}
-					
-				</div>
-				<div class="col-md-8 col-sm-12 col-xs-12 col-lg-8">
-					<div class="">
 
-						<h3 class="title_C" style="display:table-cell">Nos produit</h3>
-						<div class="row js_list_article">
-							{% if articles %}
-								{% include "boutique/dependancies/_list.html.twig" with {'articles': articles} only %}
-							{% else %}
-								Pas de resultat
-							{% endif %}
+					</div>
+					<div class="col-md-10 col-sm-12 col-xs-12 col-lg-10">
+						<div class="">
+
+							<h3 class="title_C" style="display:table-cell">Nos produit</h3>
+							<div class="row js_list_article">
+								{% if articles %}
+									{% include "boutique/dependancies/_list.html.twig" with {'articles': articles} only %}
+								{% else %}
+									Pas de resultat
+								{% endif %}
+							</div>
 						</div>
 					</div>
-				</div>
-				
-					<div class="col-md-2 col-sm-12 col-xs-12 col-lg-2">
-					
+
+					{#<div class="col-md-2 col-sm-12 col-xs-12 col-lg-2">
+
 						<h3 class="title_C" style="display:table-cell">Video</h3>
 						<div class="pub_video_pub">
 							<iframe width="100%" height="333px" src="https://www.youtube.com/embed/-YN612DOzno" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 						</div>
-					
+
+					</div>#}
+				</div>
+			{# 	<h3 class="title_C" style="display:table-cell">Nouveauté
+				</h3>
+				{% include "boutique/dependancies/section.html.twig" with {'articles' : newArticles} %}
+
+			#}
+			</div>
+
+			<div id="container_social_network">
+				<h3 class="title_C" style="display:table-cell">Réseau sociaux
+				</h3>
+				<div class="container_reference">
+					{% if boutique.shopReferences is defined  %}
+						{% for socialnetwork in boutique.socialNetworks %}
+
+							<div id="_reference">
+								<div id="_container_images">
+									<img src={{ asset('images/'~ socialnetwork.images)}} alt="{{ socialnetwork.description }}"/>
+								</div>
+								<p id="container_description_reference">{{  socialnetwork.description }}
+									<a href="{{ socialnetwork.link }}" target="_blank">{{ socialnetwork.nameLink }}</a>
+								</p>
+							</div>
+						{% endfor %}
+					{% endif %}
 				</div>
 			</div>
-			<h3 class="title_C" style="display:table-cell">Nouveauté
-			</h3>
-			{% include "boutique/dependancies/section.html.twig" with {'articles' : newArticles} %}
 
+			<div id="container_reference">
+				<h3 class="title_C" style="display:table-cell">Nos References
+				</h3>
+				<div class="container_reference">
+					{% if boutique.shopReferences is defined  %}
+						{% for reference in boutique.shopReferences %}
 
-		</div>
-
-		<div id="container_social_network">
-			<h3 class="title_C" style="display:table-cell">Réseau sociaux
-			</h3>
-			<div class="container_reference">
-				{% if boutique.shopReferences is defined  %}
-					{% for socialnetwork in boutique.socialNetworks %}
-
-						<div id="_reference">
-							<div id="_container_images">
-								<img src={{ asset('images/'~ socialnetwork.images)}} alt="{{ socialnetwork.description }}"/>
+							<div id="_reference">
+								<div id="_container_images">
+									<img src={{ asset('images/'~reference.images)}} alt="{{ reference.description }}"/>
+								</div>
+								<p id="container_description_reference">{{  reference.description }}
+								</p>
 							</div>
-							<p id="container_description_reference">{{  socialnetwork.description }}
-							<a href="{{ socialnetwork.link }}" target="_blank">{{ socialnetwork.nameLink }}</a>
-							</p>
-						</div>
-					{% endfor %}
-				{% endif %}
+						{% endfor %}
+					{% endif %}
+				</div>
 			</div>
 		</div>
-
-		<div id="container_reference">
-			<h3 class="title_C" style="display:table-cell">Nos References
-			</h3>
-			<div class="container_reference">
-				{% if boutique.shopReferences is defined  %}
-					{% for reference in boutique.shopReferences %}
-
-						<div id="_reference">
-							<div id="_container_images">
-								<img src={{ asset('images/'~reference.images)}} alt="{{ reference.description }}"/>
-							</div>
-							<p id="container_description_reference">{{  reference.description }}
-							</p>
-						</div>
-					{% endfor %}
-				{% endif %}
-			</div>
-		</div>
-	</div>
 	{% else %}
-       <p>La boutique n'existe pas</p>
+		<p>La boutique n'existe pas</p>
 	{% endif %}
 	{% if not app.user%}
 		{% include 'boutique/dependancies/connexion.html.twig'%}

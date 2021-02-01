@@ -1,0 +1,20 @@
+<div 
+   id="category-{{ category.id }}"
+   data-parent="category-{{ category.parentid }}"
+   class="listcategory"
+ >
+ <p>{{ category.name }}</p>
+    <div>
+          <button  data-parent = {{ category.id }} class="btn btn-warning edit_category"><i class="fa fa-edit"></i></button>
+          <button  data-parent = {{ category.id }} class="btn btn-primary add_category"><i class="fa fa-plus"></i></button>
+          <a href="{{ path('category_delete',{'id': category.id })}}" class="btn btn-danger delete_category"><i class="fa fa-trash"></i></a>
+    </div>
+ </div>
+ 
+ {% if category.children is defined %}
+    <div style="margin-left : 40px;">
+        {% for category in category.children %}
+            {% include "admin/dependencies/_category.html.twig" with {'category': category } only %}
+        {% endfor %}
+    </div>
+ {% endif %}

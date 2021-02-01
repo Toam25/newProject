@@ -148,6 +148,12 @@ ul > ul > li label, ul>li>label{
     margin: 15px 0px 10px;
     height: 20px;
 }
+.myvoting .fa-star{
+    color:#d10024;
+}
+.myvoting .fa-star-o{
+    color: #E4E7ED;
+}
 #header{
     position: sticky;
     top: 0;
