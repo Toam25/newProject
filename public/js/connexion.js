@@ -144,7 +144,7 @@ $(function () {
         }
       },
       error: function (data) {
-        toastr.error("Erreur d'identification : "+data.responseJSON.message);
+        toastr.error("Erreur d'identification ");
         /* $('.message').css('background','red');
          $('.message').text(data.responseJSON.message);
        */

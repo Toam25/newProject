@@ -1,9 +1,21 @@
 $(function () {
+  var $category
+  //add category 
+  $('body').on('click', '.add_category', function (e) {
+    e.preventDefault();
+    var $form = $('.form_add_category');
+    var parentId = $(this).data('parent');
+    $('#name_category').text("");
+    let namecategory = $(this).parent('div').children('p').text();
+    $('#name_category').text(namecategory);
+    $form.find('#category_parent_id').val(parentId);
+    $category = $('#category-' + parentId);
+    $("#ajout_category").modal('show');
+  });
 
-   // edit article
-   $('.edit_article_in_shop').on('submit', function (e) {
-    e.preventDefault()
-    let url= $(this).attr('action');
+  $('body').on('submit', '.form_add_category ', function (e) {
+    e.preventDefault();
+    let url = $(this).attr('action');
     $.ajax({
       url,
       type: 'POST',
@@ -20,7 +32,56 @@ $(function () {
         toastr.success('Enregistrer avec success');
         $('.btn-submit').children('.loader_ajax').remove();
         $('.btn-submit').prop('disabled', false)
-        
+       
+        let category = `
+           <div 
+            id="category-`+ data.id + `"
+            data-parent="category-`+ data.parentId + `"
+           class="listcategory"
+          >
+          <p>`+ data.name + `</p>
+          <button  data-parent = `+ data.id + ` class="btn btn-primary add_category">Ajout</button>
+          </div>`;
+          console.log(data.parentId);
+          if(parseInt(data.parentId)!=0){
+             category=`<div style="margin-left:40px">`+category+`</div>`;
+             $category.after(category);
+          }
+          else{
+             $('.container-fluid').append(category)
+          }
+      },
+      error: () => {
+        toastr.error('Une error à été survenue');
+        $('.btn-submit').children('.loader_ajax').remove();
+        $('.btn-submit').prop('disabled', false)
+      },
+      complete: function () {
+
+      }
+    });
+  });
+  // edit article
+  $('.edit_article_in_shop').on('submit', function (e) {
+    e.preventDefault()
+    let url = $(this).attr('action');
+    $.ajax({
+      url,
+      type: 'POST',
+      data: new FormData(this),
+      contentType: false,
+      processData: false,
+      cache: false,
+      dataType: 'json',
+      beforeSend: () => {
+        $('.btn-submit').append('<span class="loader_ajax" style="height: 20px;width: 20px;display: inline-block;"><img src="/images/images_default/ajax-loader.gif" style="height: 100%;width: 100%;"></span>');
+        $('.btn-submit').prop('disabled', true)
+      },
+      success: (data) => {
+        toastr.success('Enregistrer avec success');
+        $('.btn-submit').children('.loader_ajax').remove();
+        $('.btn-submit').prop('disabled', false)
+
       },
       error: () => {
         toastr.error('Une error à été survenue');
@@ -35,7 +96,7 @@ $(function () {
   //add article
   $('.add_article_in_shop').on('submit', function (e) {
     e.preventDefault()
-    let url= $(this).attr('action');
+    let url = $(this).attr('action');
     $.ajax({
       url,
       type: 'POST',
@@ -51,18 +112,18 @@ $(function () {
       success: (data) => {
         toastr.success('Supprimer avec avec success');
         $('#ajout_article').modal('hide');
-         $('.all_article').append(`
+        $('.all_article').append(`
               <div class="container_article col-xs-6 col-sm-3 col-md-2 col-lg-2">
                       <div class="list_produit">
                           <input type="hidden" name="table" value="article_in">
                           <input type="hidden" name="id_image" value="{{article.id}}">
                   
-                            <img class="image_produit" src="/images/`+data.images[0]+`" alt="`+data.name+`">
-                          <p class="name_article">`+data.name+`</p>
+                            <img class="image_produit" src="/images/`+ data.images[0] + `" alt="` + data.name + `">
+                          <p class="name_article">`+ data.name + `</p>
                             <span class="remove_article glyphicon glyphicon-remove"></span> 
                             <div>
-                         <a class="btn btn-warning article_edit" href="/admin/article/`+data.id+`">Détail</a>
-                         <a class="btn btn-danger article_delete" href="/admin/article/delete/`+data.id+`"">Supprimer</a>
+                         <a class="btn btn-warning article_edit" href="/admin/article/`+ data.id + `">Détail</a>
+                         <a class="btn btn-danger article_delete" href="/admin/article/delete/`+ data.id + `"">Supprimer</a>
                       </div>
                       </div>
             </div>
@@ -70,7 +131,7 @@ $(function () {
         $(this)[0].reset();
         $('.btn-submit').children('.loader_ajax').remove();
         $('.btn-submit').prop('disabled', false)
-        
+
       },
       error: () => {
         toastr.error('Une error à été survenue');
@@ -86,11 +147,11 @@ $(function () {
   $('.ajout_article_ev').on('click', function (e) {
     e.preventDefault();
 
-   
+
     $('.radio1').children('label').removeClass('promotion_selected');
     $('input[value="Normale"]').parents('label').addClass('promotion_selected');
 
-   
+
     $('#div-inother').hide()
     $('#article_sous_category').attr('value', $(this).attr('id'));
     $('#article_type').html(typeArticle($(this).attr('id')));

@@ -34,7 +34,7 @@ class SecurityController extends AbstractController
             if ($allUsers == NULL) {
                 $hash = $encoder->encodePassword($user, $user->getPassword());
                 $user->setPassword($hash);
-                $user->setRoles(["ROLE_ADMIN"]);
+                $user->setRoles(["ROLE_USER"]);
 
                 $boutique->setName('myBoutiqueName')
                     ->setType("SuperAdmin")

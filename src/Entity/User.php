@@ -80,6 +80,11 @@ class User implements UserInterface
      */
     private $carts;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Category", mappedBy="user")
+     */
+    private $categories;
+
     public function __construct()
     {
         $this->boutiques = new ArrayCollection();
@@ -87,6 +92,7 @@ class User implements UserInterface
         $this->avatar = 'images_default/default_image.jpg';
         $this->votes = new ArrayCollection();
         $this->carts = new ArrayCollection();
+        $this->categories = new ArrayCollection();
  
     }
 
@@ -327,6 +333,37 @@ class User implements UserInterface
             // set the owning side to null (unless already changed)
             if ($cart->getUser() === $this) {
                 $cart->setUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Category[]
+     */
+    public function getCategories(): Collection
+    {
+        return $this->categories;
+    }
+
+    public function addCategory(Category $category): self
+    {
+        if (!$this->categories->contains($category)) {
+            $this->categories[] = $category;
+            $category->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCategory(Category $category): self
+    {
+        if ($this->categories->contains($category)) {
+            $this->categories->removeElement($category);
+            // set the owning side to null (unless already changed)
+            if ($category->getUser() === $this) {
+                $category->setUser(null);
             }
         }
 

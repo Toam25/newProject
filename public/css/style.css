@@ -77,7 +77,10 @@ a {
   -webkit-transition: 0.2s color;
   transition: 0.2s color;
 }
-
+._header {
+  display: grid;
+  grid-template-columns: 1fr 2fr 1fr;
+}
 
 ul, ol {
   margin: 0;
@@ -85,7 +88,8 @@ ul, ol {
   list-style: none
 }
 .logo img{
-  border-radius: 50%;
+  height : 43px;
+  margin : 0px 9px;
 }
 /*----------------------------*\
 	Buttons
@@ -468,7 +472,7 @@ textarea.input {
 \*----------------------------*/
 
 .header-search {
-  padding: 15px 0px;
+ 
 }
 
 .header-search form {

@@ -13,10 +13,12 @@ class ProfilController extends AbstractController
      * @Route("/profil/{id}", name="profil")
      */
     public function index(User $user, BoutiqueRepository $boutiqueRepository)
-    {   
+    {  
+         $lastboutique=$boutiqueRepository->findAll();
         return $this->render('profil/index.html.twig', [
             'user' => $user,
             'boutique' => $boutiqueRepository->findOneBoutiqueByUserPerRole('ROLE_SUPER_ADMIN'),
+            'lastboutique'=>$lastboutique[1]
         ]);
     }
 }

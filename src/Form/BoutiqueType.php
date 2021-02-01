@@ -18,13 +18,13 @@ class BoutiqueType extends AbstractType
     {
         $builder
             ->add('name',TextType::class,[
-                'label'=>'Lien Fb',
+                'label'=>'Nom',
                 'attr'=>[
                     'class'=>'form-control'
                 ]
             ])
             ->add('address',TextType::class,[
-                'label'=>'Lien Fb',
+                'label'=>'Adresse',
                 'attr'=>[
                     'class'=>'form-control'
                 ]

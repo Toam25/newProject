@@ -1,34 +1,65 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Inscription{% endblock %}
+{% block title %}Inscription
+{% endblock %}
 {% block stylesheets %}
-     <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/glyphicon.css')}}">
-    <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/bootstrap.min.css')}}">
-    <link rel="stylesheet" href="./assets/css/parrainage.css" />
-    <link rel="stylesheet" href="./assets/css/inscription.css" />
+	<link href="{{ asset('css/bootstrap3.3.css')}}" rel="stylesheet" type="text/css">
+	<link rel="stylesheet" href="{{ asset('css/inscription.css')}}"/>
 {% endblock %}
 
 {% block body %}
-   <div class="backgroundimage_connexion">
-     <div class="container">
-            <div class="row">
-               <div class="col-md-4 col-sm-6 col-xs-12 style_inscription">
-                    <h2 align="center">Inscription</h2>
-				               	<p class="enregistrer" style="width: 100%;display: inline-block;text-align: center;font-weight: bold;box-shadow: 0 0 5px rgb(255, 255, 255);"></p>
-                        {{form_start(forms)}}
-                            {{form_row(forms.name)}}
-                            {{form_row(forms.firstname)}}
-                            {{form_row(forms.birthday)}}
-                            {{form_row(forms.genre)}}
-                            {{form_row(forms.email)}}
-                            {{form_row(forms.password)}}
-                          <button id="bouton_inscr" class="btn btn-danger" type="submit">Inscription </button>
-                        {{form_end(forms)}}
-               </div>
-            </div>
-        </div>
-    </div>
-{% endblock %}
+	<style type="text/css">
+		.style_inscription {
+			box-shadow: 0 0 5px;
+			border-radius: 30px 0 17px 0;
+			background: linear-gradient(rgb(112, 67, 155),rgb(3, 157, 236));
+			color: white;
+			font-size: 13px;
+			padding-bottom: 14px;
+		}
+	</style>
+	<div class="container">
+		<div class="row">
+			<div class="col-md-8 col-sm-6 col-xs-12"></div>
+			<div class="col-md-4 col-sm-6 col-xs-12 style_inscription">
+				<h2 align="center">Inscription</h2>
+				<p class="enregistrer" style="width: 100%;display: inline-block;text-align: center;font-weight: bold;box-shadow: 0 0 5px rgb(255, 255, 255);"></p>
+				{{form_start(forms,{'attr':{'class':'FormulaireMembre'}})}}
+				<!-- Inscription -->
+
+				<div id="ProfilShow"></div>
+
+				{{form_row(forms.name)}}
+				{{form_row(forms.firstname)}}
+				{{form_row(forms.birthday)}}
+				{{form_row(forms.genre)}}
+				{{form_row(forms.email)}}
+				{{form_row(forms.password)}}
+
+				<p><input class="form-control accept" type="checkbox" name="" required>
+					<span>En inscrivant sur cet site, vous accepter nos
+						<a href="condition.php" style="color: darkslateblue;">condition d"utilisation</a>
+					</span>
+				</p>
+				<p style="color: black !important;">
+					<span class="number1"></span>
+					<span class="number2"></span>
+					<span class="number3"></span>
+					<span class="number4"></span>
+					=
+					<input type="text" name="resultat" class="resultat">
+				</p>
+			</br>
+			<button id="bouton_inscr" class="btn btn-danger" type="submit">
+				Inscription
+				<img class='ajax' src="http://assets.over-blog-kiwi.com/t/catalog/images/loader/ajax_loader.gif">
+			</button>
+			<p id='mail_existe'></p>
+			{{form_end(forms)}}
+			<!--controlle en javascript de l'inscription-->
+		</div>
+	</div>
+</div>{% endblock %}
 {% block javascripts %}
-	  <script type="text/javascript" src="./assets/js/inscription.js"></script>
+    <script type="text/javascript" src="{{ asset('js/inscription.js') }}"></script>
 {% endblock %}

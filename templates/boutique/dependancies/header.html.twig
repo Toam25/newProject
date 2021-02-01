@@ -22,8 +22,8 @@
                 <!-- LOGO -->
                 <div class="col-md-3 col-sm-3 col-xs-12">
                     <div class="header-logo">
-                        <a href="/" class="logo">
-                            <img style="height: 68px;width: 68px;" src="{{asset('images/'~boutique.logo)}}" alt="">
+                        <a href="{{ path('shop',{ 'type':boutique.type, 'id': boutique.id })}}" class="logo">
+                            <img  src="{{asset('images/'~boutique.logo)}}" alt="">
                         </a>
                       <span class="shop_name" style="color:white !important"> {{boutique.name}} <br> 
                         <i class="fa fa-phone" style="color:#df2121"></i> 

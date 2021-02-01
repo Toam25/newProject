@@ -8,21 +8,21 @@
 					<a href="#">MODE</a>
 					<ul class="submenu">
 						<li>
-							<a href="boutique.html">Habillement</a>
+							<a href="{{ path('shop',{'type':'habillement','id':-1})}}">Habillement</a>
 						</li>
 						<li>
-							<a href="beauteetbienetre.html">Beauté Bien-être</a>
+							<a href="{{ path('shop',{'type':'beaute_bien_etre','id': -1})}}">Beauté Bien-être</a>
 						</li>
 						<li>
-							<a href="accessoire.html">Accessoires</a>
+							<a href="{{ path('shop',{'type':'accessoire','id':-1})}}">Accessoires</a>
 						</li>
-						<li>
+						<!--li>
 							<a href="artmalagasy.html">Art Malagasy</a>
-						</li>
+						</li-->
 					</ul>
 				</li>
 				<li class="high-tech">
-					<a href="hightech.html">HIGH-TECH</a>
+					<a href="{{ path('shop',{'type':'high-tech','id':-1})}}">HIGH-TECH</a>
 
 				</li>
 

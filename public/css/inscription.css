@@ -1,0 +1,491 @@
+body {
+
+
+
+    padding-top: 50px;
+    
+    
+    
+    }
+    .starter-template {
+    padding: 40px 15px;
+    text-align: center;
+    }
+    img{
+        vertical-align: middle;
+      border-style: none;
+        width: 100px;
+        height:50px;	
+    }
+    .accept {
+        display: inline-block;
+        width: 19px;
+        height: 10px;
+    }
+    p{
+        display: inline-block;
+    }
+    .achat{
+     color:grey;
+    }
+    .affiche_filleuil_parrainage{
+        border: 1px solid grey;
+    }
+    #connexion{
+        margin-top: 0px;
+        font-size:60%;
+    }
+    #marge_index{
+        margin-left: 670px;
+    }
+    .margedec{
+            margin-left: 300px;
+            display:inline;
+    }
+    .btn{
+        display: inline-block;
+    }
+    .backgroundimage{
+       background: url(../images/sar.jpg) no-repeat;
+       width: 70px;
+       height: 70px;
+       color: white;
+       font-size:90%;
+       margin-left: 10px;
+    }
+    .backgroundimage_achat{
+        background: url(../images/inother.jpg) no-repeat;
+       width: 500px;
+       height: 400px;
+    }
+    .backgroundimage_benefices{
+       background: url(../images/dollar_reduit.jpg) no-repeat;
+       width: 300px;
+       height: 300px;
+       color: black;
+       font-size:90%;
+       margin-left: 10px;
+    }
+    
+    
+    
+    
+    
+    
+    
+    .backgroundimage_connexion
+    
+    
+    
+    {
+    
+    
+    
+       background: url(../images/inother.jpg) no-repeat;
+    
+    
+    
+       width: 300px;
+    
+    
+    
+       height: 100px;
+    
+    
+    
+       margin-left: 75px;
+    
+    
+    
+    }
+    
+    
+    
+    
+    
+    
+    
+    .backgroundimage_header
+    
+    
+    
+    {
+    
+    
+    
+       background: url(../images/welcome.jpg) no-repeat;
+    
+    
+    
+       width: 1000px;
+    
+    
+    
+       height: 350px;
+    
+    
+    
+       margin-left: 300px;
+    
+    
+    
+    
+    
+    
+    
+    }
+    
+    
+    
+    
+    
+    
+    
+    .backgroundimage_reduit
+    
+    
+    
+    {
+    
+    
+    
+       background: url(../images/inother_réduit.jpg) no-repeat;
+    
+    
+    
+       width: 400px;
+    
+    
+    
+       height: 155px;
+    
+    
+    
+       margin-left: 75px
+    
+    
+    
+    }
+    
+    
+    
+    
+    
+    
+    
+    .backgroundimage_tous
+    
+    
+    
+    {
+    
+    
+    
+        background: url(../images/inother.jpg) no-repeat;
+    
+    
+    
+        width: 100px;
+    
+    
+    
+           height: 100px
+    
+    
+    
+    }
+    
+    
+    
+    
+    
+    
+    
+    .backgroundimage_vueentreenom
+    
+    
+    
+    {
+    
+    
+    
+        background: url(../images/inother_réduit.jpg) no-repeat;
+    
+    
+    
+        width: 100px;
+    
+    
+    
+           height: 100px
+    
+    
+    
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    .Benefic
+    
+    
+    
+    {
+    
+    
+    
+        margin-left: 775px;
+    
+    
+    
+    }
+    
+    
+    
+    
+    
+    
+    
+    #couleur_yellow
+    
+    
+    
+    {
+    
+    
+    
+        color:white;
+    
+    
+    
+    }
+    #couleur_red{
+        color:red;
+        border-color: grey;
+    }
+    
+    #couleur_red_dec
+    
+    
+    
+    {
+    
+    
+    
+        color:red;
+    
+    
+    
+        border-color: red;
+    
+    
+    
+    }
+    
+    
+    
+    
+    
+    
+    
+    .divcentre
+    
+    
+    
+     {
+    
+    
+    
+        margin-left: auto;
+    
+    
+    
+        margin-right: auto;
+    
+    
+    
+        width: 6em
+    
+    
+    
+    }
+    
+    
+    
+    .email
+    
+    
+    
+    {
+    
+    
+    
+      width: 200px;
+    
+    
+    
+      height:200px;
+    
+    
+    
+    }
+    
+    
+    
+    .error-message
+    
+    
+    
+    {
+    
+    
+    
+        display: none;
+    
+    
+    
+        color:red;
+    
+    
+    
+    }
+    
+    
+    
+    
+    
+    
+    
+    .en-tete_tableau_parrain
+    
+    
+    
+    {
+    
+    
+    
+        font-size:60%;
+    
+    
+    
+        border: 1px solid white;
+    
+    
+    
+        background-color:#dc3539;
+    
+    
+    
+        color:white;
+    
+    
+    
+    }
+    
+    
+    
+    
+    
+    
+    
+    .griser_lien
+    
+    
+    
+    {
+    
+    
+    
+      pointer-events: none;
+    
+    
+    
+      cursor: default;
+    
+    
+    
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    .navbar {
+      position: relative;
+      min-height: 50px;
+      margin-bottom: 20px;
+      border: 1px solid transparent;
+    
+    
+    
+    }
+    
+    
+    
+    
+    
+    
+    
+    .navbar-default {
+    
+    
+    
+      background-color: #f8f8f8;
+    
+    
+    
+      border-color: #e7e7e7;
+    }
+    .police{
+            font-size:60%; 
+        }
+    .police2{
+            font-size:50%;
+    
+        }
+    .r{
+        height:200px;
+        overflow:scroll;
+    }
+    .scroll{
+        margin-left: 25px;
+      width:90%;
+      height:500px;
+      overflow-x: hidden; 
+      overflow-y: scroll;
+      white-space: nowrap;
+      display: inline-block;
+    
+    }
+    input:required{
+        box-shadow: none;
+    }
+    .ajax{
+        display:none;
+        width: 33px;
+        height: 26px;
+        margin-left: 4px;
+    }
+    
+    @media (max-width: 1000px) {
+        
+         .backgroundimage_connexion
+         {
+             background: url() ;
+    
+         
+         }
+    }

@@ -1,35 +1,32 @@
 <div id="header">
-        <!-- container -->
-        <div class="container-fluid">
-            <!-- row -->
-            <div class="row">
-                <!-- LOGO -->
-                <div class="col-md-3 col-sm-3 col-xs-12">
-                    <div class="header-logo">
-                        <a href="/" class="logo">
-                            <img style="height: 68px;width: 68px;" src="{{asset('images/'~boutique.logo)}}" alt="">
-                        </a>
-                      <span class="shop_name"> {{boutique.name}} <br> 
-                        <i class="fa fa-phone" style="color:#df2121"></i> 
-                        <span class="contact_shop">{{boutique.contact}}</span></span>
-                    </div>
-                </div>
-                <!-- /LOGO -->
+	<div class="_header">
+		<div class="">
+			<div class="header-logo">
+				<a href="/" class="logo">
+					<img src="{{asset('images/'~boutique.logo)}}" alt="">
+				</a>
+				<span class="shop_name">
+					{{boutique.name}}
+					<br>
+					<i class="fa fa-phone" style="color:#df2121"></i>
+					<span class="contact_shop">{{boutique.contact}}</span>
+				</span>
+			</div>
+		</div>
+		<div class="header-search">
+			{#<form style="margin-top: 7px;" class="aside">
+				<input class="input" placeholder="Que vous cherchez chez nous ?" name="q">
+				<input type="hidden" name="shop_id" value="{{ boutique.id }}">
+				<button class="search-btn">Search</button>
+			</form>
+            #}
+		</div>
 
-                <!-- SEARCH BAR -->
-               
-                <!-- /SEARCH BAR -->
+		{% include "boutique/dependancies/_actionUser.html.twig"%}
 
-                <!-- ACCOUNT -->
-                {% include "boutique/dependancies/_actionUser.html.twig"%}
-                <!-- /ACCOUNT -->
-            </div>
-            <!-- row -->
-        </div>
-        <!-- container -->
-        <div class="inother-ajax">
-            <div class="div-inother"></div>
-        </div>
-    </div>
-    <!-- /MAIN HEADER -->
-</header>
+	</div>
+
+	<div class="inother-ajax">
+		<div class="div-inother"></div>
+	</div>
+</div></header>

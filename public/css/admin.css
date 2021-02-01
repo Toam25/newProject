@@ -4,6 +4,35 @@
     width: 100%;
     align-items: center;
 }
+.form_add_category{
+    background: white;
+    padding: 8px;
+    margin: 5px;
+    justify-content: center;
+    position: relative;
+    
+}
+#name_category {
+    color: black;
+}
+.listcategory{
+    box-shadow: 0 0 2px;
+    padding: 5px;
+    margin-top: 5px;
+    margin-left: 5px;
+    background: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.close_add{
+    position: absolute;
+    top: -17px;
+    right: -12px;
+    height: 40px;
+    width: 40px;
+    border-radius: 50%;
+}
 .container_image_article_ img {
     max-width: 100px;
     height: 16px;

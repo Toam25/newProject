@@ -25,14 +25,15 @@
 	<!-- Custom stlylesheet -->
 	<link type="text/css" rel="stylesheet" href="{{ asset('css/boutique.css') }}"/>
 	<link type="text/css" rel="stylesheet" href="{{ asset('css/style.css') }}"/>
-	<link type="text/css" rel="stylesheet" href="{{ asset('css/cart.css') }}"/>
-	<!--link type="text/css" rel="stylesheet" href="{{ asset('css/index.css') }}"/-->
+	<link
+	type="text/css" rel="stylesheet" href="{{ asset('css/cart.css') }}"/>
+<!--link type="text/css" rel="stylesheet" href="{{ asset('css/index.css') }}"/-->
 
 {% endblock %}
 {% block body %}
 	{% include "boutique/dependancies/header.html.twig" %}
 	<!-- SECTION -->
-
+	
 
 	<div
 		class="section">
@@ -50,23 +51,23 @@
 								<img src="{{asset('images/'~image.name)}}" alt="">
 							</div>
 						{% endfor %}
-						
+
 					</div>
 				</div>
-				
+
 				<!-- /Product main img -->
 
 				<!-- Product thumb imgs -->
 				<div class="col-md-2  col-md-pull-5">
-					<div id="product-imgs">
-					{#
-						{% for image in article.images%}
-
-							<div class="product-preview">
-								<img src="{{asset('images/'~image.name)}}" alt="">
-							</div>
-						{% endfor %}
-					#}
+					<div
+						id="product-imgs">{#
+													{% for image in article.images%}
+							
+														<div class="product-preview">
+															<img src="{{asset('images/'~image.name)}}" alt="">
+														</div>
+													{% endfor %}
+												#}
 					</div>
 				</div>
 				<!-- /Product thumb imgs -->
@@ -88,21 +89,21 @@
 							</h3>
 						</div>
 						<p>{{ article.description}}</p>
-					{#
-						<div class="add-to-cart">
-							<div class="qty-label">
-								<div class="input-number">
-									<input type="number" min="1" value="1">
-									<span class="qty-up">+</span>
-									<span class="qty-down">-</span>
-								</div>
-							</div>
-
-							<button class="add-to-cart-btn">
-								<i class="fa fa-shopping-cart"></i>
-								add to cart</button>
-						</div>
-					#}
+						{#
+												<div class="add-to-cart">
+													<div class="qty-label">
+														<div class="input-number">
+															<input type="number" min="1" value="1">
+															<span class="qty-up">+</span>
+															<span class="qty-down">-</span>
+														</div>
+													</div>
+						
+													<button class="add-to-cart-btn">
+														<i class="fa fa-shopping-cart"></i>
+														add to cart</button>
+												</div>
+											#}
 						--(ttr
 
 					</div>
@@ -212,30 +213,31 @@
 													</li>
 												{% endfor %}
 											</ul>
-										{#
-											<ul class="reviews-pagination">
-												<li class="active">1</li>
-												<li>
-													<a href="#">2</a>
-												</li>
-												<li>
-													<a href="#">3</a>
-												</li>
-												<li>
-													<a href="#">4</a>
-												</li>
-												<li>
-													<a href="#">
-														<i class="fa fa-angle-right"></i>
-													</a>
-												</li>
-											</ul>
-										#}
+											{#
+																						<ul class="reviews-pagination">
+																							<li class="active">1</li>
+																							<li>
+																								<a href="#">2</a>
+																							</li>
+																							<li>
+																								<a href="#">3</a>
+																							</li>
+																							<li>
+																								<a href="#">4</a>
+																							</li>
+																							<li>
+																								<a href="#">
+																									<i class="fa fa-angle-right"></i>
+																								</a>
+																							</li>
+																						</ul>
+																					#}
 										</div>
 									</div>
 									<!-- /Reviews -->
 
 									<!-- Review Form -->
+									{% if users['isComment'] %}
 									<div id="avis" class="col-md-3">
 										<div id="review-form">
 											<form id="{{ article.id }}" class="review-form">
@@ -243,19 +245,40 @@
 													<span>Votre satisfaction :
 													</span>
 													<br>
-													<div class="stars">
-														<input id="star5" name="rating" value="5" type="radio"><label for="star5"></label>
-														<input id="star4" name="rating" value="4" type="radio"><label for="star4"></label>
-														<input id="star3" name="rating" value="3" type="radio"><label for="star3"></label>
-														<input id="star2" name="rating" value="2" type="radio"><label for="star2"></label>
-														<input id="star1" name="rating" value="1" type="radio"><label for="star1"></label>
+													<div class="myvoting">
+														{{my_vote_twig(users['value'])}}
 													</div>
-													<textarea class="input comment" placeholder="Commentaire"></textarea>
+													<p>
+														{{ users['comment'] }}
+													</p>
 												</div>
-												<button class="primary-btn">Enregistrer</button>
 											</form>
 										</div>
 									</div>
+									{% elseif app.user %}
+										<div id="avis" class="col-md-3">
+											<div id="review-form">
+												<form id="{{ article.id }}" class="review-form">
+													<div class="input-rating">
+														<span>Votre satisfaction :
+														</span>
+														<br>
+														<div class="stars">
+															<input id="star5" name="rating" value="5" type="radio"><label for="star5"></label>
+															<input id="star4" name="rating" value="4" type="radio"><label for="star4"></label>
+															<input id="star3" name="rating" value="3" type="radio"><label for="star3"></label>
+															<input id="star2" name="rating" value="2" type="radio"><label for="star2"></label>
+															<input id="star1" name="rating" value="1" type="radio"><label for="star1"></label>
+														</div>
+														<textarea class="input comment" placeholder="Commentaire">
+															
+														</textarea>
+													</div>
+													<button class="primary-btn">Enregistrer</button>
+												</form>
+											</div>
+										</div>
+									{% endif %}
 									<!-- /Review Form -->
 								</div>
 							</div>

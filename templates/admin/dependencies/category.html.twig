@@ -1,0 +1,8 @@
+<button class="btn btn-success add_category_racine add_category" id="category-0" data-parent=0>
+	Ajouter une nouvele categorie</button>
+
+    {% include "admin/dependencies/add_category_modal.html.twig" with {'form' : form } only %}
+
+ {% for category in categories %}
+        {% include "admin/dependencies/_category.html.twig" with {'category': category } only %}
+{% endfor %}
