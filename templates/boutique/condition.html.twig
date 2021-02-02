@@ -1,0 +1,46 @@
+{% extends "base.html.twig" %}
+
+{% block title %}
+	{{ 'Inother-boutique' }}
+{% endblock %}
+
+{% block stylesheets %}
+	 <link href="https://fonts.googleapis.com/css?family=Montserrat:400,500,700" rel="stylesheet">
+   
+    <link href="{{ asset('css/bootstrap3.3.css')}}" rel="stylesheet" type="text/css">
+    <!-- Slick -->
+    <link type="text/css" rel="stylesheet" href="{{asset('css/slick.css') }}"/>
+    <link type="text/css" rel="stylesheet" href="{{asset('css/slick-theme.css') }}"/>
+
+    <!-- nouislider -->
+    <link type="text/css" rel="stylesheet" href="{{asset('css/nouislider.min.css') }}"/>
+
+    <!-- Font Awesome Icon -->
+    <link rel="stylesheet" href="{{ asset('css/font-awesome.min.css') }}">
+
+    <!-- Custom stlylesheet -->
+    <link type="text/css" rel="stylesheet" href="{{ asset('css/style.css') }}"/>
+    <link type="text/css" rel="stylesheet" href="{{ asset('css/index.css') }}"/>
+{% endblock %}
+
+
+{% block body %}
+{% include "boutique/index.navbar.html.twig" %}
+
+<div style="display:flex; flex-direction:column;align-items: center;">
+
+<h1>{{ boutique.name }} </h1>
+<p>  {{ boutique.usercondition | raw }} </p>
+
+</div>
+	{% if not app.user%}
+		{% include 'boutique/dependancies/connexion.html.twig'%}
+	{% endif %}
+	{% include "boutique/dependancies/footer.html.twig" %}
+{% endblock %}
+{% block javascripts %}
+	<script src="{{asset('js/jquery.js')}}"></script>
+	<script src="{{asset('js/bootstrap.min.js')}}"></script>
+	<script src="{{ asset('js/connexion.js') }}"> </script>
+	<script src="{{asset('js/index.js')}}"></script>
+{% endblock %}

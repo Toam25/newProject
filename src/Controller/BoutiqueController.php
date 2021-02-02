@@ -162,6 +162,19 @@ class BoutiqueController extends AbstractController
             ]
         );
     }
+        /**
+     * @Route("/condition/{id}", name="condition")
+     */
+    public function condition(Boutique $boutique, BoutiqueRepository $boutiqueRepository)
+    {
+        $lastboutique = $boutiqueRepository->findAll();
+        return $this->render("boutique/condition.html.twig",[
+            'boutique'=>$boutique,
+            'lastboutique' => $lastboutique[1]
+        ]);
+
+        
+    }
     /**
      * @return array 
      */
