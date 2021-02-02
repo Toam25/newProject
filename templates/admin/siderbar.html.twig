@@ -31,11 +31,12 @@
     </li>
     #}
     {% if 'ROLE_SUPER_ADMIN' in app.user.roles %}
-      <li class="nav-item">
+      {#<li class="nav-item">
         <a class="nav-link" href="">
           <i class="fas fa-fw fa-tachometer-alt"></i>
           <span>Gestionniare de video</span></a>
       </li>
+       #} 
       <li class="nav-item">
         <a class="nav-link" href="{{ path('category') }}">
           <i class="fas fa-fw fa-tachometer-alt"></i>
