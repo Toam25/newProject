@@ -53,7 +53,7 @@
     {% if 'ROLE_SUPER_ADMIN' in app.user.roles %}
           {% include "admin/menu_super_admin.html.twig" %}
     {% else %}
-          {% include "admin/menu_admin.html.twig " with {'type': boutique.type}%}
+          {% include "admin/menu_admin.html.twig" with {'type': boutique.type}%}
     {% endif %}
      {#
     <hr class="sidebar-divider">
