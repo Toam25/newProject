@@ -115,6 +115,9 @@ class Article
         $this->votes = new ArrayCollection();
         $this->votesarticle = new ArrayCollection();
         $this->carts = new ArrayCollection();
+        $this->price=0;
+        $this->price_global=0;
+        $this->price_global=0;
     }
 
     public function getId(): ?int

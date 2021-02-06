@@ -1,10 +1,10 @@
 {% if type is same as("High-tech")%}
 <li class="nav-item">
-      <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#telephonie" aria-expanded="true" aria-controls="collapsePages">
+      <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#telephonie_" aria-expanded="true" aria-controls="collapsePages">
         <i class="fas fa-fw fa-folder"></i>
         <span>Téléphonie</span>
       </a>
-      <div id="telephonie" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
+      <div id="telephonie_" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
         <div class="bg-white py-2 collapse-inner rounded">
           <a class="collapse-item" href="{{path('article_list',{'category':'telephone'})}}">Téléphone</a>
           <a class="collapse-item" href="{{path('article_list',{'category':'accessoire'})}}">Accessoire</a>
@@ -12,11 +12,11 @@
       </div>
 </li>
 <li class="nav-item">
-      <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#informatique" aria-expanded="true" aria-controls="collapsePages">
+      <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#informatique_" aria-expanded="true" aria-controls="collapsePages">
         <i class="fas fa-fw fa-folder"></i>
         <span>Informatique</span>
       </a>
-      <div id="informatique" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
+      <div id="informatique_" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
         <div class="bg-white py-2 collapse-inner rounded">
           <a class="collapse-item" href="{{path('article_list',{'category':'materiels_informatique'})}}">Matériels informatique</a>
           <a class="collapse-item" href="{{path('article_list',{'category':'diagnostiques'})}}">Diagnostiques</a>
