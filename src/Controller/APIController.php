@@ -3,9 +3,11 @@
 namespace App\Controller;
 
 use App\Entity\Header;
+use App\Entity\Menu;
 use App\Repository\BoutiqueRepository;
 use App\Repository\EsArticleRepository;
 use App\Repository\HeaderRepository;
+use App\Repository\MenuRepository;
 use App\Service\InsertFileServices;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -31,6 +33,79 @@ class APIController extends AbstractController
             $data[$key]['image'] = $value->getImage();
         }
         return new Response(json_encode($data));
+    }
+
+    /**
+     * @Route("/get/listOption", name="get_listOption")
+     */
+    public function getListOption( Request $request, MenuRepository $menuRepository,BoutiqueRepository $boutiqueRepository )
+    {   
+        $boutique =$boutiqueRepository->findOneBy(['user'=>$this->getUser()]);
+        $sous_category = $request->request->get('categorie_sante_in');
+        $list=[];
+        $listMenu=$menuRepository->findBy(['boutique'=>$boutique,'sousCategory'=> $sous_category]);
+        foreach ($listMenu as  $key=>$menu) {
+            $list[$key]=[
+                   'name'=>$menu->getName(),
+                    'id'=>$menu->getId()
+            ];
+        }
+        return new JsonResponse($list);
+    }
+     /**
+     * @Route("/delete/option/{id}", name="delete_listOption")
+     */
+    public function deleteOption(Menu $menu)
+    {   
+        
+        if($this->getUser()==$menu->getBoutique()->getUser()){
+              $em= $this->getDoctrine()->getManager();
+              $em->remove($menu);
+              $em->flush();
+              return new JsonResponse(['status'=>'success']);
+
+        }
+        else{
+             return new JsonResponse(['status'=>'error','message'=>"Non authorise"],403);
+
+        }
+    }
+
+    /**
+     * @Route("/add/listOption", name="add_listOption")
+     */
+    public function addListOption(Request $request, BoutiqueRepository $boutiqueRepository)
+    {
+
+        if ($this->getUser() != null) {
+
+            $menu = new Menu();
+            $boutique = $boutiqueRepository->findOneBy(['user' => $this->getUser()]);
+            $category = $request->request->get('categorie_sante') ?? "";
+            $name = $request->request->get('name_option') ?? "";
+            $sous_category = $request->request->get('sous_categorie_menu') ?? "";
+
+            $menu->setCategory($category);
+            $menu->setName($name);
+            $menu->setSousCategory($sous_category);
+            $menu->setBoutique($boutique);
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($menu);
+            $em->flush();
+
+            return new Response(json_encode([
+                'status' => 'success',
+                'results' => [
+                    'category' => $category,
+                    'name' => $name,
+                    'id' => $menu->getId(),
+                    'sous_category' => $sous_category,
+                    'boutique_id' => $boutique->getId()
+                ]
+            ]));
+        } else {
+            return new JsonResponse(['status' => 'not authorised'], 403);
+        }
     }
     /**
      * @Route("/header_image/edit", name="edit_images_header")
@@ -72,19 +147,15 @@ class APIController extends AbstractController
     /**
      * @Route("/header_image/delete/{id}", name="header_delete", methods={"DELETE"})
      */
-    public function header_delete($id,Header $header): Response
+    public function header_delete($id, Header $header): Response
     {
-        if ($this->getUser() and $header->getId()==$id) {
+        if ($this->getUser() and $header->getId() == $id) {
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->remove($header);
             $entityManager->flush();
-            return new JsonResponse(['status'=>'success'],Response::HTTP_OK);
-
+            return new JsonResponse(['status' => 'success'], Response::HTTP_OK);
+        } else {
+            return new JsonResponse(['status' => 'error'], Response::HTTP_NOT_EXTENDED);
         }
-        else{
-            return new JsonResponse(['status'=>'error'],Response::HTTP_NOT_EXTENDED);
-        }
-
-       
     }
 }

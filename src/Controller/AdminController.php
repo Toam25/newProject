@@ -14,8 +14,10 @@ use App\Form\UserType;
 use App\Repository\ArticleRepository;
 use App\Repository\BoutiqueRepository;
 use App\Repository\HeaderRepository;
+use App\Repository\MenuRepository;
 use App\Repository\ReferenceRepository;
 use App\Repository\UserRepository;
+use App\Service\CategoryOptionService;
 use App\Service\InsertFileServices;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -152,6 +154,24 @@ class AdminController extends AbstractController
         return $this->render('admin/index.html.twig', [
             'pages' => 'reseaux',
             'boutique' => $boutique
+        ]);
+    }
+    /**
+     * @Route("admin/parametre/option", name="parametre_option")
+     */
+    public function parametreOption(BoutiqueRepository $boutiqueRepository, MenuRepository $menuRepository, CategoryOptionService $categoryOptionService)
+    {
+
+    
+        $boutique = $boutiqueRepository->findOneBy(['user' => $this->getUser()]);
+        $menu = $menuRepository->findBy(['boutique'=>$boutique]);
+
+        
+        return $this->render('admin/index.html.twig', [
+            'pages' => 'parametreOption',
+            'boutique' => $boutique,
+            'listmenu'=>$menu,
+            'listCategories'=>$categoryOptionService->getListPerCategory($menu)
         ]);
     }
     /**

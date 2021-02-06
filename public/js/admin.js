@@ -1,5 +1,128 @@
 $(function () {
-  var $category
+  var $category;
+
+  //tab paramtre option
+
+  $('.list_option').on('click','.delete_option',function(e){
+    e.preventDefault();
+
+       var id=$(this).attr('value');
+   
+      $(this).parent('.option_menu').delay(1000).remove();
+      $.ajax({
+         url :'/api/delete/option/'+id,
+        type :'POST',
+        data :{
+         },
+         dataType : 'json',
+        beforeSend : function(){
+
+        },
+        success : function(data){
+          toastr.success('Supprimer avec success');
+        },
+        error : function(){
+          toastr.error('Il y a un erreur');
+        }
+      })
+});
+
+  $('body').on('click','.tab_men',function(e){
+             
+    categorie_menu=$(this).attr('name');
+
+     $('.add_option').children('input[name="categorie_sante"]').val(categorie_menu);
+     $('.items-menu-selected').removeClass('items-menu-selected');
+     $('button[name="'+categorie_menu+'"]').parent('div').addClass('items-menu-selected');
+     $('.list_option').html("");
+    containt_parameter(categorie_menu);
+    return false ;
+});
+
+  $('#onglets').tabs();
+  $('.attibute_article_in').on('change',function(){
+    var attr_categorie_menu = $(this).val();
+    $('fieldset').children('.loader_li').remove();
+    $.ajax({
+     url :'/api/get/listOption',
+     type: 'POST',
+     data : {
+       categorie_sante_in : attr_categorie_menu,
+     },
+     dataType : 'json',
+     beforeSend : function(){
+      $('.labelListOption').after('<img class="loader_li" style="height: 14px" src="/images/images_default/ajax-loader.gif"/>');
+     },
+     success : function(data){
+       let content="";
+       data.forEach(element => {
+         content = `
+        <div class="option_menu">`+element.name+`<button class="delete_option" value="`+element.id+`">
+        <span class="fa fa-trash"></span></button></div>
+        ` + content;
+       });
+       $('.list_option').html(content);
+     },
+     complete : function(){
+       $('fieldset').children('.loader_li').remove(); 
+     }
+    })
+  });
+  
+  $('.modifi_menu_in').on('click', function (e) {
+    e.preventDefault();
+    var categorie_menu = $(this).attr('name');
+    var listOption = [];
+    var cible = '.attibute_article_in';
+
+    $('.items-menu-selected').removeClass('items-menu-selected');
+    $(this).parent('div').addClass('items-menu-selected');
+
+    $('.name_menu').attr("placeholder", $(this).parents('.items-menu').children('.name_menu_sante').text());
+    $('.add_option').children('input[name="categorie_sante"]').val(categorie_menu);
+
+    containt_parameter(categorie_menu);
+
+  });
+  $('.add_option').on('submit',function(e){
+    e.preventDefault();
+     var  form=$(this);
+     $.ajax({
+          url :'/api/add/listOption',
+          type: 'POST',
+          data : new FormData(this),
+          contentType: false,
+          processData : false,
+          cache : false,
+          dataType : 'json',
+          beforeSend : function(){
+            $('fieldset').children('.loader_li').remove();
+            $('.labelListOption').after('<img class="loader_li" style="height: 14px" src="/images/images_default/ajax-loader.gif "/>');
+            $('.btn-submit').prop('disabled', true)
+          },
+          success : function (data){
+            toastr.success('Enregistrer avec success');
+              let content = `
+              <div class="option_menu">`+data.results.name+`<button class="delete_option" value="`+data.results.id+`">
+              <span class="fa fa-trash"></span></button></div>
+              `;
+              form.parents('fieldset').children('.list_option').append(content);
+
+              //$('.list_option').prepend(data.content);
+              $('input[name="name_option"]').val('');
+
+          
+          },
+          complete : function(){
+             $('fieldset').children('.loader_li').remove();
+          },
+          error: () => {
+            toastr.error('Une error à été survenue');
+            $('.btn-submit').children('.loader_ajax').remove();
+            $('.btn-submit').prop('disabled', false)
+          },
+     });
+  });
   //add category 
   $('body').on('click', '.add_category', function (e) {
     e.preventDefault();
@@ -32,7 +155,7 @@ $(function () {
         toastr.success('Enregistrer avec success');
         $('.btn-submit').children('.loader_ajax').remove();
         $('.btn-submit').prop('disabled', false)
-       
+
         let category = `
            <div 
             id="category-`+ data.id + `"
@@ -42,14 +165,14 @@ $(function () {
           <p>`+ data.name + `</p>
           <button  data-parent = `+ data.id + ` class="btn btn-primary add_category">Ajout</button>
           </div>`;
-          console.log(data.parentId);
-          if(parseInt(data.parentId)!=0){
-             category=`<div style="margin-left:40px">`+category+`</div>`;
-             $category.after(category);
-          }
-          else{
-             $('.container-fluid').append(category)
-          }
+        console.log(data.parentId);
+        if (parseInt(data.parentId) != 0) {
+          category = `<div style="margin-left:40px">` + category + `</div>`;
+          $category.after(category);
+        }
+        else {
+          $('.container-fluid').append(category)
+        }
       },
       error: () => {
         toastr.error('Une error à été survenue');
@@ -200,7 +323,7 @@ $(function () {
         $(this).prop('disabled', true)
       },
       success: (data) => {
-        toastr.success('Supprimer avec avec success');
+        toastr.success('Supprimer avec avec success')
         ;
         $(this).parents('.slide_animation ').css('transform', 'scale(0)');
         setTimeout(() => {
@@ -667,6 +790,8 @@ $(function () {
     $('#es_article_type').html(typeArticle($(this).attr('id')));
     $('.modal-footer').html(`<button id="submitformarticle" type="submit" class="btn btn-success"> Enregistrer</button>`);
   });
+
+
   function typeArticle(name, item = null) {
     var options = "";
     var classe = "";
@@ -920,6 +1045,113 @@ $(function () {
     }
 
     return options;
+  }
+
+  var containt_parameter = (categorie_menu) => {
+    //telefonie
+    if (categorie_menu == "Accessoires") {
+      cible = "#telephonie";
+      listOption = ['Coques', 'Batteries, Batteries externes', 'Ecouteurs', 'Enceintes bluetooth', 'Chargeurs', 'Oreillette bluetooth', 'Kits mains libres', 'Protection écran', 'Carte mémoire', 'Casque'];
+    }
+
+    if (categorie_menu == "Téléphone") {
+      cible = "#telephonie";
+      listOption = ['Téléphone fixe', 'Téléphone avec touche', 'Smartphone', 'I-phone'];
+    }
+    //image et son
+    if (categorie_menu == "TV") {
+      cible = "#image_son";
+      listOption = ['TV LED-LCD', 'TV 4K-UHD', 'Support TV', 'TV connectée', 'Smart TV'];
+    }
+    if (categorie_menu == "Video projecteur") {
+      cible = "#image_son";
+      listOption = ['HD Ready', 'Full HD', '4K/UHD', 'Accessoires'];
+    }
+    if (categorie_menu == "Son") {
+      cible = "#image_son";
+      listOption = ['Casque auto', 'Enceintes bleutooth, MP3, MP4', 'Radio', 'Dictaphone', 'Hifi', 'Bare de son'];
+    }
+    if (categorie_menu == "Phone et caméra") {
+      cible = "#image_son";
+      listOption = ['Flash photo', 'Filtre', 'Caméscope caméra', 'Objectif reflex', 'Objectif caméra', 'GoPro', 'Autre'];
+    }
+    if (categorie_menu == "Tous les accessoires") {
+      cible = "#image_son";
+      listOption = ['Câble et connectique', 'Accessoires audio et video', 'Accessoires photos', 'Accessoires caméra'];
+    }
+    //informatique
+    if (categorie_menu == "Matériels informatiques") {
+      cible = "#informatique";
+      listOption = ['Ordinateurs de bureau', 'ordinateurs portables', 'Tablette', 'Univers gaming', 'Composants - périphériques', 'Stockage', 'Réseaux'];
+    }
+    if (categorie_menu == "Diagnostiques") {
+      cible = "#informatique";
+      listOption = ['Hardware', 'Software'];
+    }
+    //impression
+    if (categorie_menu == "Impression") {
+      cible = "#impression";
+      listOption = ['Imprimante jet d\'encre', 'Imprimante laser', 'Scaner', 'Cartouches', 'Toners'];
+    }
+
+    if (categorie_menu == "Système domotique") {
+      cible = "#systme_domotique";
+      listOption = ['Motorisation', 'portails et volets', 'Accessoires', 'Interphone video', 'Alerme-Détecteur', 'Caméra de surveillance', 'Sécurité  incendie'];
+    }
+ 
+  
+    var options = attribute_article_in(listOption);
+
+    console.log(cible,categorie_menu,options);
+    $(cible).html(options);
+
+    var attr_categorie_menu = listOption[0];
+    $('fieldset').children('.loader_li').remove();
+
+    $.ajax({
+      url : "/api/get/listOption",
+      type: 'POST',
+      data: {
+        categorie_sante_in: attr_categorie_menu,
+      },
+      dataType: 'json',
+      beforeSend: function () {
+
+        $('.labelListOption').after('<img class="loader_li" style="height: 14px" src="/images/images_default/ajax-loader.gif"/>');
+      },
+      success: function (data) {
+        let content="";
+       data.forEach(element => {
+         content = `
+        <div class="option_menu">`+element.name+`<button class="delete_option" value="`+element.id+`">
+        <span class="fa fa-trash"></span></button></div>
+        ` + content;
+       });
+       $('.list_option').html(content);
+      },
+      complete: function () {
+        $('fieldset').children('.loader_li').remove();
+      }
+    });
+
+  }
+
+  var attribute_article_in = (option) => {
+
+    var options = " ";
+    var selected = ""
+    for (var i = option.length - 1; i >= 0; i--) {
+
+      if (i == 0) {
+        selected = "selected";
+      }
+      else {
+        selected = " "
+      }
+      options = '<option value="' + option[i] + '" ' + selected + '>' + option[i] + '</option>' + options;
+    }
+    return options;
+
   }
   function disableAddArticle() {
     $('.form_article').find('input').prop('disabled', true);
