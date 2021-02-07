@@ -108,6 +108,11 @@ class Article
      */
     private $sous_category;
 
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $referency;
+
     public function __construct()
     {
         $this->images = new ArrayCollection();
@@ -410,6 +415,18 @@ class Article
     public function setSousCategory(?string $sous_category): self
     {
         $this->sous_category = $sous_category;
+
+        return $this;
+    }
+
+    public function getReferency(): ?string
+    {
+        return $this->referency;
+    }
+
+    public function setReferency(string $referency): self
+    {
+        $this->referency = $referency;
 
         return $this;
     }

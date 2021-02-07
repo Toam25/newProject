@@ -25,5 +25,40 @@ class CategoryOptionService extends AbstractController{
      
         return $list;
     }
+
+    public function getCategoryType(array $categories){
+          $list=[];
+          foreach ($categories as $key => $category) {
+
+               $keylist=$this->in_array_type($category->getSousCategory(),$list);
+               if($keylist==-1){
+                    array_push($list,[
+                                        'type'=>$category->getSousCategory(),
+                                        'option'=>[$category->getName()]
+          
+                                      ]);
+                }
+                else{
+                  array_push($list[$keylist]['option'],$category->getName());
+                }
+          
+          }
+         return $list;
+        
+    }
+
+    public function in_array_type($value,$arr){
+     $i=0;
+     foreach($arr as $arr1)
+         {
+             if(in_array($value,$arr1))
+             {
+                return $i;
+             }
+        $i++;
+         }
+     return -1;
+     
+ }
   
   }

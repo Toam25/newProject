@@ -266,7 +266,7 @@ $(function () {
       }
     });
   });
-  //add type
+  //add type sous_category
   $('.ajout_article_ev').on('click', function (e) {
     e.preventDefault();
 
@@ -274,14 +274,103 @@ $(function () {
     $('.radio1').children('label').removeClass('promotion_selected');
     $('input[value="Normale"]').parents('label').addClass('promotion_selected');
 
-
+    let category = $(this).text();
+    $('._category').val(category);
     $('#div-inother').hide()
     $('#article_sous_category').attr('value', $(this).attr('id'));
     $('#article_type').html(typeArticle($(this).attr('id')));
     $('#ajout_article').modal('show');
+
+    $.ajax({
+      url: '/api/get/sous_category/type/'+category,
+      type: 'GET',
+      data: {},
+      dataType: 'json',
+      beforeSend: () => {
+
+      },
+      success: (data) => {
+          let results=data.results;
+          let sous_category ="";
+          let type ="";
+          let selected = "";
+          for (let index = 0; index < results.length; index++) {
+            selected=(index==0) ? "selected" : "";
+           sous_category+=
+            `<option class="sous_categorie_menu_on_type" data-name="`+results[index].type+`" value="`+results[index].type+`" `+selected+`>
+            `+results[index].type+`
+            </option>`;
+          }
+          for (let indexo= 0; indexo < results[0].option.length; indexo++) {
+            selected=(indexo==0) ? "selected" : "";
+            type+=
+             `<option class="sous_categorie_menu_on_type" data-name="`+results[0].option[indexo]+`" value="`+results[0].option[indexo]+`" `+selected+`>
+             `+results[0].option[indexo]+`
+             </option>`
+           }
+          $('#sous_category').html(sous_category);
+          $('#type').html(type);
+      },
+      error: () => {
+      },
+      complete: function () {
+
+      }
+    });
+
+
   });
+ 
+  // get Type 
 
+  $('.sous_category').on('change',function(e){
+             
+    var sous_categorie= $(this).val();
 
+    $('#type').parent('div').children('img').remove();
+    $.ajax({
+     url : '/api/get/list/type/'+sous_categorie,
+     type :'POST',
+     dataType : 'json',
+     data :{
+          
+      },
+     beforeSend : function(){
+            
+       $('.valeur_type').after('<img style="height: 14px" src="/images/images_default/ajax-loader.gif "/>');
+     },
+     success : function(datas){
+      
+      var selected;
+      var option=" ";
+      data=datas.results;
+      for(var $i=0; $i<data.length;$i++){
+        if($i==0){
+            selected="selected";
+        }
+        else{
+          selected=" ";
+        }
+        option+=`<option data_name="`+data[$i]+`" value="`+data[$i]+`" `+selected+` >`+data[$i]+
+                  `</option>`;
+      }
+      $('#type').html(option);
+     },
+
+     complete : function(){
+      $('.valeur_type').parent('div').children('img').remove();
+     },
+
+     error :function(){
+      $('.valeur_type').parent('div').children('img').remove();
+
+     }
+
+    });
+
+});
+
+///
   $('.close').on('click', function (e) {
     e.preventDefault();
 
