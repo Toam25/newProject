@@ -80,24 +80,31 @@ class APIController extends AbstractController
            $article->setSousCategory( $request->request->get('sous_category'));
            $article->setBoutique($boutiqueRepository->findOneBy(['user'=>$this->getUser()]));
 
-           $images = $request->request->get('images');
+           $images = $request->files->get('images');
 
-           dd($images);
+          
            foreach ($images as $image) {
-            $fichier = $insertFileServices->insertFile($image);
-            $img = new Images();
+                 $allImages = [];
+                $fichier = $insertFileServices->insertFile($image);
+                $img = new Images();
 
-            $img->setName($fichier);
-            $article->addImage($img);
-            array_push($allImages, $fichier);
-            break;
-        }
+                $img->setName($fichier);
+                $article->addImage($img);
+                array_push($allImages, $fichier);
+                break;
+           }
           
           $em= $this->getDoctrine()->getManager();
           $em->persist($article);
           $em->persist($img);
           $em->flush();
-           return new JsonResponse(['status'=>'error','message'=>'ok'],200);
+          $array = [
+            'status' => 'success',
+            'images' => $allImages,
+            'name' => $article->getName(),
+            'id' => $article->getId()
+        ];
+           return new JsonResponse($array,200);
         }
        
         return new JsonResponse(['status'=>'error','message'=>'not Authorized'],403);
