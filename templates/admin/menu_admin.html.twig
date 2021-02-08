@@ -116,6 +116,40 @@
         </div>
       </div>
 </li>
+{% elseif type is same as('Maison')%}
+<li class="nav-item">
+      <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#bricolage" aria-expanded="true" aria-controls="collapsePages">
+        <i class="fas fa-fw fa-folder"></i>
+        <span>Bricolage</span>
+      </a>
+      <div id="bricolage" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
+        <div class="bg-white py-2 collapse-inner rounded">
+          <a class="collapse-item" href="{{path('article_list',{'category':'outillages'})}}">Outillages</a>
+          </div>
+      </div>
+</li>
+<li class="nav-item">
+      <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#professionnel" aria-expanded="true" aria-controls="collapsePages">
+        <i class="fas fa-fw fa-folder"></i>
+        <span>Professionnel</span>
+      </a>
+      <div id="professionnel" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
+        <div class="bg-white py-2 collapse-inner rounded">
+          <a class="collapse-item" href="{{path('article_list',{'category':'outillages_pro'})}}">Outillages Pro</a>
+      </div>
+      </div>
+</li>
+<li class="nav-item">
+      <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#jardinage" aria-expanded="true" aria-controls="collapsePages">
+        <i class="fas fa-fw fa-folder"></i>
+        <span>Jardinage</span>
+      </a>
+      <div id="jardinage" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
+        <div class="bg-white py-2 collapse-inner rounded">
+          <a class="collapse-item" href="{{path('article_list',{'category':'outils_de_jardin'})}}">Outils de jardin</a>
+        </div>
+      </div>
+</li>
 {% endif %}
 <li class="nav-item">
       <a class="nav-link" href="{{ path('social_network_index')}}">

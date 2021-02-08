@@ -414,9 +414,18 @@ class AdminController extends AbstractController
             case 'inhalee':
                 $button = '<button id="inhalee"class="' . $class . '">Inhalée</button>';
                 break;
+            case 'outillages':
+                $button = '<button id="outillages"class="' . $class . '">Outillages</button>';
+                break;
+            case 'outillages_pro':
+                $button = '<button id="outillages_pro"class="' . $class . '">Outillages Pro</button>';
+                    break;
+            case 'outils_de_jardin':
+                $button = '<button id="outils_de_jardin"class="' . $class . '">Outils de jardin</button>';
+                    break;
             case 'rectale':
                 $button = '<button id="rectale"class="' . $class . '">Rectale</button>';
-                break;
+             break;
 
 
             default:
