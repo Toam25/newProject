@@ -1,0 +1,93 @@
+
+<div id="onglets">
+    <ul>
+      <li class="tab_men" name="Outillages"  ><a href="#_Bricolage">Bricolage</a></li>
+      <li class="tab_men" name="Outillages pro"><a href="#_professionnel">Professionnel</a></li>
+      <li name="Outils de jardin" class="tab_men"><a href="#_jardinage">Jardinage</a></li>
+    </ul>
+
+    <!--Telephonie-->
+
+  <fieldset id="_Bricolage" >
+  <div class="containt_menu_sante">
+
+        <div class="items-menu items-menu-selected">
+            <button name="Outillages" class="btn-seleted modifi_menu_in">Outillages</button>
+        </div>
+    </div>
+           <label class="labelListOption">Liste des Options :</label>
+           <div class="list_option">
+                {{ getListOption(listCategories,'Outils à main') }}
+           </div>
+      <form class="form-inline add_option container_modif_menu" >
+               <label >Ajouter une option : </label>
+               <input type="hidden"  name="categorie_sante" value="Outillages">
+
+               <input class="form-control" type="text" required name="name_option">
+               <select id="Bricolage" class="form-control attibute_article_in" name="sous_categorie_menu">
+                  <option value="Outils à main">Outils à main</option>
+                  <option value="Outils divers">Outils divers</option>
+                  <option value="Outils multifonctions">Outils multifonctions</option>
+                  <option value="Outils éléctriques">Outils éléctriques</option>
+                  <option value="Pièces détachées">Pièces détachées</option>
+               </select>
+               <input type="submit" name="btn_valider" value="Enregistrer">
+       </form>
+  </fieldset>
+
+  <!--_professionnel-->
+       <fieldset id="_professionnel">
+      
+        <div class="containt_menu_sante">
+
+        <div class="items-menu items-menu-selected">
+            <button name="Outillages Pro" class="btn-seleted modifi_menu_in">Outillages Pro</button>
+        </div>
+    </div>
+           <label class="labelListOption">Liste des Options :</label>
+           <div class="list_option">
+                {{ getListOption(listCategories,'Outillage à main') }}
+           </div>
+      <form class="form-inline add_option container_modif_menu" style="box-shadow: 0 0 3px <?= $color ?>">
+               <label >Ajouter une option : </label>
+               <input type="hidden"  name="categorie_sante" value="Outillages Pro">
+
+               <input class="form-control" type="text" required name="name_option">
+               <select id="Professionnel" class="form-control attibute_article_in" name="sous_categorie_menu">
+                  <option value="Outillage à main">Outillage à main</option>
+                  <option value="Outillage éléctroportatif">Outillage éléctroportatif</option>
+                  <option value="Machines equipements">Machines equipements</option>
+                  <option value="Eléctricité">Eléctricité</option>
+                  <option value="Quincallerie">Quincallerie</option>
+               </select>
+               <input type="submit" name="btn_valider" value="Enregistrer">
+       </form>
+  </fieldset>
+
+  <!--_jardinage-->
+       <fieldset id="_jardinage">
+      
+        <div class="containt_menu_sante">
+
+        <div class="items-menu items-menu-selected">
+            <button name="Outils de jardin" class="btn-seleted modifi_menu_in">Outils de jardin</button>
+        </div>
+    </div>
+           <label class="labelListOption">Liste des Options :</label>
+           <div class="list_option">
+                 {{ getListOption(listCategories,'TV LED-LCD') }}
+           </div>
+      <form class="form-inline add_option container_modif_menu" style="box-shadow: 0 0 3px <?= $color ?>">
+               <label >Ajouter une option : </label>
+               <input type="hidden"  name="categorie_sante" value="Outils de jardin">
+
+               <input class="form-control" type="text" required name="name_option">
+               <select id="Jardinage" class="form-control attibute_article_in" name="sous_categorie_menu">
+                  <option value="Outils de jardin">Outils de jardin</option>
+               </select>
+               <input type="submit" name="btn_valider" value="Enregistrer">
+       </form>
+  </fieldset>
+
+</div>
+

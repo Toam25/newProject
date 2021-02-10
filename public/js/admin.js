@@ -1,6 +1,56 @@
 $(function () {
   var $category;
+  
+  //detail article
 
+  $('body').on('click','.article_edit',function(e){
+      e.preventDefault();
+      url ='/api/get/article/'+$(this).data('id');
+      $.ajax({
+        url,
+       type :'POST',
+       data :{
+        },
+        dataType : 'json',
+       beforeSend : function(){
+         $('#view_article').modal('show');
+       },
+       success : function(data){
+        
+          $('#preview_image').attr('src','/images/'+data.images['name']);
+          $('#preview_image').prop('idImage',data.images['id']);
+          $('._category').val(data.category);
+          $('#view_name').val(data.name);
+          $('#view_prix').val(data.price);
+          $('#view_prix_g').val(data.global_price);
+          $('#view_stock').val(data.quantity);
+          //$('#view_sous_category').val(list_menu(data.list_menu));
+          //$('#view_type').val(list_menu(data.list_menu[0].option,data.type));
+          $('#view_referency').val(data.referency)
+          $('#view_promo').children('option[value="'+data.promo+'"]').prop('selected',true);
+          $('#view_promo_price').val(data.promo_price);
+          $('#view_detail').val(data.description);
+
+          console.log(list_option(data.list_menu[0].option,data.type));
+          console.log(list_option(data.list_menu));
+          console.log(data.list_menu);
+          console.log(data.list_menu[0].option);
+          
+
+       },
+       error : function(){
+         toastr.error('Il y a un erreur');
+       }
+     })
+  })
+
+  function list_option(array, value=null){
+    array.forEach(item=>{
+     `<option class="sous_categorie_menu_on_type" data-name="Outils de jardin" value="Outils de jardin" selected="">
+     `+item+`
+     </option>`;
+    })
+}
   //tab paramtre option
 
   $('.list_option').on('click','.delete_option',function(e){
@@ -1118,7 +1168,20 @@ $(function () {
       {
         name: "hev",
         value: ['Huile d\'amande douce ', 'Huile d\'arachide', 'Femme enceinte', 'Huile d\'argan', 'Huile d\'avocat', 'Huile de baobab', 'Huile de calendula', 'Huile de cameline', 'Huile de coco', 'Huile de colza', 'Huile de germe de blé', 'Beurre de Karité', 'Huile de Moutarde', 'Huile d\'Olive', 'Huile de Palme', 'Huile de Ricin', 'Huile de Tournesol', 'Huile de Sésame', 'Huile de Lorenzo', 'Huile de poisson']
-      }];
+      },
+      {
+        name: "outillages",
+        value: ['Outils à main', 'Outils divers', 'Outils multifonctions', 'Outils éléctriques', 'Accessoires', 'Electricité', 'Pièces détachées']
+      },
+      {
+        name: "outillages_pro",
+        value: ['Outillage à main', 'Outillage éléctroportatif', 'Machines equipements', 'Eléctricité', 'Quincallerie']
+      },
+      {
+        name: "outils_de_jardin",
+        value: ['Outils de jardin']
+      }
+    ];
 
     var type = types.find((items) => (items.name === name)).value;
 
@@ -1186,6 +1249,19 @@ $(function () {
     if (categorie_menu == "Système domotique") {
       cible = "#systme_domotique";
       listOption = ['Motorisation', 'portails et volets', 'Accessoires', 'Interphone video', 'Alerme-Détecteur', 'Caméra de surveillance', 'Sécurité  incendie'];
+    }
+    //outilage
+    if (categorie_menu == "Outillages pro"){
+      cible ="Professionnel",
+      listOption = ['Outils à main', 'Outils divers', 'Outils multifonctions', 'Outils éléctriques', 'Accessoires', 'Electricité', 'Pièces détachées']
+    }
+    if (categorie_menu == "Outillages"){
+      cible = "Bricolage",
+      listOption = ['Outillage à main', 'Outillage éléctroportatif', 'Machines equipements', 'Eléctricité', 'Quincallerie']
+    }
+    if (categorie_menu == "Outils de jardin"){
+      cible = "Jardinage",
+      listOption = ['Outils de jardin']
     }
  
   

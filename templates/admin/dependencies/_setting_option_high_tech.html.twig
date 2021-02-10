@@ -1,0 +1,180 @@
+
+<div id="onglets">
+    <ul>
+      <li class="tab_men" name="Téléphone"  ><a href="#_telefonie">Téléphonie</a></li>
+      <li class="tab_men" name="Matériels informatiques"><a href="#_informatique">Informatique</a></li>
+      <li name="TV" class="tab_men"><a href="#_image_son">Image et son</a></li>
+     <li name="Impression" class="tab_men"> <a href="#_impression">Impression</a></li>
+      <li name="Système domotique" class="tab_men"><a href="#_systeme_domotique">Système domotique</a></li>
+    </ul>
+
+    <!--Telephonie-->
+
+  <fieldset id="_telefonie" >
+  <div class="containt_menu_sante">
+
+        <div class="items-menu items-menu-selected">
+            <button name="Téléphone" class="btn-seleted modifi_menu_in">Téléphone</button>
+        </div>
+        <div class="items-menu">
+            <button name="Accessoires" class="modifi_menu_in">Accessoires</button>
+        </div>
+    </div>
+           <label class="labelListOption">Liste des Options :</label>
+           <div class="list_option">
+                {{ getListOption(listCategories,'Téléphone fixe') }}
+           </div>
+      <form class="form-inline add_option container_modif_menu" >
+               <label >Ajouter une option : </label>
+               <input type="hidden"  name="categorie_sante" value="Téléphone">
+
+               <input class="form-control" type="text" required name="name_option">
+               <select id="telephonie" class="form-control attibute_article_in" name="sous_categorie_menu">
+                  <option value="Téléphone fixe">Téléphone fixe</option>
+                  <option value="Téléphone  avec touche">Téléphone avec touche</option>
+                  <option value="Smartphone">Smartphone</option>
+                  <option value="I-phone">I-phone</option>
+               </select>
+               <input type="submit" name="btn_valider" value="Enregistrer">
+       </form>
+  </fieldset>
+
+  <!--Informatique-->
+       <fieldset id="_informatique">
+      
+        <div class="containt_menu_sante">
+
+        <div class="items-menu items-menu-selected">
+            <button name="Matériels informatiques" class="btn-seleted modifi_menu_in">Matériels informatiques</button>
+        </div>
+        <div class="items-menu">
+            <button name="Diagnostiques" class="modifi_menu_in">Diagnostiques</button>
+        </div>
+    </div>
+           <label class="labelListOption">Liste des Options :</label>
+           <div class="list_option">
+                {{ getListOption(listCategories,'Ordinateur de bureau') }}
+           </div>
+      <form class="form-inline add_option container_modif_menu" style="box-shadow: 0 0 3px <?= $color ?>">
+               <label >Ajouter une option : </label>
+               <input type="hidden"  name="categorie_sante" value="Matériels informatiques">
+
+               <input class="form-control" type="text" required name="name_option">
+               <select id="informatique" class="form-control attibute_article_in" name="sous_categorie_menu">
+                  <option value="Ordinateur de bureau">Ordinateur de bureau</option>
+                  <option value="Ordinateur portables">Ordinateur portables</option>
+                  <option value="Tablette">Tablette</option>
+                  <option value="Univers gaming">Univers gaming</option>
+                  <option value="Composants">Composants</option>
+                  <option value="Stockage">Stockage</option>
+                  <option value="Réseaux">Réseaux</option>
+               </select>
+               <input type="submit" name="btn_valider" value="Enregistrer">
+       </form>
+  </fieldset>
+
+  <!--Image et son-->
+       <fieldset id="_image_son">
+      
+        <div class="containt_menu_sante">
+
+        <div class="items-menu items-menu-selected">
+            <button name="TV" class="btn-seleted modifi_menu_in">TV</button>
+        </div>
+        <div class="items-menu">
+            <button name="Video projecteur" class="modifi_menu_in">Video projecteur</button>
+        </div>
+        <div class="items-menu">
+            <button name="Son" class="modifi_menu_in">Son</button>
+       </div>
+        <div class="items-menu">
+            <button name="Phone et caméra" class="modifi_menu_in">Phone et caméra</button>
+       </div>
+        <div class="items-menu">
+            <button name="Tous les accessoires" class="modifi_menu_in">Tous les accessoires</button>
+       </div>
+    </div>
+           <label class="labelListOption">Liste des Options :</label>
+           <div class="list_option">
+                 {{ getListOption(listCategories,'TV LED-LCD') }}
+           </div>
+      <form class="form-inline add_option container_modif_menu" style="box-shadow: 0 0 3px <?= $color ?>">
+               <label >Ajouter une option : </label>
+               <input type="hidden"  name="categorie_sante" value="TV">
+
+               <input class="form-control" type="text" required name="name_option">
+               <select id="image_son" class="form-control attibute_article_in" name="sous_categorie_menu">
+                  <option value="TV LED-LCD">TV LED-LCD</option>
+                  <option value="TV 4K-UHD">TV 4K-UHD</option>
+                  <option value="Support TV">Support TV</option>
+                  <option value="TV sonnectées">TV sonnectées</option>
+                  <option value="Smart TV">Smart TV</option>
+               </select>
+               <input type="submit" name="btn_valider" value="Enregistrer">
+       </form>
+  </fieldset>
+
+  <!--Impression-->
+       <fieldset id="_impression">
+              
+      
+     <div class="containt_menu_sante">
+
+        <div class="items-menu items-menu-selected">
+            <button name="Impression" class="btn-seleted modifi_menu_in">Impression</button>
+        </div>
+    </div>
+           <label class="labelListOption">Liste des Options :</label>
+           <div class="list_option">
+                {{ getListOption(listCategories,"Imprimante jet d'encran") }}
+           </div>
+      <form class="form-inline add_option container_modif_menu" style="box-shadow: 0 0 3px <?= $color ?>">
+               <label >Ajouter une option : </label>
+               <input type="hidden"  name="categorie_sante" value="Impression">
+
+               <input class="form-control" type="text" required name="name_option">
+               <select id="impression"class="form-control attibute_article_in" name="sous_categorie_menu">
+                  <option value="Imprimante jet d'encran">Imprimante jet d'encran</option>
+                  <option value="Imprimante laser">Imprimante laser</option>
+                  <option value="Scaner">Scaner</option>
+                  <option value="Cartouches">Cartouches</option>
+                  <option value="Toners">Toners</option>
+               </select>
+               <input type="submit" name="btn_valider" value="Enregistrer">
+       </form>
+  </fieldset>
+
+
+  <!--Systeme domotique-->
+       <fieldset id="_systeme_domotique">      
+    <div class="containt_menu_sante">
+
+        <div class="items-menu items-menu-selected">
+            <button name="Système domotique" class="btn-seleted modifi_menu_in">Système domotique</button>
+        </div>
+    </div>
+           <label class="labelListOption">Liste des Options :</label>
+           <div class="list_option">
+                
+                {{ getListOption(listCategories,"Motorisation") }}
+           </div>
+      <form class="form-inline add_option container_modif_menu" style="box-shadow: 0 0 3px <?= $color ?>">
+               <label >Ajouter une option : </label>
+               <input type="hidden"  name="categorie_sante" value="Système domotique">
+
+               <input class="form-control" type="text" required name="name_option">
+               <select id="systme_domotique"class="form-control attibute_article_in" name="sous_categorie_menu">
+                  <option value="Motorisation">Motorisation</option>
+                  <option value="Portails et volets">Portails et volets</option>
+                  <option value="Accessoires">Accessoires</option>
+                  <option value="Interphone video">Interphone video</option>
+                  <option value="Alarme - Detecteur">Alarme - Detecteur</option>
+                  <option value="Camera de surveillance">Camera de surveillance</option>
+                  <option value="Securité incendie">Securité incendie</option>
+               </select>
+               <input type="submit" name="btn_valider" value="Enregistrer">
+       </form>
+  </fieldset>
+
+</div>
+

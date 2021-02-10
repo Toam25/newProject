@@ -6,6 +6,7 @@ use App\Entity\Article;
 use App\Entity\Header;
 use App\Entity\Images;
 use App\Entity\Menu;
+use App\Repository\ArticleRepository;
 use App\Repository\BoutiqueRepository;
 use App\Repository\EsArticleRepository;
 use App\Repository\HeaderRepository;
@@ -141,6 +142,45 @@ class APIController extends AbstractController
         }
     }
 
+    /**
+     * @Route("/get/article/{id}", name="getOneArtilce")
+     */
+    public function getOneArticle(CategoryOptionService $categoryOptionService, BoutiqueRepository $boutiqueRepository, ArticleRepository $articleRepository, int $id,MenuRepository $menuRepository)
+    {
+         
+        if ($this->getUser()) {
+            $boutique = $boutiqueRepository->findOneBy(['user'=>$this->getUser()]);
+            $article= $articleRepository->findOneArticleByBoutiqueWithImage($id, $boutique);
+            $list_menu=$categoryOptionService->getCategoryType($menuRepository->findBy(['category'=>$article->getCategory()]));
+            $image=$article->getImages();
+            $list=[
+                'id'=>$article->getId(),
+                'category'=>$article->getCategory(),
+                'name'=>$article->getName(),
+                'price'=>$article->getPrice(),
+                'global_price'=>$article->getPriceGlobal(),
+                'promo_price'=>$article->getPricePromo(),
+                'promo'=>$article->getPromo(),
+                'type'=>$article->getType(),
+                'quantity'=>$article->getQuantity(),
+                'marque'=>$article->getMarque(),
+                'description'=>$article->getDescription(),
+                'referency'=>$article->getReferency(),
+                'sous_category'=>$article->getSousCategory(),
+                'images'=>[
+                     'name'=>$image[0]->getName(),
+                    'id'=> $image[0]->getId()
+                ],
+                'list_menu'=>$list_menu
+
+            ];
+
+            return new JsonResponse($list);
+        }
+        else {
+            return new JsonResponse(['status' => 'error', 'message' => "Non authorise"], 403);
+        }
+    }
      /**
      * @Route("/get/list/type/{sous_categorie}", name="getListType")
      */

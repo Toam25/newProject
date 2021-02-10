@@ -1,4 +1,4 @@
-{% if boutique.type == "High-tech" %}
+{% if boutique.type is same as("High-tech") or boutique.type is same as("Maison") %}
  	{% include "admin/dependencies/_add_other_article_modal.html.twig" %}
 {% else %}
   {% include "admin/dependencies/_add_article_modal.html.twig " %}
