@@ -1,0 +1,8 @@
+{% for listCategory in listCategories %}
+       <div class="option_menu">
+       {{ listCategory.name }} 
+       <button class="delete_option" value="{{ listCategory.id }}">
+              <span class="fa fa-trash"></span>
+        </button>
+    </div>
+{% endfor %}

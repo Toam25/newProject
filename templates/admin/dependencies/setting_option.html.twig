@@ -1,0 +1,6 @@
+
+{% if boutique.type is same as("Maison") %}
+    {% include "admin/dependencies/_setting_option_maison.html.twig" %}
+{% elseif boutique.type is same as ("High-tech") %}
+    {% include "admin/dependencies/_setting_option_high_tech.html.twig" %}
+{% endif %}

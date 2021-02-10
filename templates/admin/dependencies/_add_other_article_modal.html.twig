@@ -1,0 +1,85 @@
+<div class="modal fade" id="ajout_article" tabindex="-1" role="dialog" aria-labelledby="ajout_modal" aria-hidden="true">
+	<div class="modal-dialog modal-lg" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="label">Ajout d'article</h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<form class="add_article_in_shop" action="/api/add/article">
+				<div id="div_ajout_article" class="modal-body row" style="font-weight:none;">
+
+
+					<div class="inother-ajax">
+						<div class="div-inother"></div>
+					</div>
+
+					<input type="hidden" class="_category" name="categorie" value="">
+
+					<div class="col-md-6">
+						<label>Titre : *</label>
+						<input class="form-control" type="text" name="name" required>
+					</div>
+					<div class="col-md-6">
+						<label for="prix_in">Prix : *
+						</label>
+						<input id="prix_in" class="form-control" value="0" type="number" name="price" min="0" required>
+					</div>
+					<div class="col-md-6">
+						<label for="prix_in">Prix en gros en Ar:
+						</label>
+						<input id="prix_in" class="form-control" value="0" type="number" name="global_price" min="0">
+					</div>
+					<div class="col-md-6">
+						<label for="stock_in">Quantité :
+						</label>
+						<input id="stock_in" class="form-control" type="text" name="quantity">
+					</div>
+					<div class="col-md-6">
+						<label for="">Type(sous_category) :
+						</label>
+						<select id="sous_category" class="sous_category form-control" name="sous_category"></select>
+					</div>
+					<div class="col-md-6 ">
+
+						<label class="valeur_type" for="type">Option(type) :
+						</label>
+						<select id="type" class="type form-control" name="type"></select>
+					</div>
+					<div class="col-md-6">
+						<label for="file_in">Importer une image : *</label>
+						<input id="file_in" class="file form-control" type="file" name="images[]" multiple required>
+					</div>
+					<div class="col-md-6">
+						<label>Référence : *</label>
+						<input class="form-control" type="text" name="referency" required>
+					</div>
+					<div class="col-sm-4 col-lg-4 col-md-4">
+						<label for="promo_in">Promo :
+						</label>
+						<select id="promo_in" class="form-control" name="promotion">
+							<option value="Normal">Normal</option>
+							<option value="Promo">Promo</option>
+							<option value="New">New</option>
+							<option value="Vendu">Vendu</option>
+						</select>
+					</div>
+					<div class="col-sm-4 col-lg-4 col-md-4 inter-promo" style="display:none">
+						<label>Prix promo : *</label>
+						<input class="form-control" type="number" name="price_promo" value="0" min="0" required>
+					</div>
+					<div class="col-md-12">
+						<label for="detail_in">Détails * :
+						</label>
+						<textarea id="detail_in" class="form-control" name="description" required></textarea>
+					</div>
+				</div>
+
+				<div class="modal-footer">
+					<button class="btn btn-success submit_add_article margin-top-5 btn-submit" type="submit" name="submit_in">Ajouter</button>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>

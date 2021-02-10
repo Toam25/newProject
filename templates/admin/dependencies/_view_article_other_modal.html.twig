@@ -1,0 +1,93 @@
+<div class="modal fade" id="view_article" tabindex="-1" role="dialog" aria-labelledby="ajout_modal" aria-hidden="true">
+	<div class="modal-dialog modal-lg" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="label name_article">Vue d'article</h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+
+			<div id="div_ajout_article" class="modal-body row" style="font-weight:none;">
+				<input type="hidden" class="_category" name="categorie" value="">
+
+				<div class="container_image col-md-5">
+					<form class="form_view_update"style="display: flex;justify-content: space-between;align-items: end;flex-direction: column;">
+						<div class="preview_image" style="width: 100%;">
+						    
+							<img id="preview_image" src="" data-idImage = "" >
+						</div>
+						<div class="">
+							<label for="file_in">Importer une image : *</label>
+							<input id="file_in" class="file form-control" type="file" name="images[]" multiple required>
+						</div>
+						<button class="btn btn-success" type="submit"style="margin-top: 12px;">Enregistrer</button>
+					</form>
+
+				</div>
+				<div class="container_detail col-md-7">
+					<form class="edit_article_in_shop row" action="">
+						<div class="col-md-6">
+							<label>Titre : *</label>
+							<input id="view_name"class="form-control " type="text" name="name" required>
+						</div>
+						<div class="col-md-6">
+							<label for="view_prix">Prix : *
+							</label>
+							<input id="view_prix" class="form-control" value="0" type="number" name="price" min="0" required>
+						</div>
+						<div class="col-md-6">
+							<label for="view_prix_g">Prix en gros en Ar:
+							</label>
+							<input id="view_prix_g" class="form-control" value="0" type="number" name="global_price" min="0">
+						</div>
+						<div class="col-md-6">
+							<label for="view_stock">Quantité :
+							</label>
+							<input id="view_stock" class="form-control" type="text" name="quantity">
+						</div>
+						<div class="col-md-6">
+							<label for="view_sous_category">Type(sous_category) :
+							</label>
+							<select id="view_sous_category" class="sous_category form-control" name="sous_category"></select>
+						</div>
+						<div class="col-md-6 ">
+
+							<label class="valeur_type" for="type">Option(type) :
+							</label>
+							<select id="view_type" class="type form-control" name="type"></select>
+						</div>
+						<div class="col-md-6">
+							<label for="view_referency">Référence : *</label>
+							<input id="view_referency"class="form-control" type="text" name="referency" required>
+						</div>
+						<div class="col-sm-4 col-lg-4 col-md-4">
+							<label for="view_promo">Promo :
+							</label>
+							<select id="view_promo" class="form-control" name="promotion">
+								<option value="Normal">Normal</option>
+								<option value="Promo">Promo</option>
+								<option value="New">New</option>
+								<option value="Vendu">Vendu</option>
+							</select>
+						</div>
+						<div class="col-sm-4 col-lg-4 col-md-4 inter-promo" style="display:none">
+							<label for="view_promo_price">Prix promo : *</label>
+							<input id="view_promo_price"class="form-control" type="number" name="price_promo" value="0" min="0" required>
+						</div>
+						<div class="col-md-12">
+							<label for="view_detail">Détails * :
+							</label>
+							<textarea id="view_detail" class="form-control" name="description" required></textarea>
+						</div>
+					<button class="btn btn-success submit_add_article margin-top-5 btn-submit" type="submit" name="submit_in">Ajouter</button>
+				</form>
+
+			</div>
+			</div>
+
+			<div class="modal-footer"></div>
+
+		</div>
+	</div>
+</div>

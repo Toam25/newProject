@@ -14,8 +14,10 @@ use App\Form\UserType;
 use App\Repository\ArticleRepository;
 use App\Repository\BoutiqueRepository;
 use App\Repository\HeaderRepository;
+use App\Repository\MenuRepository;
 use App\Repository\ReferenceRepository;
 use App\Repository\UserRepository;
+use App\Service\CategoryOptionService;
 use App\Service\InsertFileServices;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -93,7 +95,7 @@ class AdminController extends AbstractController
 
         return $this->render('admin/index.html.twig', [
             'pages' => 'articleinshop',
-            'articles' => $articleRepository->findBy(['boutique' => $boutique, 'category' => $category]),
+            'articles' => $articleRepository->findBy(['boutique' => $boutique, 'category' => $this->nameMenu($category)]),
             'boutique' => $boutique,
             'add_button' => $this->button_add_boutique($category, 'btn btn-success ajout_article_ev'),
             'form' => $form->createView(),
@@ -152,6 +154,24 @@ class AdminController extends AbstractController
         return $this->render('admin/index.html.twig', [
             'pages' => 'reseaux',
             'boutique' => $boutique
+        ]);
+    }
+    /**
+     * @Route("admin/parametre/option", name="parametre_option")
+     */
+    public function parametreOption(BoutiqueRepository $boutiqueRepository, MenuRepository $menuRepository, CategoryOptionService $categoryOptionService)
+    {
+
+
+        $boutique = $boutiqueRepository->findOneBy(['user' => $this->getUser()]);
+        $menu = $menuRepository->findBy(['boutique' => $boutique]);
+
+
+        return $this->render('admin/index.html.twig', [
+            'pages' => 'parametreOption',
+            'boutique' => $boutique,
+            'listmenu' => $menu,
+            'listCategories' => $categoryOptionService->getListPerCategory($menu)
         ]);
     }
     /**
@@ -394,6 +414,15 @@ class AdminController extends AbstractController
             case 'inhalee':
                 $button = '<button id="inhalee"class="' . $class . '">Inhalée</button>';
                 break;
+            case 'outillages':
+                $button = '<button id="outillages"class="' . $class . '">Outillages</button>';
+                break;
+            case 'outillages_pro':
+                $button = '<button id="outillages_pro"class="' . $class . '">Outillages Pro</button>';
+                break;
+            case 'outils_de_jardin':
+                $button = '<button id="outils_de_jardin"class="' . $class . '">Outils de jardin</button>';
+                break;
             case 'rectale':
                 $button = '<button id="rectale"class="' . $class . '">Rectale</button>';
                 break;
@@ -410,6 +439,15 @@ class AdminController extends AbstractController
     static function nameMenu($categorie)
     {
         switch ($categorie) {
+            case 'outils_de_jardin':
+                return 'Outils de jardin';
+                break;
+            case 'outillages':
+                return 'Outillages';
+                break;
+            case 'outillages_pro':
+                return 'Outillages pro';
+                break;
             case 'habillement_homme':
                 return 'Habillement homme';
                 break;

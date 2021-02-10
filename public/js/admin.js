@@ -1,5 +1,178 @@
 $(function () {
-  var $category
+  var $category;
+  
+  //detail article
+
+  $('body').on('click','.article_edit',function(e){
+      e.preventDefault();
+      url ='/api/get/article/'+$(this).data('id');
+      $.ajax({
+        url,
+       type :'POST',
+       data :{
+        },
+        dataType : 'json',
+       beforeSend : function(){
+         $('#view_article').modal('show');
+       },
+       success : function(data){
+        
+          $('#preview_image').attr('src','/images/'+data.images['name']);
+          $('#preview_image').prop('idImage',data.images['id']);
+          $('._category').val(data.category);
+          $('#view_name').val(data.name);
+          $('#view_prix').val(data.price);
+          $('#view_prix_g').val(data.global_price);
+          $('#view_stock').val(data.quantity);
+          //$('#view_sous_category').val(list_menu(data.list_menu));
+          //$('#view_type').val(list_menu(data.list_menu[0].option,data.type));
+          $('#view_referency').val(data.referency)
+          $('#view_promo').children('option[value="'+data.promo+'"]').prop('selected',true);
+          $('#view_promo_price').val(data.promo_price);
+          $('#view_detail').val(data.description);
+
+          console.log(list_option(data.list_menu[0].option,data.type));
+          console.log(list_option(data.list_menu));
+          console.log(data.list_menu);
+          console.log(data.list_menu[0].option);
+          
+
+       },
+       error : function(){
+         toastr.error('Il y a un erreur');
+       }
+     })
+  })
+
+  function list_option(array, value=null){
+    array.forEach(item=>{
+     `<option class="sous_categorie_menu_on_type" data-name="Outils de jardin" value="Outils de jardin" selected="">
+     `+item+`
+     </option>`;
+    })
+}
+  //tab paramtre option
+
+  $('.list_option').on('click','.delete_option',function(e){
+    e.preventDefault();
+
+       var id=$(this).attr('value');
+   
+      $(this).parent('.option_menu').delay(1000).remove();
+      $.ajax({
+         url :'/api/delete/option/'+id,
+        type :'POST',
+        data :{
+         },
+         dataType : 'json',
+        beforeSend : function(){
+
+        },
+        success : function(data){
+          toastr.success('Supprimer avec success');
+        },
+        error : function(){
+          toastr.error('Il y a un erreur');
+        }
+      })
+});
+
+  $('body').on('click','.tab_men',function(e){
+             
+    categorie_menu=$(this).attr('name');
+
+     $('.add_option').children('input[name="categorie_sante"]').val(categorie_menu);
+     $('.items-menu-selected').removeClass('items-menu-selected');
+     $('button[name="'+categorie_menu+'"]').parent('div').addClass('items-menu-selected');
+     $('.list_option').html("");
+    containt_parameter(categorie_menu);
+    return false ;
+});
+
+  $('#onglets').tabs();
+  $('.attibute_article_in').on('change',function(){
+    var attr_categorie_menu = $(this).val();
+    $('fieldset').children('.loader_li').remove();
+    $.ajax({
+     url :'/api/get/listOption',
+     type: 'POST',
+     data : {
+       categorie_sante_in : attr_categorie_menu,
+     },
+     dataType : 'json',
+     beforeSend : function(){
+      $('.labelListOption').after('<img class="loader_li" style="height: 14px" src="/images/images_default/ajax-loader.gif"/>');
+     },
+     success : function(data){
+       let content="";
+       data.forEach(element => {
+         content = `
+        <div class="option_menu">`+element.name+`<button class="delete_option" value="`+element.id+`">
+        <span class="fa fa-trash"></span></button></div>
+        ` + content;
+       });
+       $('.list_option').html(content);
+     },
+     complete : function(){
+       $('fieldset').children('.loader_li').remove(); 
+     }
+    })
+  });
+  
+  $('.modifi_menu_in').on('click', function (e) {
+    e.preventDefault();
+    var categorie_menu = $(this).attr('name');
+    var listOption = [];
+    var cible = '.attibute_article_in';
+
+    $('.items-menu-selected').removeClass('items-menu-selected');
+    $(this).parent('div').addClass('items-menu-selected');
+
+    $('.name_menu').attr("placeholder", $(this).parents('.items-menu').children('.name_menu_sante').text());
+    $('.add_option').children('input[name="categorie_sante"]').val(categorie_menu);
+
+    containt_parameter(categorie_menu);
+
+  });
+  $('.add_option').on('submit',function(e){
+    e.preventDefault();
+     var  form=$(this);
+     $.ajax({
+          url :'/api/add/listOption',
+          type: 'POST',
+          data : new FormData(this),
+          contentType: false,
+          processData : false,
+          cache : false,
+          dataType : 'json',
+          beforeSend : function(){
+            $('fieldset').children('.loader_li').remove();
+            $('.labelListOption').after('<img class="loader_li" style="height: 14px" src="/images/images_default/ajax-loader.gif "/>');
+            $('.btn-submit').prop('disabled', true)
+          },
+          success : function (data){
+            toastr.success('Enregistrer avec success');
+              let content = `
+              <div class="option_menu">`+data.results.name+`<button class="delete_option" value="`+data.results.id+`">
+              <span class="fa fa-trash"></span></button></div>
+              `;
+              form.parents('fieldset').children('.list_option').append(content);
+
+              //$('.list_option').prepend(data.content);
+              $('input[name="name_option"]').val('');
+
+          
+          },
+          complete : function(){
+             $('fieldset').children('.loader_li').remove();
+          },
+          error: () => {
+            toastr.error('Une error à été survenue');
+            $('.btn-submit').children('.loader_ajax').remove();
+            $('.btn-submit').prop('disabled', false)
+          },
+     });
+  });
   //add category 
   $('body').on('click', '.add_category', function (e) {
     e.preventDefault();
@@ -32,7 +205,7 @@ $(function () {
         toastr.success('Enregistrer avec success');
         $('.btn-submit').children('.loader_ajax').remove();
         $('.btn-submit').prop('disabled', false)
-       
+
         let category = `
            <div 
             id="category-`+ data.id + `"
@@ -42,14 +215,14 @@ $(function () {
           <p>`+ data.name + `</p>
           <button  data-parent = `+ data.id + ` class="btn btn-primary add_category">Ajout</button>
           </div>`;
-          console.log(data.parentId);
-          if(parseInt(data.parentId)!=0){
-             category=`<div style="margin-left:40px">`+category+`</div>`;
-             $category.after(category);
-          }
-          else{
-             $('.container-fluid').append(category)
-          }
+        console.log(data.parentId);
+        if (parseInt(data.parentId) != 0) {
+          category = `<div style="margin-left:40px">` + category + `</div>`;
+          $category.after(category);
+        }
+        else {
+          $('.container-fluid').append(category)
+        }
       },
       error: () => {
         toastr.error('Une error à été survenue');
@@ -143,7 +316,7 @@ $(function () {
       }
     });
   });
-  //add type
+  //add type sous_category
   $('.ajout_article_ev').on('click', function (e) {
     e.preventDefault();
 
@@ -151,14 +324,103 @@ $(function () {
     $('.radio1').children('label').removeClass('promotion_selected');
     $('input[value="Normale"]').parents('label').addClass('promotion_selected');
 
-
+    let category = $(this).text();
+    $('._category').val(category);
     $('#div-inother').hide()
     $('#article_sous_category').attr('value', $(this).attr('id'));
     $('#article_type').html(typeArticle($(this).attr('id')));
     $('#ajout_article').modal('show');
+
+    $.ajax({
+      url: '/api/get/sous_category/type/'+category,
+      type: 'GET',
+      data: {},
+      dataType: 'json',
+      beforeSend: () => {
+
+      },
+      success: (data) => {
+          let results=data.results;
+          let sous_category ="";
+          let type ="";
+          let selected = "";
+          for (let index = 0; index < results.length; index++) {
+            selected=(index==0) ? "selected" : "";
+           sous_category+=
+            `<option class="sous_categorie_menu_on_type" data-name="`+results[index].type+`" value="`+results[index].type+`" `+selected+`>
+            `+results[index].type+`
+            </option>`;
+          }
+          for (let indexo= 0; indexo < results[0].option.length; indexo++) {
+            selected=(indexo==0) ? "selected" : "";
+            type+=
+             `<option class="sous_categorie_menu_on_type" data-name="`+results[0].option[indexo]+`" value="`+results[0].option[indexo]+`" `+selected+`>
+             `+results[0].option[indexo]+`
+             </option>`
+           }
+          $('#sous_category').html(sous_category);
+          $('#type').html(type);
+      },
+      error: () => {
+      },
+      complete: function () {
+
+      }
+    });
+
+
   });
+ 
+  // get Type 
 
+  $('.sous_category').on('change',function(e){
+             
+    var sous_categorie= $(this).val();
 
+    $('#type').parent('div').children('img').remove();
+    $.ajax({
+     url : '/api/get/list/type/'+sous_categorie,
+     type :'POST',
+     dataType : 'json',
+     data :{
+          
+      },
+     beforeSend : function(){
+            
+       $('.valeur_type').after('<img style="height: 14px" src="/images/images_default/ajax-loader.gif "/>');
+     },
+     success : function(datas){
+      
+      var selected;
+      var option=" ";
+      data=datas.results;
+      for(var $i=0; $i<data.length;$i++){
+        if($i==0){
+            selected="selected";
+        }
+        else{
+          selected=" ";
+        }
+        option+=`<option data_name="`+data[$i]+`" value="`+data[$i]+`" `+selected+` >`+data[$i]+
+                  `</option>`;
+      }
+      $('#type').html(option);
+     },
+
+     complete : function(){
+      $('.valeur_type').parent('div').children('img').remove();
+     },
+
+     error :function(){
+      $('.valeur_type').parent('div').children('img').remove();
+
+     }
+
+    });
+
+});
+
+///
   $('.close').on('click', function (e) {
     e.preventDefault();
 
@@ -200,7 +462,7 @@ $(function () {
         $(this).prop('disabled', true)
       },
       success: (data) => {
-        toastr.success('Supprimer avec avec success');
+        toastr.success('Supprimer avec avec success')
         ;
         $(this).parents('.slide_animation ').css('transform', 'scale(0)');
         setTimeout(() => {
@@ -667,6 +929,8 @@ $(function () {
     $('#es_article_type').html(typeArticle($(this).attr('id')));
     $('.modal-footer').html(`<button id="submitformarticle" type="submit" class="btn btn-success"> Enregistrer</button>`);
   });
+
+
   function typeArticle(name, item = null) {
     var options = "";
     var classe = "";
@@ -904,7 +1168,20 @@ $(function () {
       {
         name: "hev",
         value: ['Huile d\'amande douce ', 'Huile d\'arachide', 'Femme enceinte', 'Huile d\'argan', 'Huile d\'avocat', 'Huile de baobab', 'Huile de calendula', 'Huile de cameline', 'Huile de coco', 'Huile de colza', 'Huile de germe de blé', 'Beurre de Karité', 'Huile de Moutarde', 'Huile d\'Olive', 'Huile de Palme', 'Huile de Ricin', 'Huile de Tournesol', 'Huile de Sésame', 'Huile de Lorenzo', 'Huile de poisson']
-      }];
+      },
+      {
+        name: "outillages",
+        value: ['Outils à main', 'Outils divers', 'Outils multifonctions', 'Outils éléctriques', 'Accessoires', 'Electricité', 'Pièces détachées']
+      },
+      {
+        name: "outillages_pro",
+        value: ['Outillage à main', 'Outillage éléctroportatif', 'Machines equipements', 'Eléctricité', 'Quincallerie']
+      },
+      {
+        name: "outils_de_jardin",
+        value: ['Outils de jardin']
+      }
+    ];
 
     var type = types.find((items) => (items.name === name)).value;
 
@@ -920,6 +1197,126 @@ $(function () {
     }
 
     return options;
+  }
+
+  var containt_parameter = (categorie_menu) => {
+    //telefonie
+    if (categorie_menu == "Accessoires") {
+      cible = "#telephonie";
+      listOption = ['Coques', 'Batteries, Batteries externes', 'Ecouteurs', 'Enceintes bluetooth', 'Chargeurs', 'Oreillette bluetooth', 'Kits mains libres', 'Protection écran', 'Carte mémoire', 'Casque'];
+    }
+
+    if (categorie_menu == "Téléphone") {
+      cible = "#telephonie";
+      listOption = ['Téléphone fixe', 'Téléphone avec touche', 'Smartphone', 'I-phone'];
+    }
+    //image et son
+    if (categorie_menu == "TV") {
+      cible = "#image_son";
+      listOption = ['TV LED-LCD', 'TV 4K-UHD', 'Support TV', 'TV connectée', 'Smart TV'];
+    }
+    if (categorie_menu == "Video projecteur") {
+      cible = "#image_son";
+      listOption = ['HD Ready', 'Full HD', '4K/UHD', 'Accessoires'];
+    }
+    if (categorie_menu == "Son") {
+      cible = "#image_son";
+      listOption = ['Casque auto', 'Enceintes bleutooth, MP3, MP4', 'Radio', 'Dictaphone', 'Hifi', 'Bare de son'];
+    }
+    if (categorie_menu == "Phone et caméra") {
+      cible = "#image_son";
+      listOption = ['Flash photo', 'Filtre', 'Caméscope caméra', 'Objectif reflex', 'Objectif caméra', 'GoPro', 'Autre'];
+    }
+    if (categorie_menu == "Tous les accessoires") {
+      cible = "#image_son";
+      listOption = ['Câble et connectique', 'Accessoires audio et video', 'Accessoires photos', 'Accessoires caméra'];
+    }
+    //informatique
+    if (categorie_menu == "Matériels informatiques") {
+      cible = "#informatique";
+      listOption = ['Ordinateurs de bureau', 'ordinateurs portables', 'Tablette', 'Univers gaming', 'Composants - périphériques', 'Stockage', 'Réseaux'];
+    }
+    if (categorie_menu == "Diagnostiques") {
+      cible = "#informatique";
+      listOption = ['Hardware', 'Software'];
+    }
+    //impression
+    if (categorie_menu == "Impression") {
+      cible = "#impression";
+      listOption = ['Imprimante jet d\'encre', 'Imprimante laser', 'Scaner', 'Cartouches', 'Toners'];
+    }
+
+    if (categorie_menu == "Système domotique") {
+      cible = "#systme_domotique";
+      listOption = ['Motorisation', 'portails et volets', 'Accessoires', 'Interphone video', 'Alerme-Détecteur', 'Caméra de surveillance', 'Sécurité  incendie'];
+    }
+    //outilage
+    if (categorie_menu == "Outillages pro"){
+      cible ="Professionnel",
+      listOption = ['Outils à main', 'Outils divers', 'Outils multifonctions', 'Outils éléctriques', 'Accessoires', 'Electricité', 'Pièces détachées']
+    }
+    if (categorie_menu == "Outillages"){
+      cible = "Bricolage",
+      listOption = ['Outillage à main', 'Outillage éléctroportatif', 'Machines equipements', 'Eléctricité', 'Quincallerie']
+    }
+    if (categorie_menu == "Outils de jardin"){
+      cible = "Jardinage",
+      listOption = ['Outils de jardin']
+    }
+ 
+  
+    var options = attribute_article_in(listOption);
+
+    console.log(cible,categorie_menu,options);
+    $(cible).html(options);
+
+    var attr_categorie_menu = listOption[0];
+    $('fieldset').children('.loader_li').remove();
+
+    $.ajax({
+      url : "/api/get/listOption",
+      type: 'POST',
+      data: {
+        categorie_sante_in: attr_categorie_menu,
+      },
+      dataType: 'json',
+      beforeSend: function () {
+
+        $('.labelListOption').after('<img class="loader_li" style="height: 14px" src="/images/images_default/ajax-loader.gif"/>');
+      },
+      success: function (data) {
+        let content="";
+       data.forEach(element => {
+         content = `
+        <div class="option_menu">`+element.name+`<button class="delete_option" value="`+element.id+`">
+        <span class="fa fa-trash"></span></button></div>
+        ` + content;
+       });
+       $('.list_option').html(content);
+      },
+      complete: function () {
+        $('fieldset').children('.loader_li').remove();
+      }
+    });
+
+  }
+
+  var attribute_article_in = (option) => {
+
+    var options = " ";
+    var selected = ""
+    for (var i = option.length - 1; i >= 0; i--) {
+
+      if (i == 0) {
+        selected = "selected";
+      }
+      else {
+        selected = " "
+      }
+      options = '<option value="' + option[i] + '" ' + selected + '>' + option[i] + '</option>' + options;
+    }
+    return options;
+
   }
   function disableAddArticle() {
     $('.form_article').find('input').prop('disabled', true);
