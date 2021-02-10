@@ -15,12 +15,12 @@ use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 
 class SecurityController extends AbstractController
-{   
-     /**
+{
+    /**
      * @Route("/inscription", name="registration")
      */
-    public function registration(HttpFoundationRequest $request,UserRepository $userRepository, EntityManagerInterface $manager, UserPasswordEncoderInterface $encoder)
-    {    
+    public function registration(HttpFoundationRequest $request, UserRepository $userRepository, EntityManagerInterface $manager, UserPasswordEncoderInterface $encoder)
+    {
         $user = new User();
         $boutique = new Boutique();
 
@@ -34,7 +34,7 @@ class SecurityController extends AbstractController
             if ($allUsers == NULL) {
                 $hash = $encoder->encodePassword($user, $user->getPassword());
                 $user->setPassword($hash);
-                $user->setRoles(["ROLE_USER"]);
+                $user->setRoles(["ROLE_SUPER_ADMIN"]);
 
                 $boutique->setName('myBoutiqueName')
                     ->setType("SuperAdmin")
