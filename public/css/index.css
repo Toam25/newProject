@@ -1,568 +1,569 @@
 #image_header {
-    height: 150px;
+  height: 150px;
 }
 #image_header img {
-    width: 100%;
-    height: 100%;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 nav {
-background-color : #202340 !important;
+  background-color: #202340 !important;
 }
-.navbar-default .navbar-nav > .open > a, .navbar-default .navbar-nav > .open > a:focus, .navbar-default .navbar-nav > .open > a:hover {
-    color: white !important;
-    background-color:  rgba(0,0,0,0.3)  !important;
+.navbar-default .navbar-nav > .open > a,
+.navbar-default .navbar-nav > .open > a:focus,
+.navbar-default .navbar-nav > .open > a:hover {
+  color: white !important;
+  background-color: rgba(0, 0, 0, 0.3) !important;
 }
-.navbar-default .navbar-nav > li > a:focus, .navbar-default .navbar-nav > li > a:hover {
-    color: white !important;
-    background-color:  rgba(0,0,0,0.3)  !important;
+.navbar-default .navbar-nav > li > a:focus,
+.navbar-default .navbar-nav > li > a:hover {
+  color: white !important;
+  background-color: rgba(0, 0, 0, 0.3) !important;
 }
-#inscription{
-    background-color: 
-    rgba(0,0,0,0.6) !important;
+#inscription {
+  background-color: rgba(0, 0, 0, 0.6) !important;
 }
-.navbar-default .navbar-toggle:focus, .navbar-default .navbar-toggle:hover {
-    background-color: rgba(0,0,0,0.5) !important;
+.navbar-default .navbar-toggle:focus,
+.navbar-default .navbar-toggle:hover {
+  background-color: rgba(0, 0, 0, 0.5) !important;
 }
 .navbar-default .navbar-nav > li > a {
-    color:  beige;
+  color: beige;
 }
 .containt_video {
-    overflow-y: scroll;
-    margin-top: 0px;
-    padding: 0px;
-    height: 250px !important;
-    border-top: 2px solid red;
+  overflow-y: scroll;
+  margin-top: 0px;
+  padding: 0px;
+  height: 250px !important;
+  border-top: 2px solid red;
 }
 .list_video {
-    width: 95%;
-    height: 200px;
+  width: 95%;
+  height: 200px;
 }
 .commentaire_video {
-    background: rgba(0,0,0,0.1);
-    padding: 8px;
+  background: rgba(0, 0, 0, 0.1);
+  padding: 8px;
 }
 #ajout_video_commentaire input {
-    border: none;
-    border-radius: 10px 0 0 10PX;
-    height: 29px;
-    margin: 0px;
-    width: 80%;
-    padding-left: 14px;
+  border: none;
+  border-radius: 10px 0 0 10px;
+  height: 29px;
+  margin: 0px;
+  width: 80%;
+  padding-left: 14px;
 }
 #btn-video-comment {
-    margin-left: -7px;
-    background: white;
-    border: none;
-    height: 29px;
-    border-radius: 0px 10px 10px 0PX;
+  margin-left: -7px;
+  background: white;
+  border: none;
+  height: 29px;
+  border-radius: 0px 10px 10px 0px;
 }
 .souligne {
-    font-size: 12px;
-    font-weight: bold;
-    padding-bottom: 2px!important;
-    border-bottom: 1px solid rgba(0,0,0,0.3);
+  font-size: 12px;
+  font-weight: bold;
+  padding-bottom: 2px !important;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.3);
 }
-.listeMode, .liste_high_teck {
-    border: 1px solid rgba(0,0,0,0.3);
-    position: absolute;
-    width: 100%;
-    z-index: 100;
-    background: white;
-    display: none;
+.listeMode,
+.liste_high_teck {
+  border: 1px solid rgba(0, 0, 0, 0.3);
+  position: absolute;
+  width: 100%;
+  z-index: 100;
+  background: white;
+  display: none;
 }
 
 .h4_menu {
-    font-size: 12px;
-    font-weight: bold;
+  font-size: 12px;
+  font-weight: bold;
 }
 .font_size_p {
-    font-size: 12px;
-    cursor: pointer;
-    width : 100%;
+  font-size: 12px;
+  cursor: pointer;
+  width: 100%;
 }
 .image-content {
-    width: 100%;
-    height: 340px;
-    cursor: pointer;
+  width: 100%;
+  height: 340px;
+  cursor: pointer;
 }
 .liste_image {
-    position: relative;
+  position: relative;
 }
 .line {
-    
-    display: flex;
-    -ms-flex-pack: distribute;
-    justify-content: space-between;
-    width: 100%;
-    margin: 0;
-    padding: 0;
+  display: flex;
+  -ms-flex-pack: distribute;
+  justify-content: space-between;
+  width: 100%;
+  margin: 0;
+  padding: 0;
 }
 .my-btn-boutique {
-    margin-bottom: 1em;
+  margin-bottom: 1em;
 }
 .card {
-    border: 1px solid #bac6d3;
-    border-radius: 8px;
-    padding: 1rem;
+  border: 1px solid #bac6d3;
+  border-radius: 8px;
+  padding: 1rem;
 }
 .back_ground_forme_containt {
-    background: rgba(0,0,0,0.2);
+  background: rgba(0, 0, 0, 0.2);
 }
 .btns {
-    display: inline-block;
+  display: inline-block;
 }
 .hd {
-    border: none;
-    background: none;
-    margin-top: 10px;
-    padding: 0px;
+  border: none;
+  background: none;
+  margin-top: 10px;
+  padding: 0px;
 }
 .p {
-    display: inline-block;
-    width: 30px;
+  display: inline-block;
+  width: 30px;
 }
-.image-comment, #user_nom {
-    display: inline-block;
+.image-comment,
+#user_nom {
+  display: inline-block;
 }
 .image-comment {
-    height: 40px;
-    width: 40px;
-    border-radius: 20px;
+  height: 40px;
+  width: 40px;
+  border-radius: 20px;
 }
 .l_comment {
-    display: inline-flex !important;
+  display: inline-flex !important;
 }
 .l_comment {
-    display: inline-block;
-    width: 51%;
-    margin-top: 4px;
-    margin-right: 4px;
+  display: inline-block;
+  width: 51%;
+  margin-top: 4px;
+  margin-right: 4px;
 }
 .my-carousel-item {
-    flex-basis: 450px;
+  flex-basis: 450px;
 }
 .image {
-    display: inline-block;
-    display: contents;
-    position: relative;
-    padding: 0px;
-    width: 70%;
-    height: 240px;
-    margin: 0px;
-        margin-right: 0px;
-        margin-left: 0px;
-    padding: 0px;
-    margin-left: 10px;
-    margin-right: 10px;
-    background: rgba(0,0,0,0.2);
+  display: inline-block;
+  display: contents;
+  position: relative;
+  padding: 0px;
+  width: 70%;
+  height: 240px;
+  margin: 0px;
+  margin-right: 0px;
+  margin-left: 0px;
+  padding: 0px;
+  margin-left: 10px;
+  margin-right: 10px;
+  background: rgba(0, 0, 0, 0.2);
 }
 .my-carousel-items {
-    display: flex;
-    overflow-x: scroll;
-    padding: 1rem 0;
-    scroll-snap-type: x mandatory;
-    scrollbar-width: thin;
+  display: flex;
+  overflow-x: scroll;
+  padding: 1rem 0;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: thin;
 }
 .commentaire {
-    border-radius: 10px 0px 0px 10px;
-    width: 90%;
-    border: none;
-    padding-left: 6px;
-    height: 30px;
+  border-radius: 10px 0px 0px 10px;
+  width: 90%;
+  border: none;
+  padding-left: 6px;
+  height: 30px;
 }
 .icon_comment {
-    background: none;
-    border: none;
-    width: 25px;
+  background: none;
+  border: none;
+  width: 25px;
 }
 #g_comment {
-    display: inline-block;
+  display: inline-block;
 }
 .l_comment {
-    display: inline-flex !important;
+  display: inline-flex !important;
 }
 .my-carousel-item {
-    flex: 1 0 250px;
-    flex-basis: 250px;
-    margin-left: 1rem;
-    scroll-snap-align: start;
+  flex: 1 0 250px;
+  flex-basis: 250px;
+  margin-left: 1rem;
+  scroll-snap-align: start;
 }
 .echantillon {
-    width: 100%;
-    height: 130px;
+  width: 100%;
+  height: 130px;
 }
 .name {
-    position: absolute;
-    text-shadow: 0px 0px 5px black;
-    color: white;
-    font-size: 13px;
-    text-align: center;
-    width: 100%;
-    bottom: 0;
-    left: 0;
-    background: rgba(0,0,0,0.5);
+  position: absolute;
+  text-shadow: 0px 0px 5px black;
+  color: white;
+  font-size: 13px;
+  text-align: center;
+  width: 100%;
+  bottom: 0;
+  left: 0;
+  background: rgba(0, 0, 0, 0.5);
 }
 .liste_categorie_vetement {
-    position: relative;
-    width: 131px;
-    display: inline-block;
-    margin-right: 3PX;
-    margin-left: 3PX;
-    background-color: white;
-    padding: 5PX;
+  position: relative;
+  width: 131px;
+  display: inline-block;
+  margin-right: 3px;
+  margin-left: 3px;
+  background-color: white;
+  padding: 5px;
 }
-._container_echatillon, ._boutiqueContaintEchantillon {
-    min-width: 100%;
-    overflow-x: auto;
-    white-space: nowrap;
-    margin-top: 8px;
-    overflow-y: hidden;
-    margin-bottom: 7px;
+._container_echatillon,
+._boutiqueContaintEchantillon {
+  min-width: 100%;
+  overflow-x: auto;
+  white-space: nowrap;
+  margin-top: 8px;
+  overflow-y: hidden;
+  margin-bottom: 7px;
 }
 .remove {
-    padding: 0px;
-    width: 30px;
-    height: 30px;
-    border-radius: 100%;
-    border: none;
-    position: absolute;
-    right: -12px;
-    top: -21PX;
-    color: red;
-    cursor: pointer;
-    transition: 300ms;
+  padding: 0px;
+  width: 30px;
+  height: 30px;
+  border-radius: 100%;
+  border: none;
+  position: absolute;
+  right: -12px;
+  top: -21px;
+  color: red;
+  cursor: pointer;
+  transition: 300ms;
 }
 #menu_detail {
-    box-shadow: 1px 3px 4px 1px rgba(0, 0, 255, .2);
-    height: auto;
-    margin-top: 16px;
+  box-shadow: 1px 3px 4px 1px rgba(0, 0, 255, 0.2);
+  height: auto;
+  margin-top: 16px;
 }
 #menu_detail h3 {
-    font-size: 14px;
-    height: auto;
-    padding: 5px;
+  font-size: 14px;
+  height: auto;
+  padding: 5px;
 }
-#menu_detail h3{
-    margin: 0px;
+#menu_detail h3 {
+  margin: 0px;
 }
 .sous_menu {
-    border-bottom: 1px solid;
-    border-left: 1px solid;
-    border-right: 1px solid;
+  border-bottom: 1px solid;
+  border-left: 1px solid;
+  border-right: 1px solid;
 }
 .h4_menu1 {
-    font-size: 12px;
-    font-weight: bold;
-    border: 1px solid;
-    height: auto;
-    padding: 5px;
-    text-align: center;
-    background-color: #131633;
-    color: white;
-    margin-bottom: 0px;
-    margin-top: 0px;
+  font-size: 12px;
+  font-weight: bold;
+  border: 1px solid;
+  height: auto;
+  padding: 5px;
+  text-align: center;
+  background-color: #131633;
+  color: white;
+  margin-bottom: 0px;
+  margin-top: 0px;
 }
 #container_echatillon {
-    position: absolute;
-    width: 90%;
-    z-index: 999;
-    display: none;
-    background: white;
-    left: 5%;
-    right: 5%;
-    padding: 5px;
-    box-shadow: 0px 0px 14px black;
-    top: 10%;
+  position: absolute;
+  width: 90%;
+  z-index: 999;
+  display: none;
+  background: white;
+  left: 5%;
+  right: 5%;
+  padding: 5px;
+  box-shadow: 0px 0px 14px black;
+  top: 10%;
 }
 .liste_categorie_vetement {
-    cursor: pointer;
+  cursor: pointer;
 }
 .container_boutique {
-    display: inline-block;
-    margin-left: 3px;
-    margin-right: 3px;
-    border: 1px solid black;
-    width: 263px;
+  display: inline-block;
+  margin-left: 3px;
+  margin-right: 3px;
+  border: 1px solid black;
+  width: 263px;
 }
 .nom_boutique_vetement {
-    display: inline-block;
-    margin: 0px;
-        margin-bottom: 0px;
-    width: 100%;
-    text-align: center;
-    padding-top: 5px;
-    padding-bottom: 5px;
-    box-shadow: 0PX 3px 5px rgba(0,0,0,0.8);
-    margin-bottom: 8px;
+  display: inline-block;
+  margin: 0px;
+  margin-bottom: 0px;
+  width: 100%;
+  text-align: center;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  box-shadow: 0px 3px 5px rgba(0, 0, 0, 0.8);
+  margin-bottom: 8px;
 }
 .boutique {
-    height: 320px;
-    overflow-y: scroll;
-    overflow-x: hidden;
-    width: 100%;
-    white-space: initial;
-    text-align: center;
+  height: 320px;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  width: 100%;
+  white-space: initial;
+  text-align: center;
 }
 ._my_aricle_in {
-    margin: 2px;
-    padding: 1px;
+  margin: 2px;
+  padding: 1px;
 }
 .image_vetement_boutique {
-    max-width: 100%;
-    transition: 500ms;
-    cursor: pointer;
-    height: 250PX;
-    display: inline-block;
+  max-width: 100%;
+  transition: 500ms;
+  cursor: pointer;
+  height: 250px;
+  display: inline-block;
 }
 .prix {
-    font-size: 23px;
-    font-weight: bold;
-    color: rgba(0,0,0,0.8);
-    text-align: center;
+  font-size: 23px;
+  font-weight: bold;
+  color: rgba(0, 0, 0, 0.8);
+  text-align: center;
 }
 .border_click {
-    border: 1px solid aqua;
-    border-radius: 10px;
+  border: 1px solid aqua;
+  border-radius: 10px;
 }
-._my_aricle_in:hover{
-    box-shadow: 0px 0px 5px black;
+._my_aricle_in:hover {
+  box-shadow: 0px 0px 5px black;
 }
 .titre_menu_detail {
-    border: 1px solid;
-    text-align: center;
-    background-color: black;
-    color: white;
+  border: 1px solid;
+  text-align: center;
+  background-color: black;
+  color: white;
 }
 .font_size_p {
-    font-size: 12px;
-    margin-left: 10px;
-}
-.div-inother{
-	background-color: green;
-	display:none;
-}
-._container_all_echantillon{
-    box-shadow: 0 0 2px;
-    border-radius: 7px
-}
-.inother-ajax{
-position:relative;
-width:100%;
-height:2px;
-overflow:hidden;
+  font-size: 12px;
+  margin-left: 10px;
 }
 .div-inother {
-position : absolute;
-height:100%;
-width:20%;
+  background-color: green;
+  display: none;
+}
+._container_all_echantillon {
+  box-shadow: 0 0 2px;
+  border-radius: 7px;
+}
+.inother-ajax {
+  position: relative;
+  width: 100%;
+  height: 2px;
+  overflow: hidden;
+}
+.div-inother {
+  position: absolute;
+  height: 100%;
+  width: 20%;
 
--webkit-animation:moveMarquee 1s linear alternate infinite;
-   -moz-animation:moveMarquee 1s linear alternate  infinite;
-    -ms-animation:moveMarquee 1s linear  alternate infinite;
-     -o-animation:moveMarquee 1s linear alternate infinite;
-        animation:moveMarquee 1s linear alternate  infinite;
+  -webkit-animation: moveMarquee 1s linear alternate infinite;
+  -moz-animation: moveMarquee 1s linear alternate infinite;
+  -ms-animation: moveMarquee 1s linear alternate infinite;
+  -o-animation: moveMarquee 1s linear alternate infinite;
+  animation: moveMarquee 1s linear alternate infinite;
 }
 @-webkit-keyframes moveMarquee {
-  0%{
-     transform:translateX(10%);
-} 
-  100%{
-transform:translateX(600%);
-}
+  0% {
+    transform: translateX(10%);
+  }
+  100% {
+    transform: translateX(600%);
+  }
 }
 
 @-moz-keyframes moveMarquee {
- 0%{
-transform:translateX(10%);
-} 
-  100%{
-transform:translateX(600%);
-}
+  0% {
+    transform: translateX(10%);
+  }
+  100% {
+    transform: translateX(600%);
+  }
 }
 
 @keyframes moveMarquee {
- 0%{
-transform:translateX(-100%);
-width: 20%;
-} 
-50%{
- transform:translateX(0);
- width: 40%;
-} 
-  100%{
-transform:translateX(500%);
-width: 20%;
-}
+  0% {
+    transform: translateX(-100%);
+    width: 20%;
+  }
+  50% {
+    transform: translateX(0);
+    width: 40%;
+  }
+  100% {
+    transform: translateX(500%);
+    width: 20%;
+  }
 }
 /*vote*/
 
-#profil_toggle{
-    padding: 10px;
-  }
-  .menu_profil_index{
-    text-align: center;
-    border: 1px solid #1875bc;
-    width: 100%;
-    color: black !important;
-    margin-top: 3px;
-    display: inline-block;
-    padding: 4px;
-  }
-  #icone_message{
-    border: 1px solid white;
-    border-radius: 50%;
-    color: white;
-  }
-  #icone_membre{
-    color: white;
-  }
-  .menu_profil_index:hover{
-    text-decoration: none;
-  }
-  
-  .image-comment,#user_nom{
-    display: inline-block;
-  }
-  #se_Connecter{
+#profil_toggle {
+  padding: 10px;
+}
+.menu_profil_index {
+  text-align: center;
+  border: 1px solid #1875bc;
+  width: 100%;
+  color: black !important;
+  margin-top: 3px;
+  display: inline-block;
+  padding: 4px;
+}
+#icone_message {
+  border: 1px solid white;
+  border-radius: 50%;
+  color: white;
+}
+#icone_membre {
+  color: white;
+}
+.menu_profil_index:hover {
+  text-decoration: none;
+}
+
+.image-comment,
+#user_nom {
+  display: inline-block;
+}
+#se_Connecter {
+  float: right;
+}
+.modal-header {
+  margin-top: 0px !important;
+}
+.high-tech-mobil {
+  display: none;
+}
+.achat_index_menu {
+  background: no-repeat;
+  border: none;
+}
+.achat_index_menu:hover {
+  background: no-repeat;
+  border: none;
+}
+.nbre_article {
+  border: 1px solid red;
+  background-color: red;
+  padding-bottom: 0;
+  padding-top: 0;
+  padding-left: 4px;
+  padding-right: 3px;
+  border-radius: 10px;
+}
+.nbre_suivis_client {
+  border: 1px solid red;
+  background-color: red;
+  padding-bottom: 0;
+  padding-top: 0;
+  padding-left: 4px;
+  padding-right: 3px;
+  border-radius: 10px;
+}
+.nbre_suivis_moi {
+  border: 1px solid red;
+  background-color: red;
+  padding-bottom: 0;
+  padding-top: 0;
+  padding-left: 4px;
+  padding-right: 3px;
+  border-radius: 10px;
+}
+.header_achat {
+  padding-bottom: 43px;
+}
+.block_nom_boutique {
+  margin-top: 7px !important;
+}
+.menu_vertic_clicked {
+  border: 2px solid #375d81;
+  background: white !important;
+  color: black !important;
+}
+.fets {
+  cursor: pointer;
+}
+.h4_menu_vertic {
+  cursor: pointer;
+}
+#confirmModal_suivis {
+  width: 50% !important;
+}
+@media (max-width: 1000px) {
+  #se_Connecter {
     float: right;
+    margin-right: 25px;
   }
-  .modal-header {
-      margin-top: 0px !important;
+  .block_nom_boutique {
+    /*margin-top: 0 !important;*/
   }
-  .high-tech-mobil{
-      display:none;
-  }
-  .achat_index_menu{
-    background: no-repeat;
-    border: none
-  }
-  .achat_index_menu:hover{
-    background: no-repeat;
-    border: none
-  }
-  .nbre_article{
-    border: 1px solid red;
-    background-color:red;
-    padding-bottom: 0;
-    padding-top: 0;
-    padding-left: 4px;
-    padding-right: 3px;
-    border-radius: 10px;
-  }
-  .nbre_suivis_client{
-    border: 1px solid red;
-    background-color:red;
-    padding-bottom: 0;
-    padding-top: 0;
-    padding-left: 4px;
-    padding-right: 3px;
-    border-radius: 10px;
-  }
-  .nbre_suivis_moi{
-    border: 1px solid red;
-    background-color:red;
-    padding-bottom: 0;
-    padding-top: 0;
-    padding-left: 4px;
-    padding-right: 3px;
-    border-radius: 10px;
-  }
-  .header_achat{
-    padding-bottom: 43px;
-  }
-  .block_nom_boutique{
-    margin-top: 7px !important
-  }
-  .menu_vertic_clicked{
-    border: 2px solid #375d81;
-    background: white !important;
-    color: black !important;
-  }
-  .fets{
-      cursor: pointer;
-      
-  }
-  .h4_menu_vertic {
-    cursor: pointer;
-  }
-  #confirmModal_suivis {
-      width: 50% !important;
-  }
-  @media(max-width: 1000px){
-    #se_Connecter{
-      float: right;
-      margin-right: 25px;
-    }
-    .block_nom_boutique{
-      /*margin-top: 0 !important;*/
-    }
-    #profil_index{
+  #profil_index {
     width: 130px;
     z-index: 1;
-    }
-    #panier_7{
-      display: none;
-    }
-    .header_achat{
-   /*  padding-bottom: 0px;*/
-    }
-  
   }
-  .p{  
-  
-    display: inline-block;
-  
-    width: 30px;
-  
+  #panier_7 {
+    display: none;
   }
-  .munu_vertic{
-    font-size: 12px;
-   /*margin-top: -5px;*/
-   /*margin-left: -20px;*/
-   transition: 500ms;
+  .header_achat {
+    /*  padding-bottom: 0px;*/
   }
-  
-  .munu_vertic_ar{
+}
+.p {
+  display: inline-block;
+
+  width: 30px;
+}
+.munu_vertic {
+  font-size: 12px;
+  /*margin-top: -5px;*/
+  /*margin-left: -20px;*/
+  transition: 500ms;
+}
+
+.munu_vertic_ar {
   font-size: 12px;
   margin-top: -6px;
   margin-left: 13px;
-  }
-  .h4_menu_vertic{
+}
+.h4_menu_vertic {
   font-size: 14px;
   width: 94px;
-  background: #375D81;
+  background: #375d81;
   /*margin-left: -15px;*/
   margin-top: 0;
   color: white;
   text-align: center;
-  }
-  .munu_vertic_b{
-    font-size: 12px;
-  
-  }
-  .h4_menu_vertic_b{
-    font-size: 14px;
-  
-  background-color: #375D81;
-  
+}
+.munu_vertic_b {
+  font-size: 12px;
+}
+.h4_menu_vertic_b {
+  font-size: 14px;
+
+  background-color: #375d81;
+
   color: white;
-  
+
   width: 93px;
-  
+
   margin-left: -15px;
-  
+
   margin-top: -7px;
-  
+
   height: 22px;
-  
+
   text-align: center;
-  
+
   padding-top: 2px;
-  
-  }
-  .h4_menu_vertic_a{
-    font-size: 14px;
-  background-color: #375D81;
+}
+.h4_menu_vertic_a {
+  font-size: 14px;
+  background-color: #375d81;
   color: white;
   width: 93px;
   margin-left: -15px;
@@ -570,1343 +571,1124 @@ width: 20%;
   height: auto;
   text-align: center;
   padding-top: 2px;
-  }
-  .h4_menu_vertic_ar{
-    font-size: 13px;
-    background-color: #375D81;
-    color: white;
-    width: 93px;
-    margin-left: 0;
-    margin-top: 0px;
-    margin-bottom: 1px;
-    height: auto;
-    text-align: center;
-    padding-top: 2px;
-  }
-  .flech{
-  
-    width: 0px;
-  
-    height: 0px;
-  
-    border-bottom: 15px solid white;
-  
-    border-top: 0px solid transparent;
-  
-    border-left: 15px solid transparent;
-  
-    border-right: 15px solid transparent;
-  
-    position: absolute;
-  
-    top: -15px;
-  
-    left: 15px;
-  
-  }
-  
-  .menu_sante{
-  
-       position: absolute;
-  
-      background: white;
-  
-      z-index: 1;
-  
-      border: 1px solid rgba(0,0,0,0.4);
-  
-      display: none;
-  
-      width: 200px;
-  
-      padding-left: 10PX;
-  
-      padding-right: 10px;
-  
-      padding-right: 10px;
-  
-      margin-left: 212px;
-      margin-top: -19px;
-  
-  }
-  
-  .sous_sous_menu h4{
-  
-    margin-left: 16px;
-  
-  }
-  
-  .header{
-  
-    height: 113px
-  
-  }
-  
-  .menu_col_m{
-  
-     margin: 0px !important;
-  
-     padding: 0px !important;
-  
-  }
-  
-  #resultat_click_vetement{
-  
-  overflow-x: scroll;
-  
-  white-space: nowrap;
-  
+}
+.h4_menu_vertic_ar {
+  font-size: 13px;
+  background-color: #375d81;
+  color: white;
+  width: 93px;
+  margin-left: 0;
+  margin-top: 0px;
+  margin-bottom: 1px;
+  height: auto;
+  text-align: center;
+  padding-top: 2px;
+}
+.flech {
+  width: 0px;
+
+  height: 0px;
+
+  border-bottom: 15px solid white;
+
+  border-top: 0px solid transparent;
+
+  border-left: 15px solid transparent;
+
+  border-right: 15px solid transparent;
+
+  position: absolute;
+
+  top: -15px;
+
+  left: 15px;
+}
+
+.menu_sante {
+  position: absolute;
+
+  background: white;
+
+  z-index: 1;
+
+  border: 1px solid rgba(0, 0, 0, 0.4);
+
   display: none;
-  
-  }
-  
-  .font_size_p{
-  
-    font-size: 12px;
-    margin-left: 10px
-  
-  }
-  
-  .listeMode{
-  
-    border: 1px solid rgba(0,0,0,0.3);
-  
-  }
-  .souligne_1{
+
+  width: 200px;
+
+  padding-left: 10px;
+
+  padding-right: 10px;
+
+  padding-right: 10px;
+
+  margin-left: 212px;
+  margin-top: -19px;
+}
+
+.sous_sous_menu h4 {
+  margin-left: 16px;
+}
+
+.header {
+  height: 113px;
+}
+
+.menu_col_m {
+  margin: 0px !important;
+
+  padding: 0px !important;
+}
+
+#resultat_click_vetement {
+  overflow-x: scroll;
+
+  white-space: nowrap;
+
+  display: none;
+}
+
+.font_size_p {
+  font-size: 12px;
+  margin-left: 10px;
+}
+
+.listeMode {
+  border: 1px solid rgba(0, 0, 0, 0.3);
+}
+.souligne_1 {
   font-size: 15px;
   font-weight: bold;
   padding-bottom: 2px !important;
   margin-top: 0;
   margin-bottom: 8px;
-  margin-left: -7px
-  
-  }
-  .souligne_2{
+  margin-left: -7px;
+}
+.souligne_2 {
   font-size: 15px;
   font-weight: bold;
   padding-bottom: 2px !important;
   margin-top: 0;
   margin-bottom: 8px;
   /*margin-left: -7px*/
-  
-  
-  }
-  .souligne{
-  
-    font-size: 15px;
-  
-    font-weight: bold;
-    margin-top: 0;
-    padding-bottom: 2px!important;
-  
-  }
-  
-  .h4_menu{
-  
-    font-size: 12px;
-  
-    font-weight: bold;
-  
-  }
-  
-  .liste_categorie_vetement{
-  
-    border: 1px solid rgba(0,0,0,0.3);
-  
-    margin-right: 7px;
-  
-    cursor: pointer;
-  
-  }
-  
-  .fets:hover{
-  
-    cursor : pointer;
-  
-    color:red;
-  
-  }
-  
-  .fets:focus{
-  
-    color:red;
-  
-  }
-  
-  .name{
-  
-    position: absolute;
-  
-    bottom: 0px;
-  
-    text-shadow: 0px 0px 5px black;
-  
-    color: white;
-  
-    font-size: 17px;
-  
-    left: 12px;
-  
-    text-align: center;
-  
-  }
-  
-  .liste_image{
-  
-    position : relative;
-  
-  }
-  
-  .send_ajax img{
-  
-    height: 58px;
-  
-  }
-  
-  .acheter{
-  
-    display: none;
-  
-    position : absolute;
-  
-    bottom: 0px;
-  
-    background: rgba(0,0,0,0.5);
-  
-    width: 100%;
-  
-    padding: 9px;
-  
-  }
-  
-  .ajax_load_vetement{ 
-  
-    display: none;
-  
-    height: 37px;
-  
-    position: absolute;
-  
-    z-index: 1;
-  
-    top: 64px;
-  
-    left: 72px;
-  
-  }
-  
-  .image_set_image{
-  
-    padding-right: 2px;
-  
-  }
-  
-  .nom_boutique_vetement{
-  
-   display: inline-block;
-  
-   margin: 0px;
-  
-   width: 100%;
-  
-   text-align: center;
-  
-   padding-top: 5px;
-  
-   padding-bottom: 5px;
-  
-   box-shadow: 0PX 3px 5px rgba(0,0,0,0.8);
-  
-   margin-bottom: 8px;
-  
-  }
-  
-  .container_boutique{
-  
-    display: inline-block;
-  
-    margin-left: 3px;
-  
-    margin-right: 3px;
-  
-    border: 1px solid black;
-  
-    /*width: 263px;*/
-  
-  }
-  
-  .image_vetement_boutique{
-      max-width: 100%;
-      transition: 500ms;
-      cursor: pointer;
-      height: 250PX;
-      display: inline-block;
-  
-  }
-  .containt_image_vote {
-      width: 100%;
-      height: 260PX;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-  }
-  .image_min_recup_while{
-      max-width: 100%;
-      transition: 500ms;
-      cursor: pointer;
-      height: 136px !important;
-      display: inline-block;
-  }
-  
-  .image_min_recup_while:hover{
-    transform: scale(1.1);
-  }
-  
-  .boutique{
-      height: 320px;
-      overflow-y: scroll;
-      overflow-x: hidden;
-      width: 100%;
-      white-space: initial;
-      text-align: center;
-  
-  }
-  
-  .nbr_comment{
-  
-  
-  
-      width: 20px;
-  
-      padding: 0px;
-  
-      height: 30px;
-  
-      margin: 0px;
-  
-      background: white;
-  
-      border: none;
-  
-  }
-  
-  .send_ajax{
-  
-    font-size: 48px;
-  
-    color: #808080;
-  
-    display: none;
-  
-  }
-  
-  .image_comment_video{
-  
-     height:  85%;
-  
-     width:12%;
-  
-     border-radius: 100%;
-  
-  }
-  
-  .commentaire_video_pub_input{
-  
-    border-radius: 10px 0px 0px 10px;
-  
-    border: none;
-  
-    height: 30px;
-  
-    padding-left: 5px;
-  
-    margin-right: -1px;
-  
-    width: 70%;;
-  
-  }
-  
-  .commentaire_pub_video{
-  
-    background: #ccc;
-  
-    height: 44px;
-  
-    padding-left: 5px;
-  
-    padding-top: 6px;
-  
-  }
-  
-  .button_commentaire_video_pub_input{
-  
-    width: 12%;
-  
-    padding: 0px;
-  
-    height: 30px;
-  
-    margin-left: -3px;
-  
-    background: white;
-  
-    border: none;
-  
-    border-radius: 0 10px 10px 0;
-  
-  }
-  
-  
-  
-  .num{
-  
-    text-align: center;
-  
-  }
-  
-  #bup_image{
-  
-     background: rgba(0,0,0,0.02);
-     display: none;
-  }
-  
-  .pub_image{
-  
-     width:100%;
-  
-     height:100px;
-  
-  
-  }
-  
-  .apropos_commentaire{
-  
-    font-size: 31px;
-    font-weight: bold;
-    font-family: "Brush Script MT", "Brush Script Std", "cursive";
-    margin-top: 2px;
-    margin-left: 5px;
-  
-  }
-  
-  .back_ground_forme_containt{
-  
-    background: rgba(0,0,0,0.2);
-  
-  }
-  
-  .voir_boutique{
-  
-    position : absolute;
-  
-    top: 5px;
-  
-    right : 5px;
-  
-  }
-  
-  .connection{
-  
-    width: 300px;
-  
-    background: rgba(255,255,255,0.8);
-  
-  }
-  
-  @media(max-width: 700px){
-    .connection{
-  
-    width: auto;
-  
-    background: rgba(255,255,255,0.8);
-  
-  }
-  }
-  
-  .bouster{
-  
-    display: inline-block;
-  
-    margin-left: 10px;
-  
-    margin-right: 5px;
-  
-    border: none;
-  
-    background: none;
-  
-    color: black;
-  
-  }
-  
-  .image-content{
-  
-    max-width: 100%;
-  
-    max-height: /*auto;*/100%; /*451px;*/
-  
-    cursor: pointer;
-  
-  }
-  
-  
-  
-  .image{
-  
-      /* display: inline-block; */
-      display: contents;
-  
-      position:relative;
-  
-      padding:0px;
-  
-      width: 70%;
-  
-  
-  
-      /*height: 240px;*/
-  
-      margin: 0px;
-  
-      padding: 0px;
-  
-      margin-left: 10px;
-  
-      margin-right: 10px;
-  
-      /*background: rgba(0,0,0,0.2)*/
-  
-    }
-  
-  .image:hover{
-  
-    box-shadow: 5px 10px 10px rgba(0,0,0,0.5);
-  
-  }
-  
-  .texte{
-  
-  
-  
-  }
-  
-  .titre_image{
-  
-  padding: 2px;  
-  
-  width: 42px;
-  
-  height: 42px;
-  
-  }
-  
-  .icon_comment{
-  
-    background: none;
-  
-    border: none;
-  
-    width: 25px;
-  
-  }
-  
-  #count_comment{
-  
-    display: inline-block;
-  
-  }
-  
-  .background_title_comment{
-  
-     background: rgba(0,0,0,0.04);
-  
-  }
-  
-  .commentaire{
-  
-    border-radius: 10px 0px 0px 10px;
-  
-    width: 90%;
-  
-    border: none;
-  
-    padding-left: 6px;
-  
-    height: 30px;
-  
-  }
-  
-  #content{
-  
-    width:80%;
-  
-    border: 1px solid black;
-  
-    overflow-y: hidden;
-  
-    overflow-x: hidden;
-  
-    
-  
-  }
-  
-  
-  
-  
-  
-  #p_video{
-  
-    font-size: 31px;
-  
-    font-weight: bold;
-  
-    font-family: "Brush Script MT", "Brush Script Std", "cursive";
-  
-    margin-top: -7px;
-  
-    margin-left: 1px;
-  
-  }
-  
-    .buttons_select{
-  
-     width: 4%;
-  
-     height: 20px
-  
-  
-  
-    }
-  
-  
-  
-  #btn-video-comment{
-  
-    margin-left: -7px;
-  
-    background: white;
-  
-    border: none;
-  
-    height: 29px;
-  
-    border-radius: 0px 10px 10px 0PX;
-  
-  }
-  
-  .navbar-default .navbar-nav > li > a {
-  
-      color: white;
-  
-  }
-  
-    .commentaire_video{
-  
-       background: rgba(0,0,0,0.1);
-  
-       padding: 8px;
-  
-    }
-  
-    #video-comment{
-  
-     width: 11%;
-  
-     border-radius: 100%;
-  
-     height: 26px;
-  
-     display: inline-block;
-  
-     margin-right: 5px;
-  
-    }
-  
-  #ajout_video_commentaire input{
-  
-    border: none;
-  
-   border-radius: 10px 0 0 10PX;
-  
-   height: 29px;
-  
-   margin: 0px;
-  
-   width: 80%;
-  
-  padding-left: 14px;
-  
-  }
-  
-  #ajout_video_commentaire{
-  
-   width: 86%;
-  
-  float: right;
-  
-  }
-  
-    .hd{
-  
-      border:none;
-  
-      background: none;
-  
-      margin-top: 10px;
-  
-      padding: 0px;
-  
-    }
-  
-    .containt{
-  
-      width: 100%;
-  
-      overflow-y: hidden;
-  
-      overflow-x: scroll;
-  
-      margin-left: auto;
-  
-      margin-right: auto;
-  
-      padding: 0px !important;
-  
-      padding-bottom: 6px !important;
-  
-      white-space: nowrap;
-  
-      border-radius: 3px;
-  
-      height: auto; /*557px;*/
-  
-    
-  
-    }
-  
-    .div_apropos_commentaire{
-  
-        border-right: 1px solid #e3d9d94d;
-  
-       border-left:1px solid #e3d9d94d;
-  
-       border-bottom: 1px solid #e3d9d94d;
-  
-       margin: 0px;
-  
-    }
-  
-  .left{
-  
-      padding-right: 2px;
-  
-    }
-  
-  .right{
-  
-    padding-left: 0px;
-  
-  }
-  
-  .image-comment{
-    height: 40px;
-    width: 40px;
-    border-radius: 20px;
-  }
-   .logo_profil{
-    height: 40px;
-    width: 40px;
-    border-radius: 20px;
-   }
-  
-  .btns{
-  
-    
-  
-    display: inline-block;
-  
-    
-  
-  }
-  
-  #pup_video_play{
-  
-  width:100% ;
-  
-  height:333px;
-  
-  }
-  
-  .button_comment_submit{
-  
-    background: white;
-  
-    border: none;
-  
-    height:30px;
-  
-    border-radius: 0px 10px 10px 0px;
-  
-    margin-left: -4px;
-  
-  }
-  
-  .back_ground_forme_containt{
-   /* display: inline; */
-   display: contents;
-   width: auto;
-  
-  }
-  
-  .button_comment_submit:hover{
-  
-    background: white;
-  
-    border: none;
-  
-    border-radius: 0px 10px 10px 0px;
-  
-    margin-left: -4px;
-  
-  }
-  
-  #g_comment{
-  
-    display: inline-block;
-  
-  }
-  
-  .l_comment{
-  
-    display: inline-block;
-  
-    width: 51%;
-  
-    margin-top:4px;
-  
-    margin-right:4px;
-  
-  }
-  
-  .overflow_commentaire_p{
-  
-    max-height: 257px;
-  
-    overflow: auto;
-  
-  }
-  
-  .nom{
-  
-    font-weight: bold;
-  
-  }
-  
-  .personne_ecrire{
-  
-    font-size: 8px;
-  
-    font-weight: bold;
-  
-    font-style: italic;
-  
-  }
-  
-  .personne_ecrire img{
-  
-    height: 15px;
-  
-  }
-  
-  .form-control[disabled]{
-  
-     cursor: default;
-  
-  }
-  
-  .btn[disabled]{
-  
-     cursor: default;
-  
-  }
-  
-  /******************css pub_video*********************/
-  
-
-
-  .list_video{
-    width: 95%; 
-    height: 200px;
-  }
-  
-  .block_achat{
-    background-color: gray;
-    color: white;
-  }
-  
-  .col-md-4{
-  
-    margin: 0px;
-  
-  }
-  
-  #petit{
-  
-    display: none;
-  
-  }
-  
-  
-  #panier{
-  
+}
+.souligne {
   font-size: 15px;
-  
-  /*position: absolute;*/
-  
-  right: 20px;
-  
-  top: 157px;
-  
+
+  font-weight: bold;
+  margin-top: 0;
+  padding-bottom: 2px !important;
+}
+
+.h4_menu {
+  font-size: 12px;
+
+  font-weight: bold;
+}
+
+.liste_categorie_vetement {
+  border: 1px solid rgba(0, 0, 0, 0.3);
+
+  margin-right: 7px;
+
+  cursor: pointer;
+}
+
+.fets:hover {
+  cursor: pointer;
+
+  color: red;
+}
+
+.fets:focus {
+  color: red;
+}
+
+.name {
+  position: absolute;
+
+  bottom: 0px;
+
+  text-shadow: 0px 0px 5px black;
+
+  color: white;
+
+  font-size: 17px;
+
+  left: 12px;
+
+  text-align: center;
+}
+
+.liste_image {
+  position: relative;
+}
+
+.send_ajax img {
+  height: 58px;
+}
+
+.acheter {
+  display: none;
+
+  position: absolute;
+
+  bottom: 0px;
+
+  background: rgba(0, 0, 0, 0.5);
+
+  width: 100%;
+
+  padding: 9px;
+}
+
+.ajax_load_vetement {
+  display: none;
+
+  height: 37px;
+
+  position: absolute;
+
   z-index: 1;
-  
+
+  top: 64px;
+
+  left: 72px;
+}
+
+.image_set_image {
+  padding-right: 2px;
+}
+
+.nom_boutique_vetement {
+  display: inline-block;
+
+  margin: 0px;
+
+  width: 100%;
+
+  text-align: center;
+
+  padding-top: 5px;
+
+  padding-bottom: 5px;
+
+  box-shadow: 0px 3px 5px rgba(0, 0, 0, 0.8);
+
+  margin-bottom: 8px;
+}
+
+.container_boutique {
+  display: inline-block;
+
+  margin-left: 3px;
+
+  margin-right: 3px;
+
+  border: 1px solid black;
+
+  /*width: 263px;*/
+}
+
+.image_vetement_boutique {
+  max-width: 100%;
+  transition: 500ms;
+  cursor: pointer;
+  height: 250px;
+  display: inline-block;
+}
+.containt_image_vote {
+  width: 100%;
+  height: 260px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.image_min_recup_while {
+  max-width: 100%;
+  transition: 500ms;
+  cursor: pointer;
+  height: 136px !important;
+  display: inline-block;
+}
+
+.image_min_recup_while:hover {
+  transform: scale(1.1);
+}
+
+.boutique {
+  height: 320px;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  width: 100%;
+  white-space: initial;
+  text-align: center;
+}
+
+.nbr_comment {
+  width: 20px;
+
+  padding: 0px;
+
+  height: 30px;
+
+  margin: 0px;
+
+  background: white;
+
+  border: none;
+}
+
+.send_ajax {
+  font-size: 48px;
+
+  color: #808080;
+
+  display: none;
+}
+
+.image_comment_video {
+  height: 85%;
+
+  width: 12%;
+
+  border-radius: 100%;
+}
+
+.commentaire_video_pub_input {
+  border-radius: 10px 0px 0px 10px;
+
+  border: none;
+
+  height: 30px;
+
+  padding-left: 5px;
+
+  margin-right: -1px;
+
+  width: 70%;
+}
+
+.commentaire_pub_video {
+  background: #ccc;
+
+  height: 44px;
+
+  padding-left: 5px;
+
+  padding-top: 6px;
+}
+
+.button_commentaire_video_pub_input {
+  width: 12%;
+
+  padding: 0px;
+
+  height: 30px;
+
+  margin-left: -3px;
+
+  background: white;
+
+  border: none;
+
+  border-radius: 0 10px 10px 0;
+}
+
+.num {
+  text-align: center;
+}
+
+#bup_image {
+  background: rgba(0, 0, 0, 0.02);
+  display: none;
+}
+
+.pub_image {
+  width: 100%;
+
+  height: 100px;
+}
+
+.apropos_commentaire {
+  font-size: 31px;
+  font-weight: bold;
+  font-family: "Brush Script MT", "Brush Script Std", "cursive";
+  margin-top: 2px;
+  margin-left: 5px;
+}
+
+.back_ground_forme_containt {
+  background: rgba(0, 0, 0, 0.2);
+}
+
+.voir_boutique {
+  position: absolute;
+
+  top: 5px;
+
+  right: 5px;
+}
+
+.connection {
+  width: 300px;
+
+  background: rgba(255, 255, 255, 0.8);
+}
+
+@media (max-width: 700px) {
+  .connection {
+    width: auto;
+
+    background: rgba(255, 255, 255, 0.8);
   }
-  .toggle_achat_mobil{
-    display: none;
+}
+
+.bouster {
+  display: inline-block;
+
+  margin-left: 10px;
+
+  margin-right: 5px;
+
+  border: none;
+
+  background: none;
+
+  color: black;
+}
+
+.image-content {
+  max-width: 100%;
+
+  max-height: /*auto;*/ 100%; /*451px;*/
+
+  cursor: pointer;
+}
+
+.image {
+  /* display: inline-block; */
+  display: contents;
+
+  position: relative;
+
+  padding: 0px;
+
+  width: 70%;
+
+  /*height: 240px;*/
+
+  margin: 0px;
+
+  padding: 0px;
+
+  margin-left: 10px;
+
+  margin-right: 10px;
+
+  /*background: rgba(0,0,0,0.2)*/
+}
+
+.image:hover {
+  box-shadow: 5px 10px 10px rgba(0, 0, 0, 0.5);
+}
+
+.texte {
+}
+
+.titre_image {
+  padding: 2px;
+
+  width: 42px;
+
+  height: 42px;
+}
+
+.icon_comment {
+  background: none;
+
+  border: none;
+
+  width: 25px;
+}
+
+#count_comment {
+  display: inline-block;
+}
+
+.background_title_comment {
+  background: rgba(0, 0, 0, 0.04);
+}
+
+.commentaire {
+  border-radius: 10px 0px 0px 10px;
+
+  width: 90%;
+
+  border: none;
+
+  padding-left: 6px;
+
+  height: 30px;
+}
+
+#content {
+  width: 80%;
+
+  border: 1px solid black;
+
+  overflow-y: hidden;
+
+  overflow-x: hidden;
+}
+
+#p_video {
+  font-size: 31px;
+
+  font-weight: bold;
+
+  font-family: "Brush Script MT", "Brush Script Std", "cursive";
+
+  margin-top: -7px;
+
+  margin-left: 1px;
+}
+
+.buttons_select {
+  width: 4%;
+
+  height: 20px;
+}
+
+#btn-video-comment {
+  margin-left: -7px;
+
+  background: white;
+
+  border: none;
+
+  height: 29px;
+
+  border-radius: 0px 10px 10px 0px;
+}
+
+.navbar-default .navbar-nav > li > a {
+  color: white;
+}
+
+.commentaire_video {
+  background: rgba(0, 0, 0, 0.1);
+
+  padding: 8px;
+}
+
+#video-comment {
+  width: 11%;
+
+  border-radius: 100%;
+
+  height: 26px;
+
+  display: inline-block;
+
+  margin-right: 5px;
+}
+
+#ajout_video_commentaire input {
+  border: none;
+
+  border-radius: 10px 0 0 10px;
+
+  height: 29px;
+
+  margin: 0px;
+
+  width: 80%;
+
+  padding-left: 14px;
+}
+
+#ajout_video_commentaire {
+  width: 86%;
+
+  float: right;
+}
+
+.hd {
+  border: none;
+
+  background: none;
+
+  margin-top: 10px;
+
+  padding: 0px;
+}
+
+.containt {
+  width: 100%;
+
+  overflow-y: hidden;
+
+  overflow-x: scroll;
+
+  margin-left: auto;
+
+  margin-right: auto;
+
+  padding: 0px !important;
+
+  padding-bottom: 6px !important;
+
+  white-space: nowrap;
+
+  border-radius: 3px;
+
+  height: auto; /*557px;*/
+}
+
+.div_apropos_commentaire {
+  border-right: 1px solid #e3d9d94d;
+
+  border-left: 1px solid #e3d9d94d;
+
+  border-bottom: 1px solid #e3d9d94d;
+
+  margin: 0px;
+}
+
+.left {
+  padding-right: 2px;
+}
+
+.right {
+  padding-left: 0px;
+}
+
+.image-comment {
+  height: 40px;
+  width: 40px;
+  border-radius: 20px;
+}
+.logo_profil {
+  height: 40px;
+  width: 40px;
+  border-radius: 20px;
+}
+
+.btns {
+  display: inline-block;
+}
+
+#pup_video_play {
+  width: 100%;
+
+  height: 333px;
+}
+
+.button_comment_submit {
+  background: white;
+
+  border: none;
+
+  height: 30px;
+
+  border-radius: 0px 10px 10px 0px;
+
+  margin-left: -4px;
+}
+
+.back_ground_forme_containt {
+  /* display: inline; */
+  display: contents;
+  width: auto;
+}
+
+.button_comment_submit:hover {
+  background: white;
+
+  border: none;
+
+  border-radius: 0px 10px 10px 0px;
+
+  margin-left: -4px;
+}
+
+#g_comment {
+  display: inline-block;
+}
+
+.l_comment {
+  display: inline-block;
+
+  width: 51%;
+
+  margin-top: 4px;
+
+  margin-right: 4px;
+}
+
+.overflow_commentaire_p {
+  max-height: 257px;
+
+  overflow: auto;
+}
+
+.nom {
+  font-weight: bold;
+}
+
+.personne_ecrire {
+  font-size: 8px;
+
+  font-weight: bold;
+
+  font-style: italic;
+}
+
+.personne_ecrire img {
+  height: 15px;
+}
+
+.form-control[disabled] {
+  cursor: default;
+}
+
+.btn[disabled] {
+  cursor: default;
+}
+
+/******************css pub_video*********************/
+
+.list_video {
+  width: 95%;
+  height: 200px;
+}
+
+.block_achat {
+  background-color: gray;
+  color: white;
+}
+
+.col-md-4 {
+  margin: 0px;
+}
+
+#petit {
+  display: none;
+}
+
+#panier {
+  font-size: 15px;
+
+  /*position: absolute;*/
+
+  right: 20px;
+
+  top: 157px;
+
+  z-index: 1;
+}
+.toggle_achat_mobil {
+  display: none;
+}
+@media (max-width: 1000px) {
+  .toggle_achat_mobil {
+    display: block;
   }
-  @media(max-width: 1000px){
-    .toggle_achat_mobil{
-      display: block;
-    }
-    .menu_mobile_2,.toggle_achat_mobil{
-      display: inline-block;
-    }
-    .modal-dialog{
-      width: 95%;
-    }
-  
-  }
-  .liste_btn_achat{
+  .menu_mobile_2,
+  .toggle_achat_mobil {
     display: inline-block;
-    float: right;
-    margin-top: 7px;
-    margin-right: 9px;
   }
-  .row_detail_achat{
-    background-color:#008080;
-    color:white;
-    width: 100%;
-    margin-left: 0;
-    height: 38px;
-    padding-top: 7px;
-    font-size: 16px;
-    font-weight: bold;
-    margin-top: 5px;
+  .modal-dialog {
+    width: 95%;
   }
-  
-  .row_detail_achat_boutique{
-    background-color:#008080;
-    color:white;
-    width: 100%;
-    margin-left: 0;
-    height: 38px;
-    padding-top: 7px;
-    font-size: 16px;
-    font-weight: bold;
-    margin-top: 5px;
-  }
-  .menu_deroulant_mobile_achat{
-    position: absolute;
-    margin-left: 90px;
-    display:none;
-    z-index: 1;
-    background-color: black;
-  }
-  #mobile_menu_achat{
-    background-color:
-  gray;
+}
+.liste_btn_achat {
+  display: inline-block;
+  float: right;
+  margin-top: 7px;
+  margin-right: 9px;
+}
+.row_detail_achat {
+  background-color: #008080;
+  color: white;
+  width: 100%;
+  margin-left: 0;
+  height: 38px;
+  padding-top: 7px;
+  font-size: 16px;
+  font-weight: bold;
+  margin-top: 5px;
+}
+
+.row_detail_achat_boutique {
+  background-color: #008080;
+  color: white;
+  width: 100%;
+  margin-left: 0;
+  height: 38px;
+  padding-top: 7px;
+  font-size: 16px;
+  font-weight: bold;
+  margin-top: 5px;
+}
+.menu_deroulant_mobile_achat {
+  position: absolute;
+  margin-left: 90px;
+  display: none;
+  z-index: 1;
+  background-color: black;
+}
+#mobile_menu_achat {
+  background-color: gray;
   padding-left: 14px;
   margin-left: 45px;
   padding-right: 11px;
-  }
- 
-  #panier_2{
-    color: white;
-  }
-  .btn_achat_mobil{
-    list-style-type: none;
-  }
-  .galerie_marchande_mobile{
-      display:none;
-    }
-  
-  .menu_mobile_2{
-      display:none;
-    }
-  
-  .panier_mobile{
-      display:none;
-    }
-  /**********controle video et css mobile************/
-  
-  @media (max-width: 768px ){
-  
-    /* #liste_commentaire, #p4, #p5,#p3, #p8, #grand{
+}
+
+#panier_2 {
+  color: white;
+}
+.btn_achat_mobil {
+  list-style-type: none;
+}
+.galerie_marchande_mobile {
+  display: none;
+}
+
+.menu_mobile_2 {
+  display: none;
+}
+
+.panier_mobile {
+  display: none;
+}
+/**********controle video et css mobile************/
+
+@media (max-width: 768px) {
+  /* #liste_commentaire, #p4, #p5,#p3, #p8, #grand{
   
        display:none;
   
      }*/
   .containt_image_vote {
-      height: 180PX;
+    height: 180px;
   }
   .send_ajax {
-      font-size: 17px;
+    font-size: 17px;
   }
   .send_ajax img {
-      height: 33px;
+    height: 33px;
   }
-  #grand, #grant{
-     display:none;
-  }
-    .l_comment {
-      width: 100%;
-  
-  }
-   .commentaire, .button_comment_submit,.btns{
-    display:block }
-     #petit{
-  
-  
-      display: block;
-      box-shadow: 0 0 5px;
-  padding: 5px
-  
-     }
-     .liste_categorie_selection{
-       height: 37px;
-     }
-     .header {
-  
-      height: 37px;
-  
-      }
-      .listeMode, .liste_high_teck {
-          width: 90% !important;
-  
-      }
-  
-       #panier {
-  
-      font-size: 7px;
-  
-      position: absolute;
-  
-      right: 10px;
-  
-      top: 41px;
-  
-      opacity : 0.8;
-  
-       }
-  
-      .image-content{
-  
-       width: 100%;
-  
-       height:181px;/*340px; /*451px;*/
-  
-        cursor: pointer;
-  
-      }
-       
-      .chargin_text{
-          display:none;
-      }
-      .send_ajax {
-  
-      font-size: 25px;
-  
-      color: #808080;
-  
-      display: none;
-  
-     }
-  
-     .voir_boutique {
-  
-        font-size: 11px;
-  
-       height: 25px;
-  
-       padding: 4px;
-  
-      position: absolute;
-  
-      top: 0px;
-  
-      right: 5px;
-  
-  
-  
-    }
-  
-    .apropos_commentaire {
-  
-  
-  
-      font-size: 21px;
-  
-      font-weight: bold;
-  
-      font-family: "Brush Script MT", "Brush Script Std", "cursive";
-  
-      margin-top: 2px;
-  
-      margin-left: 5px;
-  
-    }
-  
-  
-  
-     .pub-video {
-  
-        padding-left: 53px;
-  
-        padding-right: 57px;
-  
-      }
-    .containt_video {
-      padding: 6px;
-      height: 250px !important;
-      margin-bottom: 15px;
-      border: 1px solid rgba(0,0,0,0.5);
-    }
-  
-    #deux{
-  
-    font-size:10px;
+  #grand,
+  #grant {
     display: none;
-  
-    }
-  
-    #se_connecter button,#se_connecter a {
-  
-    font-size : 9px;
-  
-    }
-  
-    #pup_video_play{
-  
-    width:100% ;
-  
-    height:auto;
-  
-    }
-  
-    .list_video {
-  
-      width: 100%;
-  
-      height: auto;
-  
-    }
-  
-  
-  
-    .containt {
-  
-      padding-bottom: 21px !important;
-  
-      border-bottom: 1px solid rgba(0,0,0,0.4);
-  
-      margin-bottom: 8px;
-  
-    }
-  
-    #panier{
-      display: none;
-    }
-    .menu_2{
-      display: none;
-    }
-    .menu_mobile_2{
-      display: inline;
-    }
-    .panier_mobile{
-      display: inline;
-    }
-  
-    #p1{
-      display: none;
-    }
-    .taille_text{
-      display: block;
-    }
-    .galerie_marchande_mobile{
-      display:inline;
-    }
-  
-    .menu_sante{
-      margin-left: 52px;
-      margin-top: 0px;
-    }
-  
-    .ajax_echantillon {
-      position: relative;
-      margin-top: -92px;;
-      z-index: 1;
-      width: 550px;
-      margin-left: -15px;
-    }
-  
-    .listeMode{
+  }
+  .l_comment {
+    width: 100%;
+  }
+  .commentaire,
+  .button_comment_submit,
+  .btns {
+    display: block;
+  }
+  #petit {
+    display: block;
+    box-shadow: 0 0 5px;
+    padding: 5px;
+  }
+  .liste_categorie_selection {
+    height: 37px;
+  }
+  .header {
+    height: 37px;
+  }
+  .listeMode,
+  .liste_high_teck {
+    width: 90% !important;
+  }
+
+  #panier {
+    font-size: 7px;
+
+    position: absolute;
+
+    right: 10px;
+
+    top: 41px;
+
+    opacity: 0.8;
+  }
+
+  .image-content {
+    width: 100%;
+
+    height: 181px; /*340px; /*451px;*/
+
+    cursor: pointer;
+  }
+
+  .chargin_text {
     display: none;
-    }
-  
-  
   }
-  
-  /*fin*/
-  
-    
-  .imagesUsersMember {
-      width: 30px;
-      height: 30px;
-      border-radius: 100%;
-      border: 1px solid black;
+  .send_ajax {
+    font-size: 25px;
+
+    color: #808080;
+
+    display: none;
   }
-  
-  .taille_texte{
-  
-    font-size:10px;
-  }
-  
-  .menu_deroulant_mobile{
+
+  .voir_boutique {
+    font-size: 11px;
+
+    height: 25px;
+
+    padding: 4px;
+
     position: absolute;
-    z-index: 1;
-    border: solid 1px #afafaf;
-    margin-left: 37px;
-    background-color: #c3c3c3;
-    cursor: pointer;
-    height: 0px;
+
+    top: 0px;
+
+    right: 5px;
   }
-  
-  .menu_deroulant_mobile ul {
-    padding-left: 0px;
+
+  .apropos_commentaire {
+    font-size: 21px;
+
+    font-weight: bold;
+
+    font-family: "Brush Script MT", "Brush Script Std", "cursive";
+
+    margin-top: 2px;
+
+    margin-left: 5px;
   }
-  
-  .icone_habillement{
-    position:absolute;
-    display:block;
-    z-index:101;
-    margin-top: -2px;
+
+  .pub-video {
+    padding-left: 53px;
+
+    padding-right: 57px;
   }
-  .icone_habillement:hover{
-    cursor: pointer;
+  .containt_video {
+    padding: 6px;
+    height: 250px !important;
+    margin-bottom: 15px;
+    border: 1px solid rgba(0, 0, 0, 0.5);
   }
-  .icone_BB{
-    width: 25px;
-    position:absolute;
-    display:block;
-    z-index:101;
-    margin-top: 28px;
+
+  #deux {
+    font-size: 10px;
+    display: none;
   }
-  .icone_BB:hover{
-    cursor: pointer;
+
+  #se_connecter button,
+  #se_connecter a {
+    font-size: 9px;
   }
-  .icone_accessoires{
-    width:22px;
-    position:absolute;
-    display:block;
-    z-index:101;
-    margin-top: 58px;
+
+  #pup_video_play {
+    width: 100%;
+
+    height: auto;
   }
-  
-  .icone_accessoires:hover{
-    cursor: pointer;
+
+  .list_video {
+    width: 100%;
+
+    height: auto;
   }
-  
-  .icone_art{
-    width: 25px;
-    position:absolute;
-    display:block;
-    z-index:101;
-    margin-top: 88px;
+
+  .containt {
+    padding-bottom: 21px !important;
+
+    border-bottom: 1px solid rgba(0, 0, 0, 0.4);
+
+    margin-bottom: 8px;
   }
-  
-  
-  .sortie_icone{
-    position: absolute;
-    margin-top: 75px;
-    z-index: 101;
-    color: red;
-    border: 1px solid red;
-    background-color: red;
-    color: white;
-    width: 33px;
-    height: 29px;
-  
+
+  #panier {
+    display: none;
   }
-  .sortie_icone:hover{
-    cursor: pointer;  
+  .menu_2 {
+    display: none;
   }
-  
-  .listeMode_mobile, .high-tech-mobil{
-    position:absolute;
+  .menu_mobile_2 {
+    display: inline;
+  }
+  .panier_mobile {
+    display: inline;
+  }
+
+  #p1 {
+    display: none;
+  }
+  .taille_text {
+    display: block;
+  }
+  .galerie_marchande_mobile {
+    display: inline;
+  }
+
+  .menu_sante {
+    margin-left: 52px;
     margin-top: 0px;
-    margin-left: 33px;
-    width: 95px;
-    z-index: 3;
-    background-color: white;
-    }
-  .fe{
-    display:none;
-    border: 1px solid;
   }
-    .ajax_echantillon{
-      margin-left: -16px;
-    }
-    .icone_mobile{
-      border-radius: 50%;
-      border: 2px solid white;
-      margin-left: -6px;
-  
+
+  .ajax_echantillon {
+    position: relative;
+    margin-top: -92px;
+    z-index: 1;
+    width: 550px;
+    margin-left: -15px;
+  }
+
+  .listeMode {
+    display: none;
+  }
+}
+
+/*fin*/
+
+.imagesUsersMember {
+  width: 30px;
+  height: 30px;
+  border-radius: 100%;
+  border: 1px solid black;
+}
+
+.taille_texte {
+  font-size: 10px;
+}
+
+.menu_deroulant_mobile {
+  position: absolute;
+  z-index: 1;
+  border: solid 1px #afafaf;
+  margin-left: 37px;
+  background-color: #c3c3c3;
+  cursor: pointer;
+  height: 0px;
+}
+
+.menu_deroulant_mobile ul {
+  padding-left: 0px;
+}
+
+.icone_habillement {
+  position: absolute;
+  display: block;
+  z-index: 101;
+  margin-top: -2px;
+}
+.icone_habillement:hover {
+  cursor: pointer;
+}
+.icone_BB {
+  width: 25px;
+  position: absolute;
+  display: block;
+  z-index: 101;
+  margin-top: 28px;
+}
+.icone_BB:hover {
+  cursor: pointer;
+}
+.icone_accessoires {
+  width: 22px;
+  position: absolute;
+  display: block;
+  z-index: 101;
+  margin-top: 58px;
+}
+
+.icone_accessoires:hover {
+  cursor: pointer;
+}
+
+.icone_art {
+  width: 25px;
+  position: absolute;
+  display: block;
+  z-index: 101;
+  margin-top: 88px;
+}
+
+.sortie_icone {
+  position: absolute;
+  margin-top: 75px;
+  z-index: 101;
+  color: red;
+  border: 1px solid red;
+  background-color: red;
+  color: white;
+  width: 33px;
+  height: 29px;
+}
+.sortie_icone:hover {
+  cursor: pointer;
+}
+
+.listeMode_mobile,
+.high-tech-mobil {
+  position: absolute;
+  margin-top: 0px;
+  margin-left: 33px;
+  width: 95px;
+  z-index: 3;
   background-color: white;
-    }
-    #liste_icone, .liste_icone_hight-tech{
-      width: 34px;
-      height: 175px;
-      z-index: 2;
-      position: absolute;
-      display: none;
-      border:1px solid black;
-      background-color:#375D81;
-      padding-top: 0px;
-      padding-left: 5px;
-      padding-right: 5px;
-    }
-    .icone_mobile:hover{
-      border-radius: 50%;
-      border: 2px solid red;
-      background-color: white;
-      width: 34px;
-      height: 30px;
-    }
-    .icone_habillement{
-      margin-top: 2px;
-    }
-    .icone_BB{
-      margin-top: 40px;
-    }
-    .icone_accessoires{
-      margin-top: 75px;
-      height: 33px;
-    }
-    .icone_art{
-      margin-top: 115px;
-    }
-    .sortie_icone{
-      margin-top: 155px;
-      height: 25px;
-      width: 32px;
-      background-color: red;
-    }
+}
+.fe {
+  display: none;
+  border: 1px solid;
+}
+.ajax_echantillon {
+  margin-left: -16px;
+}
+.icone_mobile {
+  border-radius: 50%;
+  border: 2px solid white;
+  margin-left: -6px;
+
+  background-color: white;
+}
+#liste_icone,
+.liste_icone_hight-tech {
+  width: 34px;
+  height: 175px;
+  z-index: 2;
+  position: absolute;
+  display: none;
+  border: 1px solid black;
+  background-color: #375d81;
+  padding-top: 0px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+.icone_mobile:hover {
+  border-radius: 50%;
+  border: 2px solid red;
+  background-color: white;
+  width: 34px;
+  height: 30px;
+}
+.icone_habillement {
+  margin-top: 2px;
+}
+.icone_BB {
+  margin-top: 40px;
+}
+.icone_accessoires {
+  margin-top: 75px;
+  height: 33px;
+}
+.icone_art {
+  margin-top: 115px;
+}
+.sortie_icone {
+  margin-top: 155px;
+  height: 25px;
+  width: 32px;
+  background-color: red;
+}
