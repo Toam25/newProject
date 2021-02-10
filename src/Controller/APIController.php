@@ -59,7 +59,7 @@ class APIController extends AbstractController
 
             $em = $this->getDoctrine()->getManager();
             $em->remove($boutique);
-            //$em->flush();
+            $em->flush();
 
             return new JsonResponse(['status' => 'success']);
         } else {
