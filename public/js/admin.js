@@ -1,10 +1,58 @@
 $(function () {
   var $category;
   
+
+   //update image 
+   $('.form_view_update_image').on("submit",function(e){
+    e.preventDefault();
+      $.ajax({
+        url :'/api/update/images',
+       type :'POST',
+       data : new FormData(this),
+       contentType: false,
+       processData : false,
+       cache : false,
+       dataType : 'json',
+       beforeSend : function(){
+         $('#view_article').modal('show');
+       },
+       success : function(data){
+         
+
+       },
+       error : function(){
+         toastr.error('Il y a un erreur');
+       }
+     })
+  });
+  //update artilce 
+  $('.form_article_in_shop_update').on("submit",function(e){
+    e.preventDefault();
+      $.ajax({
+        url :'/api/update/article',
+       type :'POST',
+       data : new FormData(this),
+       contentType: false,
+       processData : false,
+       cache : false,
+       dataType : 'json',
+       beforeSend : function(){
+         $('#view_article').modal('show');
+       },
+       success : function(data){
+         
+
+       },
+       error : function(){
+         toastr.error('Il y a un erreur');
+       }
+     })
+  });
+
   //detail article
 
   $('body').on('click','.article_edit',function(e){
-      e.preventDefault();
+    e.preventDefault();
       url ='/api/get/article/'+$(this).data('id');
       $.ajax({
         url,
@@ -16,25 +64,22 @@ $(function () {
          $('#view_article').modal('show');
        },
        success : function(data){
-        
+          $('.id-article').val(data.id);
+          $('._view_category').val(data.category);
           $('#preview_image').attr('src','/images/'+data.images['name']);
-          $('#preview_image').prop('idImage',data.images['id']);
-          $('._category').val(data.category);
+          $('#view_id-image').val(data.images['id']);
           $('#view_name').val(data.name);
           $('#view_prix').val(data.price);
           $('#view_prix_g').val(data.global_price);
           $('#view_stock').val(data.quantity);
-          //$('#view_sous_category').val(list_menu(data.list_menu));
-          //$('#view_type').val(list_menu(data.list_menu[0].option,data.type));
+          $('#view_sous_category').html(list_option(data.list_menu,data.sous_category));
+          $('#view_type').html(list_option(data.list_menu[0].option,data.type));
           $('#view_referency').val(data.referency)
           $('#view_promo').children('option[value="'+data.promo+'"]').prop('selected',true);
           $('#view_promo_price').val(data.promo_price);
           $('#view_detail').val(data.description);
 
-          console.log(list_option(data.list_menu[0].option,data.type));
-          console.log(list_option(data.list_menu));
-          console.log(data.list_menu);
-          console.log(data.list_menu[0].option);
+          
           
 
        },
@@ -44,12 +89,29 @@ $(function () {
      })
   })
 
-  function list_option(array, value=null){
-    array.forEach(item=>{
-     `<option class="sous_categorie_menu_on_type" data-name="Outils de jardin" value="Outils de jardin" selected="">
-     `+item+`
-     </option>`;
-    })
+  function list_option(arrays, value){
+    let option="";
+    let selected ="";
+    let classe="";
+    let type ="";
+
+    console.log(arrays);
+     for (const array of arrays) {
+            type = array.type ;
+       if(array.type===value){
+           selected="selected";
+           classe="selected_option"
+       }
+       else{
+         selected ="";
+         classe="";
+       }
+       option+= `<option class="view_sous_categorie`+classe+`" data-name="`+type+`" value="`+type+`" `+selected+`>
+       `+type+`
+       </option>`;
+     }
+
+    return option
 }
   //tab paramtre option
 
@@ -359,7 +421,7 @@ $(function () {
              </option>`
            }
           $('#sous_category').html(sous_category);
-          $('#type').html(type);
+          $('.type').html(type);
       },
       error: () => {
       },

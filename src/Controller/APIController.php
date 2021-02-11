@@ -10,6 +10,7 @@ use App\Repository\ArticleRepository;
 use App\Repository\BoutiqueRepository;
 use App\Repository\EsArticleRepository;
 use App\Repository\HeaderRepository;
+use App\Repository\ImagesRepository;
 use App\Repository\MenuRepository;
 use App\Service\CategoryOptionService;
 use App\Service\InsertFileServices;
@@ -56,7 +57,40 @@ class APIController extends AbstractController
         }
         return new JsonResponse($list);
     }
+      /**
+     * @Route("/update/article", name="update_article")
+     */
+    public function updateArticle(Request $request,ArticleRepository $articleRepository,BoutiqueRepository $boutiqueRepository)
+    {
+        $article = $articleRepository->findOneBy(['id'=>$request->request->get('id-article')]);
 
+        if($this->getUser() and $article){
+           $article->setCategory($request->request->get('categorie'));
+           $article->setName( $request->request->get('name'));
+           $article->setPrice( $request->request->get('price'));
+           $article->setPriceGlobal( $request->request->get('global_price'));
+           $article->setPricePromo( $request->request->get('price_promo'));
+           $article->setPromo( $request->request->get('promotion'));
+           $article->setType( $request->request->get('type'));
+           $article->setQuantity( $request->request->get('quantity'));
+           $article->setMarque("");
+           $article->setDescription( $request->request->get('description'));
+           $article->setReferency( $request->request->get('referency'));
+           $article->setSousCategory( $request->request->get('sous_category'));
+           $article->setBoutique($boutiqueRepository->findOneBy(['user'=>$this->getUser()]));
+
+          $em= $this->getDoctrine()->getManager();
+          $em->flush();
+          $array = [
+            'status' => 'success',
+            'name' => $article->getName(),
+            'id' => $article->getId()
+        ];
+           return new JsonResponse($array,200);
+        }
+       
+        return new JsonResponse(['status'=>'error','message'=>'not Authorized'],403);
+    }
      /**
      * @Route("/add/article", name="add_article")
      */
@@ -65,7 +99,6 @@ class APIController extends AbstractController
         
         if($this->getUser()){
             
-           $category = $request->request->get('categorie');
            $article = new Article();
            $article->setCategory($request->request->get('categorie'));
            $article->setName( $request->request->get('name'));
@@ -235,6 +268,35 @@ class APIController extends AbstractController
         } else {
             return new JsonResponse(['status' => 'not authorised'], 403);
         }
+    }
+
+        /**
+     * @Route("/update/images", name="update_images")
+     */
+
+    public function updateImages(Request $request, ImagesRepository $imagesRepository, InsertFileServices $insertFileServices)
+    {
+
+
+        $images = $request->files->get('images');
+        
+        if ($this->getUser()) {
+            $file = $insertFileServices->insertFile($images, ['jpeg', 'jpg', 'gif', 'png']);
+            $images= $imagesRepository->findOneBy(['id'=>$request->request->get('id-image')]);
+    
+            if ($file != false) {
+                $images= $imagesRepository->findOneBy(['id'=>$request->request->get('id-image')]);
+                unlink('images/'.$images->getName());
+                $images->setName($file);
+                $em = $this->getDoctrine()->getManager();
+                $em->flush();
+                return new JsonResponse(['images' => $file]);
+            } else {
+                return new JsonResponse(['message' => "form fichier invalide"], Response::HTTP_NOT_ACCEPTABLE);
+            }
+        }
+
+        return new JsonResponse([], Response::HTTP_UNAUTHORIZED);
     }
     /**
      * @Route("/header_image/edit", name="edit_images_header")
