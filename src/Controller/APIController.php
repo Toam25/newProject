@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Article;
+use App\Entity\Boutique;
 use App\Entity\Header;
 use App\Entity\Images;
 use App\Entity\Menu;
@@ -39,7 +40,32 @@ class APIController extends AbstractController
         }
         return new Response(json_encode($data));
     }
+    /**
+     * @Route("/delete/boutique/{id}", name="get_es_article")
+     */
+    public function deteteBoutique(Boutique $boutique, BoutiqueRepository $boutiqueRepository, ImagesRepository $imagesRepository, ArticleRepository $articleRepository)
+    {
 
+
+        if ($boutiqueRepository->findOneBoutiqueByUserPerRole('ROLE_SUPER_ADMIN')) {
+            $articles = $articleRepository->findOneArticleByBoutiqueWithImage($boutique->getId());
+            if ($articles) {
+                foreach ($articles as $article) {
+                    foreach ($article->getImages() as $image) {
+                        unlink('images/' . $image->getName());
+                    }
+                }
+            }
+
+            $em = $this->getDoctrine()->getManager();
+            $em->remove($boutique);
+            $em->flush();
+
+            return new JsonResponse(['status' => 'success']);
+        } else {
+            return new JsonResponse(['status' => 'error'], 402);
+        }
+    }
     /**
      * @Route("/get/listOption", name="get_listOption")
      */
@@ -64,6 +90,7 @@ class APIController extends AbstractController
     {
         $article = $articleRepository->findOneBy(['id'=>$request->request->get('id-article')]);
 
+<<<<<<< HEAD
         if($this->getUser() and $article){
            $article->setCategory($request->request->get('categorie'));
            $article->setName( $request->request->get('name'));
@@ -92,10 +119,14 @@ class APIController extends AbstractController
         return new JsonResponse(['status'=>'error','message'=>'not Authorized'],403);
     }
      /**
+=======
+    /**
+>>>>>>> refs/remotes/origin/master
      * @Route("/add/article", name="add_article")
      */
-    public function addArticle(Request $request, InsertFileServices $insertFileServices,BoutiqueRepository $boutiqueRepository)
+    public function addArticle(Request $request, InsertFileServices $insertFileServices, BoutiqueRepository $boutiqueRepository)
     {
+<<<<<<< HEAD
         
         if($this->getUser()){
             
@@ -119,6 +150,32 @@ class APIController extends AbstractController
           
            foreach ($images as $image) {
                  $allImages = [];
+=======
+
+        if ($this->getUser()) {
+
+            $category = $request->request->get('categorie');
+            $article = new Article();
+            $article->setCategory($request->request->get('categorie'));
+            $article->setName($request->request->get('name'));
+            $article->setPrice($request->request->get('price'));
+            $article->setPriceGlobal($request->request->get('global_price'));
+            $article->setPricePromo($request->request->get('price_promo'));
+            $article->setPromo($request->request->get('promotion'));
+            $article->setType($request->request->get('type'));
+            $article->setQuantity($request->request->get('quantity'));
+            $article->setMarque("");
+            $article->setDescription($request->request->get('description'));
+            $article->setReferency($request->request->get('referency'));
+            $article->setSousCategory($request->request->get('sous_category'));
+            $article->setBoutique($boutiqueRepository->findOneBy(['user' => $this->getUser()]));
+
+            $images = $request->files->get('images');
+
+
+            foreach ($images as $image) {
+                $allImages = [];
+>>>>>>> refs/remotes/origin/master
                 $fichier = $insertFileServices->insertFile($image);
                 $img = new Images();
 
@@ -126,22 +183,22 @@ class APIController extends AbstractController
                 $article->addImage($img);
                 array_push($allImages, $fichier);
                 break;
-           }
-          
-          $em= $this->getDoctrine()->getManager();
-          $em->persist($article);
-          $em->persist($img);
-          $em->flush();
-          $array = [
-            'status' => 'success',
-            'images' => $allImages,
-            'name' => $article->getName(),
-            'id' => $article->getId()
-        ];
-           return new JsonResponse($array,200);
+            }
+
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($article);
+            $em->persist($img);
+            $em->flush();
+            $array = [
+                'status' => 'success',
+                'images' => $allImages,
+                'name' => $article->getName(),
+                'id' => $article->getId()
+            ];
+            return new JsonResponse($array, 200);
         }
-       
-        return new JsonResponse(['status'=>'error','message'=>'not Authorized'],403);
+
+        return new JsonResponse(['status' => 'error', 'message' => 'not Authorized'], 403);
     }
     /**
      * @Route("/delete/option/{id}", name="delete_listOption")
@@ -162,15 +219,14 @@ class APIController extends AbstractController
     /**
      * @Route("/get/sous_category/type/{category}", name="getSousCategoryType")
      */
-    public function getSousCategoryType(string $category,MenuRepository $menuRepository, CategoryOptionService $categoryOptionService)
+    public function getSousCategoryType(string $category, MenuRepository $menuRepository, CategoryOptionService $categoryOptionService)
     {
-         
-        if ($this->getUser()) {
-            $menu = $menuRepository->findBy(['category'=>$category]);
 
-            return new JsonResponse(['status' => 'success','results'=>$categoryOptionService->getCategoryType($menu)],200);
-        } 
-        else {
+        if ($this->getUser()) {
+            $menu = $menuRepository->findBy(['category' => $category]);
+
+            return new JsonResponse(['status' => 'success', 'results' => $categoryOptionService->getCategoryType($menu)], 200);
+        } else {
             return new JsonResponse(['status' => 'error', 'message' => "Non authorise"], 403);
         }
     }
@@ -178,57 +234,55 @@ class APIController extends AbstractController
     /**
      * @Route("/get/article/{id}", name="getOneArtilce")
      */
-    public function getOneArticle(CategoryOptionService $categoryOptionService, BoutiqueRepository $boutiqueRepository, ArticleRepository $articleRepository, int $id,MenuRepository $menuRepository)
+    public function getOneArticle(CategoryOptionService $categoryOptionService, BoutiqueRepository $boutiqueRepository, ArticleRepository $articleRepository, int $id, MenuRepository $menuRepository)
     {
-         
+
         if ($this->getUser()) {
-            $boutique = $boutiqueRepository->findOneBy(['user'=>$this->getUser()]);
-            $article= $articleRepository->findOneArticleByBoutiqueWithImage($id, $boutique);
-            $list_menu=$categoryOptionService->getCategoryType($menuRepository->findBy(['category'=>$article->getCategory()]));
-            $image=$article->getImages();
-            $list=[
-                'id'=>$article->getId(),
-                'category'=>$article->getCategory(),
-                'name'=>$article->getName(),
-                'price'=>$article->getPrice(),
-                'global_price'=>$article->getPriceGlobal(),
-                'promo_price'=>$article->getPricePromo(),
-                'promo'=>$article->getPromo(),
-                'type'=>$article->getType(),
-                'quantity'=>$article->getQuantity(),
-                'marque'=>$article->getMarque(),
-                'description'=>$article->getDescription(),
-                'referency'=>$article->getReferency(),
-                'sous_category'=>$article->getSousCategory(),
-                'images'=>[
-                     'name'=>$image[0]->getName(),
-                    'id'=> $image[0]->getId()
+            $boutique = $boutiqueRepository->findOneBy(['user' => $this->getUser()]);
+            $article = $articleRepository->findOneArticleByBoutiqueWithImage($id, $boutique);
+            $list_menu = $categoryOptionService->getCategoryType($menuRepository->findBy(['category' => $article->getCategory()]));
+            $image = $article->getImages();
+            $list = [
+                'id' => $article->getId(),
+                'category' => $article->getCategory(),
+                'name' => $article->getName(),
+                'price' => $article->getPrice(),
+                'global_price' => $article->getPriceGlobal(),
+                'promo_price' => $article->getPricePromo(),
+                'promo' => $article->getPromo(),
+                'type' => $article->getType(),
+                'quantity' => $article->getQuantity(),
+                'marque' => $article->getMarque(),
+                'description' => $article->getDescription(),
+                'referency' => $article->getReferency(),
+                'sous_category' => $article->getSousCategory(),
+                'images' => [
+                    'name' => $image[0]->getName(),
+                    'id' => $image[0]->getId()
                 ],
-                'list_menu'=>$list_menu
+                'list_menu' => $list_menu
 
             ];
 
             return new JsonResponse($list);
-        }
-        else {
+        } else {
             return new JsonResponse(['status' => 'error', 'message' => "Non authorise"], 403);
         }
     }
-     /**
+    /**
      * @Route("/get/list/type/{sous_categorie}", name="getListType")
      */
-    public function getListType(string $sous_categorie,MenuRepository $menuRepository)
+    public function getListType(string $sous_categorie, MenuRepository $menuRepository)
     {
-         
+
         if ($this->getUser()) {
-            $menus = $menuRepository->findBy(['sousCategory'=>$sous_categorie]);
-           $list=[];
-           foreach ($menus as $key => $menu) {
-               $list[$key]=$menu->getName();
-           }
-            return new JsonResponse(['status' => 'success','results'=>$list],200);
-        } 
-        else {
+            $menus = $menuRepository->findBy(['sousCategory' => $sous_categorie]);
+            $list = [];
+            foreach ($menus as $key => $menu) {
+                $list[$key] = $menu->getName();
+            }
+            return new JsonResponse(['status' => 'success', 'results' => $list], 200);
+        } else {
             return new JsonResponse(['status' => 'error', 'message' => "Non authorise"], 403);
         }
     }
