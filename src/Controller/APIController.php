@@ -90,7 +90,6 @@ class APIController extends AbstractController
     {
         $article = $articleRepository->findOneBy(['id'=>$request->request->get('id-article')]);
 
-<<<<<<< HEAD
         if($this->getUser() and $article){
            $article->setCategory($request->request->get('categorie'));
            $article->setName( $request->request->get('name'));
@@ -119,15 +118,10 @@ class APIController extends AbstractController
         return new JsonResponse(['status'=>'error','message'=>'not Authorized'],403);
     }
      /**
-=======
-    /**
->>>>>>> refs/remotes/origin/master
      * @Route("/add/article", name="add_article")
      */
     public function addArticle(Request $request, InsertFileServices $insertFileServices, BoutiqueRepository $boutiqueRepository)
-    {
-<<<<<<< HEAD
-        
+    {     
         if($this->getUser()){
             
            $article = new Article();
@@ -150,7 +144,7 @@ class APIController extends AbstractController
           
            foreach ($images as $image) {
                  $allImages = [];
-=======
+
 
         if ($this->getUser()) {
 
@@ -175,7 +169,6 @@ class APIController extends AbstractController
 
             foreach ($images as $image) {
                 $allImages = [];
->>>>>>> refs/remotes/origin/master
                 $fichier = $insertFileServices->insertFile($image);
                 $img = new Images();
 
@@ -200,6 +193,9 @@ class APIController extends AbstractController
 
         return new JsonResponse(['status' => 'error', 'message' => 'not Authorized'], 403);
     }
+}
+    }
+
     /**
      * @Route("/delete/option/{id}", name="delete_listOption")
      */
@@ -335,16 +331,16 @@ class APIController extends AbstractController
         $images = $request->files->get('images');
         
         if ($this->getUser()) {
-            $file = $insertFileServices->insertFile($images, ['jpeg', 'jpg', 'gif', 'png']);
+            $file = $insertFileServices->insertFile($images, ['jpeg', 'jpg', 'gif', 'png','webp']);
             $images= $imagesRepository->findOneBy(['id'=>$request->request->get('id-image')]);
     
             if ($file != false) {
                 $images= $imagesRepository->findOneBy(['id'=>$request->request->get('id-image')]);
-                unlink('images/'.$images->getName());
                 $images->setName($file);
                 $em = $this->getDoctrine()->getManager();
                 $em->flush();
-                return new JsonResponse(['images' => $file]);
+                unlink('images/'.$images->getName());
+                return new JsonResponse(['images' => $file,'id'=>$images->getId()]);
             } else {
                 return new JsonResponse(['message' => "form fichier invalide"], Response::HTTP_NOT_ACCEPTABLE);
             }

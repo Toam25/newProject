@@ -9,7 +9,7 @@
 			</div>
 
 			<div id="div_ajout_article" class="modal-body row" style="font-weight:none;">
-				
+				<div class="loader_ajax_"><img src="/images/images_default/ajax-loader.gif"></div>
 				<div class="container_image col-md-5">
 					<form class="form_view_update_image"style="display: flex;justify-content: space-between;align-items: end;flex-direction: column;">
 						<div class="preview_image" style="width: 100%;">
@@ -26,6 +26,7 @@
 				</div>
 				<div class="container_detail col-md-7">
 					<form class="form_article_in_shop_update row" action="">
+					  
 					    <input type="hidden" class="id-article" value="" name="id-article">
 						<input type="hidden" class="_view_category" name="categorie" value="">
 						<div class="col-md-6">
@@ -81,13 +82,11 @@
 							</label>
 							<textarea id="view_detail" class="form-control" name="description" required></textarea>
 						</div>
-					<button class="btn btn-success submit_add_article margin-top-5 btn-submit" type="submit" name="submit_in">Ajouter</button>
+					<button class="btn btn-success submit_add_article margin-top-5 btn-submit" type="submit" name="submit_in">Enregistrer</button>
 				</form>
 
 			</div>
 			</div>
-
-			<div class="modal-footer"></div>
 
 		</div>
 	</div>

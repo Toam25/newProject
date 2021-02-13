@@ -10,8 +10,8 @@
                       {#<p class="name_article">{{ article.name}}</p>#}
                       <span class="remove_article glyphicon glyphicon-remove"></span> 
                       <div>
-                         <a class="btn btn-warning article_view article_edit" data-id="{{ article.id }}" href="{{ path('article_edit',{'id':article.id}) }}">Détail</a>
-                         <a class="btn btn-danger article_delete" href="{{ path('article_delete',{'id':article.id}) }}">Supprimer</a>
+                         <button class="btn btn-warning article_view article_edit" data-id="{{ article.id }}">Détail</button>
+                         <button class="btn btn-danger article_delete" data-id = "{{ article.id }}">Supprimer</button>
                       </div>
                  </div>
        </div>
