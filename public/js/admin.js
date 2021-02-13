@@ -971,7 +971,7 @@ $(function () {
       cache: false,
       dataType: 'json',
       beforeSend: function () {
-        $('.name_menu').append(`<span><img class="loader_img_default"src="/assets/images/defaults/default_loader.gif"/>`);
+        $('.name_menu').append(`<span><img class="loader_img_default"src="/images/images_default/ajax-loader.gif"/>`);
       },
       success: function (data) {
 

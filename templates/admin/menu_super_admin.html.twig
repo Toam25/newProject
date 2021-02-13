@@ -1,11 +1,45 @@
 <li class="nav-item">
-      <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#telephonie" aria-expanded="true" aria-controls="collapsePages">
+      <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#bricolage" aria-expanded="true" aria-controls="collapsePages">
         <i class="fas fa-fw fa-folder"></i>
-        <span>Téléphonie</span>
+        <span>Bricolage</span>
       </a>
-      <div id="telephonie" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
+      <div id="bricolage" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
+        <div class="bg-white py-2 collapse-inner rounded">
+          <a class="collapse-item" href="{{path('es_article_list',{'category':'outillages'})}}">Outillages</a>
+        </div>
+      </div>
+</li>
+<li class="nav-item">
+      <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#professionnel" aria-expanded="true" aria-controls="collapsePages">
+        <i class="fas fa-fw fa-folder"></i>
+        <span>Professionnel</span>
+      </a>
+      <div id="professionnel" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
+        <div class="bg-white py-2 collapse-inner rounded">
+          <a class="collapse-item" href="{{path('es_article_list',{'category':'outillages_pro'})}}">Outillages Pro</a>
+        </div>
+      </div>
+</li>
+<li class="nav-item">
+      <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#jardinage" aria-expanded="true" aria-controls="collapsePages">
+        <i class="fas fa-fw fa-folder"></i>
+        <span>Jardinage</span>
+      </a>
+      <div id="jardinage" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
+        <div class="bg-white py-2 collapse-inner rounded">
+          <a class="collapse-item" href="{{path('es_article_list',{'category':'outils_de_jardin'})}}">Outils de jardin</a>
+        </div>
+      </div>
+</li>
+<li class="nav-item">
+      <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#maison" aria-expanded="true" aria-controls="collapsePages">
+        <i class="fas fa-fw fa-folder"></i>
+        <span>Maison</span>
+      </a>
+      <div id="maison" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
         <div class="bg-white py-2 collapse-inner rounded">
           <a class="collapse-item" href="{{path('es_article_list',{'category':'telephone'})}}">Téléphone</a>
+          <a class="collapse-item" href="{{path('es_article_list',{'category':'accessoire'})}}">Accessoire</a>
           <a class="collapse-item" href="{{path('es_article_list',{'category':'accessoire'})}}">Accessoire</a>
         </div>
       </div>
