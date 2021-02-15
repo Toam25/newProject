@@ -499,9 +499,7 @@ nav {
     float: right;
     margin-right: 25px;
   }
-  .block_nom_boutique {
-    /*margin-top: 0 !important;*/
-  }
+ 
   #profil_index {
     width: 130px;
     z-index: 1;
@@ -509,9 +507,7 @@ nav {
   #panier_7 {
     display: none;
   }
-  .header_achat {
-    /*  padding-bottom: 0px;*/
-  }
+ 
 }
 .p {
   display: inline-block;
@@ -994,8 +990,7 @@ nav {
   box-shadow: 5px 10px 10px rgba(0, 0, 0, 0.5);
 }
 
-.texte {
-}
+
 
 .titre_image {
   padding: 2px;
@@ -1306,7 +1301,6 @@ nav {
 }
 .liste_btn_achat {
   display: inline-block;
-  float: right;
   margin-top: 7px;
   margin-right: 9px;
 }
