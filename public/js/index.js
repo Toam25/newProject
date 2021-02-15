@@ -198,7 +198,7 @@ $(function(){
           for (var i = 0; i < data.length; i++) {
             message += `
               <div class="container_boutique">
-                  <a href="/boutique/`+ data[i].type + `/` + data[i].id + `" target="blank">
+                  <a href="/shop/`+ data[i].type + `/` + data[i].id + `" target="blank">
                      <p class="nom_boutique_vetement">` + data[i].name+ `</p>
                   </a>
                   <div class="boutique">`

@@ -28,7 +28,7 @@
 								<h3 class="footer-title">Information</h3>
 								<ul class="footer-links">
 								   {% if boutique.id is defined %}
-									<li><a href="{{ path('condition', {'id': boutique.id })}}" target="blank" class="condition_genral_d'utilisation">Condition generale</a></li>
+									<li><a href="{{ path('condition', {'id': boutique.id })}}" target="blank" class="condition_genral_d'utilisation">Condition generale {{ boutique.name}}</a></li>
 									{% endif %}
 								</ul>
 							</div>

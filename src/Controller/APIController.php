@@ -70,6 +70,31 @@ class APIController extends AbstractController
           return new JsonResponse(["status"=>"error"], Response::HTTP_UNAUTHORIZED);
         }
     }
+       /**
+     * @Route("/profil/update/password/{id}", name="profil_password")
+     */
+    public function upPassWordUser(Request $request, User $user, $id, InsertFileServices $insertFileServices)
+    {
+        if($this->getUser()->getId()== intVal($id)){
+             $user->setName($request->request->get('name')??$user->getName());
+             $user->setFirstname($request->request->get('first_name')??$user->getFirstname());
+            
+              if($request->files->get('images')){
+                   
+                   if(($user->getAvatar()!=="images_default/default_image.jpg")){
+                            unlink("/images/".$user->getAvatar());
+                   }
+                   $user->setAvatar($insertFileServices->insertFile($request->files->get('images')));
+               
+              }
+              $em=$this->getDoctrine()->getManager();
+              $em->flush();
+              return new JsonResponse(["status"=>"sucess"], Response::HTTP_OK);
+        }
+        else {
+          return new JsonResponse(["status"=>"error"], Response::HTTP_UNAUTHORIZED);
+        }
+    }
     /**
      * @Route("/delete/boutique/{id}", name="deleteboutique")
      */

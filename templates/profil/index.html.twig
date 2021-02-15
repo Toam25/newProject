@@ -21,6 +21,7 @@
          <img src="{{ asset('images/'~ user.avatar) }}" id="profil_preview_image"class="preview_image" alt="{{user.name }}">
       </div>
       {% if user.id is  same as(app.user.id) %}
+         {# <label>Information Général</label>#}
           <form class="profil_user_name" action="{{ path('apiprofil_update_user',{'id' : app.user.id})  }}">
             <label> Nom : </label>
             <input name="name" value="{{ user.name }}" class="form-control" required>
@@ -30,6 +31,16 @@
             <input name="images" type = "file" class="form-control file">
             <button  type="submit" class="btn btn-success btn-submit">Enregistrer</button>
         </form>
+        {#
+        <label>Changer votre mot de passe ?</label>
+        <form class="profil_password" action="{{ path('apiprofil_password',{'id' : app.user.id})  }}">
+            <label> Acien mots de passe : </label>
+            <input name="a_password" value="" class="form-control" required>
+            <label> Nouveaux mots de pass : </label>
+            <input name="new_password"  class="form-control" required>
+            <button  type="submit" class="btn btn-success btn-submit">Enregistrer</button>
+        </form>
+        #}
       {% else %} 
            <p>{{ user.firstname }} {{ user.name }}</p>
       {% endif %}
