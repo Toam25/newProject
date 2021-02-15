@@ -66,8 +66,8 @@
 										<i class="fa fa-arrow-right"></i>
 
 										</button>
-									{% if not app  %}
-										<img src="{{ asset('images/'~app.user.avatar)}}" class="image-comment">
+									{% if  app.user %}
+										<img src="{{ asset('images/'~ app.user.avatar)}}" class="image-comment">
 									{% else %}
 										<img src="{{ asset('images/images_default/default_image.jpg')}}" class="image-comment">
 									{% endif %}
