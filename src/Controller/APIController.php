@@ -7,6 +7,7 @@ use App\Entity\Boutique;
 use App\Entity\Header;
 use App\Entity\Images;
 use App\Entity\Menu;
+use App\Entity\User;
 use App\Repository\ArticleRepository;
 use App\Repository\BoutiqueRepository;
 use App\Repository\EsArticleRepository;
@@ -17,9 +18,11 @@ use App\Service\ArticlePerShopService;
 use App\Service\CategoryOptionService;
 use App\Service\InsertFileServices;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\BrowserKit\Response as BrowserKitResponse;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Event\ResponseEvent;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
@@ -40,6 +43,32 @@ class APIController extends AbstractController
             $data[$key]['image'] = $value->getImage();
         }
         return new Response(json_encode($data));
+    }
+
+     /**
+     * @Route("/profil/update/user/{id}", name="profil_update_user")
+     */
+    public function updateUser(Request $request, User $user, $id, InsertFileServices $insertFileServices)
+    {
+        if($this->getUser()->getId()== intVal($id)){
+             $user->setName($request->request->get('name')??$user->getName());
+             $user->setFirstname($request->request->get('first_name')??$user->getFirstname());
+            
+              if($request->files->get('images')){
+                   
+                   if(($user->getAvatar()!=="images_default/default_image.jpg")){
+                            unlink("/images/".$user->getAvatar());
+                   }
+                   $user->setAvatar($insertFileServices->insertFile($request->files->get('images')));
+               
+              }
+              $em=$this->getDoctrine()->getManager();
+              $em->flush();
+              return new JsonResponse(["status"=>"sucess"], Response::HTTP_OK);
+        }
+        else {
+          return new JsonResponse(["status"=>"error"], Response::HTTP_UNAUTHORIZED);
+        }
     }
     /**
      * @Route("/delete/boutique/{id}", name="deleteboutique")

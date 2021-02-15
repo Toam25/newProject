@@ -3,17 +3,39 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    height : 400px;
+    min-height : 400px;
 }
 .image_profil{
-    width: 200;
+    width: 200px;
     height: 200px;
-    border: 1px solid beige;
+    border: 1px solid #202340;
     border-radius: 100%;
     padding: 5px;
+    position: relative;
+}
+.profil_user_name{
+    display: flex;
+    flex-direction: column;
+    align-items: unset;
+}
+.profil_user_name button {
+    margin : 5px 0;
 }
 .image_profil img{
     width: 100%;
     height: 100%;
     border-radius: 50%;
+    object-fit: cover;
+}
+.image_profil > button{
+    position: absolute;
+border: none;
+background: #202340;
+color: white;
+padding: 7px;
+border-radius: 50%;
+width: 34px;
+bottom: 11px;
+right: 14px;
+height: 34px;
 }
