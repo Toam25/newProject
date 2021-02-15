@@ -13,6 +13,7 @@ use App\Repository\EsArticleRepository;
 use App\Repository\HeaderRepository;
 use App\Repository\ImagesRepository;
 use App\Repository\MenuRepository;
+use App\Service\ArticlePerShopService;
 use App\Service\CategoryOptionService;
 use App\Service\InsertFileServices;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -41,7 +42,7 @@ class APIController extends AbstractController
         return new Response(json_encode($data));
     }
     /**
-     * @Route("/delete/boutique/{id}", name="get_es_article")
+     * @Route("/delete/boutique/{id}", name="deleteboutique")
      */
     public function deteteBoutique(Boutique $boutique, BoutiqueRepository $boutiqueRepository, ImagesRepository $imagesRepository, ArticleRepository $articleRepository)
     {
@@ -398,5 +399,17 @@ class APIController extends AbstractController
         } else {
             return new JsonResponse(['status' => 'error'], Response::HTTP_NOT_EXTENDED);
         }
+    }
+     /**
+     * @Route("/get/listArticlePerBoutique/{category}/{type}", name="listeArticlePerBoutique", methods={"GET"})
+     */
+    public function listArticlePerBoutique($category, $type, ArticleRepository $articleRepository, ArticlePerShopService $articlePerShopService): Response
+    {
+            $articles = $articleRepository->findAllArticleBySousCategory($category,$type);
+
+            
+
+            return new JsonResponse($articlePerShopService->getListArticlePerShop($articles), Response::HTTP_OK);
+        
     }
 }
