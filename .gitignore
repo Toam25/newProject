@@ -15,4 +15,9 @@
 .phpunit.result.cache
 /phpunit.xml
 ###< symfony/phpunit-bridge ###
+<<<<<<< HEAD
 .env
+=======
+/public/images
+.env
+>>>>>>> refs/remotes/origin/master

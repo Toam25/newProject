@@ -15,13 +15,35 @@
 {% endblock %}
 {% block body %}
 
-{% include "boutique/index.navbar.html.twig" %}
+{% include "boutique/profil.navbar.html.twig" %}
   <div class="profil">
       <div class="image_profil">
-         <img src="{{ asset('images/'~ user.avatar) }}" alt="{{user.name }}">
+         <img src="{{ asset('images/'~ user.avatar) }}" id="profil_preview_image"class="preview_image" alt="{{user.name }}">
       </div>
-      <p>{{ user.firstname }} {{ user.name }}</p>
-       Date d'inscription : {{ user.createdat | date }}
+      {% if user.id is  same as(app.user.id) %}
+         {# <label>Information Général</label>#}
+          <form class="profil_user_name" action="{{ path('apiprofil_update_user',{'id' : app.user.id})  }}">
+            <label> Nom : </label>
+            <input name="name" value="{{ user.name }}" class="form-control" required>
+            <label> Prenom : </label>
+            <input name="first_name" value = "{{ user.firstname }}"  class="form-control" required>
+            <label> Avatar : </label>
+            <input name="images" type = "file" class="form-control file">
+            <button  type="submit" class="btn btn-success btn-submit">Enregistrer</button>
+        </form>
+        {#
+        <label>Changer votre mot de passe ?</label>
+        <form class="profil_password" action="{{ path('apiprofil_password',{'id' : app.user.id})  }}">
+            <label> Acien mots de passe : </label>
+            <input name="a_password" value="" class="form-control" required>
+            <label> Nouveaux mots de pass : </label>
+            <input name="new_password"  class="form-control" required>
+            <button  type="submit" class="btn btn-success btn-submit">Enregistrer</button>
+        </form>
+        #}
+      {% else %} 
+           <p>{{ user.firstname }} {{ user.name }}</p>
+      {% endif %}
   </div>
   	{% if not app.user %}
 		{% include 'boutique/dependancies/connexion.html.twig'%}
@@ -30,8 +52,6 @@
 
 {% endblock %}
 {% block javascripts %}
-	<script src="{{asset('js/jquery.js')}}"></script>
-	<script src="{{asset('js/bootstrap.min.js')}}"></script>
-	<script src="{{ asset('js/connexion.js') }}"> </script>
+	<script src="{{ asset('js/profil.js') }}"> </script>
 {% endblock %}
 

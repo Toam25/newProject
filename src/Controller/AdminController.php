@@ -18,6 +18,7 @@ use App\Repository\MenuRepository;
 use App\Repository\ReferenceRepository;
 use App\Repository\UserRepository;
 use App\Service\CategoryOptionService;
+use App\Service\CategoryService;
 use App\Service\InsertFileServices;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -51,7 +52,7 @@ class AdminController extends AbstractController
     /**
      * @Route("/admin/article_list/{category}", name="article_list")
      */
-    public function addArticleInShop($category, Request $request, BoutiqueRepository $boutiqueRepository, InsertFileServices $insertFileServices, ArticleRepository $articleRepository)
+    public function addArticleInShop($category, Request $request,CategoryService $categoryService, BoutiqueRepository $boutiqueRepository, InsertFileServices $insertFileServices, ArticleRepository $articleRepository)
     {
 
         // $allArticle = $articleRepository->findBy(['boutique'=>$boutiqueRepository->findOneBy(['user'=>$this->getUser()])] );
@@ -95,7 +96,7 @@ class AdminController extends AbstractController
 
         return $this->render('admin/index.html.twig', [
             'pages' => 'articleinshop',
-            'articles' => $articleRepository->findBy(['boutique' => $boutique, 'category' => $this->nameMenu($category)]),
+            'articles' => $articleRepository->findBy(['boutique' => $boutique, 'category' => $categoryService->getNameMenu($category)]),
             'boutique' => $boutique,
             'add_button' => $this->button_add_boutique($category, 'btn btn-success ajout_article_ev'),
             'form' => $form->createView(),

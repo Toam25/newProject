@@ -74,7 +74,12 @@
 					<iframe width="100%" height="333px" src="https://www.youtube.com/embed/-YN612no" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 				</div>
 				<div class='commentaire_video'>
-					<img id="video-comment"/>
+				
+					{% if  app.user %}
+										<img src="{{ asset('images/'~ app.user.avatar)}}" id="video-comment">
+									{% else %}
+										<img src="{{ asset('images/images_default/default_image.jpg')}}" id="video-comment">
+									{% endif %}
 					<form class='from-inline' id="ajout_video_commentaire">
 						<input type="text" placeholder='Commentaire' name=""/>
 						<button id="btn-video-comment">
@@ -96,8 +101,8 @@
 	{% include "boutique/dependancies/footer.html.twig" %}
 {% endblock %}
 {% block javascripts %}
-	<script src="{{asset('js/jquery.js')}}"></script>
-	<script src="{{asset('js/bootstrap.min.js')}}"></script>
+	{#<script src="{{asset('js/jquery.js')}}"></script>
+	<script src="{{asset('js/bootstrap.min.js')}}"></script>#}
 	<script src="{{ asset('js/connexion.js') }}"> </script>
 	<script src="{{asset('js/index.js')}}"></script>
 {% endblock %}

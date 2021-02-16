@@ -108,6 +108,20 @@ class ArticleRepository extends ServiceEntityRepository
         
     return  $query ->getQuery()->getOneOrNullResult();
 }
+public function findAllArticleBySousCategory(string $category, string $sous_category){
+    $query= $this->createQueryBuilder('a')
+    ->select('a', 'b', 'v', 'i', 'c','u')
+    ->leftJoin('a.votes', 'v')
+    ->leftJoin('v.user', 'u')
+    ->leftJoin('a.boutique', 'b')
+    ->leftJoin('a.images', 'i')
+    ->leftJoin('a.carts', 'c')
+    ->andwhere('a.sous_category = :sous_category')
+    ->andwhere('a.category = :category')
+    ->setParameter('sous_category', $sous_category)
+    ->setParameter('category', $category);
+    return  $query ->getQuery()->getResult();
+}
 
 
 

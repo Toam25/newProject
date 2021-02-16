@@ -8,6 +8,7 @@ $(function(){
     //$('.menu_index').hide();
     $('.listeMode').toggle();
     $('.liste_high_teck').hide();
+    $('.maison').hide();
     ESS_ARTICLE = "MODE";
   
   })
@@ -17,8 +18,19 @@ $(function(){
     //$('.menu_index').hide();
     $('.liste_high_teck').toggle();
     $('.listeMode').hide();
+    $('.maison').hide();
 
     ESS_ARTICLE = "HIGH-TECH";
+    
+  });
+  $('body').on('click', '.maisonnav',function (e) {
+    e.preventDefault();
+    //$('.menu_index').hide();
+    $('.liste_high_teck').hide();
+    $('.listeMode').hide();
+    $('.maison').toggle();
+
+    ESS_ARTICLE = "MAISON";
     
   });
 
@@ -95,6 +107,7 @@ $(function(){
     var art_malagasy = ["sisal", "produit_en_soie", "broderie", "raphia", "bijoux", "artistique", "travail_du_bois", "decoration_interieure", "travail_du_fer"]
     var menu_v = $(this).attr('name');
     $('#menu_detail').children('#' + menu_v).remove();
+    $('.menu_index').hide();
 
     $('.sous_menu').hide();
     var categorie = $(this).attr('id');
@@ -124,6 +137,9 @@ $(function(){
     else {
       if (ESS_ARTICLE == "HIGH-TECH") {
         $('#menu_detail').html(high_tech());
+      }
+      if (ESS_ARTICLE == "MAISON") {
+        $('#menu_detail').html(maison());
       }
     }
     $('.listeMode').hide();
@@ -168,34 +184,36 @@ $(function(){
     vetement_selectionner.addClass('border_click');
     var categorie = $('.categorie').val();
     var nom_vetement_selectionner = vetement_selectionner.children('.name').text();
-    console.log(categorie, nom_vetement_selectionner);
     $.ajax({
-      url: '/api/listarticlec/' + categorie + '/' + nom_vetement_selectionner,
-      type: 'POST',
+      url: '/api/get/listArticlePerBoutique/' + categorie + '/' + nom_vetement_selectionner,
+      type: 'GET',
       dataType: 'json',
       beforeSend: function () {
         $('.div-inother').css('display', 'block');
       },
       success: function (data) {
-        console.log(data);
+       
         if (data.length > 0) {
-          console.log(data[0].article.length);
           var message = " ";
           for (var i = 0; i < data.length; i++) {
             message += `
               <div class="container_boutique">
-                  <a href="/boutique/`+ data[i].user.boutique + `/` + data[i].user.id + `" target="blank"><p class="nom_boutique_vetement">` + data[i].user.name_boutique + `</p></a>
+                  <a href="/shop/`+ data[i].type + `/` + data[i].id + `" target="blank">
+                     <p class="nom_boutique_vetement">` + data[i].name+ `</p>
+                  </a>
                   <div class="boutique">`
 
             for (let j = 0; j < data[i].article.length; j++) {
-              $retVal = data[i].article[j].likes;
-              $prix = (data[i].article[j].prix == 0) ? "<span class='prix_ala'>Prix : A la demande</span>" : 'Prix : ' + data[i].article[j].prix;
-              message += ` 
-                                 <div class="_my_aricle_in">
+              $prix = (data[i].article[j].price == 0) ? "<span class='prix_ala'>Prix : A la demande</span>" : 'Prix : ' + data[i].article[j].price;
+              message += ` <div class="_my_aricle_in">
                                  <input type="hidden" value='.$resultat['id'].'>
-                                 <img class="image_vetement_boutique" id="'.$resultat['id_admin'].'" src="assets/images/`+ data[i].article[j].images + `" value="'.$resultat['name'].'">
-                                 <span class="separe"></span><p class="prix"> `+ $prix + `</p><p>
-                                 <span class="ref">Ref : `+ data[i].article[j].reference + `</span><span class="aime" >j\'aime : ` + $retVal + `</span></p></div>`;
+                                 <img class="image_vetement_boutique" id="`+ data[i].article[j].images + `" src="/images/`+ data[i].article[j].images + `" value="'.$resultat['name'].'">
+                                 <span class="separe"></span>
+                                 <p class="prix"> `+ $prix + `</p>
+                                 <p>
+                                 <span class="ref">Ref : `+ data[i].article[j].referency+ `</span>
+                                 </p>
+                          </div>`;
             }
 
 
@@ -290,18 +308,27 @@ $(function(){
 
   function high_tech() {
     return `<h3 class="souligne">   Téléphonie </h3>
-                 <h4 class="h4_menu">   <span id="Telephone" class="echantillon_image font_size_p menu1"> &nbsp;&nbsp;&nbsp;  Téléphone </span>  </h4>
-                 <h4 class="h4_menu">   <span id="Accessoires" class="echantillon_image font_size_p menu1"> &nbsp;&nbsp;&nbsp;  Accessoires </span>  </h4>
+                 <h4 class="h4_menu">   <span id="Telephone" class="echantillon_image font_size_p menu1"> &nbsp;&nbsp;&nbsp;Téléphone </span>  </h4>
+                 <h4 class="h4_menu">   <span id="Accessoires" class="echantillon_image font_size_p menu1"> &nbsp;&nbsp;&nbsp;Accessoires </span>  </h4>
              <h3 class="souligne">   Informatique </h3>
-                 <h4 class="h4_menu font_size_p menu1">   <span id="Matériels informatiques" class="echantillon_image font_size_p menu1"> &nbsp;&nbsp;&nbsp;  Matériels informatiques </span>  </h4>
-                 <h4 class="h4_menu font_size_p menu1">   <span id="Diagnostiques" class="echantillon_image font_size_p menu1"> &nbsp;&nbsp;&nbsp; Diagnostiques </span>  </h4>
+                 <h4 class="h4_menu font_size_p menu1">   <span id="Matériels informatiques" class="echantillon_image font_size_p menu1"> &nbsp;&nbsp;&nbsp;Matériels informatiques </span>  </h4>
+                 <h4 class="h4_menu font_size_p menu1">   <span id="Diagnostiques" class="echantillon_image font_size_p menu1"> &nbsp;&nbsp;&nbsp;Diagnostiques </span>  </h4>
              <h3 class="souligne">   Image et son </h3>
                  <h4 class="h4_menu">   <span id="TV" class="echantillon_image font_size_p menu1"> &nbsp;&nbsp;&nbsp;  TV </span>  </h4>
-                 <h4 class="h4_menu">   <span id="Videoprojecteur" class="echantillon_image font_size_p menu1"> &nbsp;&nbsp;&nbsp;  Videoprojecteur </span>  </h4>
-                 <h4 class="h4_menu">   <span id="Photos et caméra" class="echantillon_image font_size_p menu1"> &nbsp;&nbsp;&nbsp;  Photos et caméra </span>  </h4>
-                 <h4 class="h4_menu">   <span id="Tous accessoires" class="echantillon_image font_size_p menu1"> &nbsp;&nbsp;&nbsp; Tous accessoires </span>  </h4>
-             <h3 class="souligne">   <h4 class="h4_menu">   <span id="Impression" class="echantillon_image font_size_p menu1"> &nbsp;&nbsp;&nbsp;  Impression </span>  </h4> </h3>
-             <h3 class="souligne">   <h4 class="h4_menu">   <span id="Système domotique" class="echantillon_image font_size_p menu1"> &nbsp;&nbsp;&nbsp; Système domotique </span>  </h4> </h3>
+                 <h4 class="h4_menu">   <span id="Videoprojecteur" class="echantillon_image font_size_p menu1"> &nbsp;&nbsp;&nbsp;Videoprojecteur </span>  </h4>
+                 <h4 class="h4_menu">   <span id="Photos et caméra" class="echantillon_image font_size_p menu1"> &nbsp;&nbsp;&nbsp;Photos et caméra </span>  </h4>
+                 <h4 class="h4_menu">   <span id="Tous accessoires" class="echantillon_image font_size_p menu1"> &nbsp;&nbsp;&nbsp;Tous accessoires </span>  </h4>
+             <h3 class="souligne">   <h4 class="h4_menu">   <span id="Impression" class="echantillon_image font_size_p menu1"> &nbsp;&nbsp;&nbsp;Impression </span>  </h4> </h3>
+             <h3 class="souligne">   <h4 class="h4_menu">   <span id="Système domotique" class="echantillon_image font_size_p menu1"> &nbsp;&nbsp;&nbsp;Système domotique </span>  </h4> </h3>
               `;
+  }
+  function maison() {
+    return `<h3 class="souligne">Professonnel</h3>
+                 <h4 class="h4_menu">   <span id="Outillages Pro" class="echantillon_image font_size_p menu1"> &nbsp;&nbsp;&nbsp;Outillages Pro </span>  </h4>
+            <h3 class="souligne">Jardinage</h3>
+                 <h4 class="h4_menu font_size_p menu1">   <span id="Outils de jardin" class="echantillon_image font_size_p menu1"> &nbsp;&nbsp;&nbsp;Outils de jardin </span>  </h4>
+            <h3 class="souligne">   Bricolage</h3>
+              <h4 class="h4_menu"><span id="outillages" class="echantillon_image font_size_p menu1"> &nbsp;&nbsp;&nbsp;outillages </span>  </h4>
+            `;
   }
 });

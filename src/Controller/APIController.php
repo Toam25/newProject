@@ -7,18 +7,22 @@ use App\Entity\Boutique;
 use App\Entity\Header;
 use App\Entity\Images;
 use App\Entity\Menu;
+use App\Entity\User;
 use App\Repository\ArticleRepository;
 use App\Repository\BoutiqueRepository;
 use App\Repository\EsArticleRepository;
 use App\Repository\HeaderRepository;
 use App\Repository\ImagesRepository;
 use App\Repository\MenuRepository;
+use App\Service\ArticlePerShopService;
 use App\Service\CategoryOptionService;
 use App\Service\InsertFileServices;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\BrowserKit\Response as BrowserKitResponse;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Event\ResponseEvent;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
@@ -40,15 +44,66 @@ class APIController extends AbstractController
         }
         return new Response(json_encode($data));
     }
+
+     /**
+     * @Route("/profil/update/user/{id}", name="profil_update_user")
+     */
+    public function updateUser(Request $request, User $user, $id, InsertFileServices $insertFileServices)
+    {
+        if($this->getUser()->getId()== intVal($id)){
+             $user->setName($request->request->get('name')??$user->getName());
+             $user->setFirstname($request->request->get('first_name')??$user->getFirstname());
+            
+              if($request->files->get('images')){
+                   
+                   if(($user->getAvatar()!=="images_default/default_image.jpg")){
+                            unlink("/images/".$user->getAvatar());
+                   }
+                   $user->setAvatar($insertFileServices->insertFile($request->files->get('images')));
+               
+              }
+              $em=$this->getDoctrine()->getManager();
+              $em->flush();
+              return new JsonResponse(["status"=>"sucess"], Response::HTTP_OK);
+        }
+        else {
+          return new JsonResponse(["status"=>"error"], Response::HTTP_UNAUTHORIZED);
+        }
+    }
+       /**
+     * @Route("/profil/update/password/{id}", name="profil_password")
+     */
+    public function upPassWordUser(Request $request, User $user, $id, InsertFileServices $insertFileServices)
+    {
+        if($this->getUser()->getId()== intVal($id)){
+             $user->setName($request->request->get('name')??$user->getName());
+             $user->setFirstname($request->request->get('first_name')??$user->getFirstname());
+            
+              if($request->files->get('images')){
+                   
+                   if(($user->getAvatar()!=="images_default/default_image.jpg")){
+                            unlink("/images/".$user->getAvatar());
+                   }
+                   $user->setAvatar($insertFileServices->insertFile($request->files->get('images')));
+               
+              }
+              $em=$this->getDoctrine()->getManager();
+              $em->flush();
+              return new JsonResponse(["status"=>"sucess"], Response::HTTP_OK);
+        }
+        else {
+          return new JsonResponse(["status"=>"error"], Response::HTTP_UNAUTHORIZED);
+        }
+    }
     /**
-     * @Route("/delete/boutique/{id}", name="get_es_article")
+     * @Route("/delete/boutique/{id}", name="deleteboutique")
      */
     public function deteteBoutique(Boutique $boutique, BoutiqueRepository $boutiqueRepository, ImagesRepository $imagesRepository, ArticleRepository $articleRepository)
     {
 
 
         if ($boutiqueRepository->findOneBoutiqueByUserPerRole('ROLE_SUPER_ADMIN')) {
-            $articles = $articleRepository->findOneArticleByBoutiqueWithImage($boutique->getId());
+           /* $articles = $articleRepository->findOneArticleByBoutiqueWithImage($boutique->getId());
             if ($articles) {
                 foreach ($articles as $article) {
                     foreach ($article->getImages() as $image) {
@@ -56,7 +111,10 @@ class APIController extends AbstractController
                     }
                 }
             }
-
+            if($boutique->getLogo()!=="images_default/default_image.jpg"){
+              unlink('images/'.$boutique->getLogo());
+            }
+            */
             $em = $this->getDoctrine()->getManager();
             $em->remove($boutique);
             $em->flush();
@@ -83,12 +141,68 @@ class APIController extends AbstractController
         }
         return new JsonResponse($list);
     }
+      /**
+     * @Route("/update/article", name="update_article")
+     */
+    public function updateArticle(Request $request,ArticleRepository $articleRepository,BoutiqueRepository $boutiqueRepository)
+    {
+        $article = $articleRepository->findOneBy(['id'=>$request->request->get('id-article')]);
 
-    /**
+        if($this->getUser() and $article){
+           $article->setCategory($request->request->get('categorie'));
+           $article->setName( $request->request->get('name'));
+           $article->setPrice( $request->request->get('price'));
+           $article->setPriceGlobal( $request->request->get('global_price'));
+           $article->setPricePromo( $request->request->get('price_promo'));
+           $article->setPromo( $request->request->get('promotion'));
+           $article->setType( $request->request->get('type'));
+           $article->setQuantity( $request->request->get('quantity'));
+           $article->setMarque("");
+           $article->setDescription( $request->request->get('description'));
+           $article->setReferency( $request->request->get('referency'));
+           $article->setSousCategory( $request->request->get('sous_category'));
+           $article->setBoutique($boutiqueRepository->findOneBy(['user'=>$this->getUser()]));
+
+          $em= $this->getDoctrine()->getManager();
+          $em->flush();
+          $array = [
+            'status' => 'success',
+            'name' => $article->getName(),
+            'id' => $article->getId()
+        ];
+           return new JsonResponse($array,200);
+        }
+       
+        return new JsonResponse(['status'=>'error','message'=>'not Authorized'],403);
+    }
+     /**
      * @Route("/add/article", name="add_article")
      */
     public function addArticle(Request $request, InsertFileServices $insertFileServices, BoutiqueRepository $boutiqueRepository)
-    {
+    {     
+        if($this->getUser()){
+            
+           $article = new Article();
+           $article->setCategory($request->request->get('categorie'));
+           $article->setName( $request->request->get('name'));
+           $article->setPrice( $request->request->get('price'));
+           $article->setPriceGlobal( $request->request->get('global_price'));
+           $article->setPricePromo( $request->request->get('price_promo'));
+           $article->setPromo( $request->request->get('promotion'));
+           $article->setType( $request->request->get('type'));
+           $article->setQuantity( $request->request->get('quantity'));
+           $article->setMarque("");
+           $article->setDescription( $request->request->get('description'));
+           $article->setReferency( $request->request->get('referency'));
+           $article->setSousCategory( $request->request->get('sous_category'));
+           $article->setBoutique($boutiqueRepository->findOneBy(['user'=>$this->getUser()]));
+
+           $images = $request->files->get('images');
+
+          
+           foreach ($images as $image) {
+                 $allImages = [];
+
 
         if ($this->getUser()) {
 
@@ -137,6 +251,9 @@ class APIController extends AbstractController
 
         return new JsonResponse(['status' => 'error', 'message' => 'not Authorized'], 403);
     }
+}
+    }
+
     /**
      * @Route("/delete/option/{id}", name="delete_listOption")
      */
@@ -260,6 +377,35 @@ class APIController extends AbstractController
             return new JsonResponse(['status' => 'not authorised'], 403);
         }
     }
+
+        /**
+     * @Route("/update/images", name="update_images")
+     */
+
+    public function updateImages(Request $request, ImagesRepository $imagesRepository, InsertFileServices $insertFileServices)
+    {
+
+
+        $images = $request->files->get('images');
+        
+        if ($this->getUser()) {
+            $file = $insertFileServices->insertFile($images, ['jpeg', 'jpg', 'gif', 'png','webp']);
+            $images= $imagesRepository->findOneBy(['id'=>$request->request->get('id-image')]);
+    
+            if ($file != false) {
+                $images= $imagesRepository->findOneBy(['id'=>$request->request->get('id-image')]);
+                $images->setName($file);
+                $em = $this->getDoctrine()->getManager();
+                $em->flush();
+                unlink('images/'.$images->getName());
+                return new JsonResponse(['images' => $file,'id'=>$images->getId()]);
+            } else {
+                return new JsonResponse(['message' => "form fichier invalide"], Response::HTTP_NOT_ACCEPTABLE);
+            }
+        }
+
+        return new JsonResponse([], Response::HTTP_UNAUTHORIZED);
+    }
     /**
      * @Route("/header_image/edit", name="edit_images_header")
      */
@@ -310,5 +456,17 @@ class APIController extends AbstractController
         } else {
             return new JsonResponse(['status' => 'error'], Response::HTTP_NOT_EXTENDED);
         }
+    }
+     /**
+     * @Route("/get/listArticlePerBoutique/{category}/{type}", name="listeArticlePerBoutique", methods={"GET"})
+     */
+    public function listArticlePerBoutique($category, $type, ArticleRepository $articleRepository, ArticlePerShopService $articlePerShopService): Response
+    {
+            $articles = $articleRepository->findAllArticleBySousCategory($category,$type);
+
+            
+
+            return new JsonResponse($articlePerShopService->getListArticlePerShop($articles), Response::HTTP_OK);
+        
     }
 }

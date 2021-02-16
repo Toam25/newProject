@@ -3,7 +3,16 @@
     margin: 0;
     padding: 0 !important;
 }
+.menu_v {
+   /* transform : translateX(-400px);
+    transition : 400ms*/
+    padding: 5px;
+}
 
+.boutique_container{
+    display: grid;
+    grid-template-columns: 200px 1fr;
+}
 #container_description_reference {
     padding: 6px;
     border-top: 1px solid rgba(0,0,0,0.1);

@@ -30,7 +30,7 @@ class EsArticleController extends AbstractController
         $button_add_ess = ($category!=null) ? AdminController::button_add_boutique($category,"btn btn-success ajout_ess_article_ev") : " ";
         
         $form->handleRequest($request);
-        if($form->isSubmitted() and $form->isValid()){
+        if($form->isSubmitted()){
             
          
             $file = $insertFileServices->insertFile($esArticle->getPhotos());

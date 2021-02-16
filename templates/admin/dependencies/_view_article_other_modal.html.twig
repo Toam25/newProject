@@ -9,24 +9,26 @@
 			</div>
 
 			<div id="div_ajout_article" class="modal-body row" style="font-weight:none;">
-				<input type="hidden" class="_category" name="categorie" value="">
-
+				<div class="loader_ajax_"><img src="/images/images_default/ajax-loader.gif"></div>
 				<div class="container_image col-md-5">
-					<form class="form_view_update"style="display: flex;justify-content: space-between;align-items: end;flex-direction: column;">
+					<form class="form_view_update_image"style="display: flex;justify-content: space-between;align-items: end;flex-direction: column;">
 						<div class="preview_image" style="width: 100%;">
-						    
-							<img id="preview_image" src="" data-idImage = "" >
+						    <input id="view_id-image" type="hidden" name="id-image" class="id-image">
+							<img id="preview_image" src="" >
 						</div>
 						<div class="">
 							<label for="file_in">Importer une image : *</label>
-							<input id="file_in" class="file form-control" type="file" name="images[]" multiple required>
+							<input id="file_in" class="file form-control" type="file" name="images" multiple required>
 						</div>
 						<button class="btn btn-success" type="submit"style="margin-top: 12px;">Enregistrer</button>
 					</form>
 
 				</div>
 				<div class="container_detail col-md-7">
-					<form class="edit_article_in_shop row" action="">
+					<form class="form_article_in_shop_update row" action="">
+					  
+					    <input type="hidden" class="id-article" value="" name="id-article">
+						<input type="hidden" class="_view_category" name="categorie" value="">
 						<div class="col-md-6">
 							<label>Titre : *</label>
 							<input id="view_name"class="form-control " type="text" name="name" required>
@@ -49,13 +51,13 @@
 						<div class="col-md-6">
 							<label for="view_sous_category">Type(sous_category) :
 							</label>
-							<select id="view_sous_category" class="sous_category form-control" name="sous_category"></select>
+							<select id="view_sous_category" class="view_sous_category form-control" name="sous_category"></select>
 						</div>
 						<div class="col-md-6 ">
 
 							<label class="valeur_type" for="type">Option(type) :
 							</label>
-							<select id="view_type" class="type form-control" name="type"></select>
+							<select id="view_type" class="view_type form-control" name="type"></select>
 						</div>
 						<div class="col-md-6">
 							<label for="view_referency">Référence : *</label>
@@ -80,13 +82,11 @@
 							</label>
 							<textarea id="view_detail" class="form-control" name="description" required></textarea>
 						</div>
-					<button class="btn btn-success submit_add_article margin-top-5 btn-submit" type="submit" name="submit_in">Ajouter</button>
+					<button class="btn btn-success submit_add_article margin-top-5 btn-submit" type="submit" name="submit_in">Enregistrer</button>
 				</form>
 
 			</div>
 			</div>
-
-			<div class="modal-footer"></div>
 
 		</div>
 	</div>
