@@ -79,7 +79,9 @@ a {
 }
 ._header {
   display: grid;
-  grid-template-columns: 1fr 2fr 1fr;
+ /* grid-template-columns: 1fr 2fr 1fr;*/
+  grid-template-columns: 1fr auto;
+  align-items: center;
 }
 
 ul, ol {

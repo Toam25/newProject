@@ -1,6 +1,31 @@
 $(function () {
   var $category;
 
+
+  // delete shop
+  $('body').on('click','.js-delate-shop',function(e){
+    e.preventDefault();
+      url ='/api/delete/boutique/'+$(this).data('id');
+      $(this).parents('.js-container-shop').remove()
+      $.ajax({
+        url,
+       type :'POST',
+       data :{
+        },
+        dataType : 'json',
+       beforeSend : function(){
+
+       },
+       success : function(data){
+        toastr.success('Supprimer avec success');
+
+       },
+       error : function(){
+         toastr.error('Il y a un erreur');
+
+       }
+     });
+  });
     //detail article
 
   $('body').on('click','.article_delete',function(e){
@@ -24,8 +49,8 @@ $(function () {
          toastr.error('Il y a un erreur');
 
        }
-     })
-  })
+     });
+  });
    //update image 
    $('.form_view_update_image').on("submit",function(e){
     e.preventDefault();

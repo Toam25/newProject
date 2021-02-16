@@ -103,7 +103,7 @@ class APIController extends AbstractController
 
 
         if ($boutiqueRepository->findOneBoutiqueByUserPerRole('ROLE_SUPER_ADMIN')) {
-            $articles = $articleRepository->findOneArticleByBoutiqueWithImage($boutique->getId());
+           /* $articles = $articleRepository->findOneArticleByBoutiqueWithImage($boutique->getId());
             if ($articles) {
                 foreach ($articles as $article) {
                     foreach ($article->getImages() as $image) {
@@ -111,7 +111,10 @@ class APIController extends AbstractController
                     }
                 }
             }
-
+            if($boutique->getLogo()!=="images_default/default_image.jpg"){
+              unlink('images/'.$boutique->getLogo());
+            }
+            */
             $em = $this->getDoctrine()->getManager();
             $em->remove($boutique);
             $em->flush();

@@ -7,21 +7,24 @@
 				</a>
 				<span class="shop_name">
 					{{boutique.name}}
-					<br>
-					<i class="fa fa-phone" style="color:#df2121"></i>
-					<span class="contact_shop">{{boutique.contact}}</span>
+					{#
+						<i class="fa fa-phone" style="color:#df2121"></i>
+						<span class="contact_shop">{{boutique.contact}}</span>
+					#}
+					
 				</span>
 			</div>
 		</div>
+		{#<form style="margin-top: 7px;" class="aside">
 		<div class="header-search">
-			{#<form style="margin-top: 7px;" class="aside">
+			
 				<input class="input" placeholder="Que vous cherchez chez nous ?" name="q">
 				<input type="hidden" name="shop_id" value="{{ boutique.id }}">
 				<button class="search-btn">Search</button>
 			</form>
-            #}
+         
 		</div>
-
+		   #}
 		{% include "boutique/dependancies/_actionUser.html.twig"%}
 
 	</div>
