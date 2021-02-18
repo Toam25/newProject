@@ -1,28 +1,45 @@
 <div class="product">
-    <a href="{{path('detail',{'id' : article.id})}}">
-    <div class="product-img">
-         <img src="{{asset('images/'~article.images[0].name)}}" alt="">
-        
-       {#<div id="_action_for_cart" class="product-btns" data-idboutique="{{article.boutique.id}}" data-idarticle="{{article.id}}">
-            <button class="add-to-wishlist" ><i class="fa fa-heart-o"></i></button>
-            <button class="add-to-compare add_cart" data-price="{{article.price}}" data-id-article="{{article.id}}"><i class="fa fa-shopping-cart"></i></button>
-            <button class="quick-view"><i class="fa fa-eye"></i></button>
-        </div>
-        #} 
-    </div>
-</a> 
-    <div class="product-body">
-        <div class="product-rating">
-            {{ my_vote_twig(article.votes) }}
-        </div>
-       
-        <h3 class="product-name"><a href="#">{{ article.name }}</a></h3>
+	{{ promo(article.promo,article.price, article.pricePromo) }}
+	<a href="{{path('detail',{'id' : article.id})}}">
+		<div class="product-img">
+			<img
+			src="{{asset('images/'~article.images[0].name)}}" alt="">
 
-        <h4 class="product-price">{{ article.price|number_format(0,',',' ') }}&nbspAr</h4>
-        
-        <p class="product-category">Vendu par
-            <a href="{{path('shop',{'type':article.boutique.type , 'id':article.boutique.id})}}" target="blank">{{ article.boutique.name }}</a>
-        </p>
-        
-    </div>
+		{#<div id="_action_for_cart" class="product-btns" data-idboutique="{{article.boutique.id}}" data-idarticle="{{article.id}}">
+		            <button class="add-to-wishlist" ><i class="fa fa-heart-o"></i></button>
+		            <button class="add-to-compare add_cart" data-price="{{article.price}}" data-id-article="{{article.id}}"><i class="fa fa-shopping-cart"></i></button>
+		            <button class="quick-view"><i class="fa fa-eye"></i></button>
+		        </div>
+		        #}
+		</div>
+	</a>
+	<div class="product-body">
+		<div class="product-rating">
+			{{ my_vote_twig(article.votes) }}
+		</div>
+
+		<h3 class="product-name">
+			<a href="#">{{ article.name }}</a>
+		</h3>
+
+		<h4 class="product-price">
+			{% if article.price is same as(0)  %}
+				Prix : A la demande
+			{% else %}
+				{% if article.promo is same as('Promo')%}
+					{{article.pricePromo| number_format(0,',',' ') }}&nbspAr
+					<span class='old-prix'>{{article.price| number_format(0,',',' ') }}&nbspAr</span>
+				{% else %}
+					{{article.price| number_format(0,',',' ') }}&nbspAr
+				{% endif %}
+			{% endif %}
+		</h4>
+
+		{#
+		        <p class="product-category">Vendu par
+		            <a href="{{path('shop',{'type':article.boutique.type , 'id':article.boutique.id})}}" target="blank">{{ article.boutique.name }}</a>
+		        </p>
+		        #}
+
+	</div>
 </div>

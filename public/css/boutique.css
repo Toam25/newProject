@@ -8,10 +8,66 @@
     transition : 400ms*/
     padding: 5px;
 }
-
+.ribbon-top-right {
+    top: -10px;
+    right: -10px;
+}
+.ribbon-top-right span {
+    left: -25px;
+    top: 30px;
+    transform: rotate(45deg);
+}
+.ribbon span {
+    position: absolute;
+    display: block;
+    width: 175Px;
+    padding: 9px 0;
+    background-color: #9e1814;
+    box-shadow: 0 5px 10px rgba(0,0,0,.1);
+    color: #fff;
+    font: 700 12px/1 'Lato', sans-serif;
+    text-shadow: 0 1px 1px rgba(0,0,0,.2);
+    text-transform: uppercase;
+    text-align: center;
+}
+.ribbon::before, .ribbon::after {
+    position: absolute;
+    z-index: -1;
+    content: '';
+    display: block;
+    border: 5px solid #570101;
+        border-top-color: rgb(87, 1, 1);
+        border-right-color: rgb(87, 1, 1);
+}
+.ribbon-top-right::before, .ribbon-top-right::after {
+    border-top-color: transparent;
+    border-right-color: transparent;
+}
+.ribbon-top-right::after {
+    bottom: 0;
+    right: 0;
+}
+.New span {
+    background-color: #2D892D !important;
+}
+.Vendu span {
+    background-color: #0E5592 !important;
+}
+.ribbon {
+    width: 110px;
+    height: 110px;
+    overflow: hidden;
+    position: absolute;
+    z-index : 3;
+}
 .boutique_container{
     display: grid;
     grid-template-columns: 200px 1fr;
+}
+.old-prix {
+    font-size: 12px;
+    text-decoration: line-through;
+    font-weight: normal;
 }
 #container_description_reference {
     padding: 6px;

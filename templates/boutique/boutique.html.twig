@@ -75,19 +75,22 @@
 					</div>
 
 					{#<div class="col-md-2 col-sm-12 col-xs-12 col-lg-2">
-
-						<h3 class="title_C" style="display:table-cell">Video</h3>
-						<div class="pub_video_pub">
-							<iframe width="100%" height="333px" src="https://www.youtube.com/embed/-YN612DOzno" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-						</div>
-
-					</div>#}
+					
+											<h3 class="title_C" style="display:table-cell">Video</h3>
+											<div class="pub_video_pub">
+												<iframe width="100%" height="333px" src="https://www.youtube.com/embed/-YN612DOzno" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+											</div>
+					
+										</div>#}
 				</div>
-			{# 	<h3 class="title_C" style="display:table-cell">Nouveauté
-				</h3>
-				{% include "boutique/dependancies/section.html.twig" with {'articles' : newArticles} %}
+				{# 
+				
+							#}
+				<div id="container_social_network">
+					<h3 class="title_C" style="display:table-cell" text-align="center">Nos séléctions</h3>
+					{% include "boutique/dependancies/slide_shop.html.twig" with {'articles' : newArticles} %}
 
-			#}
+				</div>
 			</div>
 
 			<div id="container_social_network">

@@ -915,8 +915,8 @@ textarea.input {
 
 .product .product-img .product-label>span.sale {
   background-color: #FFF;
-  border-color: #D10024;
-  color: #D10024;
+  border-color: #202340;
+  color: #202340;
 }
 
 .product .product-img .product-label>span.new {
@@ -949,11 +949,11 @@ textarea.input {
 }
 
 .product .product-body .product-name>a:hover, .product .product-body .product-name>a:focus {
-  color: #D10024;
+  color: #202340;
 }
 
 .product .product-body .product-price {
-  color: #D10024;
+  color: #202340;
   font-size: 18px;
 }
 

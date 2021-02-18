@@ -123,6 +123,21 @@ public function findAllArticleBySousCategory(string $category, string $sous_cate
     return  $query ->getQuery()->getResult();
 }
 
+public function findAllArticleSliderByBoutique($boutique){
+     $query= $this->createQueryBuilder('a')
+    ->select('a', 'b', 'v', 'i', 'c','u')
+    ->leftJoin('a.votes', 'v')
+    ->leftJoin('v.user', 'u')
+    ->leftJoin('a.boutique', 'b')
+    ->leftJoin('a.images', 'i')
+    ->leftJoin('a.carts', 'c')
+    ->andwhere('a.boutique = :boutiqueId')
+    ->andwhere('a.slide = :slide')
+    ->setParameter('boutiqueId', $boutique->getId())
+    ->setParameter('slide', 1);
+    return  $query ->getQuery()->getResult();
+}
+
 
 
 

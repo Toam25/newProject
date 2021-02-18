@@ -123,6 +123,7 @@ $(function () {
          $('#view_article').modal('show');
        },
        success : function(data){
+          $('view_slide').prop('checked', false);
           $('.id-article').val(data.id);
           $('._view_category').val(data.category);
           $('#preview_image').attr('src','/images/'+data.images['name']);
@@ -131,6 +132,7 @@ $(function () {
           $('#view_prix').val(data.price);
           $('#view_prix_g').val(data.global_price);
           $('#view_stock').val(data.quantity);
+          $('#slide'+data.slider).prop('checked', true);
           $('#view_sous_category').html(list_option(data.list_menu,data.sous_category));
           $('#view_type').html(list_type(data.list_menu,data.sous_category,data.type));
           $('#view_referency').val(data.referency)

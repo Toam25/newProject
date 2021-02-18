@@ -113,6 +113,11 @@ class Article
      */
     private $referency;
 
+    /**
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    private $slide;
+
     public function __construct()
     {
         $this->images = new ArrayCollection();
@@ -122,7 +127,8 @@ class Article
         $this->carts = new ArrayCollection();
         $this->price=0;
         $this->price_global=0;
-        $this->price_global=0;
+        $this->price_promo=0;
+        $this->slide = 0;
     }
 
     public function getId(): ?int
@@ -427,6 +433,18 @@ class Article
     public function setReferency(string $referency): self
     {
         $this->referency = $referency;
+
+        return $this;
+    }
+
+    public function getSlide(): ?int
+    {
+        return $this->slide;
+    }
+
+    public function setSlide(?int $slide): self
+    {
+        $this->slide = $slide;
 
         return $this;
     }

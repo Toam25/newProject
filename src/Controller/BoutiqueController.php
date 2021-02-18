@@ -79,7 +79,7 @@ class BoutiqueController extends AbstractController
             'controller_name' => 'BoutiqueController',
             'boutique' => $boutique,
             'articles' => $article,
-            'newArticles' => $articleRepository->findAllArticleByBoutique($boutique),
+            'newArticles' => $articleRepository->findAllArticleSliderByBoutique($boutique),
             'listShop' => $listShops['listShops'],
             'type' => $type,
             'filtreCategory' => $this->getCategoryPerArticle($article)

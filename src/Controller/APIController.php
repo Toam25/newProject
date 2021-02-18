@@ -161,7 +161,9 @@ class APIController extends AbstractController
            $article->setDescription( $request->request->get('description'));
            $article->setReferency( $request->request->get('referency'));
            $article->setSousCategory( $request->request->get('sous_category'));
+           $article->setSlide($request->request->get('slider'));
            $article->setBoutique($boutiqueRepository->findOneBy(['user'=>$this->getUser()]));
+
 
           $em= $this->getDoctrine()->getManager();
           $em->flush();
@@ -180,33 +182,11 @@ class APIController extends AbstractController
      */
     public function addArticle(Request $request, InsertFileServices $insertFileServices, BoutiqueRepository $boutiqueRepository)
     {     
-        if($this->getUser()){
-            
-           $article = new Article();
-           $article->setCategory($request->request->get('categorie'));
-           $article->setName( $request->request->get('name'));
-           $article->setPrice( $request->request->get('price'));
-           $article->setPriceGlobal( $request->request->get('global_price'));
-           $article->setPricePromo( $request->request->get('price_promo'));
-           $article->setPromo( $request->request->get('promotion'));
-           $article->setType( $request->request->get('type'));
-           $article->setQuantity( $request->request->get('quantity'));
-           $article->setMarque("");
-           $article->setDescription( $request->request->get('description'));
-           $article->setReferency( $request->request->get('referency'));
-           $article->setSousCategory( $request->request->get('sous_category'));
-           $article->setBoutique($boutiqueRepository->findOneBy(['user'=>$this->getUser()]));
-
-           $images = $request->files->get('images');
-
-          
-           foreach ($images as $image) {
-                 $allImages = [];
-
+       
 
         if ($this->getUser()) {
 
-            $category = $request->request->get('categorie');
+           
             $article = new Article();
             $article->setCategory($request->request->get('categorie'));
             $article->setName($request->request->get('name'));
@@ -220,6 +200,7 @@ class APIController extends AbstractController
             $article->setDescription($request->request->get('description'));
             $article->setReferency($request->request->get('referency'));
             $article->setSousCategory($request->request->get('sous_category'));
+            $article->setSlide($request->request->get('slider'));
             $article->setBoutique($boutiqueRepository->findOneBy(['user' => $this->getUser()]));
 
             $images = $request->files->get('images');
@@ -250,9 +231,9 @@ class APIController extends AbstractController
         }
 
         return new JsonResponse(['status' => 'error', 'message' => 'not Authorized'], 403);
-    }
-}
-    }
+ }
+
+ 
 
     /**
      * @Route("/delete/option/{id}", name="delete_listOption")
@@ -310,6 +291,7 @@ class APIController extends AbstractController
                 'description' => $article->getDescription(),
                 'referency' => $article->getReferency(),
                 'sous_category' => $article->getSousCategory(),
+                'slider'=>$article->getSlide(),
                 'images' => [
                     'name' => $image[0]->getName(),
                     'id' => $image[0]->getId()
