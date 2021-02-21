@@ -141,7 +141,7 @@ class APIController extends AbstractController
     public function deteteBoutique(Boutique $boutique, BoutiqueRepository $boutiqueRepository, ImagesRepository $imagesRepository, ArticleRepository $articleRepository)
     {
 
-
+        /**Mbola tsy afaka supprimena ilay boutique fa misy lié amin'ny entite maromaro */
         if ($boutiqueRepository->findOneBoutiqueByUserPerRole('ROLE_SUPER_ADMIN')) {
            /* $articles = $articleRepository->findOneArticleByBoutiqueWithImage($boutique->getId());
             if ($articles) {
