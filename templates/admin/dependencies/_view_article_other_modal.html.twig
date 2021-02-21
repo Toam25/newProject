@@ -29,6 +29,16 @@
 					  
 					    <input type="hidden" class="id-article" value="" name="id-article">
 						<input type="hidden" class="_view_category" name="categorie" value="">
+						<div class="col-md-12">
+							<label for="view_prix">Ajouter dans le slide   : *
+							</label>
+							<div>
+								<input  id="slide1" class="view_slide" type="radio" name="slider" value="1" > Oui
+								<input  id="slide0" class="view_slide"  type="radio" name="slider" value="0" > Non
+							</div>
+						     
+							
+						</div>
 						<div class="col-md-6">
 							<label>Titre : *</label>
 							<input id="view_name"class="form-control " type="text" name="name" required>
@@ -73,10 +83,11 @@
 								<option value="Vendu">Vendu</option>
 							</select>
 						</div>
-						<div class="col-sm-4 col-lg-4 col-md-4 inter-promo" style="display:none">
-							<label for="view_promo_price">Prix promo : *</label>
-							<input id="view_promo_price"class="form-control" type="number" name="price_promo" value="0" min="0" required>
+						<div class="col-sm-4 col-lg-4 col-md-4 inter-promo" >
+							<label for="view_promo_price">Prix promo : </label>
+							<input id="view_promo_price"class="form-control" type="number" name="price_promo" value="0" min="0">
 						</div>
+
 						<div class="col-md-12">
 							<label for="view_detail">Détails * :
 							</label>

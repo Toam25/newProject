@@ -161,13 +161,7 @@ nav {
   margin-right: 10px;
   background: rgba(0, 0, 0, 0.2);
 }
-.my-carousel-items {
-  display: flex;
-  overflow-x: scroll;
-  padding: 1rem 0;
-  scroll-snap-type: x mandatory;
-  scrollbar-width: thin;
-}
+
 .commentaire {
   border-radius: 10px 0px 0px 10px;
   width: 90%;

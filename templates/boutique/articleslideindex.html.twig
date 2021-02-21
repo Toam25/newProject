@@ -1,113 +1,112 @@
 <ul class="my-carousel-items">
-     {% for vote in votes %}
-		
-
-		<div id="{{ vote.id }}" class="image" >
+	{% for vote in votes %}
+		{% set disabled = false %}
+		{% for userVote in vote.UserVotes %}
+			{% if userVote.user == app.user %}
+					{% set disabled = true %}
+			{% endif %}
+		{% endfor %}
+       
+		<div
+			id="{{ vote.id }}" class="image">
 			<!--ma modification-->
 			<li class="my-carousel-item">
 				<div class="card">
-		 			<div class="line">
-						<h3 class="card-title apropos_commentaire" >{{ vote.boutique.name}}</h3>
-						<a class='btn btn-success my-btn-boutique ' href="{{path('shop',{'type': vote.boutique.type, 'id' : vote.boutique.id})}}" target='_blank'> Voir boutique</a>
+					<div class="line">
+						<h3 class="card-title apropos_commentaire">{{ vote.boutique.name}}</h3>
+						<a class='btn btn-success my-btn-boutique ' href="{{path('shop',{'type': vote.boutique.type, 'id' : vote.boutique.id})}}" target='_blank'>
+							Voir boutique</a>
 					</div>
 					<div class="liste_image">
-						 <p id="title_{{ vote.id }}" title="">{{vote.description}}</p>
-						 <span class="_d"></span>
+						<p id="title_{{ vote.id }}" title="{{vote.description}}">
+							{{ cutWorld(vote.description,100, false)}}</p>
+						<span class="_d"></span>
 						<div class="containt_image_vote">
-							<img  src="{{ asset('images/'~vote.images)}}" class="image-content" name="comment{{ vote.id }}">
+							<img src="{{ asset('images/'~vote.images)}}" class="image-content" name="comment{{ vote.id }}">
 						</div>
-						
-					</div>
-					<div class="card-content">
-		 				<!-------forme---------->
 
+					</div>
+					<div
+						class="card-content">
 						<form class="form-inline back_ground_forme_containt submit_commes" method="" action="">
 
 
-						{% if app.user %} 
-						<!--a class="bouster"  name="<?=$donner['image']?>" value="<?=$donner['id']?>" data-toggle="modal" data-target="#loginModal">
-
-								<span name="id" value="id"></span>
-
-								<i class="glyphicon glyphicon-chevron-up"></i>
-
-						</a-->
-						{% endif %}
+							{% if app.user %}
+								<!--a class="bouster"  name="<?=$donner['image']?>" value="<?=$donner['id']?>" data-toggle="modal" data-target="#loginModal">
+								
+																<span name="id" value="id"></span>
+								
+																<i class="glyphicon glyphicon-chevron-up"></i>
+								
+														</a-->
+							{% endif %}
 
 
 							<input type="hidden" class="nbr_vote" name="nbr_vote" value="{{ vote.nbrvote}}">
 
 							<input type="hidden" class="jour" name="jour" value="">
-
+									
 							<div class="btns">
-									<button id="hd{{vote.id}}"class="hd" name="haut" value="{{vote.id}}"class="hd" 
+								<button id="hd{{vote.id}}" class="hd btn{{vote.id}}" name="haut" value="{{vote.id}}" class="hd" 
+								{% if not app.user or disabled is same as (true) %} 
+										disabled 
+								{% endif %} 
+								style="margin-left: 5px;">
 
-											{% if not app.user %}
-												 disabled
-											{% endif %}
-										    style="margin-left: 5px;">
+									<span class="fa fa-arrow-left"></button>
 
-											<span class="fa fa-arrow-left">
+									<p class="hd p" id="p{{vote.id}}" align="center">
+										{{ vote.nbrvote }}</p>
 
-									</button>
-
-									<p class="hd p" id="p{{vote.id}}" align="center"> {{ vote.nbrvote }}</p>
-
-
-
-									<button  id="bas{{vote.id}}"class="hd"  name="bas" value="{{vote.id}}"
-
-											{% if not app.user %}
-
-												disabled
-
-											{% endif %}
-										>
+									<button id="bas{{vote.id}}" class="hd  btn{{vote.id}}" name="bas" value="{{vote.id}}"
+									 {% if not app.user or vote.nbrvote is same as(0) or  disabled is same as (true) %} 
+										 disabled 
+									 {% endif %}>
 										<i class="fa fa-arrow-right"></i>
-
-										</button>
+									</button>
 									{% if  app.user %}
 										<img src="{{ asset('images/'~ app.user.avatar)}}" class="image-comment">
 									{% else %}
 										<img src="{{ asset('images/images_default/default_image.jpg')}}" class="image-comment">
 									{% endif %}
 
+								</div>
+
+								<div
+									class="l_comment">{#<p id='g_comment' class="g_{{vote.id}}"></p>
+										
+																	<button class="icon_comment" disabled="disabled">
+										
+																			<span class="fa fa-comment g_comment"></span>  
+										
+																	</button>
+										                    	<input  id="comment{{vote.id}}" type="text" name="commentaire" placeholder="votre commentaire" class="commentaire " 
+																	 {% if not app.user %} 
+																			 disabled
+																	 {% endif %}
+																	>
+										
+																	<input type="hidden" name="image_content" value="{{ vote.description }}">
+										
+																	<button id="button_comment_submit{{vote.id}}"class=' button_comment_submit' type="submit" value="{{vote.id}}"
+																	 {% if not app.user %}
+																			disabled
+																	 {% endif %}
+																	 >
+										
+																			<span class="fa fa-paper-plane"></span>
+										
+																		</button>
+																	#}
+
+								</div>
+
+							</form>
 						</div>
-
-						<div class="l_comment"> 
-							<p id='g_comment' class="g_{{vote.id}}"></p>
-
-							<button class="icon_comment" disabled="disabled">
-
-									<span class="fa fa-comment g_comment"></span>  
-
-							</button>
-                    
-							<input  id="comment{{vote.id}}" type="text" name="commentaire" placeholder="votre commentaire" class="commentaire " 
-							 {% if not app.user %} 
-									 disabled
-							 {% endif %}
-							>
-
-							<input type="hidden" name="image_content" value="{{ vote.description }}">
-
-							<button id="button_comment_submit{{vote.id}}"class=' button_comment_submit' type="submit" value="{{vote.id}}"
-							 {% if not app.user %}
-									disabled
-							 {% endif %}
-							 >
-
-									<span class="fa fa-paper-plane"></span>
-
-								</button>
-
-						</div>
-
-						</form>
 					</div>
-				</div>
+				</li>
+				<!--fin ma modification-->
 			</li>
-			<!--fin ma modification-->
 		</div>
-   {% endfor %}
+	{% endfor %}
 </ul>

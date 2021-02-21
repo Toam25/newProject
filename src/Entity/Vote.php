@@ -65,6 +65,11 @@ class Vote
      */
     private $header_vote;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\UserVote", mappedBy="vote")
+     */
+    private $userVotes;
+
     public function __construct()
     {
         $this->comments = new ArrayCollection();
@@ -72,6 +77,7 @@ class Vote
         $this->setCreateAt(new \DateTime());
         $this->header_vote = new ArrayCollection();
         $this->placement = 0;
+        $this->userVotes = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -218,6 +224,37 @@ class Vote
             // set the owning side to null (unless already changed)
             if ($headerVote->getVoteHeader() === $this) {
                 $headerVote->setVoteHeader(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|UserVote[]
+     */
+    public function getUserVotes(): Collection
+    {
+        return $this->userVotes;
+    }
+
+    public function addUserVote(UserVote $userVote): self
+    {
+        if (!$this->userVotes->contains($userVote)) {
+            $this->userVotes[] = $userVote;
+            $userVote->setVote($this);
+        }
+
+        return $this;
+    }
+
+    public function removeUserVote(UserVote $userVote): self
+    {
+        if ($this->userVotes->contains($userVote)) {
+            $this->userVotes->removeElement($userVote);
+            // set the owning side to null (unless already changed)
+            if ($userVote->getVote() === $this) {
+                $userVote->setVote(null);
             }
         }
 

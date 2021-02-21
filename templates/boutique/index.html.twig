@@ -21,6 +21,7 @@
     <!-- Custom stlylesheet -->
     <link type="text/css" rel="stylesheet" href="{{ asset('css/style.css') }}"/>
     <link type="text/css" rel="stylesheet" href="{{ asset('css/index.css') }}"/>
+    <link type="text/css" rel="stylesheet" href="{{ asset('css/slideindexvote.css') }}"/>
 {% endblock %}
 
 
@@ -103,6 +104,8 @@
 {% block javascripts %}
 	{#<script src="{{asset('js/jquery.js')}}"></script>
 	<script src="{{asset('js/bootstrap.min.js')}}"></script>#}
+	<script src="{{ asset('js/mousewheel.js') }}"> </script>
 	<script src="{{ asset('js/connexion.js') }}"> </script>
 	<script src="{{asset('js/index.js')}}"></script>
+	<script src="{{asset('js/voteindex.js')}}"></script>
 {% endblock %}

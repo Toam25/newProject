@@ -85,6 +85,11 @@ class User implements UserInterface
      */
     private $categories;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\UserVote", mappedBy="user")
+     */
+    private $userVotes;
+
     public function __construct()
     {
         $this->boutiques = new ArrayCollection();
@@ -93,6 +98,7 @@ class User implements UserInterface
         $this->votes = new ArrayCollection();
         $this->carts = new ArrayCollection();
         $this->categories = new ArrayCollection();
+        $this->userVotes = new ArrayCollection();
  
     }
 
@@ -364,6 +370,37 @@ class User implements UserInterface
             // set the owning side to null (unless already changed)
             if ($category->getUser() === $this) {
                 $category->setUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|UserVote[]
+     */
+    public function getUserVotes(): Collection
+    {
+        return $this->userVotes;
+    }
+
+    public function addUserVote(UserVote $userVote): self
+    {
+        if (!$this->userVotes->contains($userVote)) {
+            $this->userVotes[] = $userVote;
+            $userVote->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeUserVote(UserVote $userVote): self
+    {
+        if ($this->userVotes->contains($userVote)) {
+            $this->userVotes->removeElement($userVote);
+            // set the owning side to null (unless already changed)
+            if ($userVote->getUser() === $this) {
+                $userVote->setUser(null);
             }
         }
 

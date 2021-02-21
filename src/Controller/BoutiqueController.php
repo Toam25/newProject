@@ -31,6 +31,9 @@ class BoutiqueController extends AbstractController
     {
 
         $boutique = $boutiqueRepository->findOneBoutiqueByUserPerRole('ROLE_SUPER_ADMIN');
+
+        $vote = $voteRepository->findAllWithUserVote();
+
         $lastboutique = $boutiqueRepository->findAll();
         $header = $headerRepository->findOneBy(['boutique' => $boutique]);
         $header_image = ($header) ? $header->getName() : "images_default/default_image.jpg";
@@ -40,7 +43,7 @@ class BoutiqueController extends AbstractController
             'boutique' => $boutique,
             'articles' => $articles,
             'header_image' => $header_image,
-            'votes' => $voteRepository->findAll(),
+            'votes' => $vote,
             'lastboutique' => $lastboutique[1]
         ]);
     }
@@ -79,7 +82,7 @@ class BoutiqueController extends AbstractController
             'controller_name' => 'BoutiqueController',
             'boutique' => $boutique,
             'articles' => $article,
-            'newArticles' => $articleRepository->findAllArticleByBoutique($boutique),
+            'newArticles' => $articleRepository->findAllArticleSliderByBoutique($boutique),
             'listShop' => $listShops['listShops'],
             'type' => $type,
             'filtreCategory' => $this->getCategoryPerArticle($article)

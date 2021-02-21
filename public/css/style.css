@@ -683,8 +683,24 @@ textarea.input {
     display: inline-block;
 
   }
+
+  .close_menu{
+    display: inline-block !important;
+  }
+  .boutique_container {
+    grid-template-columns: 1fr !important;
+}
   .menu_v {
-    display: none;
+    
+      width: 200px;
+      position: absolute;
+      background: white;
+      z-index: 10;
+      box-shadow: 0 0 5px;
+      left: 0;
+      transform: translateX(-250px);
+      transition: 400ms;
+  
   }
   #responsive-nav {
     position: fixed;
@@ -915,8 +931,8 @@ textarea.input {
 
 .product .product-img .product-label>span.sale {
   background-color: #FFF;
-  border-color: #D10024;
-  color: #D10024;
+  border-color: #202340;
+  color: #202340;
 }
 
 .product .product-img .product-label>span.new {
@@ -949,11 +965,11 @@ textarea.input {
 }
 
 .product .product-body .product-name>a:hover, .product .product-body .product-name>a:focus {
-  color: #D10024;
+  color: #202340;
 }
 
 .product .product-body .product-price {
-  color: #D10024;
+  color: #202340;
   font-size: 18px;
 }
 

@@ -1,0 +1,22 @@
+.product-previe{
+    position: relative;
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    width: 100% !important;
+    height: 286px !important;
+}
+.Promo{
+    background-color: #9e1814 !important;
+}
+.New{
+    background-color: #2D892D !important;
+}
+.Vendu {
+    background-color: #0E5592 !important;
+}
+.promotion {
+    color: white;
+    font-size: 12px;
+    padding: 10px;
+}

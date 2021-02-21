@@ -1,7 +1,10 @@
 {% for article in articles %}
 
+
+
 	<div class="col-md-4 col-sm-4 col-xs-6 col-lg-3 " style="margin-top: 3px;">
 		<div class="cart container_cart">
+		    {{ promo(article.promo,article.price, article.pricePromo) }}
 			<a href="{{path('detail',{'id' : article.id})}}">
 				<div class="container_image">
 					<img src="{{ asset('images/'~article.images[0].name)}}" alt="">
@@ -19,9 +22,14 @@
 				<h1 class="product-name">{{article.name}}</h1>
 				<h4 class="product-price">
 					{% if article.price is same as(0)  %}
-					 Prix : A la demande 
+					    Prix : A la demande 
 					{% else %}
-						{{article.price| number_format(0,',',' ') }}&nbspAr
+				         {% if article.promo is same as('Promo')%}
+							 {{article.pricePromo| number_format(0,',',' ') }}&nbspAr
+							 <span class='old-prix'>{{article.price| number_format(0,',',' ') }}&nbspAr</span>
+						 {% else %}
+						 	{{article.price| number_format(0,',',' ') }}&nbspAr
+						 {% endif %}
 					{% endif %}
 
 				</h4>

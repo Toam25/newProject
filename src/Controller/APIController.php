@@ -8,12 +8,15 @@ use App\Entity\Header;
 use App\Entity\Images;
 use App\Entity\Menu;
 use App\Entity\User;
+use App\Entity\UserVote;
 use App\Repository\ArticleRepository;
 use App\Repository\BoutiqueRepository;
 use App\Repository\EsArticleRepository;
 use App\Repository\HeaderRepository;
 use App\Repository\ImagesRepository;
 use App\Repository\MenuRepository;
+use App\Repository\UserVoteRepository;
+use App\Repository\VoteRepository;
 use App\Service\ArticlePerShopService;
 use App\Service\CategoryOptionService;
 use App\Service\InsertFileServices;
@@ -43,6 +46,43 @@ class APIController extends AbstractController
             $data[$key]['image'] = $value->getImage();
         }
         return new Response(json_encode($data));
+    }
+
+    /**
+     * @Route("/set/numberVoteIndex/{status}-{id_vote}", name="set_number_vote_index", methods={"POST"})
+     */
+    public function setNumberVoteIndex($status,$id_vote, VoteRepository $voteRepository, UserVoteRepository $userVoteRepository)
+    {   
+        $vote= $voteRepository->findOneBy(['id'=>$id_vote]);
+        $userVote= $userVoteRepository->findOneBy(['vote'=>$vote,'user'=>$this->getUser()]);
+        
+        if($this->getUser() and $vote and $userVote==null){
+            
+            $userVote= new UserVote();
+            if($status=="haut"){
+
+                $vote->setNbrVote($vote->getNbrVote()+1);
+                $vote->setPlacement($vote->getPlacement()+1);
+              
+                    
+            }
+            else{
+                if($status=="bas"){
+                    if($vote->getNbrVote()!=0){
+                       $vote->setNbrVote($vote->getNbrVote()-1);
+                    }
+               }
+            }
+            $userVote->setVote($vote);
+            $userVote->setUser($this->getUser());
+
+            $em=$this->getDoctrine()->getManager();
+            $em->persist($userVote);
+            $em->flush();
+            return new JsonResponse(['status'=>"success",'nbr_vote'=>$vote->getNbrVote()],Response::HTTP_OK);
+        }
+        
+        return new JsonResponse(['status'=>"error"],Response::HTTP_UNAUTHORIZED);
     }
 
      /**
@@ -96,12 +136,12 @@ class APIController extends AbstractController
         }
     }
     /**
-     * @Route("/delete/boutique/{id}", name="deleteboutique")
+     * @Route("/delete/boutique/{id}", name="deleteboutique", methods="DELETE")
      */
     public function deteteBoutique(Boutique $boutique, BoutiqueRepository $boutiqueRepository, ImagesRepository $imagesRepository, ArticleRepository $articleRepository)
     {
 
-
+        /**Mbola tsy afaka supprimena ilay boutique fa misy lié amin'ny entite maromaro */
         if ($boutiqueRepository->findOneBoutiqueByUserPerRole('ROLE_SUPER_ADMIN')) {
            /* $articles = $articleRepository->findOneArticleByBoutiqueWithImage($boutique->getId());
             if ($articles) {
@@ -161,7 +201,9 @@ class APIController extends AbstractController
            $article->setDescription( $request->request->get('description'));
            $article->setReferency( $request->request->get('referency'));
            $article->setSousCategory( $request->request->get('sous_category'));
+           $article->setSlide($request->request->get('slider'));
            $article->setBoutique($boutiqueRepository->findOneBy(['user'=>$this->getUser()]));
+
 
           $em= $this->getDoctrine()->getManager();
           $em->flush();
@@ -180,33 +222,11 @@ class APIController extends AbstractController
      */
     public function addArticle(Request $request, InsertFileServices $insertFileServices, BoutiqueRepository $boutiqueRepository)
     {     
-        if($this->getUser()){
-            
-           $article = new Article();
-           $article->setCategory($request->request->get('categorie'));
-           $article->setName( $request->request->get('name'));
-           $article->setPrice( $request->request->get('price'));
-           $article->setPriceGlobal( $request->request->get('global_price'));
-           $article->setPricePromo( $request->request->get('price_promo'));
-           $article->setPromo( $request->request->get('promotion'));
-           $article->setType( $request->request->get('type'));
-           $article->setQuantity( $request->request->get('quantity'));
-           $article->setMarque("");
-           $article->setDescription( $request->request->get('description'));
-           $article->setReferency( $request->request->get('referency'));
-           $article->setSousCategory( $request->request->get('sous_category'));
-           $article->setBoutique($boutiqueRepository->findOneBy(['user'=>$this->getUser()]));
-
-           $images = $request->files->get('images');
-
-          
-           foreach ($images as $image) {
-                 $allImages = [];
-
+       
 
         if ($this->getUser()) {
 
-            $category = $request->request->get('categorie');
+           
             $article = new Article();
             $article->setCategory($request->request->get('categorie'));
             $article->setName($request->request->get('name'));
@@ -220,6 +240,7 @@ class APIController extends AbstractController
             $article->setDescription($request->request->get('description'));
             $article->setReferency($request->request->get('referency'));
             $article->setSousCategory($request->request->get('sous_category'));
+            $article->setSlide($request->request->get('slider'));
             $article->setBoutique($boutiqueRepository->findOneBy(['user' => $this->getUser()]));
 
             $images = $request->files->get('images');
@@ -250,9 +271,9 @@ class APIController extends AbstractController
         }
 
         return new JsonResponse(['status' => 'error', 'message' => 'not Authorized'], 403);
-    }
-}
-    }
+ }
+
+ 
 
     /**
      * @Route("/delete/option/{id}", name="delete_listOption")
@@ -310,6 +331,7 @@ class APIController extends AbstractController
                 'description' => $article->getDescription(),
                 'referency' => $article->getReferency(),
                 'sous_category' => $article->getSousCategory(),
+                'slider'=>$article->getSlide(),
                 'images' => [
                     'name' => $image[0]->getName(),
                     'id' => $image[0]->getId()

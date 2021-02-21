@@ -1,0 +1,38 @@
+.footer {
+    margin: 30px 0px;
+}
+.footer .footer-title {
+    color: #FFF;
+    text-transform: uppercase;
+    font-size: 18px;
+    margin: 0px 0px 30px;
+}
+ul, ol {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+.footer-links li a {
+    color: #B9BABC;
+}
+.footer-links li i {
+    margin-right: 15px;
+    color: #D10024;
+    width: 14px;
+    text-align: center;
+}
+.footer .footer-title {
+    color: #FFF;
+    text-transform: uppercase;
+    font-size: 18px;
+    margin: 0px 0px 30px;
+}
+h1, h2, h3, h4, h5, h6 {
+    color: #2B2D42;
+    font-weight: 700;
+    margin: 0 0 10px;
+}
+#footer {
+    background: #15161D;
+    color: #B9BABC;
+}

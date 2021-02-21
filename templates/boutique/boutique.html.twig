@@ -47,9 +47,13 @@
 		<div>
 			<div class="container-fluid">
 				<div class="boutique_container">
+				   
 					<div class="menu_v ">
+					    <div class="title_c_and_menu">
 						<h3 class="title_C" style="display:table-cell">Filtres
 						</h3>
+						 <span class="close_menu js-toggle-menu">Menu</span>
+						</div>
 						<input class="shop_type" type="hidden" name="shop_type" value="{{ type }}">
 						{% if boutique %}
 							<form action="" class="aside" style="margin-top: 13px;">
@@ -62,8 +66,8 @@
 					</div>
 					<div class="article_boutique">
 						<div class="">
-
 							<h3 class="title_C" style="display:table-cell">Nos produits</h3>
+				
 							<div class="row js_list_article">
 								{% if articles %}
 									{% include "boutique/dependancies/_list.html.twig" with {'articles': articles} only %}
@@ -75,19 +79,21 @@
 					</div>
 
 					{#<div class="col-md-2 col-sm-12 col-xs-12 col-lg-2">
-
-						<h3 class="title_C" style="display:table-cell">Video</h3>
-						<div class="pub_video_pub">
-							<iframe width="100%" height="333px" src="https://www.youtube.com/embed/-YN612DOzno" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-						</div>
-
-					</div>#}
+					
+											<h3 class="title_C" style="display:table-cell">Video</h3>
+											<div class="pub_video_pub">
+												<iframe width="100%" height="333px" src="https://www.youtube.com/embed/-YN612DOzno" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+											</div>
+					
+										</div>#}
 				</div>
-			{# 	<h3 class="title_C" style="display:table-cell">Nouveauté
-				</h3>
-				{% include "boutique/dependancies/section.html.twig" with {'articles' : newArticles} %}
-
-			#}
+				{# 
+				
+							#}
+				<div id="container_social_network">
+					<h3 class="title_C" style="display:table-cell" text-align="center">Nos séléctions</h3>
+				</div>
+					{% include "boutique/dependancies/slide_shop.html.twig" with {'articles' : newArticles} %}	
 			</div>
 
 			<div id="container_social_network">
