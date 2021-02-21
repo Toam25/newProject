@@ -136,7 +136,7 @@ class APIController extends AbstractController
         }
     }
     /**
-     * @Route("/delete/boutique/{id}", name="deleteboutique")
+     * @Route("/delete/boutique/{id}", name="deleteboutique", methods="DELETE")
      */
     public function deteteBoutique(Boutique $boutique, BoutiqueRepository $boutiqueRepository, ImagesRepository $imagesRepository, ArticleRepository $articleRepository)
     {
