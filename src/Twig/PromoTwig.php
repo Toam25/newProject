@@ -22,7 +22,7 @@ class PromoTwig extends AbstractExtension{
         ];
     }
 
-    public function getPromo(string $promo,$price,$price_promo){
+    public function getPromo(string $promo,$price,$price_promo, $detail=null){
          
         $ispromo="";
         $old_price = $price ;
@@ -37,8 +37,11 @@ class PromoTwig extends AbstractExtension{
             $remise = ( $price_promo - $price)/$price * 100 ;
             $ispromo= $promo." ".round($remise,2).' %';
         }
-        
-        $promo = ($promo !='Normal' and  intval($old_price) !==0 ) ? "<div class='ribbon ribbon-top-right  ".$promo."' ><span>".$ispromo."</span></div>" : '' ;
+        if($detail!= null){
+            $promo = ($promo !='Normal' and  intval($old_price) !==0 ) ? "<span class='promotion ".$promo."'>".$ispromo."</span>" : '' ;
+        }else{
+             $promo = ($promo !='Normal' and  intval($old_price) !==0 ) ? "<div class='ribbon ribbon-top-right  ".$promo."' ><span>".$ispromo."</span></div>" : '' ;
+        }
         return $this->twig->render('partials/promo.html.twig',[
             'promo'=> $promo
         ]);

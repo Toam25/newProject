@@ -30,6 +30,18 @@ class VoteRepository extends ServiceEntityRepository
                     ->getResult()
                     ;
     }
+    
+    public function findAllWithUserVote()
+    {
+        return $this->createQueryBuilder('v')
+                    ->select('v','u')
+                    ->leftJoin('v.userVotes','u')
+                    ->orderBy('v.placement',"DESC")
+                    ->getQuery()
+                    ->getResult()
+                    ;
+        
+    }
     // /**
     //  * @return Vote[] Returns an array of Vote objects
     //  */

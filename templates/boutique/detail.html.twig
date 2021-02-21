@@ -27,13 +27,14 @@
 	<link type="text/css" rel="stylesheet" href="{{ asset('css/style.css') }}"/>
 	<link
 	type="text/css" rel="stylesheet" href="{{ asset('css/cart.css') }}"/>
-<!--link type="text/css" rel="stylesheet" href="{{ asset('css/index.css') }}"/-->
+	<link type="text/css" rel="stylesheet" href="{{ asset('css/detail.css') }}"/>
+    {# <link type="text/css" rel="stylesheet" href="{{ asset('css/index.css') }}"/> #}
 
 {% endblock %}
 {% block body %}
 	{% include "boutique/dependancies/header.html.twig" %}
 	<!-- SECTION -->
-	
+
 
 	<div
 		class="section">
@@ -44,11 +45,13 @@
 			<div
 				class="row">
 				<!-- Product main img -->
-				<div class="col-md-5 col-md-push-2">
+				{# remove col-md-push-2 #}
+				<div class="col-md-7 ">
 					<div id="product-main-img">
 						{% for image in article.images%}
 							<div class="product-previe">
-								<img src="{{asset('images/'~image.name)}}" alt="">
+
+								<img src="{{asset('images/'~image.name)}}" alt="{{ article.name }}" style="max-width: 100%;max-height: 100%;">
 							</div>
 						{% endfor %}
 
@@ -58,24 +61,27 @@
 				<!-- /Product main img -->
 
 				<!-- Product thumb imgs -->
-				<div class="col-md-2  col-md-pull-5">
+				{#<div class="col-md-2  col-md-pull-5">
 					<div
-						id="product-imgs">{#
-													{% for image in article.images%}
-							
-														<div class="product-preview">
-															<img src="{{asset('images/'~image.name)}}" alt="">
-														</div>
-													{% endfor %}
-												#}
+						id="product-imgs">
+																				{% for image in article.images%}
+														
+																					<div class="product-preview">
+																						<img src="{{asset('images/'~image.name)}}" alt="">
+																					</div>
+																				{% endfor %}
+																			
 					</div>
-				</div>
+				</div>#}
 				<!-- /Product thumb imgs -->
 
 				<!-- Product details -->
 				<div class="col-md-5">
 					<div class="product-details">
-						<h2 class="product-name">{{ article.name}}</h2>
+						<h2 class="product-name">
+							{{ article.name}}
+							 {{ promo(article.promo,article.price, article.pricePromo, "detail") }}
+						</h2>
 						<div>
 							<div class="product-rating">
 								{{my_vote_twig(votes)}}
@@ -84,26 +90,35 @@
 								évaluation(s) | donner votre avis</a>
 						</div>
 						<div>
-							<h3 class="product-price">{{ article.price }}
-								Ar
+							<h3 class="product-price">
+									{% if article.price is same as(0)  %}
+										Prix : A la demande 
+									{% else %}
+										{% if article.promo is same as('Promo')%}
+											{{article.pricePromo| number_format(0,',',' ') }}&nbspAr
+											<span class='old-prix'>{{article.price| number_format(0,',',' ') }}&nbspAr</span>
+										{% else %}
+											{{article.price| number_format(0,',',' ') }}&nbspAr
+										{% endif %}
+									{% endif %}
 							</h3>
 						</div>
 						<p>{{ article.description}}</p>
 						{#
-												<div class="add-to-cart">
-													<div class="qty-label">
-														<div class="input-number">
-															<input type="number" min="1" value="1">
-															<span class="qty-up">+</span>
-															<span class="qty-down">-</span>
-														</div>
-													</div>
-						
-													<button class="add-to-cart-btn">
-														<i class="fa fa-shopping-cart"></i>
-														add to cart</button>
-												</div>
-											#}
+																		<div class="add-to-cart">
+																			<div class="qty-label">
+																				<div class="input-number">
+																					<input type="number" min="1" value="1">
+																					<span class="qty-up">+</span>
+																					<span class="qty-down">-</span>
+																				</div>
+																			</div>
+												
+																			<button class="add-to-cart-btn">
+																				<i class="fa fa-shopping-cart"></i>
+																				add to cart</button>
+																		</div>
+																	#}
 						--(ttr
 
 					</div>
@@ -214,47 +229,47 @@
 												{% endfor %}
 											</ul>
 											{#
-																						<ul class="reviews-pagination">
-																							<li class="active">1</li>
-																							<li>
-																								<a href="#">2</a>
-																							</li>
-																							<li>
-																								<a href="#">3</a>
-																							</li>
-																							<li>
-																								<a href="#">4</a>
-																							</li>
-																							<li>
-																								<a href="#">
-																									<i class="fa fa-angle-right"></i>
-																								</a>
-																							</li>
-																						</ul>
-																					#}
+																																	<ul class="reviews-pagination">
+																																		<li class="active">1</li>
+																																		<li>
+																																			<a href="#">2</a>
+																																		</li>
+																																		<li>
+																																			<a href="#">3</a>
+																																		</li>
+																																		<li>
+																																			<a href="#">4</a>
+																																		</li>
+																																		<li>
+																																			<a href="#">
+																																				<i class="fa fa-angle-right"></i>
+																																			</a>
+																																		</li>
+																																	</ul>
+																																#}
 										</div>
 									</div>
 									<!-- /Reviews -->
 
 									<!-- Review Form -->
 									{% if users['isComment'] %}
-									<div id="avis" class="col-md-3">
-										<div id="review-form">
-											<form id="{{ article.id }}" class="review-form">
-												<div class="input-rating">
-													<span>Votre satisfaction :
-													</span>
-													<br>
-													<div class="myvoting">
-														{{my_vote_twig(users['value'])}}
+										<div id="avis" class="col-md-3">
+											<div id="review-form">
+												<form id="{{ article.id }}" class="review-form">
+													<div class="input-rating">
+														<span>Votre satisfaction :
+														</span>
+														<br>
+														<div class="myvoting">
+															{{my_vote_twig(users['value'])}}
+														</div>
+														<p>
+															{{ users['comment'] }}
+														</p>
 													</div>
-													<p>
-														{{ users['comment'] }}
-													</p>
-												</div>
-											</form>
+												</form>
+											</div>
 										</div>
-									</div>
 									{% elseif app.user %}
 										<div id="avis" class="col-md-3">
 											<div id="review-form">
@@ -270,9 +285,7 @@
 															<input id="star2" name="rating" value="2" type="radio"><label for="star2"></label>
 															<input id="star1" name="rating" value="1" type="radio"><label for="star1"></label>
 														</div>
-														<textarea class="input comment" placeholder="Commentaire">
-															
-														</textarea>
+														<textarea class="input comment" placeholder="Commentaire"></textarea>
 													</div>
 													<button class="primary-btn">Enregistrer</button>
 												</form>

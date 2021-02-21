@@ -683,8 +683,24 @@ textarea.input {
     display: inline-block;
 
   }
+
+  .close_menu{
+    display: inline-block !important;
+  }
+  .boutique_container {
+    grid-template-columns: 1fr !important;
+}
   .menu_v {
-    display: none;
+    
+      width: 200px;
+      position: absolute;
+      background: white;
+      z-index: 10;
+      box-shadow: 0 0 5px;
+      left: 0;
+      transform: translateX(-250px);
+      transition: 400ms;
+  
   }
   #responsive-nav {
     position: fixed;

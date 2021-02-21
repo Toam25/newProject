@@ -8,12 +8,15 @@ use App\Entity\Header;
 use App\Entity\Images;
 use App\Entity\Menu;
 use App\Entity\User;
+use App\Entity\UserVote;
 use App\Repository\ArticleRepository;
 use App\Repository\BoutiqueRepository;
 use App\Repository\EsArticleRepository;
 use App\Repository\HeaderRepository;
 use App\Repository\ImagesRepository;
 use App\Repository\MenuRepository;
+use App\Repository\UserVoteRepository;
+use App\Repository\VoteRepository;
 use App\Service\ArticlePerShopService;
 use App\Service\CategoryOptionService;
 use App\Service\InsertFileServices;
@@ -43,6 +46,43 @@ class APIController extends AbstractController
             $data[$key]['image'] = $value->getImage();
         }
         return new Response(json_encode($data));
+    }
+
+    /**
+     * @Route("/set/numberVoteIndex/{status}-{id_vote}", name="set_number_vote_index", methods={"POST"})
+     */
+    public function setNumberVoteIndex($status,$id_vote, VoteRepository $voteRepository, UserVoteRepository $userVoteRepository)
+    {   
+        $vote= $voteRepository->findOneBy(['id'=>$id_vote]);
+        $userVote= $userVoteRepository->findOneBy(['vote'=>$vote,'user'=>$this->getUser()]);
+        
+        if($this->getUser() and $vote and $userVote==null){
+            
+            $userVote= new UserVote();
+            if($status=="haut"){
+
+                $vote->setNbrVote($vote->getNbrVote()+1);
+                $vote->setPlacement($vote->getPlacement()+1);
+              
+                    
+            }
+            else{
+                if($status=="bas"){
+                    if($vote->getNbrVote()!=0){
+                       $vote->setNbrVote($vote->getNbrVote()-1);
+                    }
+               }
+            }
+            $userVote->setVote($vote);
+            $userVote->setUser($this->getUser());
+
+            $em=$this->getDoctrine()->getManager();
+            $em->persist($userVote);
+            $em->flush();
+            return new JsonResponse(['status'=>"success",'nbr_vote'=>$vote->getNbrVote()],Response::HTTP_OK);
+        }
+        
+        return new JsonResponse(['status'=>"error"],Response::HTTP_UNAUTHORIZED);
     }
 
      /**
