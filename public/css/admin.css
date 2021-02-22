@@ -1,4 +1,15 @@
-
+.shop_edit{
+    background: white;
+padding: 14px;
+border-radius: 3px;
+margin-bottom: 26px;
+}
+.container_btn_shop_edit{
+    display: flex;
+justify-content: end;
+align-items: center;
+margin-top: 8px;
+}
 .container_image_article_ {
     display: flex;
     flex-wrap: wrap;
