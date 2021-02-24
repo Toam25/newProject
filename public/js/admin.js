@@ -94,8 +94,10 @@ $(function () {
          $('.loader_ajax_').css('transform','scale(1)');
        },
        success : function(data){
-        toastr.success('Enregistrer avec success');
+        toastr.success('Enregistrer avecd success');
         $('.loader_ajax_').css('transform','scale(0)');
+        $('input[value="'+data.id+'"]').parent('.list_produit').children('p').text(tronquer($('#view_name').val(),11,false));
+        $('#view_article').modal('hide');
         
        },
        error : function(){
@@ -133,8 +135,10 @@ $(function () {
           $('#view_prix_g').val(data.global_price);
           $('#view_stock').val(data.quantity);
           $('#slide'+data.slider).prop('checked', true);
+          $('._view_simple_article_sous_category').val(data.sous_category)
           $('#view_sous_category').html(list_option(data.list_menu,data.sous_category));
           $('#view_type').html(list_type(data.list_menu,data.sous_category,data.type));
+          $('#view_simple_article_type').html(typeArticle(data.sous_category,data.type))
           $('#view_referency').val(data.referency)
           $('#view_promo').children('option[value="'+data.promo+'"]').prop('selected',true);
           $('#view_promo_price').val(data.promo_price);
@@ -428,16 +432,16 @@ $(function () {
         $('.btn-submit').prop('disabled', true)
       },
       success: (data) => {
-        toastr.success('Supprimer avec avec success');
+        toastr.success('Ajouter avec success');
         $('#ajout_article').modal('hide');
         $('.all_article').append(`
               <div class="container_article col-xs-6 col-sm-3 col-md-2 col-lg-2">
                       <div class="list_produit">
                           <input type="hidden" name="table" value="article_in">
-                          <input type="hidden" name="id_image" value="{{article.id}}">
+                          <input type="hidden" name="id_image" value="`+ data.id + `">
                   
                             <img class="image_produit" src="/images/`+ data.images[0] + `" alt="` + data.name + `">
-                          <p class="name_article">`+ data.name + `</p>
+                          <p class="name_article">`+ tronquer(data.name,11,false) + `</p>
                             <span class="remove_article glyphicon glyphicon-remove"></span> 
                             <div>
                          <button class="btn btn-warning article_edit" data-id="`+ data.id + `">Détail</button>
@@ -469,8 +473,10 @@ $(function () {
     $('.radio1').children('label').removeClass('promotion_selected');
     $('input[value="Normale"]').parents('label').addClass('promotion_selected');
 
-    let category = $(this).text();
+    let category = $(this).attr('id');
+
     $('._category').val(category);
+    $('._sous_category').val(category);
     $('#div-inother').hide()
     $('#article_sous_category').attr('value', $(this).attr('id'));
     $('#article_type').html(typeArticle($(this).attr('id')));
@@ -489,6 +495,9 @@ $(function () {
           let sous_category ="";
           let type ="";
           let selected = "";
+
+         
+          if(results.length!=0){
           for (let index = 0; index < results.length; index++) {
             selected=(index==0) ? "selected" : "";
            sous_category+=
@@ -496,13 +505,16 @@ $(function () {
             `+results[index].type+`
             </option>`;
           }
-          for (let indexo= 0; indexo < results[0].option.length; indexo++) {
-            selected=(indexo==0) ? "selected" : "";
-            type+=
-             `<option class="sous_categorie_menu_on_type" data-name="`+results[0].option[indexo]+`" value="`+results[0].option[indexo]+`" `+selected+`>
-             `+results[0].option[indexo]+`
-             </option>`
-           }
+         
+            for (let indexo= 0; indexo < results[0].option.length; indexo++) {
+              selected=(indexo==0) ? "selected" : "";
+              type+=
+               `<option class="sous_categorie_menu_on_type" data-name="`+results[0].option[indexo]+`" value="`+results[0].option[indexo]+`" `+selected+`>
+               `+results[0].option[indexo]+`
+               </option>`
+           
+          }
+        }
           $('#sous_category').html(sous_category);
           $('.type').html(type);
       },
@@ -936,43 +948,7 @@ $(function () {
       }
     });
   });
-  //add user admin
-  $('#add_user_admin').on('submit', function (e) {
-    e.preventDefault();
-    var url = $('this').attr('action');
-  
-    $.ajax({
-      url: url,
-      type: 'POST',
-      data: new FormData(this),
-      contentType: false,
-      processData: false,
-      cache: false,
-      dataType: 'json',
-      beforeSend: () => {
-        $('.logo').css('display', 'inline-block');
 
-      },
-      error: () => {
-        toastr.error('Erreur inconue');
-        $("form[name='user']")[0].reset()
-      },
-      success: (data) => {
-        if (data.status == 'ok') {
-          toastr.success(data.msg);
-          $("form[name='user']")[0].reset()
-        }
-        if (data.status == 'ko') {
-          toastr.error(data.msg);
-          $("form[name='user']")[0].reset()
-        }
-
-      },
-      complete: () => {
-        $('.logo').css('display', 'none');
-      }
-    });
-  });
   // preview image  
   //preview image
   $('body').on('change', '.file', function (event) {
@@ -1038,12 +1014,14 @@ $(function () {
       cache: false,
       dataType: 'json',
       beforeSend: () => {
-        $('.logo').css('display', 'inline-block');
+        $('.btn-submit').append('<span class="loader_ajax" style="height: 20px;width: 20px;display: inline-block;"><img src="/images/images_default/ajax-loader.gif" style="height: 100%;width: 100%;"></span>')
+        $('.btn-submit').prop('disabled', true);
 
       },
       error: () => {
         toastr.error('Erreur inconue');
-        $("form[name='user']")[0].reset()
+        $('.btn-submit').children('.loader_ajax').remove();
+        $('.btn-submit').prop('disabled', false)
       },
       success: (data) => {
         if (data.status == 'ok') {
@@ -1053,6 +1031,8 @@ $(function () {
         if (data.status == 'ko') {
           toastr.error(data.msg);
           $("form[name='user']")[0].reset()
+          $('.btn-submit').children('.loader_ajax').remove();
+        $('.btn-submit').prop('disabled', false)
         }
 
       },
@@ -1062,6 +1042,7 @@ $(function () {
     });
 
   });
+  
   // add nnew ess article
   $('.ajout_ess_article_ev').on('click', function () {
     activeAddArticle();
@@ -1328,19 +1309,23 @@ $(function () {
         value: ['Outils de jardin']
       }
     ];
-
-    var type = types.find((items) => (items.name === name)).value;
+    if(types.find((items) => (items.name === name))!= undefined){
+       var type = types.find((items) => (items.name === name)).value;
 
 
     for (var i = 0; i < type.length; i++) {
       if (item != null) {
-        if (item == type[i]) {
-          classe = "class='default' selected";
+        if ( type[i]===item) {
+          classe = "class=' selected_option' selected";
+        }
+        else{
+          classe ="";
         }
       }
       options = '<option value="' + type[i] + '" ' + classe + '>' + type[i] + '</option>' + options;
 
     }
+  }
 
     return options;
   }

@@ -104,8 +104,11 @@ border-radius: 50%;
 }
 .image_produit {
     width: 100%;
-    height: 100%;
+    height: 77%;
     object-fit: cover;
+}
+.name_article {
+    text-align: center;
 }
 #preview_image {
     height: 100%;
