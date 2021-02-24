@@ -14,26 +14,24 @@
     <!-- MAIN HEADER -->
      <div id='list_shop'>
      </div>
-    <div id="header">
+    <div id="header" style="display: flex;justify-content: space-between;">
         <!-- container -->
-        <div class="container-fluid">
+        
             <!-- row -->
-            <div class="row">
+            
                 <!-- LOGO -->
-                <div class="col-md-3 col-sm-3 col-xs-12">
+                <div class="">
                     <div class="header-logo">
                         <a href="{{ path('shop',{ 'type':boutique.type, 'id': boutique.id })}}" class="logo">
                             <img  src="{{asset('images/'~boutique.logo)}}" alt="">
                         </a>
                       <span class="shop_name" style="color:white !important"> {{boutique.name}} <br> 
-                        <i class="fa fa-phone" style="color:#df2121"></i> 
-                        <span class="contact_shop">{{boutique.contact}}</span></span>
                     </div>
                 </div>
                 <!-- /LOGO -->
 
                 <!-- SEARCH BAR -->
-                <div class="col-md-5 col-sm-5 col-xs-12">
+               
                     {#
                     <div class="header-search">
                         <form method="Get" action="{{path('list_product')}}">
@@ -42,15 +40,15 @@
                         </form>
                     </div>
                     #}
-                </div>
+               
                 <!-- /SEARCH BAR -->
 
                 <!-- ACCOUNT -->
                  {% include "boutique/dependancies/_actionUser.html.twig"%}
                 <!-- /ACCOUNT -->
-            </div>
+           
             <!-- row -->
-        </div>
+        
         <!-- container -->
     </div>
     <div class="inother-ajax">
