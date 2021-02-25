@@ -86,8 +86,9 @@
 							<div class="product-rating">
 								{{my_vote_twig(votes)}}
 							</div>
-							<a class="review-link" href="#avis">{{votes|length }}
+							<a class="review-link {% if not app.user %} _connexion {% endif %}" href="#avis">{{votes|length }}
 								évaluation(s) | donner votre avis</a>
+							
 						</div>
 						<div>
 							<h3 class="product-price">
@@ -104,6 +105,9 @@
 							</h3>
 						</div>
 						<p>{{ article.description}}</p>
+						<div class="contain_share">
+							<button class="share">Partagé</button>
+						</div>
 						{#
 																		<div class="add-to-cart">
 																			<div class="qty-label">
@@ -305,15 +309,19 @@
 		<!-- /container -->
 	</div>
 	<!-- /SECTION -->
+	{% if not app.user%}
+		{% include 'boutique/dependancies/connexion.html.twig'%}
+	{% endif %}
 	{% include "boutique/dependancies/footer.html.twig" %}
 {% endblock %}
 
 {% block javascripts %}
 	<script src="{{ asset('js/slick.min.js') }}"></script>
+	<script src="{{ asset('js/connexion.js') }}"> </script>
 	<script src=" {{ asset('js/nouislider.min.js') }}"></script>
 	<script src="{{ asset('js/jquery.zoom.min.js') }}"></script>
 	<script src="{{ asset('js/index.js') }}"></script>
-	<script src="{{ asset('js/main.js') }}"></script>
 	<script src="{{ asset('js/vote.js') }}"></script>
+
 
 {% endblock %}
