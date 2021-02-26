@@ -34,11 +34,11 @@ use Symfony\Component\Routing\Annotation\Route;
 class APIController extends AbstractController
 {
     /**
-     * @Route("/es_article/get/{category}", name="get_es_article")
+     * @Route("/es_article/get/{sous_category}", name="get_es_article")
      */
-    public function getEsArticle(string $category, EsArticleRepository $esArticleRepository)
+    public function getEsArticle(string $sous_category, EsArticleRepository $esArticleRepository)
     {
-        $es_article = $esArticleRepository->findBy(['category' => $category]);
+        $es_article = $esArticleRepository->findBy(['sous_category' => $sous_category]);
         $data = [];
         foreach ($es_article as $key => $value) {
             $data[$key]['type'] = $value->getType();

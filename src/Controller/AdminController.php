@@ -251,6 +251,8 @@ class AdminController extends AbstractController
             $em = $this->getDoctrine()->getManager();
             $em->persist($boutique);
             $em->flush();
+
+            return new JsonResponse(['status=>success']);
         }
 
         return $this->render('admin/index.html.twig', [

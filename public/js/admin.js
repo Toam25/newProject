@@ -2,6 +2,39 @@ $(function () {
   var $category;
 
 
+  //edition shop
+
+
+  $('.shop_edit').on('submit',function(e){
+    e.preventDefault();
+    url = "/admin/boutique";
+    $.ajax({
+      url,
+      type: 'POST',
+      data: new FormData(this),
+      contentType: false,
+      processData: false,
+      cache: false,
+      dataType: 'json',
+      beforeSend: () => {
+        $('.btn-submit').append('<span class="loader_ajax" style="height: 20px;width: 20px;display: inline-block;"><img src="/images/images_default/ajax-loader.gif" style="height: 100%;width: 100%;"></span>');
+        $('.btn-submit').prop('disabled', true)
+      },
+      success: () => {
+        toastr.success('Enregistrer avec success');
+        $('.btn-submit').children('.loader_ajax').remove();
+        $('.btn-submit').prop('disabled', false)
+      },
+      error: () => {
+        toastr.error('Une error à été survenue');
+        $('.btn-submit').children('.loader_ajax').remove();
+        $('.btn-submit').prop('disabled', false)
+      },
+      complete: function () {
+
+      }
+    });
+  })
   // delete shop
   $('body').on('click','.js-delate-shop',function(e){
     e.preventDefault();
@@ -1026,13 +1059,14 @@ $(function () {
       success: (data) => {
         if (data.status == 'ok') {
           toastr.success(data.msg);
-          $("form[name='user']")[0].reset()
+          $("form[name='user']")[0].reset();
+          $('.btn-submit').prop('disabled', false);
         }
         if (data.status == 'ko') {
-          toastr.error(data.msg);
-          $("form[name='user']")[0].reset()
-          $('.btn-submit').children('.loader_ajax').remove();
-        $('.btn-submit').prop('disabled', false)
+           toastr.error(data.msg);
+        
+           $('.btn-submit').children('.loader_ajax').remove();
+           $('.btn-submit').prop('disabled', false)
         }
 
       },

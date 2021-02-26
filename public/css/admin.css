@@ -9,6 +9,28 @@ margin-bottom: 26px;
 justify-content: end;
 align-items: center;
 margin-top: 8px;
+width: 100%;
+}
+.photo_edit_boutique {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #8080800d;
+    height: 488px;
+    margin: 17px;
+}
+.preview_image img {
+        max-height: 100%;
+        max-width: 100%;
+}
+.photo_edit_boutique img {
+    max-width: 100%;
+    max-height: 100%;
+}
+#container_class {
+    background: white;
+    display: grid;
+    grid-template-columns: 3fr 2fr;
 }
 .container_image_article_ {
     display: flex;
@@ -110,12 +132,12 @@ border-radius: 50%;
 .name_article {
     text-align: center;
 }
-#preview_image {
+/*#preview_image {
     height: 100%;
     width: 100%;
     object-fit: cover;
     object-position: center;
-}
+}*/
 .preview_image{
     height: 238px;
     border: 1px solid beige;
