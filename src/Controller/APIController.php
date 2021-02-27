@@ -4,10 +4,12 @@ namespace App\Controller;
 
 use App\Entity\Article;
 use App\Entity\Boutique;
+use App\Entity\EsArticle;
 use App\Entity\Header;
 use App\Entity\Images;
 use App\Entity\Menu;
 use App\Entity\User;
+use App\Entity\UserCondition;
 use App\Entity\UserVote;
 use App\Repository\ArticleRepository;
 use App\Repository\BoutiqueRepository;
@@ -15,6 +17,10 @@ use App\Repository\EsArticleRepository;
 use App\Repository\HeaderRepository;
 use App\Repository\ImagesRepository;
 use App\Repository\MenuRepository;
+use App\Repository\ReferenceRepository;
+use App\Repository\SliderRepository;
+use App\Repository\SocialNetworkRepository;
+use App\Repository\UserConditionRepository;
 use App\Repository\UserVoteRepository;
 use App\Repository\VoteRepository;
 use App\Service\ArticlePerShopService;
@@ -136,14 +142,14 @@ class APIController extends AbstractController
         }
     }
     /**
-     * @Route("/delete/boutique/{id}", name="deleteboutique", methods="DELETE")
+     * @Route("/delete/boutique/{id}", name="deleteboutique")
      */
-    public function deteteBoutique(Boutique $boutique, BoutiqueRepository $boutiqueRepository, ImagesRepository $imagesRepository, ArticleRepository $articleRepository)
+    public function deteteBoutique(Boutique $boutique, BoutiqueRepository $boutiqueRepository,ArticleRepository $articleRepository)
     {
 
-        /**Mbola tsy afaka supprimena ilay boutique fa misy lié amin'ny entite maromaro */
+    
         if ($boutiqueRepository->findOneBoutiqueByUserPerRole('ROLE_SUPER_ADMIN')) {
-           /* $articles = $articleRepository->findOneArticleByBoutiqueWithImage($boutique->getId());
+            $articles = $articleRepository->findOneArticleByBoutiqueWithImage($boutique->getId());
             if ($articles) {
                 foreach ($articles as $article) {
                     foreach ($article->getImages() as $image) {
@@ -151,10 +157,10 @@ class APIController extends AbstractController
                     }
                 }
             }
-            if($boutique->getLogo()!=="images_default/default_image.jpg"){
+           if($boutique->getLogo()!=="images_default/default_image.jpg"){
               unlink('images/'.$boutique->getLogo());
             }
-            */
+            
             $em = $this->getDoctrine()->getManager();
             $em->remove($boutique);
             $em->flush();

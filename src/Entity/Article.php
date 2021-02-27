@@ -39,7 +39,7 @@ class Article
     private $createdAt;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Images", mappedBy="article", cascade={"persist"})
+     * @ORM\OneToMany(targetEntity="App\Entity\Images", mappedBy="article", cascade={"persist"}, orphanRemoval=true)
      */
     private $images;
 
@@ -84,17 +84,17 @@ class Article
     private $boutique;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Votes", mappedBy="article")
+     * @ORM\OneToMany(targetEntity="App\Entity\Votes", mappedBy="article", orphanRemoval=true)
      */
     private $votes;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Votes", mappedBy="votearticle")
+     * @ORM\OneToMany(targetEntity="App\Entity\Votes", mappedBy="votearticle", orphanRemoval=true)
      */
     private $votesarticle;
 
     /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\Cart", mappedBy="articles")
+     * @ORM\ManyToMany(targetEntity="App\Entity\Cart", mappedBy="articles", orphanRemoval=true)
      */
     private $carts;
 

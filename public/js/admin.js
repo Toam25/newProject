@@ -906,7 +906,7 @@ $(function () {
       },
       error: () => {
         toastr.error('Une error à été survenue');
-        $(this).prop('disabled', true)
+        $(this).prop('disabled', false)
       },
       complete: function () {
 
