@@ -11,6 +11,19 @@ align-items: center;
 margin-top: 8px;
 width: 100%;
 }
+.loader_ajax{
+    margin-left: 10px;
+}
+#container_social_network {
+    background-color: white;
+    padding: 5px;
+    border-radius: 10px;
+}
+.container_btn_add_social{
+    display : flex;
+    justify-content: end;
+    margin-top : 5px;
+}
 .photo_edit_boutique {
     display: flex;
     justify-content: center;

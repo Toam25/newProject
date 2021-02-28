@@ -778,15 +778,17 @@ $(function () {
   // add social network
   $('.namelink').on('keyup', function (e) {
     let description = $('.description').val();
-    let namelink = $('.namelink').val();
-    $('.p_social_description').html(description + " " + namelink);
+    $('.a_link_social_network').html($('.namelink').val());
   })
   $('.description').on('keyup', function (e) {
     let description = $('.description').val();
-    let namelink = $('.namelink').val();
-    $('.p_social_description').html(description + " " + namelink);
+   // let namelink = $('.a_link_social_network').html($('.namelink').val());
+    $('.des').html(description);
   })
-
+  $('.link').on('keyup', function (e) {
+     let link = $('.link').val();
+     $('.a_link_social_network').prop('href',link);
+  })
   $('.social_network').on('submit', function (e) {
     e.preventDefault(e);
 
