@@ -3,8 +3,21 @@
     margin: 0;
     padding: 0 !important;
 }
-
-
+.shop_menu {
+    border: none;
+    padding: 5px;
+    border-radius: 6px;
+    position: absolute;
+    color: white;
+    font-weight: bold;
+    background: rgba(0,0,0,0.8);
+    display: none;
+    left: 16px;
+    margin: 2px;
+}
+.icon-bar{
+    background-color: white !important;
+}
 .header-logo .logo img {
     display: block;
 }
@@ -244,10 +257,11 @@ object-fit: cover;
 }
 .close_menu{
     margin-right: 9px;
-    border-radius: 50%;
+    border-radius: 10%;
     border: 1px solid;
     padding: 5px;
     display: none;
+    cursor: pointer;
 }
 
 .title_c_and_menu{
@@ -352,6 +366,14 @@ nav a{
 }
 nav li:hover .submenu{
 	display: inline-block;
+	position: absolute;
+	top: 100%;
+	left: 0px;
+	padding:0px;
+	z-index: 99;
+}
+.show_list_category_menu{
+    display: inline-block;
 	position: absolute;
 	top: 100%;
 	left: 0px;

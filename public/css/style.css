@@ -683,7 +683,9 @@ textarea.input {
     display: inline-block;
 
   }
-
+  .shop_menu {
+    display: block !important;
+  }
   .close_menu{
     display: inline-block !important;
   }

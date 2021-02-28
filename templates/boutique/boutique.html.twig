@@ -52,7 +52,7 @@
 					    <div class="title_c_and_menu">
 						<h3 class="title_C" style="display:table-cell">Filtres
 						</h3>
-						 <span class="close_menu js-toggle-menu">Menu</span>
+						 <span class="close_menu js-hide-menu">Fermer</span>
 						</div>
 						<input class="shop_type" type="hidden" name="shop_type" value="{{ type }}">
 						{% if boutique %}
@@ -66,8 +66,10 @@
 					</div>
 					<div class="article_boutique">
 						<div class="">
+						    <div  style="display: flex;justify-content: center;">
+							 <button class="shop_menu js-show-menu">Menu</button>
 							<h3 class="title_C" style="display:table-cell">Nos produits</h3>
-				
+							</div>
 							<div class="row js_list_article">
 								{% if articles %}
 									{% include "boutique/dependancies/_list.html.twig" with {'articles': articles} only %}
