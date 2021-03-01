@@ -29,9 +29,16 @@
 			arrows: true,
 			appendArrows: $nav ? $nav : false,
 			responsive: [{
-	        breakpoint: 991,
+	        breakpoint: 1200,
 	        settings: {
 	          slidesToShow: 3,
+	          slidesToScroll: 1,
+	        }
+		  },
+		  {
+	        breakpoint: 767,
+	        settings: {
+	          slidesToShow: 2,
 	          slidesToScroll: 1,
 	        }
 	      },

@@ -20,8 +20,10 @@
       <div class="image_profil">
          <img src="{{ asset('images/'~ user.avatar) }}" id="profil_preview_image"class="preview_image" alt="{{user.name }}">
       </div>
-      {% if user.id is  same as(app.user.id) %}
-         {# <label>Information Général</label>#}
+      {% if app.user.id is defined and user.id is  same as(app.user.id) %}
+       <div class="info-user">
+       
+         <h4>Information Général</h4>
           <form class="profil_user_name" action="{{ path('apiprofil_update_user',{'id' : app.user.id})  }}">
             <label> Nom : </label>
             <input name="name" value="{{ user.name }}" class="form-control" required>
@@ -31,16 +33,22 @@
             <input name="images" type = "file" class="form-control file">
             <button  type="submit" class="btn btn-success btn-submit">Enregistrer</button>
         </form>
-        {#
-        <label>Changer votre mot de passe ?</label>
+        </div>
+        <div class="info-user">
+        
+        <h4>Option de connexion</h4>
         <form class="profil_password" action="{{ path('apiprofil_password',{'id' : app.user.id})  }}">
-            <label> Acien mots de passe : </label>
-            <input name="a_password" value="" class="form-control" required>
-            <label> Nouveaux mots de pass : </label>
-            <input name="new_password"  class="form-control" required>
-            <button  type="submit" class="btn btn-success btn-submit">Enregistrer</button>
+            <label>Adresse mail</label>
+            <input name="mail" value="{{ user.email }}" class="form-control" type="email" required>
+            <label> Ancien mot de passe : </label>
+            <input name="a_password" value="" class="form-control" type="password" required>
+            <label> Nouveaux mot de passe : </label>
+            <input name="new_password"  class="form-control new_password" type="password">
+            <label>confirmé votre mot de passe : </label>
+            <input name="confirm_password"  class="form-control confirm_password" type="password">
+            <button  type="submit" class="btn btn-success btn-submit2">Enregistrer</button>
         </form>
-        #}
+         </div>
       {% else %} 
            <p>{{ user.firstname }} {{ user.name }}</p>
       {% endif %}
@@ -53,5 +61,6 @@
 {% endblock %}
 {% block javascripts %}
 	<script src="{{ asset('js/profil.js') }}"> </script>
+  <script src="{{ asset('js/connexion.js') }}"> </script>
 {% endblock %}
 

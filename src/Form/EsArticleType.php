@@ -24,7 +24,7 @@ class EsArticleType extends AbstractType
             ->add('type',ChoiceType::class,[
                 'choices'=>$this->categoryService->getTypeArticle()
             ])
-            ->add('category',HiddenType::class)
+            ->add('sous_category',HiddenType::class)
         ;
     }
 

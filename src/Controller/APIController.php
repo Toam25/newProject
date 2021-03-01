@@ -4,10 +4,12 @@ namespace App\Controller;
 
 use App\Entity\Article;
 use App\Entity\Boutique;
+use App\Entity\EsArticle;
 use App\Entity\Header;
 use App\Entity\Images;
 use App\Entity\Menu;
 use App\Entity\User;
+use App\Entity\UserCondition;
 use App\Entity\UserVote;
 use App\Repository\ArticleRepository;
 use App\Repository\BoutiqueRepository;
@@ -15,6 +17,10 @@ use App\Repository\EsArticleRepository;
 use App\Repository\HeaderRepository;
 use App\Repository\ImagesRepository;
 use App\Repository\MenuRepository;
+use App\Repository\ReferenceRepository;
+use App\Repository\SliderRepository;
+use App\Repository\SocialNetworkRepository;
+use App\Repository\UserConditionRepository;
 use App\Repository\UserVoteRepository;
 use App\Repository\VoteRepository;
 use App\Service\ArticlePerShopService;
@@ -27,6 +33,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Event\ResponseEvent;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 /**
  * @Route("/api", name="api")
@@ -34,11 +41,11 @@ use Symfony\Component\Routing\Annotation\Route;
 class APIController extends AbstractController
 {
     /**
-     * @Route("/es_article/get/{category}", name="get_es_article")
+     * @Route("/es_article/get/{sous_category}", name="get_es_article")
      */
-    public function getEsArticle(string $category, EsArticleRepository $esArticleRepository)
+    public function getEsArticle(string $sous_category, EsArticleRepository $esArticleRepository)
     {
-        $es_article = $esArticleRepository->findBy(['category' => $category]);
+        $es_article = $esArticleRepository->findBy(['sous_category' => $sous_category]);
         $data = [];
         foreach ($es_article as $key => $value) {
             $data[$key]['type'] = $value->getType();
@@ -111,39 +118,37 @@ class APIController extends AbstractController
         }
     }
        /**
-     * @Route("/profil/update/password/{id}", name="profil_password")
+     * @Route("/api/login/update/user/{id}", name="profil_password", methods="POST")
      */
-    public function upPassWordUser(Request $request, User $user, $id, InsertFileServices $insertFileServices)
-    {
-        if($this->getUser()->getId()== intVal($id)){
-             $user->setName($request->request->get('name')??$user->getName());
-             $user->setFirstname($request->request->get('first_name')??$user->getFirstname());
+    public function upPassWordUser(Request $request, User $user, $id, InsertFileServices $insertFileServices, UserPasswordEncoderInterface $encoder)
+    {   
+        
+      
+        if($this->getUser()->getId()== intVal($id) &&   $encoder->isPasswordValid($user,$request->request->get('a_password'))){
+             
+             $user->setEmail($request->request->get('mail'));
+
+             if($request->request->get('new_password')!=""){
+                $user->setPassword($encoder->encodePassword($user, $request->request->get('new_password')));
+             }
             
-              if($request->files->get('images')){
-                   
-                   if(($user->getAvatar()!=="images_default/default_image.jpg")){
-                            unlink("/images/".$user->getAvatar());
-                   }
-                   $user->setAvatar($insertFileServices->insertFile($request->files->get('images')));
-               
-              }
               $em=$this->getDoctrine()->getManager();
               $em->flush();
               return new JsonResponse(["status"=>"sucess"], Response::HTTP_OK);
         }
         else {
-          return new JsonResponse(["status"=>"error"], Response::HTTP_UNAUTHORIZED);
+          return new JsonResponse(["status"=>"error",'message'=>"Mot de passe incorect"], Response::HTTP_UNAUTHORIZED);
         }
     }
     /**
-     * @Route("/delete/boutique/{id}", name="deleteboutique", methods="DELETE")
+     * @Route("/delete/boutique/{id}", name="deleteboutique")
      */
-    public function deteteBoutique(Boutique $boutique, BoutiqueRepository $boutiqueRepository, ImagesRepository $imagesRepository, ArticleRepository $articleRepository)
+    public function deteteBoutique(Boutique $boutique, BoutiqueRepository $boutiqueRepository,ArticleRepository $articleRepository)
     {
 
-        /**Mbola tsy afaka supprimena ilay boutique fa misy lié amin'ny entite maromaro */
+    
         if ($boutiqueRepository->findOneBoutiqueByUserPerRole('ROLE_SUPER_ADMIN')) {
-           /* $articles = $articleRepository->findOneArticleByBoutiqueWithImage($boutique->getId());
+            $articles = $articleRepository->findOneArticleByBoutiqueWithImage($boutique->getId());
             if ($articles) {
                 foreach ($articles as $article) {
                     foreach ($article->getImages() as $image) {
@@ -151,10 +156,10 @@ class APIController extends AbstractController
                     }
                 }
             }
-            if($boutique->getLogo()!=="images_default/default_image.jpg"){
+           if($boutique->getLogo()!=="images_default/default_image.jpg"){
               unlink('images/'.$boutique->getLogo());
             }
-            */
+            
             $em = $this->getDoctrine()->getManager();
             $em->remove($boutique);
             $em->flush();
@@ -234,7 +239,8 @@ class APIController extends AbstractController
             $article->setPriceGlobal($request->request->get('global_price'));
             $article->setPricePromo($request->request->get('price_promo'));
             $article->setPromo($request->request->get('promotion'));
-            $article->setType($request->request->get('type'));
+
+            $article->setType($request->request->get('type')??$request->request->get('sous_category'));
             $article->setQuantity($request->request->get('quantity'));
             $article->setMarque("");
             $article->setDescription($request->request->get('description'));
@@ -242,6 +248,7 @@ class APIController extends AbstractController
             $article->setSousCategory($request->request->get('sous_category'));
             $article->setSlide($request->request->get('slider'));
             $article->setBoutique($boutiqueRepository->findOneBy(['user' => $this->getUser()]));
+            $article->setSlide(0);
 
             $images = $request->files->get('images');
 

@@ -13,12 +13,28 @@
     padding: 5px;
     position: relative;
 }
-.profil_user_name{
+.navbar.navbar-default {
+    position: sticky !important;
+    top: 0;
+    z-index: 3;
+}
+.profil_user_name, .profil_password{
     display: flex;
     flex-direction: column;
     align-items: unset;
+    width: 100%;
 }
-.profil_user_name button {
+.info-user {
+    margin: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border: 1px solid rgba(0,0,0,0.2);
+    padding: 10px;
+    width: 50%;
+    min-width: 250px;
+}
+.profil_user_name button, .profil_password button {
     margin : 5px 0;
 }
 .image_profil img{

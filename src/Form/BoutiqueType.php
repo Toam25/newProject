@@ -57,7 +57,7 @@ class BoutiqueType extends AbstractType
                  'required'=>false,
                  'attr'=>[
                      'required'=>false,
-                     'class'=>'form-control'
+                     'class'=>'form-control file'
                  ]
             ])
             ->add('user_condition',TextareaType::class,[

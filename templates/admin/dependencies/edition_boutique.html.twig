@@ -1,5 +1,21 @@
-{{form_start(form)}}
-        {{form_widget(form)}}
-  <button class="btn btn-success" type="submit">Enregistrer</button>
-  <p></p>
-{{form_end(form)}}
+<div id="container_class">
+	<div class="form_edit_boutique">
+		{{form_start(form, {'attr' : {'class': 'row shop_edit'}})}}
+    
+    <div class="col-md-6">{{ form_row(form.name)}}</div>
+    <div class="col-md-6"> {{ form_row(form.address)}}</div>
+    <div class="col-md-6">{{ form_row(form.link)}}</div>
+    <div class="col-md-6">{{ form_row(form.mail)}}</div>
+    <div class="col-md-6">{{ form_row(form.contact)}}</div>
+    <div class="col-md-6">{{ form_row(form.image)}}</div>
+    <div class="col-md-12">{{ form_row(form.apropos)}}</div>
+    <div class="col-md-12"> {{ form_row(form.user_condition)}}</div>
+		<div class="container_btn_shop_edit">
+			<button class="btn btn-success btn-submit" type="submit" class="btn_shop_edit">Enregistresr</button>
+		</div>
+		{{form_end(form)}}
+	</div>
+	<div class="photo_edit_boutique">
+    <img id="preview_image" src="{{ asset("images/"~ boutique.logo) }}"/>
+  </div>
+</div>

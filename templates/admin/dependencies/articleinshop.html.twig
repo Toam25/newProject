@@ -7,7 +7,7 @@
                      <input type="hidden" name="id_image" value="{{article.id}}">
             
                       <img class="image_produit" src="{{asset('images/' ~ article.images[0].name)}}" alt="{{article.name}}">
-                      {#<p class="name_article">{{ article.name}}</p>#}
+                      <p class="name_article">{{ cutWorld(article.name,11,false) }}</p>
                       <span class="remove_article glyphicon glyphicon-remove"></span> 
                       <div>
                          <button class="btn btn-warning article_view article_edit" data-id="{{ article.id }}">Détail</button>

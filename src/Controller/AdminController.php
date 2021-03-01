@@ -100,7 +100,7 @@ class AdminController extends AbstractController
             'boutique' => $boutique,
             'add_button' => $this->button_add_boutique($category, 'btn btn-success ajout_article_ev'),
             'form' => $form->createView(),
-            'category' => $category
+            'category' =>$categoryService->getNameMenu($category)
         ]);
     }
     /**
@@ -251,6 +251,8 @@ class AdminController extends AbstractController
             $em = $this->getDoctrine()->getManager();
             $em->persist($boutique);
             $em->flush();
+
+            return new JsonResponse(['status=>success']);
         }
 
         return $this->render('admin/index.html.twig', [
@@ -282,25 +284,25 @@ class AdminController extends AbstractController
         switch ($categorie) {
             case 'habillement_homme':
 
-                $button = '<button id="' . 'Vetements_homme' . '"class="' . $class . '">Vêtement</button>';
-                $button .= '<button id="' . 'Chaussures_homme' . '"class="' . $class . '">Chaussure</button>';
-                $button .= '<button id="' . 'Lingeries_homme' . '"class="' . $class . '">Lingeries</button>';
+                $button = '<button id="' . 'Vetements_homme' . '"class="' . $class . '">Vêtement homme</button>';
+                $button .= '<button id="' . 'Chaussures_homme' . '"class="' . $class . '">Chaussure homme</button>';
+                $button .= '<button id="' . 'Lingeries_homme' . '"class="' . $class . '">Lingeries homme</button>';
 
                 break;
             case 'habillement_femme':
-                $button = '<button id="' . 'Vetements_femme' . '"class="' . $class . '">Vêtement</button>';
-                $button .= '<button id="' . 'Chaussures_femmme' . '"class="' . $class . '">Chaussure</button>';
-                $button .= '<button id="' . 'Lingeries_femme' . '"class="' . $class . '">Lingeries</button>';
+                $button = '<button id="' . 'Vetements_femme' . '"class="' . $class . '">Vêtement femme</button>';
+                $button .= '<button id="' . 'Chaussures_femmme' . '"class="' . $class . '">Chaussure femme</button>';
+                $button .= '<button id="' . 'Lingeries_femme' . '"class="' . $class . '">Lingeries femme</button>';
                 break;
             case 'habillement_enfant':
-                $button = '<button id="' . 'Vetements_enfant' . '"class="' . $class . '">Garçon</button>';
-                $button .= '<button id="' . 'Lingeries_enfant' . '"class="' . $class . '">fille</button>';
-                $button .= '<button id="' . 'Chaussures_enfant' . '"class="' . $class . '">Chaussure</button>';
+                $button = '<button id="' . 'Vetements_enfant' . '"class="' . $class . '">Garçon enfant</button>';
+                $button .= '<button id="' . 'Lingeries_enfant' . '"class="' . $class . '">fille enfant</button>';
+                $button .= '<button id="' . 'Chaussures_enfant' . '"class="' . $class . '">Chaussure enfant</button>';
                 break;
             case 'habillement_bebe':
-                $button = '<button id="' . 'bebe_garcons' . '"class="' . $class . '">Garçon</button>';
-                $button .= '<button id="' . 'bebe_filles' . '"class="' . $class . '">fille</button>';
-                $button .= '<button id="' . 'bebe_chaussure' . '"class="' . $class . '">Chaussure</button>';
+                $button = '<button id="' . 'bebe_garcons' . '"class="' . $class . '">Garçon bébé</button>';
+                $button .= '<button id="' . 'bebe_filles' . '"class="' . $class . '">fille bébé</button>';
+                $button .= '<button id="' . 'bebe_chaussure' . '"class="' . $class . '">Chaussure bébé</button>';
                 break;
             case 'acc_parfums':
                 $button = '<button id="acc_parfums"class="' . $class . '">Parfums</button>';

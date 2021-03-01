@@ -5,6 +5,8 @@
     align-items: center !important;
     width: 100% !important;
     height: 286px !important;
+    background: rgba(0,0,0,0.05);
+    margin: 9px;
 }
 .Promo{
     background-color: #9e1814 !important;
@@ -19,4 +21,21 @@
     color: white;
     font-size: 12px;
     padding: 10px;
+    display : inline-block
+}
+.product-details .product-name {
+    text-transform: uppercase;
+    font-size: 18px;
+    text-align: center;
+}
+.share{
+   
+        border: none;
+        color: white;
+        background: #4e4eecd9;
+  
+}
+.contain_share {
+    display: flex;
+    justify-content: center;
 }

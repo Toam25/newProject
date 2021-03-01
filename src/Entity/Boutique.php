@@ -64,37 +64,37 @@ class Boutique
     private $logo;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Article", mappedBy="boutique")
+     * @ORM\OneToMany(targetEntity="App\Entity\Article", mappedBy="boutique", orphanRemoval=true)
      */
     private $article;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Header", mappedBy="boutique")
+     * @ORM\OneToMany(targetEntity="App\Entity\Header", mappedBy="boutique", orphanRemoval=true)
      */
     private $headers;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\SocialNetwork", mappedBy="boutique")
+     * @ORM\OneToMany(targetEntity="App\Entity\SocialNetwork", mappedBy="boutique", orphanRemoval=true)
      */
     private $socialNetworks;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Slider", mappedBy="boutique")
+     * @ORM\OneToMany(targetEntity="App\Entity\Slider", mappedBy="boutique", orphanRemoval=true)
      */
     private $sliders;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Reference", mappedBy="boutique")
+     * @ORM\OneToMany(targetEntity="App\Entity\Reference", mappedBy="boutique", orphanRemoval=true)
      */
     private $shopReferences;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Menu", mappedBy="boutique")
+     * @ORM\OneToMany(targetEntity="App\Entity\Menu", mappedBy="boutique", orphanRemoval=true)
      */
     private $menus;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\EsArticle", mappedBy="boutique")
+     * @ORM\OneToMany(targetEntity="App\Entity\EsArticle", mappedBy="boutique", orphanRemoval=true)
      */
     private $esArticles;
 
@@ -104,7 +104,7 @@ class Boutique
     private $user_condition;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Vote", mappedBy="boutique")
+     * @ORM\OneToMany(targetEntity="App\Entity\Vote", mappedBy="boutique", orphanRemoval=true)
      */
     private $vote;
 

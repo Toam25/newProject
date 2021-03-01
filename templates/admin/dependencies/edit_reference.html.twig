@@ -2,7 +2,8 @@
 <div class="row">
 	<div class="col-md-7 card border-left-success shadow py-2 margin-top-5 ">
 		{{ form_start(form,{'attr':{'class':'edit_reference','action' : path('reference_edit',{'id':reference.id})}})}}
-		{{form_widget(form)}}
+		{{form_row(form.photos,{'attr' : {'required': false}})}}
+		{{form_row(form.description)}}
  
 		<button class="btn btn-success margin-top-5 btn-submit" type="submit">Enregistrer</button>
 		{{ form_end(form)}}

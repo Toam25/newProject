@@ -34,7 +34,7 @@ class EsArticleController extends AbstractController
             
          
             $file = $insertFileServices->insertFile($esArticle->getPhotos());
-            
+            $esArticle->setCategory($category);
             $esArticle->setImage($file);
             $esArticle->setBoutique($boutique);
             $em=$this->getDoctrine()->getManager();

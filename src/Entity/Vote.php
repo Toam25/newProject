@@ -45,7 +45,7 @@ class Vote
     private $create_at;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Comment", mappedBy="vote")
+     * @ORM\OneToMany(targetEntity="App\Entity\Comment", mappedBy="vote" , orphanRemoval=true)
      */
     private $comments;
 
@@ -66,7 +66,7 @@ class Vote
     private $header_vote;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\UserVote", mappedBy="vote")
+     * @ORM\OneToMany(targetEntity="App\Entity\UserVote", mappedBy="vote" , orphanRemoval=true)
      */
     private $userVotes;
 

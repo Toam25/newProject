@@ -44,6 +44,11 @@ class EsArticle
      */
     private $photos;
 
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $sous_category;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -106,6 +111,18 @@ class EsArticle
     public function setPhotos($photos): self
     {
         $this->photos = $photos;
+
+        return $this;
+    }
+
+    public function getSousCategory(): ?string
+    {
+        return $this->sous_category;
+    }
+
+    public function setSousCategory(string $sous_category): self
+    {
+        $this->sous_category = $sous_category;
 
         return $this;
     }
