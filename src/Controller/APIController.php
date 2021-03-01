@@ -11,6 +11,7 @@ use App\Entity\Menu;
 use App\Entity\User;
 use App\Entity\UserCondition;
 use App\Entity\UserVote;
+use App\Entity\Vote;
 use App\Repository\ArticleRepository;
 use App\Repository\BoutiqueRepository;
 use App\Repository\EsArticleRepository;
@@ -52,6 +53,24 @@ class APIController extends AbstractController
             $data[$key]['category'] = $value->getCategory();
             $data[$key]['image'] = $value->getImage();
         }
+        return new Response(json_encode($data));
+    }
+    /**
+     * @Route("/edit/vote/{id}", name="edit_vote")
+     */
+    public function editVote(Vote $vote, Request $request, InsertFileServices $insertFileServices)
+    {      $data = [];
+           $description=  $request->request->get('description');
+            if($request->files->get('images')){
+                   
+                    unlink("/images/".$vote->getImages());
+                    $images=$insertFileServices->insertFile($request->files->get('images'));
+                    $vote->setImages($images);
+              }
+        
+            $data['image']= $request->files->get('images') ?? $images ;
+            $data['description'] = $description;
+            $data['status'] = "success";
         return new Response(json_encode($data));
     }
 

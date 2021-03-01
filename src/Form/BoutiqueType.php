@@ -45,6 +45,12 @@ class BoutiqueType extends AbstractType
                     'class'=>'form-control'
                 ]
             ])
+            
+            ->add('resume',TextareaType::class,[
+                'attr'=>[
+                    'class'=>'form-control'
+                ]
+            ])
             ->add('apropos',TextareaType::class,[
                 'attr'=>[
                     'class'=>'form-control'

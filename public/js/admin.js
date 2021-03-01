@@ -2,9 +2,39 @@ $(function () {
   var $category;
 
 
+  //edition vote
+
+  $('._edit_vote').on('submit',function(e){
+    e.preventDefault();
+    let id = $('.id-vote').val();
+    $.ajax({
+      url : "/api/edit/vote/"+1 ,
+      type: 'POST',
+      data: new FormData(this),
+      contentType: false,
+      processData: false,
+      cache: false,
+      dataType: 'json',
+      beforeSend: () => {
+        $('.btn-submit2').append('<span class="loader_ajax" style="height: 20px;width: 20px;display: inline-block;"><img src="/images/images_default/ajax-loader.gif" style="height: 100%;width: 100%;"></span>');
+        $('.btn-submit2').prop('disabled', true)
+      },
+      success: () => {
+        toastr.success('Enregistrer avec success');
+        $('.btn-submit2').children('.loader_ajax').remove();
+        $('.btn-submit2').prop('disabled', false)
+      },
+      error: () => {
+        toastr.error('Une error à été survenue');
+        $('.btn-submit2').children('.loader_ajax').remove();
+        $('.btn-submit2').prop('disabled', false)
+      },
+      complete: function () {
+
+      }
+    });
+  });
   //edition shop
-
-
   $('.shop_edit').on('submit',function(e){
     e.preventDefault();
     url = "/admin/boutique";
@@ -881,10 +911,12 @@ $(function () {
   $('body').on('click', '.image_for_body', function (e) {
     e.preventDefault();
     let src = $(this).attr('src');
+     $('.id-vote').val($(this).attr('name'));
     let description = $(this).parent('div').children('input').val();
     $('.text_area_edit').val(description);
     $('._preview_image').prop('src', src);
     $('#edit_vote').modal('show');
+
   });
   //delete vote 
   $('body').on('click', '.remove_vote ', function (e) {

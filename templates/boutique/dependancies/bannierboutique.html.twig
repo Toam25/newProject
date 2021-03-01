@@ -2,6 +2,9 @@
     {% for images in boutique.headers %}
             <div class="container_image_slider">
                 <img class="image_slider" src="{{asset('images/'~images.name )}}" />
+                <div class="container_resume_shop">
+                    <h3> {{ boutique.resume | raw }} </h3>
+                </div>
             </div>
     {% endfor %}
  {% endif %}
