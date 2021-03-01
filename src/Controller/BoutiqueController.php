@@ -91,7 +91,7 @@ class BoutiqueController extends AbstractController
     }
 
     /**
-     * @Route("/detail/{id}", name="detail")
+     * @Route("/detail/{id}-{slug}", name="detail")
      */
     public function detail(int $id, Article $article, BoutiqueRepository $boutiqueRepository, VotesRepository $votesRepository)
     {
