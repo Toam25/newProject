@@ -1,6 +1,6 @@
 <div class="product">
 	{{ promo(article.promo,article.price, article.pricePromo) }}
-	<a href="{{path('detail',{'id' : article.id})}}">
+	<a href="{{path('detail',{'id' : article.id,'slug' : slugify(article.name )})}}">
 		<div class="product-img">
 			<img
 			src="{{asset('images/'~article.images[0].name)}}" alt="">

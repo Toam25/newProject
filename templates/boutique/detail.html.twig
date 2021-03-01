@@ -19,16 +19,23 @@
 	type="text/css" rel="stylesheet" href="{{asset('css/nouislider.min.css') }}"/>
 
 	<!-- Font Awesome Icon -->
+	<link rel="stylesheet" href="{{ asset('css/font-awesome.min.css') }}">
 	<link
-	rel="stylesheet" href="{{ asset('css/font-awesome.min.css') }}">
+	rel="icon" type="image/png" href="{{asset('images/'~boutique.logo)}}">
 
 	<!-- Custom stlylesheet -->
 	<link type="text/css" rel="stylesheet" href="{{ asset('css/boutique.css') }}"/>
 	<link type="text/css" rel="stylesheet" href="{{ asset('css/style.css') }}"/>
-	<link
-	type="text/css" rel="stylesheet" href="{{ asset('css/cart.css') }}"/>
+	<link type="text/css" rel="stylesheet" href="{{ asset('css/cart.css') }}"/>
 	<link type="text/css" rel="stylesheet" href="{{ asset('css/detail.css') }}"/>
-    {# <link type="text/css" rel="stylesheet" href="{{ asset('css/index.css') }}"/> #}
+	<link
+	type="text/css" rel="stylesheet" href="{{ asset('css/connexion.css') }}"/>
+	{# <link type="text/css" rel="stylesheet" href="{{ asset('css/index.css') }}"/> #}
+	<meta property="og:url" content="https://www.toutenone.com{{path('detail',{'id': boutique.id,'slug' : slugify(article.name ) })}}"/>
+	<meta property="og:type" content="website"/>
+	<meta property="og:title" content="{{ boutique.name }}"/>
+	<meta property="og:description" content="{{ boutique.apropos }}"/>
+	<meta property="og:image" content="https://www.toutenone.com{{ asset('images/'~ article.images[0].name )}}"/>
 
 {% endblock %}
 {% block body %}
@@ -42,13 +49,11 @@
 		<div
 			class="container">
 			<!-- row -->
-			<div
-				class="row">
+			<div class="row">
 				<!-- Product main img -->
 				{# remove col-md-push-2 #}
-				<div class="col-md-7 ">
-					<div id="product-main-img">
-						{% for image in article.images%}
+					<div class="col-md-7 "> <div id="product-main-img">
+						{% for image in article.images %}
 							<div class="product-previe">
 
 								<img src="{{asset('images/'~image.name)}}" alt="{{ article.name }}" style="max-width: 100%;max-height: 100%;">
@@ -62,25 +67,24 @@
 
 				<!-- Product thumb imgs -->
 				{#<div class="col-md-2  col-md-pull-5">
-					<div
-						id="product-imgs">
-																				{% for image in article.images%}
-														
-																					<div class="product-preview">
-																						<img src="{{asset('images/'~image.name)}}" alt="">
-																					</div>
-																				{% endfor %}
-																			
-					</div>
-				</div>#}
+									<div
+										id="product-imgs">
+																								{% for image in article.images%}
+																		
+																									<div class="product-preview">
+																										<img src="{{asset('images/'~image.name)}}" alt="">
+																									</div>
+																								{% endfor %}
+																							
+									</div>
+								</div>#}
 				<!-- /Product thumb imgs -->
 
 				<!-- Product details -->
-				<div class="col-md-5">
-					<div class="product-details">
+					<div class="col-md-5"> <div class="product-details">
 						<h2 class="product-name">
 							{{ article.name}}
-							 {{ promo(article.promo,article.price, article.pricePromo, "detail") }}
+							{{ promo(article.promo,article.price, article.pricePromo, "detail") }}
 						</h2>
 						<div>
 							<div class="product-rating">
@@ -88,41 +92,48 @@
 							</div>
 							<a class="review-link {% if not app.user %} _connexion {% endif %}" href="#avis">{{votes|length }}
 								évaluation(s) | donner votre avis</a>
-							
+
 						</div>
 						<div>
 							<h3 class="product-price">
-									{% if article.price is same as(0)  %}
-										Prix : A la demande 
+								{% if article.price is same as(0)  %}
+									Prix : A la demande
+								{% else %}
+									{% if article.promo is same as('Promo')%}
+										{{article.pricePromo| number_format(0,',',' ') }}&nbspAr
+										<span class='old-prix'>{{article.price| number_format(0,',',' ') }}&nbspAr</span>
 									{% else %}
-										{% if article.promo is same as('Promo')%}
-											{{article.pricePromo| number_format(0,',',' ') }}&nbspAr
-											<span class='old-prix'>{{article.price| number_format(0,',',' ') }}&nbspAr</span>
-										{% else %}
-											{{article.price| number_format(0,',',' ') }}&nbspAr
-										{% endif %}
+										{{article.price| number_format(0,',',' ') }}&nbspAr
 									{% endif %}
+								{% endif %}
 							</h3>
 						</div>
 						<p>{{ article.description}}</p>
 						<div class="contain_share">
-							<button class="share">Partagé</button>
+
+
+							{#<button class="share">
+								<a class="share" href="https://www.facebook.com/sharer/sharer.php?u=https://www.toutenone.com{{path('detail',{'id': boutique.id,'slug' : slugify(article.name ) })}}" target="_blank">
+									Partagé
+								</a>
+							</button>
+							#}
 						</div>
 						{#
-																		<div class="add-to-cart">
-																			<div class="qty-label">
-																				<div class="input-number">
-																					<input type="number" min="1" value="1">
-																					<span class="qty-up">+</span>
-																					<span class="qty-down">-</span>
-																				</div>
-																			</div>
-												
-																			<button class="add-to-cart-btn">
-																				<i class="fa fa-shopping-cart"></i>
-																				add to cart</button>
-																		</div>
-																	#}
+																								<div class="add-to-cart">
+																									<div class="qty-label">
+																										<div class="input-number">
+																											<input type="number" min="1" value="1">
+																											<span class="qty-up">+</span>
+																											<span class="qty-down">-</span>
+																										</div>
+																									</div>
+																		
+																									<button class="add-to-cart-btn">
+																										<i class="fa fa-shopping-cart"></i>
+																										add to cart</button>
+																								</div>
+																							#}
 					</div>
 				</div>
 				<!-- /Product details -->
@@ -231,24 +242,24 @@
 												{% endfor %}
 											</ul>
 											{#
-																																	<ul class="reviews-pagination">
-																																		<li class="active">1</li>
-																																		<li>
-																																			<a href="#">2</a>
-																																		</li>
-																																		<li>
-																																			<a href="#">3</a>
-																																		</li>
-																																		<li>
-																																			<a href="#">4</a>
-																																		</li>
-																																		<li>
-																																			<a href="#">
-																																				<i class="fa fa-angle-right"></i>
-																																			</a>
-																																		</li>
-																																	</ul>
-																																#}
+																																												<ul class="reviews-pagination">
+																																													<li class="active">1</li>
+																																													<li>
+																																														<a href="#">2</a>
+																																													</li>
+																																													<li>
+																																														<a href="#">3</a>
+																																													</li>
+																																													<li>
+																																														<a href="#">4</a>
+																																													</li>
+																																													<li>
+																																														<a href="#">
+																																															<i class="fa fa-angle-right"></i>
+																																														</a>
+																																													</li>
+																																												</ul>
+																																											#}
 										</div>
 									</div>
 									<!-- /Reviews -->
@@ -317,7 +328,7 @@
 
 {% block javascripts %}
 	<script src="{{ asset('js/slick.min.js') }}"></script>
-	<script src="{{ asset('js/connexion.js') }}"> </script>
+	<script src="{{ asset('js/connexion.js') }}"></script>
 	<script src=" {{ asset('js/nouislider.min.js') }}"></script>
 	<script src="{{ asset('js/jquery.zoom.min.js') }}"></script>
 	<script src="{{ asset('js/index.js') }}"></script>
