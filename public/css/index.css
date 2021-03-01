@@ -228,7 +228,6 @@ nav {
   position: absolute;
   right: -12px;
   top: -21px;
-  color: red;
   cursor: pointer;
   transition: 300ms;
 }
