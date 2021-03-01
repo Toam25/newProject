@@ -1062,14 +1062,12 @@ $(function () {
         if (data.status == 'ok') {
           toastr.success(data.msg);
           $("form[name='user']")[0].reset();
-          $('.btn-submit').prop('disabled', false);
         }
         if (data.status == 'ko') {
            toastr.error(data.msg);
-        
-           $('.btn-submit').children('.loader_ajax').remove();
-           $('.btn-submit').prop('disabled', false)
         }
+        $('.btn-submit').children('.loader_ajax').remove();
+        $('.btn-submit').prop('disabled', false)
 
       },
       complete: () => {
