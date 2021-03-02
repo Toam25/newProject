@@ -1,9 +1,18 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}Log in!{% endblock %}
+{% block stylesheets %}
+
+	<link href="https://fonts.googleapis.com/css?family=Montserrat:400,500,700" rel="stylesheet">
+	<link href="{{ asset('css/bootstrap3.3.css')}}" rel="stylesheet" type="text/css">
+	<link href="{{ asset('css/login.css')}}" rel="stylesheet" type="text/css">
+    
+
+{% endblock %}
 
 {% block body %}
-<form method="post">
+<div id='login'>
+<form method="post" class="connexion">
     {% if error %}
         <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
     {% endif %}
@@ -14,11 +23,15 @@
         </div>
     {% endif %}
 
-    <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
+    <h1 class="h3 mb-3 font-weight-normal">Connexion</h1>
     <label for="inputEmail">Email</label>
-    <input type="email" value="{{ last_username }}" name="_username" id="inputEmail" class="form-control" required autofocus>
-    <label for="inputPassword">Password</label>
-    <input type="password" name="_password" id="inputPassword" class="form-control" required>
+    <input type="email" value="{{ last_username }}" placeholder = "Entrer votre adresse e-mail" name="_username" id="inputEmail" class="form-control" required autofocus>
+    <label for="inputPassword">Mot de passe </label>
+    
+        <input type="password" name="_password" id="inputPassword" placeholder = "Entrer votre mot de passe" class="form-control" required>
+       
+    
+    
 
     <input type="hidden" name="_csrf_token"
            value="{{ csrf_token('authenticate') }}"
@@ -34,9 +47,15 @@
             </label>
         </div>
     #}
-
-    <button class="btn btn-lg btn-primary" type="submit">
-        Sign in
+    <div class =" btn-action">
+     <a href ="{{ path('registration')}}">Inscription</a>
+    <button class="btn btn-lg btn-primary" type="submit" style="display: flex; align-items: center;">
+        Connexion<img class="ajax" src="{{ asset('images/images_default/ajax-loader.gif')}}">
     </button>
+    </div>
 </form>
+</div>
+{% endblock %}
+{% block javascripts %}
+    <script type="text/javascript" src="{{ asset('js/login_security.js') }}"></script>
 {% endblock %}

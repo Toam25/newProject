@@ -108,6 +108,11 @@ class Boutique
      */
     private $vote;
 
+    /**
+     * @ORM\Column(type="text", nullable=true)
+     */
+    private $resume;
+
     public function __construct()
     {
         $this->logo = "images_default/default_logo.png";
@@ -490,6 +495,18 @@ class Boutique
                 $createAt->setBoutique(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getResume(): ?string
+    {
+        return $this->resume;
+    }
+
+    public function setResume(?string $resume): self
+    {
+        $this->resume = $resume;
 
         return $this;
     }

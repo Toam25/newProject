@@ -11,6 +11,7 @@ use App\Entity\Menu;
 use App\Entity\User;
 use App\Entity\UserCondition;
 use App\Entity\UserVote;
+use App\Entity\Vote;
 use App\Repository\ArticleRepository;
 use App\Repository\BoutiqueRepository;
 use App\Repository\EsArticleRepository;
@@ -54,6 +55,7 @@ class APIController extends AbstractController
         }
         return new Response(json_encode($data));
     }
+ 
 
     /**
      * @Route("/set/numberVoteIndex/{status}-{id_vote}", name="set_number_vote_index", methods={"POST"})
