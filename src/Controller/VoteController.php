@@ -95,21 +95,20 @@ class VoteController extends AbstractController
     /**
      * @Route("/edit/{id}", name="vote_edit", methods={"GET","POST"})
      */
-    public function edit(Request $request, Vote $vote): Response
-    {
-        $form = $this->createForm(VoteType::class, $vote);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $this->getDoctrine()->getManager()->flush();
-
-            return $this->redirectToRoute('vote_index');
-        }
-
-        return $this->render('vote/edit.html.twig', [
-            'vote' => $vote,
-            'form' => $form->createView(),
-        ]);
+    public function edit(Vote $vote, Request $request, InsertFileServices $insertFileServices)
+    {      $data = [];
+           $description=  $request->request->get('description');
+            if($request->files->get('images')){
+                   
+                    unlink("/images/".$vote->getImages());
+                    $images=$insertFileServices->insertFile($request->files->get('images'));
+                    $vote->setImages($images);
+              }
+        
+            $data['image']= $request->files->get('images') ?? $images ;
+            $data['description'] = $description;
+            $data['status'] = "success";
+        return new Response(json_encode($data));
     }
 
     /**

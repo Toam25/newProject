@@ -1364,7 +1364,7 @@ $(function () {
       },
       {
         name: "outillages",
-        value: ['Outils à main', 'Outils divers', 'Outils multifonctions', 'Outils éléctriques', 'Accessoires', 'Electricité', 'Pièces détachées']
+        value: ['Accessoires','Outils à main', 'Outils divers', 'Outils multifonctions', 'Outils éléctriques', 'Accessoires', 'Electricité', 'Pièces détachées']
       },
       {
         name: "outillages_pro",
@@ -1454,7 +1454,7 @@ $(function () {
     }
     if (categorie_menu == "Outillages"){
       cible = "Bricolage",
-      listOption = ['Outillage à main', 'Outillage éléctroportatif', 'Machines equipements', 'Eléctricité', 'Quincallerie']
+      listOption = ['Accessoires','Outillage à main', 'Outillage éléctroportatif', 'Machines equipements', 'Eléctricité', 'Quincallerie']
     }
     if (categorie_menu == "Outils de jardin"){
       cible = "Jardinage",

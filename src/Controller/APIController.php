@@ -55,24 +55,7 @@ class APIController extends AbstractController
         }
         return new Response(json_encode($data));
     }
-    /**
-     * @Route("/edit/vote/{id}", name="edit_vote")
-     */
-    public function editVote(Vote $vote, Request $request, InsertFileServices $insertFileServices)
-    {      $data = [];
-           $description=  $request->request->get('description');
-            if($request->files->get('images')){
-                   
-                    unlink("/images/".$vote->getImages());
-                    $images=$insertFileServices->insertFile($request->files->get('images'));
-                    $vote->setImages($images);
-              }
-        
-            $data['image']= $request->files->get('images') ?? $images ;
-            $data['description'] = $description;
-            $data['status'] = "success";
-        return new Response(json_encode($data));
-    }
+ 
 
     /**
      * @Route("/set/numberVoteIndex/{status}-{id_vote}", name="set_number_vote_index", methods={"POST"})
