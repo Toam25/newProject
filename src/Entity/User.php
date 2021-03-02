@@ -99,6 +99,7 @@ class User implements UserInterface
         $this->carts = new ArrayCollection();
         $this->categories = new ArrayCollection();
         $this->userVotes = new ArrayCollection();
+        $this->birthday = new \DateTime();
  
     }
 

@@ -293,7 +293,6 @@ $(function () {
   $('body').on('click','.tab_men',function(e){
              
     categorie_menu=$(this).attr('name');
-    
      $('.add_option').children('input[name="categorie_sante"]').val(categorie_menu);
      $('.items-menu-selected').removeClass('items-menu-selected');
      $(`button[name="`+categorie_menu+`"]`).parent('.items-menu ').addClass('items-menu-selected');
@@ -345,6 +344,7 @@ $(function () {
     $('.add_option').children('input[name="categorie_sante"]').val(categorie_menu);
 
     containt_parameter(categorie_menu);
+    console.log(categorie_menu);
 
   });
   $('.add_option').on('submit',function(e){
@@ -1363,7 +1363,7 @@ $(function () {
         value: ['Huile d\'amande douce ', 'Huile d\'arachide', 'Femme enceinte', 'Huile d\'argan', 'Huile d\'avocat', 'Huile de baobab', 'Huile de calendula', 'Huile de cameline', 'Huile de coco', 'Huile de colza', 'Huile de germe de blé', 'Beurre de Karité', 'Huile de Moutarde', 'Huile d\'Olive', 'Huile de Palme', 'Huile de Ricin', 'Huile de Tournesol', 'Huile de Sésame', 'Huile de Lorenzo', 'Huile de poisson']
       },
       {
-        name: "outillages",
+        name: "Outillages",
         value: ['Accessoires','Outils à main', 'Outils divers', 'Outils multifonctions', 'Outils éléctriques', 'Accessoires', 'Electricité', 'Pièces détachées']
       },
       {
@@ -1448,7 +1448,7 @@ $(function () {
       listOption = ['Motorisation', 'portails et volets', 'Accessoires', 'Interphone video', 'Alerme-Détecteur', 'Caméra de surveillance', 'Sécurité  incendie'];
     }
     //outilage
-    if (categorie_menu == "Outillages pro"){
+    if (categorie_menu == "Outillages Pro"){
       cible ="Professionnel",
       listOption = ['Outils à main', 'Outils divers', 'Outils multifonctions', 'Outils éléctriques', 'Accessoires', 'Electricité', 'Pièces détachées']
     }

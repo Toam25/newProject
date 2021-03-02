@@ -178,13 +178,13 @@ class AdminController extends AbstractController
     /**
      * @Route("/superadmin/inscription", name="admin_registration")
      */
-    public function registration(Request $request, UserRepository $userRepository, EntityManagerInterface $manager, UserPasswordEncoderInterface $encoder)
+    public function registration(Request $request,BoutiqueRepository $boutiqueRepository, UserRepository $userRepository, EntityManagerInterface $manager, UserPasswordEncoderInterface $encoder)
     {
         $user = new User();
         $boutique = new Boutique();
 
 
-
+        
         $form = $this->createForm(UserType::class, $user);
         $form->handleRequest($request);
 
@@ -218,10 +218,11 @@ class AdminController extends AbstractController
                 'Content-Type' => 'application/json'
             ]);
         }
-
+        $boutique = $boutiqueRepository->findOneBy(['user' => $this->getUser()]);
         return $this->render('admin/index.html.twig', [
             'forms' => $form->createView(),
-            'pages' => 'new_user'
+            'pages' => 'new_user',
+            'boutique' => $boutique
         ]);
     }
 

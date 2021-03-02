@@ -25,7 +25,8 @@
 
                <input class="form-control" type="text" required name="name_option">
                <select id="Bricolage" class="form-control attibute_article_in" name="sous_categorie_menu">
-                  <option value="Outils à main">Outils à main</option>
+                  <option value="Outils à main" selected>Outils à main</option>
+                  <option value="Accessoires">Accessoires</option>
                   <option value="Outils divers">Outils divers</option>
                   <option value="Outils multifonctions">Outils multifonctions</option>
                   <option value="Outils éléctriques">Outils éléctriques</option>
@@ -54,7 +55,7 @@
 
                <input class="form-control" type="text" required name="name_option">
                <select id="Professionnel" class="form-control attibute_article_in" name="sous_categorie_menu">
-                  <option value="Outillage à main">Outillage à main</option>
+                  <option value="Outillage à main" selected>Outillage à main</option>
                   <option value="Outillage éléctroportatif">Outillage éléctroportatif</option>
                   <option value="Machines equipements">Machines equipements</option>
                   <option value="Eléctricité">Eléctricité</option>
@@ -75,7 +76,7 @@
     </div>
            <label class="labelListOption">Liste des Options :</label>
            <div class="list_option">
-                 {{ getListOption(listCategories,'TV LED-LCD') }}
+                 {{ getListOption(listCategories,'Outils de jardin') }}
            </div>
       <form class="form-inline add_option container_modif_menu" style="box-shadow: 0 0 3px <?= $color ?>">
                <label >Ajouter une option : </label>
@@ -83,7 +84,7 @@
 
                <input class="form-control" type="text" required name="name_option">
                <select id="Jardinage" class="form-control attibute_article_in" name="sous_categorie_menu">
-                  <option value="Outils de jardin">Outils de jardin</option>
+                  <option value="Outils de jardin" selected>Outils de jardin</option>
                </select>
                <input type="submit" name="btn_valider" value="Enregistrer">
        </form>
