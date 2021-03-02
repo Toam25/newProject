@@ -3,7 +3,13 @@
 {% block title %}
 	{{ boutique.name }}
 {% endblock %}
-{% block meta%}{% endblock %}
+{% block meta%}
+	<meta property="og:url" content="https://www.toutenone.com{{path('detail',{'id': boutique.id,'slug' : slugify(article.name ) })}}"/>
+	<meta property="og:type" content="website"/>
+	<meta property="og:title" content="{{ boutique.name }}"/>
+	<meta property="og:description" content="{{ boutique.apropos }}"/>
+	<meta property="og:image" content="https://www.toutenone.com{{ asset('images/'~ article.images[0].name )}}"/>
+{% endblock %}
 {% block stylesheets %}
 	<link href="https://fonts.googleapis.com/css?family=Montserrat:400,500,700" rel="stylesheet">
 
@@ -31,11 +37,7 @@
 	<link
 	type="text/css" rel="stylesheet" href="{{ asset('css/connexion.css') }}"/>
 	{# <link type="text/css" rel="stylesheet" href="{{ asset('css/index.css') }}"/> #}
-	<meta property="og:url" content="https://www.toutenone.com{{path('detail',{'id': boutique.id,'slug' : slugify(article.name ) })}}"/>
-	<meta property="og:type" content="website"/>
-	<meta property="og:title" content="{{ boutique.name }}"/>
-	<meta property="og:description" content="{{ boutique.apropos }}"/>
-	<meta property="og:image" content="https://www.toutenone.com{{ asset('images/'~ article.images[0].name )}}"/>
+	
 
 {% endblock %}
 {% block body %}

@@ -342,11 +342,12 @@ max-height: 100%;
     padding: 5px;
     margin: 5px;
     box-shadow: 5px 5px 11px -9px black;
+    width: 200px;
 }
 .scrol_slide_animation {
-    overflow-x: auto;
-    white-space: nowrap;
-    display: flex;
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
 }
 .ajout_article_ev{
     margin-left:5px;

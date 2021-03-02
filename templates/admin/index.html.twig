@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %} {{ name_boutique }} {% endblock %}
+{% block title %} {{ boutique.name }} {% endblock %}
 {% block stylesheets %}
 <link href="{{ asset('css/bootstrap4.5.css')}}" rel="stylesheet" type="text/css">
     <link href="{{ asset('vendor/fontawesome-free/css/all.min.css') }}" rel="stylesheet" type="text/css">
@@ -11,6 +11,7 @@
     <link href="{{ asset('css/admin.css') }}" rel="stylesheet" type="text/css">
     <link href="{{ asset('css/parametre_option.css') }}" rel="stylesheet" type="text/css">
     <link href="{{ asset('css/contact.css') }}" rel="stylesheet" type="text/css">
+    <link rel="icon" type="image/png" href="{{asset('images/'~boutique.logo)}}">
   
 {% endblock %}
 {% block body %}

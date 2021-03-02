@@ -1,15 +1,15 @@
 $(function(){
 
    $('.js-category').on('click',function(e){
-       e.preventDefault();
+      
      ($(this).children('.submenu').hasClass('show_list_category_menu') ) ? $(this).children('.submenu').removeClass('show_list_category_menu') : $(this).children('.submenu').addClass('show_list_category_menu');
    });
    $('.js-show-menu').on('click',function(e){
-       e.preventDefault();
+       
        $('.menu_v').css('transform','translate(0px)');
    })
    $('.js-hide-menu').on('click',function(e){
-      e.preventDefault();
+     
       $('.menu_v').css('transform','translate(-250px)');
   })
    /**
