@@ -20,6 +20,7 @@ use App\Repository\UserRepository;
 use App\Service\CategoryOptionService;
 use App\Service\CategoryService;
 use App\Service\InsertFileServices;
+use App\Service\TypeOptionMenuService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -30,7 +31,12 @@ use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 
 class AdminController extends AbstractController
-{
+{   
+    private $typeOptionMenuService;
+    public function __construct( TypeOptionMenuService $typeOptionMenuService )
+    {
+        $this->typeOptionMenuService=$typeOptionMenuService;
+    }
     /**
      * @Route("/admin", name="home")
      */
@@ -433,7 +439,7 @@ class AdminController extends AbstractController
 
 
             default:
-                $button = " ";
+                $button = self::$typeOptionMenuService::getAddButton($categorie,$class);
                 break;
         }
 

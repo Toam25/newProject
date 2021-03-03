@@ -11,6 +11,17 @@ align-items: center;
 margin-top: 8px;
 width: 100%;
 }
+.container_category_setting {
+    background: white;
+    border-radius: 10px;
+    padding: 8px;
+    margin: 10px 0px;
+}
+.container_category_setting > h3 {
+    color: #007fff;
+    text-align: center;
+    font-size: 16px;
+}
 .loader_ajax{
     margin-left: 10px;
 }
