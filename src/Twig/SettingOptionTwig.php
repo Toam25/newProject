@@ -35,7 +35,7 @@ class SettingOptionTwig extends AbstractExtension{
     public function getSetting(Boutique $boutique){
          
         return $this->twig->render('partials/_settingOption.html.twig',[
-            'options'=>$this->typeOptionMenuService::getTypeOptionMenu($boutique->getType()),
+            'options'=>$this->typeOptionMenuService->getTypeOptionMenu($boutique->getType()),
             'listCategories'=>$this->categoryOptionService->getListPerCategory($this->menuRepository->findBy(['boutique'=>$boutique]))
         ]);
     }

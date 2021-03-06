@@ -25,10 +25,12 @@ class MenuSuperAdminTwig extends AbstractExtension{
         ];
     }
 
-    public function getMenuSuperAdmin(string $boutiqueType,$role){
+    public function getMenuSuperAdmin(string $boutiqueType,$role,$superadmin=null){
          
         return $this->twig->render('partials/menuSuperAdmin.html.twig',[
-            'role'=>($role=="SUPER_ADMIN") ? 'es_article_list' :'article_list',
+            'es_article_list_or_article_list'=>($role=="SUPER_ADMIN") ? 'es_article_list' :'article_list',
+            'superadmin'=>$superadmin,
+            'typeshop'=>$boutiqueType,
             'menus'=>$this->typeOptionMenuService->getTypeOptionMenu(strtolower($boutiqueType))
 
         ]);

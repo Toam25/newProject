@@ -1,15 +1,35 @@
-{% for menu  in menus   %}
-<li class="nav-item">
-      <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#{{ menu['category']}}" aria-expanded="true" aria-controls="collapsePages">
-        <i class="fas fa-fw fa-folder"></i>
-        <span>{{ menu['category']}}</span>
-      </a>
-      <div id="{{ menu['category']}}" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
-        <div class="bg-white py-2 collapse-inner rounded">
-          {% for sous_menu in menu['sous_category']%}
-          <a class="collapse-item" href="{{path(role,{'category':slugify(sous_menu)})}}">{{ sous_menu }}</a>
-          {% endfor %}
-        </div>
-      </div>
-</li>
-{% endfor %}
+
+
+{% if superadmin is  same as (null)%}
+    {% for menu  in menus   %}
+        <li class="nav-item">
+              <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#{{ slugify(menu['category'])}}" aria-expanded="true" aria-controls="collapsePages">
+                <i class="fas fa-fw fa-folder"></i>
+                <span>{{ menu['category']}}</span>
+              </a>
+              <div id="{{ slugify(menu['category']) }}" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
+                <div class="bg-white py-2 collapse-inner rounded">
+                  {% for key, sous_menu in menu['sous_category']%}
+                  <a class="collapse-item" href="{{path(es_article_list_or_article_list,{'category':slugify( menu['category']  ),'sous_category':slugify( sous_menu['name'] ) })}}">{{ sous_menu['name'] }}</a>
+                  {% endfor %}
+                </div>
+              </div>
+        </li>
+    {% endfor %}
+{% else %}
+    {% for menu  in menus   %}
+    <li class="nav-item">
+          <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#{{ slugify(menu['category'])}}" aria-expanded="true" aria-controls="collapsePages">
+            <i class="fas fa-fw fa-folder"></i>
+            <span>{{ menu['category']}}</span>
+          </a>
+          <div id="{{ slugify(menu['category']) }}" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
+            <div class="bg-white py-2 collapse-inner rounded">
+              {% for key, sous_menu in menu['sous_category']%}
+              <a class="collapse-item" href="{{path(es_article_list_or_article_list,{'shop':typeshop,'category':slugify( menu['category']  ),'sous_category':slugify( sous_menu['name'] ) })}}">{{ sous_menu['name'] }}</a>
+              {% endfor %}
+            </div>
+          </div>
+    </li>
+    {% endfor %}
+{% endif %}
