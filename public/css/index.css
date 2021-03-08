@@ -226,8 +226,8 @@ nav {
   border-radius: 100%;
   border: none;
   position: absolute;
-  right: -12px;
-  top: -21px;
+  right: 8px;
+  top: 10px;
   cursor: pointer;
   transition: 300ms;
 }
@@ -263,15 +263,15 @@ nav {
 }
 #container_echatillon {
   position: absolute;
-  width: 90%;
+  width: 79vw;
   z-index: 999;
   display: none;
   background: white;
-  left: 5%;
+  left:  18.5vw;
   right: 5%;
   padding: 5px;
   box-shadow: 0px 0px 14px black;
-  top: 10%;
+  top: 3px;
 }
 .liste_categorie_vetement {
   cursor: pointer;
@@ -343,6 +343,7 @@ nav {
 ._container_all_echantillon {
   box-shadow: 0 0 2px;
   border-radius: 7px;
+  margin-top : 43px;
 }
 .inother-ajax {
   position: relative;

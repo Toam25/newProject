@@ -1,0 +1,41 @@
+<li >
+    <a class="active main-menu-link"href="{{ path('shop',{'type':lastboutique.type,'id':  lastboutique.id})}}">Galerie Marchande</a>
+</li>
+
+{% for key, menu in allMenus %}
+ 
+     <li class="has-dropdown has-megaitem">
+          <a href="#" style="color: white">
+           {{ key }}&nbsp<i class="fa fa-angle-down"></i></a>
+                      <!-- Mega Menu -->
+                      <div class="mega-menu">
+                        <ul class="mega-menu-inner">
+                     
+                        <!-- Mega Menu Sub Link -->
+                       {% for keyc, _category in menu %}
+                              
+                          <li class="mega-menu-item">
+                            <a href="#" class="mega-menu-item-title"
+                              >- &nbsp{{ _category['category']}}</a
+                            >
+                            <ul class="mega-menu-sub">
+                            {% for keys,sous_category in _category['sous_category'] %}
+                              <li id="{{ slugify(sous_category['name']) }}" class="echantillon_image">
+                                <a href="#" class="h4_menu  itemlink">{{ sous_category['name']}}</a>
+                                {#<ul class="">
+                                
+                                   <li><a href="#">option</a></li>
+                               
+                                </ul>
+                                #}
+                            </li>
+                            {% endfor %}
+                            
+                            </ul>
+                          </li>
+                         {% endfor %}
+
+                        </ul>
+                      </div>
+    </li>
+{% endfor %}

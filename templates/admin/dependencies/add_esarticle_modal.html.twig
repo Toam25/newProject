@@ -7,7 +7,7 @@
 					<span aria-hidden="true">&times;</span>
 				</button>
 			</div>
-			{{ form_start(form, {'attr': {'class' : 'form_article','action': path('es_article_list',{'category': category}) }}) }}
+			{{ form_start(form, {'attr': {'class' : 'form_article','action': path('es_article_list',{'shop' : shop,'category': category,'sous_category': sous_category}) }}) }}
 			<div id="div_ajout_article" class="modal-body row" style="font-weight:none;">
 				<div class="col-md-4">
 					<div class="preview_image">

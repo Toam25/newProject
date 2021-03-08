@@ -1,0 +1,52 @@
+{% for option in options %}
+	<div id="container_{{ slugify(option['category']) }}"class="container_category_setting">
+		<h3>{{ option['category'] }}
+		</h3>
+		<div id ="container_button_add_{{slugify(option['category'])}}" class="containt_menu_sante">
+			{% set i = 0%}
+			{% set firstKeyOption = "" %}
+			{% for key, sous_category in option['sous_category'] %}
+				{% set addClass =""%}
+				
+
+			  
+				{% if i is same as(0) %}
+				    
+					{% set addClass ="items-menu-selected"%}
+					{% set firstKeyOption = sous_category.name %}
+
+				{% endif %}
+				{%  set i = i + 1 %}
+				
+				<div class="items-menu {{ addClass }}">
+					<button name="{{ slugify(sous_category['name'])}}" data-value="{{ option['sous_category'][key]['options'][0] }}" data-category="{{  slugify(option['category'])  }}"class="btn-seleted modifi_menu_in add_option_{{ slugify( sous_category.name ) }}">{{ sous_category.name }}</button>
+				</div>
+			{% endfor %}
+			
+		</div>
+        <label id="listOption{{ slugify(option['category']) }}"class="labelListOption" >Liste des Options :</label>
+			<div id="list-option-{{ slugify(option['category']) }}" class="list_option" >
+			
+				{{ getListOption(listCategories,option['sous_category'][slugify(firstKeyOption)]['options'][0]) }}
+			
+			</div>
+		<form class="form-inline add_option container_modif_menu">
+			<label>
+                Ajouter une option :
+			</label>
+			<input type="hidden" name="categorie_sante" value="{{ slugify(option['sous_category'][slugify(firstKeyOption)]['name']) }} ">
+			<input class="form-control input-{{slugify(option['category'])}}" type="text" required name="name_option">
+			<select id="{{ slugify(option['category'] )}} " class="form-control attibute_article_in" name="sous_categorie_menu">
+				{% for key, _option in option['sous_category'][slugify(firstKeyOption)]['options'] %}
+					{% set selected ="" %}
+					{% if key is same as(0) %}
+						{% set selected ="selected"%}
+					{% endif %}
+					<option value="{{ _option }}" {{selected}} >{{ _option }}</option>
+				{% endfor %}
+			</select>
+		
+			<input type="submit" name="btn_valider" value="Enregistrer" class="btn btn-success btn-submit{{slugify(option['category'])}}">
+		</form>
+	</div>
+{% endfor %}

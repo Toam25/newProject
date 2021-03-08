@@ -16,6 +16,8 @@ use App\Repository\VoteRepository;
 use App\Repository\VotesRepository;
 use App\Service\Cart\CartService;
 use App\Service\SearchService;
+use App\Service\TypeOptionMenuService;
+use App\Service\UtilsService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -24,6 +26,13 @@ use Symfony\Component\Validator\Constraints\Length;
 
 class BoutiqueController extends AbstractController
 {
+
+    private $typeOptionMenuService;
+  
+    public function __construct(UtilsService $utilsService, TypeOptionMenuService $typeOptionMenuService )
+    {
+        $this->typeOptionMenuService=$typeOptionMenuService;
+    }
     /**
      * @Route("/", name="index")
      */
@@ -31,9 +40,10 @@ class BoutiqueController extends AbstractController
     {
 
         $boutique = $boutiqueRepository->findOneBoutiqueByUserPerRole('ROLE_SUPER_ADMIN');
+        $allMenu= $this->typeOptionMenuService->getTypeOptionMenu();
 
         $vote = $voteRepository->findAllWithUserVote();
-
+         
         $lastboutique = $boutiqueRepository->findAll();
         $header = $headerRepository->findOneBy(['boutique' => $boutique]);
         $header_image = ($header) ? $header->getName() : "images_default/default_image.jpg";
@@ -44,6 +54,7 @@ class BoutiqueController extends AbstractController
             'articles' => $articles,
             'header_image' => $header_image,
             'votes' => $vote,
+            'allMenus'=>$allMenu,
             'lastboutique' => $lastboutique[1]
         ]);
     }

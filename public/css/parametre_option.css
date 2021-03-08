@@ -1,8 +1,7 @@
 .list_option {
     padding: 3px;
     overflow-y: auto;
-    min-height: 70px;
-    box-shadow: 2px 2px 5px;
+    box-shadow: 0px 0px 1px;
     border-radius: 8px;
 }
 .items-menu {
@@ -24,25 +23,33 @@
     background: transparent;
     color: white;
     font-weight: bold;
-    padding: 4px;
+    padding: 1px;
+    font-size: 13px;
 }
 .attibute_article_in{
     margin: 0 5px;
 }
 .option_menu {
     display: inline-block;
-    padding: 10px 3px 10px 10px;
+    padding: 5px;
     margin: 3px;
     background-color: #337ab7;
     border-color: #2e6da4;
     border-radius: 11px;
     color: white;
     position: relative;
-cursor: pointer;
+    cursor: pointer;
+    transition: 10s;
+}
+.scale0{
+    transform: scale(0);
+}
+.scale1{
+    transform: scale(1);
 }
 .delete_option {
     background-color: transparent;
     border: none;
     width: 27px;
-    color: white;
+    color: #e74a3b;
 }

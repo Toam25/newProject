@@ -15,11 +15,21 @@ class CategoryService
    static $category;
    private $articleRepository;
    private $typeBoutique;
+   private $utilsService;
 
-   public function __construct(ArticleRepository $articleRepository)
+   public function __construct(ArticleRepository $articleRepository,UtilsService $utilsService)
    {
       $this->articleRepository = $articleRepository;
       $this->typeBoutique = "high-tech";
+      $this->utilsService=$utilsService;
+   }
+
+   public function getAddButton(array $options,string $class){
+      $button ="";
+      foreach ($options as $option) {
+         $button.='<button id="' .$this->utilsService->getSlug($option['name']). '"class="' . $class . '">'.$option['name'].'</button>';
+      }
+      return $button;
    }
    public function getCategoryForArticle($boutique)
    {

@@ -7,7 +7,10 @@ use App\Form\EsArticleType;
 use App\Repository\ArticleRepository;
 use App\Repository\BoutiqueRepository;
 use App\Repository\EsArticleRepository;
+use App\Service\CategoryService;
 use App\Service\InsertFileServices;
+use App\Service\TypeOptionMenuService;
+use App\Service\UtilsService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -17,22 +20,29 @@ use Symfony\Component\Routing\Annotation\Route;
  * @Route("superadmin/es/article")
  */
 class EsArticleController extends AbstractController
-{
+{   
+    private $typeOptionMenuService;
+  
+    public function __construct(UtilsService $utilsService, TypeOptionMenuService $typeOptionMenuService )
+    {
+        $this->typeOptionMenuService=$typeOptionMenuService;
+        $this->utilsService=$utilsService;
+    }
     /**
-     * @Route("/{category}", name="es_article_list")
+     * @Route("/{shop}/{category}/{sous_category}", name="es_article_list")
      */
-    public function index($category,EsArticleRepository $esArticleRepository,InsertFileServices $insertFileServices, ArticleRepository $articleRepository,BoutiqueRepository $boutiqueRepository,Request $request): Response
+    public function index($category,$sous_category,$shop,CategoryService $categoryService, EsArticleRepository $esArticleRepository,InsertFileServices $insertFileServices, ArticleRepository $articleRepository,BoutiqueRepository $boutiqueRepository,Request $request): Response
     {   
         $boutique = $boutiqueRepository->findOneBy(['user'=>$this->getUser()]);
        
         $esArticle = new EsArticle();
         $form = $this->createForm(EsArticleType::class,$esArticle);
-        $button_add_ess = ($category!=null) ? AdminController::button_add_boutique($category,"btn btn-success ajout_ess_article_ev") : " ";
         
-        $form->handleRequest($request);
+         $button_add_ess = $categoryService->getAddButton($this->typeOptionMenuService->getTypeOptionMenu($shop,$category),"btn btn-success  ajout_ess_article_ev");
+        
+         $form->handleRequest($request);
         if($form->isSubmitted()){
-            
-         
+
             $file = $insertFileServices->insertFile($esArticle->getPhotos());
             $esArticle->setCategory($category);
             $esArticle->setImage($file);
@@ -43,14 +53,18 @@ class EsArticleController extends AbstractController
             return new Response(json_encode(['id'=>$esArticle->getId(),'images'=>$esArticle->getImage(),'type'=>$esArticle->getType()]));
         }
         $allArticle = $articleRepository->findBy(['boutique'=>$boutique] );
+
         return $this->render('admin/index.html.twig', [
             'es_articles' => $esArticleRepository->findBy(['category'=>$category,'boutique'=>$boutique]),
             'pages'=>'list_es',
             'articles'=>$allArticle,
             'category'=>$category,
-            'menu'=>AdminController::nameMenu($category),
+            'sous_category'=>$sous_category,
+            'shop'=>$shop,
+            'menu'=>$this->typeOptionMenuService->getTypeOptionMenu($shop,$category,$sous_category)['name'],
             'button_add_es'=>$button_add_ess,
-            'form'=>$form->createView(), 
+            'form'=>$form->createView(),
+            'boutique'=>$boutique 
         ]);
     }
 

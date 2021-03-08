@@ -20,6 +20,8 @@ use App\Repository\UserRepository;
 use App\Service\CategoryOptionService;
 use App\Service\CategoryService;
 use App\Service\InsertFileServices;
+use App\Service\TypeOptionMenuService;
+use App\Service\UtilsService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -30,7 +32,14 @@ use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 
 class AdminController extends AbstractController
-{
+{   
+    private $typeOptionMenuService;
+    private $utilsService;
+    public function __construct(UtilsService $utilsService, TypeOptionMenuService $typeOptionMenuService )
+    {
+        $this->typeOptionMenuService=$typeOptionMenuService;
+        $this->utilsService=$utilsService;
+    }
     /**
      * @Route("/admin", name="home")
      */
@@ -50,20 +59,20 @@ class AdminController extends AbstractController
         ]);
     }
     /**
-     * @Route("/admin/article_list/{category}", name="article_list")
+     * @Route("/admin/article_list/{category}/{sous_category}", name="article_list")
      */
-    public function addArticleInShop($category, Request $request,CategoryService $categoryService, BoutiqueRepository $boutiqueRepository, InsertFileServices $insertFileServices, ArticleRepository $articleRepository)
+    public function addArticleInShop($category,$sous_category,CategoryOptionService $categoryOptionService, Request $request,CategoryService $categoryService, BoutiqueRepository $boutiqueRepository, InsertFileServices $insertFileServices, ArticleRepository $articleRepository)
     {
-
+        
+      
         // $allArticle = $articleRepository->findBy(['boutique'=>$boutiqueRepository->findOneBy(['user'=>$this->getUser()])] );
         $boutique = $boutiqueRepository->findOneBy(['user' => $this->getUser()]);
         $article = new Article();
         $form = $this->createForm(ArticleType::class, $article);
         $form->handleRequest($request);
         ////
-
-
-        if ($form->isSubmitted()) {
+         
+      /*  if ($form->isSubmitted()) {
             $allImages = [];
             $entityManager = $this->getDoctrine()->getManager();
             $images = $form->get('images')->getData();
@@ -92,15 +101,17 @@ class AdminController extends AbstractController
             return new JsonResponse($array, Response::HTTP_OK);
         }
 
-        ///
+        */
 
+        ///
+        
         return $this->render('admin/index.html.twig', [
             'pages' => 'articleinshop',
-            'articles' => $articleRepository->findBy(['boutique' => $boutique, 'category' => $categoryService->getNameMenu($category)]),
+            'articles' => $articleRepository->findBy(['boutique' => $boutique, 'category' => $sous_category]),
             'boutique' => $boutique,
-            'add_button' => $this->button_add_boutique($category, 'btn btn-success ajout_article_ev'),
+            'add_button' => $categoryService->getAddButton($this->typeOptionMenuService->getTypeOptionMenu($boutique->getType(),$category),"btn btn-success ajout_article_ev"),
             'form' => $form->createView(),
-            'category' =>$categoryService->getNameMenu($category)
+            'category' =>$sous_category
         ]);
     }
     /**
@@ -166,7 +177,6 @@ class AdminController extends AbstractController
 
         $boutique = $boutiqueRepository->findOneBy(['user' => $this->getUser()]);
         $menu = $menuRepository->findBy(['boutique' => $boutique]);
-
 
         return $this->render('admin/index.html.twig', [
             'pages' => 'parametreOption',
@@ -277,7 +287,13 @@ class AdminController extends AbstractController
         ]);
     }
 
-
+    public function buttonAddProduct(array $categories,string $class){
+         $button = "";
+         foreach ($categories as $key => $category) {
+            $button .= '<button id="'.$this->utilsService::getSlug($category).'"class="'. $class .'">'.$category.'</button>';
+         }
+        return $button;
+    }
     static function button_add_boutique(string $categorie, $class)
     {
 
@@ -433,8 +449,8 @@ class AdminController extends AbstractController
 
 
             default:
-                $button = " ";
-                break;
+                $button = "";
+            break;
         }
 
 

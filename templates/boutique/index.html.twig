@@ -7,7 +7,7 @@
 {% block stylesheets %}
 	 <link href="https://fonts.googleapis.com/css?family=Montserrat:400,500,700" rel="stylesheet">
    
-    <link href="{{ asset('css/bootstrap3.3.css')}}" rel="stylesheet" type="text/css">
+    <link href="{{ asset('css/bootstrap5.0.css')}}" rel="stylesheet" type="text/css">
     <!-- Slick -->
     <link type="text/css" rel="stylesheet" href="{{asset('css/slick.css') }}"/>
     <link type="text/css" rel="stylesheet" href="{{asset('css/slick-theme.css') }}"/>
@@ -21,6 +21,7 @@
     <!-- Custom stlylesheet -->
     <link type="text/css" rel="stylesheet" href="{{ asset('css/style.css') }}"/>
     <link type="text/css" rel="stylesheet" href="{{ asset('css/index.css') }}"/>
+	<link rel="stylesheet" href="{{ asset('css/indexmenu.css') }}" />
     <link type="text/css" rel="stylesheet" href="{{ asset('css/slideindexvote.css') }}"/>
 {% endblock %}
 
@@ -33,17 +34,20 @@
 
 	</div>
 	{#  navbar #}
-	{% include "boutique/index.navbar.html.twig" %}
+	
+	{% include "boutique/menu.twig" %}
+	{#{% include "boutique/index.navbar.html.twig" %}#}
 
 	<div id="container_echatillon"> 
 	<div class="inother-ajax">
                <div class="div-inother"></div>
     </div>
-  	<div class="col-md-2">
+  	{#<div class="col-md-2">
 	   <div id="menu_detail">
 	   </div>
 	</div>
-	<div class="col-md-10 _container_all_echantillon">
+	#}
+	<div class="_container_all_echantillon">
 		<button class="remove btn btn-danger "><span class="fa fa-times"></span></button>
 	     <div class="_container_echatillon">
 	     	<h4 align='center'> Recherche des resultats </h4>
@@ -108,4 +112,5 @@
 	<script src="{{ asset('js/connexion.js') }}"> </script>
 	<script src="{{asset('js/index.js')}}"></script>
 	<script src="{{asset('js/voteindex.js')}}"></script>
+	<script src="{{asset('js/indexmenu.js')}}"></script>
 {% endblock %}
