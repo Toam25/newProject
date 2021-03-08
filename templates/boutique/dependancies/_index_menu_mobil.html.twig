@@ -1,0 +1,20 @@
+<li><a href="{{ path('shop',{'type':lastboutique.type,'id':  lastboutique.id})}}">{{ "Galerie Marchande"|upper }}</a></li>                
+
+
+{% for key, menu in allMenus %}
+<li>
+    <a href="#"><span> {{ key|upper }}</span></a>
+    <ul class="mobile-sub-menu">
+        {% for  _category in menu %}
+        <li>
+            <a href="#">- &nbsp{{ _category['category']}}</a>
+            <ul class="mobile-sub-menu">
+               {% for sous_category in _category['sous_category'] %}
+                    <li id="{{ slugify(sous_category['name']) }}" class="echantillon_image"><a href="#">{{ sous_category['name']}}</a></li>
+               {% endfor %}
+            </ul>
+        </li>
+        {% endfor %}
+    </ul>
+</li>
+{% endfor %}

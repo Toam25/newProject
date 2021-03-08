@@ -39,7 +39,7 @@
                     $this.addClass('close');
                 }
             });
-            $('.offcanvas-close, .offcanvas-overlay').on('click', function (e) {
+            $('.offcanvas-close, .offcanvas-overlay, .remove ').on('click', function (e) {
                 e.preventDefault();
                 $body.removeClass('offcanvas-open');
                 $offCanvas.removeClass('offcanvas-open');

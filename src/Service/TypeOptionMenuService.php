@@ -626,7 +626,7 @@ class TypeOptionMenuService extends AbstractController
                ]
             ]
          ],
-         "système domotique" =>
+         "systeme-domotique" =>
          [
             "category" => "Système domotique",
             'sous_category' => [

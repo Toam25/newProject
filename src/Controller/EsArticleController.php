@@ -22,7 +22,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class EsArticleController extends AbstractController
 {   
     private $typeOptionMenuService;
-    private $utilsService;
+  
     public function __construct(UtilsService $utilsService, TypeOptionMenuService $typeOptionMenuService )
     {
         $this->typeOptionMenuService=$typeOptionMenuService;

@@ -100,7 +100,7 @@ $(function(){
   })
   $('body').on('click', '.echantillon_image', function (e) {
     e.preventDefault();
-
+    $('#mobile-menu-offcanvas').addClass('offcanvas-open')
     var habillement = ["Vetements_homme", "Chaussures_homme", "Lingeries_homme", "Vetements_femme", "Chaussures_femmme", "Lingeries_femme", "enfant_garcon", "enfant_fille", "Chaussures_enfant", "bebe_garcons", "bebe_chaussure", "bebe_filles"];
     var accessoires = ["acc_cheveux", "acc_bijoux_montre", "acc_sacs_maroquinerie", "acc_fashion_plus"];
     var beaute_bien = ["acc_soins_cheveux", "acc_soins_ongle", "acc_soins_corps_visage", "acc_beaute_bio", "acc_parfums"];
