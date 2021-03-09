@@ -37,14 +37,17 @@ class EsArticleController extends AbstractController
        
         $esArticle = new EsArticle();
         $form = $this->createForm(EsArticleType::class,$esArticle);
-        
+         
          $button_add_ess = $categoryService->getAddButton($this->typeOptionMenuService->getTypeOptionMenu($shop,$category),"btn btn-success  ajout_ess_article_ev");
-        
+         $listOption=$this->typeOptionMenuService->getOption($sous_category);
+
          $form->handleRequest($request);
         if($form->isSubmitted()){
 
             $file = $insertFileServices->insertFile($esArticle->getPhotos());
             $esArticle->setCategory($category);
+            $esArticle->setSousCategory($sous_category);
+            $esArticle->setType($request->request->get('es_article')['type']);
             $esArticle->setImage($file);
             $esArticle->setBoutique($boutique);
             $em=$this->getDoctrine()->getManager();
@@ -61,7 +64,7 @@ class EsArticleController extends AbstractController
             'category'=>$category,
             'sous_category'=>$sous_category,
             'shop'=>$shop,
-            'menu'=>$this->typeOptionMenuService->getTypeOptionMenu($shop,$category,$sous_category)['name'],
+            'menu'=>$shop.'/'.$listOption['sous_category'].'/'.$listOption['name'],
             'button_add_es'=>$button_add_ess,
             'form'=>$form->createView(),
             'boutique'=>$boutique 

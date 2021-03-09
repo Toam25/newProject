@@ -280,10 +280,11 @@ class AdminController extends AbstractController
     {
 
         $boutiques = $boutiqueRepository->findAll();
-
+        $boutique = $boutiqueRepository->findOneBy(['user' => $this->getUser()]);
         return $this->render('admin/index.html.twig', [
             'pages' => 'list_boutique',
-            'boutiques' => $boutiques
+            'boutiques' => $boutiques,
+            'boutique'=>$boutique
         ]);
     }
 

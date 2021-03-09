@@ -2,6 +2,20 @@ $(function () {
   var $category;
 
 
+  //delete header 
+  $('.del_header').on('click',function(e){
+     e.preventDefault();
+     $.ajax({
+      url : "/api/delete/header_images",
+      type: 'POST',
+      dataType: 'json',
+      success : (data)=>{
+         
+      },
+      error : ()=>{
+
+      }
+  });
   //edition vote
 
   $('._edit_vote').on('submit',function(e){
@@ -68,26 +82,50 @@ $(function () {
   // delete shop
   $('body').on('click','.js-delate-shop',function(e){
     e.preventDefault();
-      url ='/api/delete/boutique/'+$(this).data('id');
-      $(this).parents('.js-container-shop').remove()
-      $.ajax({
-        url,
-       type :'POST',
-       data :{
+    Lobibox.confirm({
+      msg: 'Voulez vous supprimer cette Video ?',
+      buttons : {
+         yes : {
+            text : 'Acceptez',
+
         },
-        dataType : 'json',
-       beforeSend : function(){
+        no : {
+            text : 'Annulez',
 
-       },
-       success : function(data){
-        toastr.success('Supprimer avec success');
+        },
+       
+      },
 
-       },
-       error : function(){
-         toastr.error('Il y a un erreur');
+      callback : ($this,type)=>{
 
-       }
-     });
+      if(type==="yes"){
+         
+        
+        url ='/api/delete/boutique/'+$(this).data('id');
+        $(this).parents('.js-container-shop').remove()
+        $.ajax({
+          url,
+         type :'POST',
+         data :{
+          },
+          dataType : 'json',
+         beforeSend : function(){
+  
+         },
+         success : function(data){
+          toastr.success('Supprimer avec success');
+  
+         },
+         error : function(){
+           toastr.error('Il y a un erreur');
+  
+         }
+       });
+     }  
+    } 
+
+   }); 
+    
   });
     //detail article
 
@@ -1076,7 +1114,6 @@ $(function () {
   $('body').on('submit', '.add_ess_article', function (e) {
     e.preventDefault();
 
-    $("#ajout_article").modal('hide');
     var form = $(this);
     $.ajax({
       type: 'POST',
@@ -1089,7 +1126,9 @@ $(function () {
         $('.name_menu').append(`<span><img class="loader_img_default"src="/images/images_default/ajax-loader.gif"/>`);
       },
       success: function (data) {
-
+        form[0].reset();
+        toastr.success('Enregistrer avec success');
+        $('#preview_image').attr('src',"")
         $('.liste_article_in').prepend(`
             <div class="container_article col-xs-6 col-sm-3 col-md-2 col-lg-2">
             <div class="list_produit">
@@ -1158,14 +1197,29 @@ $(function () {
   $('.ajout_ess_article_ev').on('click', function () {
     activeAddArticle();
     $("#ajout_article").modal('show');
-
+    
     $('.file').prop('required', true);
     $('.type_article_in').attr('value', $(this).attr('id'));
     $('.form_article').addClass('add_ess_article');
     $('.form_article').removeClass('edit_article');
-   
-    $('#es_article_type').html(typeArticle($(this).attr('id')));
-    $('.modal-footer').html(`<button id="submitformarticle" type="submit" class="btn btn-success"> Enregistrer</button>`);
+    $('.btn-submit').append('<span class="loader_ajax" style="height: 20px;width: 20px;display: inline-block;"><img src="/images/images_default/ajax-loader.gif" style="height: 100%;width: 100%;"></span>')
+    $('.btn-submit').prop('disabled', true);
+    $.ajax({
+      url : '/api/getOptions/'+$(this).attr('id'),
+      type : "GET",
+      dataType : 'json',
+      success : (data)=>{
+         $('#es_article_type').html(getMyOption(data['option']));
+         $('.btn-submit').children('.loader_ajax').remove();
+         $('.btn-submit').prop('disabled', false)
+      },
+      error : ()=>{
+        $('.btn-submit').children('.loader_ajax').remove();
+        $('.btn-submit').prop('disabled', false)
+      }
+
+    })
+   // $('#es_article_type').html(typeArticle($(this).attr('id')));
   });
 
 
@@ -1186,16 +1240,16 @@ $(function () {
         value: ['Caleçon', 'Boxeur', 'Slips', 'Short', 'Jock strap', 'Chaussette', 'Pantie']
       },
       {
-        name: "Vetements_femme",
+        name: "Vetement-femme",
         value: ['Robe de ceremonie', 'Robe de mariée', 'Robe de fiançaille', 'Sweats-Shirts', 'Jeans', 'Cardigans', 'Chemise', 'Body', 'Blouse', 'T-shirts', 'Polos', 'Débardeur', 'Pulls', 'Gilets', 'Sweats-Shirts', 'Manteaux', 'Tailleurs', 'Vestes', 'Blousons', 'Jupes', 'Pantalons', 'Salopettes', 'Combinaisons', 'Combi-short', 'Chaussettes', 'Collants', 'Vêtements de Grossesse', 'Vetement de nuit', 'Vetement de Sports', 'Imperméable', 'Maillots de Bains', 'Costumes', 'Ensemble', 'Jogging']
       },
       {
-        name: "Chaussures_femmme",
+        name: "Chaussure-femmme",
         value: ['Ballerines ', 'Baskets', 'Bottes', 'Boots', 'Chaussons', 'Chaussures Bateau', 'Chaussures de Securité', 'Chaussures de ville', 'Derbie', 'Designer', 'Escarpins', 'Espadrilles', ' Mary Janes', 'Mocassins', 'Mulle', 'Sabot', 'Sandales', 'Sport', 'Tongs']
       },
       {
-        name: "Lingeries_femme",
-        value: ['Slips', 'Dentelle côté', 'Tanga', 'Boxer', 'Accessoires', 'Bas', 'Jarretières', 'Bodys', 'Bustiers', 'corsets', 'Caracos', 'Combinaisons', 'Jupons', 'Culottes', 'Shorties', 'Strings', 'Ensembles de Lingeries', 'Lingeries Sculptantes', 'Nuisettes', 'Deshabillés', 'Vêtements Thérmiques', 'Soutiens Gorges']
+        name: "Lingeries-femme",
+        value: ['Slips','Dentelle côté', 'Tanga', 'Boxer', 'Accessoires', 'Bas', 'Jarretières', 'Bodys', 'Bustiers', 'corsets', 'Caracos', 'Combinaisons', 'Jupons', 'Culottes', 'Shorties', 'Strings', 'Ensembles de Lingeries', 'Lingeries Sculptantes', 'Nuisettes', 'Deshabillés', 'Vêtements Thérmiques', 'Soutiens Gorges']
       },
       {
         name: "Vetements_enfant",
@@ -1440,7 +1494,24 @@ $(function () {
 
     return options;
   }
+  
+  function getMyOption(type,item=null){
+    let classe ="";
+    let options="";
+    for (var i = 0; i < type.length; i++) {
+      if (item != null) {
+        if ( type[i]===item) {
+          classe = "class=' selected_option' selected";
+        }
+        else{
+          classe ="";
+        }
+      }
+      options = '<option value="' + type[i] + '" ' + classe + '>' + type[i] + '</option>' + options;
 
+    }
+    return options;
+  }
   var containt_parameter = (categorie_menu) => {
     //telefonie
     if (categorie_menu == "Accessoires") {
