@@ -17,6 +17,9 @@ width: 100%;
     padding: 8px;
     margin: 10px 0px;
 }
+.ajout_ess_article_ev{
+    margin : 0 7px;
+}
 .container_category_setting > h3 {
     color: #007fff;
     text-align: center;

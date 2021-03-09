@@ -37,17 +37,37 @@ class TypeOptionMenuService extends AbstractController
       ];
 
       if ($sous_category != null) {
-         return $type[strtolower($typeMenu)][$utils->getSlug($category)]['sous_category'][$utils->getSlug($sous_category)] ?? "";
+         return $type[strtolower($typeMenu)][$utils->getSlug($category)]['sous_category'][$utils->getSlug($sous_category)] ?? [];
       } else if ($category != null) {
-         return $type[strtolower($typeMenu)][$utils->getSlug($category)]['sous_category'] ?? "";
+         return $type[strtolower($typeMenu)][$utils->getSlug($category)]['sous_category'] ?? [];
       }
       else if ($typeMenu!=null){
-         return $type[strtolower($typeMenu)] ?? "";
+         return $type[strtolower($typeMenu)] ?? [];
       }
 
       return $type;
    }
+   
+   public function getOption($option){
+      $array = [];
+      $categories = $this->getTypeOptionMenu();
+     foreach ($categories as $keyc=> $category) {
+          foreach ($category as $keys=>$sous_category) {
+            foreach ($sous_category['sous_category'] as $key=>$_sous_category) {
+                if($option == $key){
 
+                  return  [
+                     'category'=>$keyc,
+                     'sous_category'=>$sous_category['category'],
+                     'name'=>$_sous_category['name'],
+                     'option'=>$_sous_category['options']
+                  ] ;
+                }
+           }
+          }
+     }
+      return $array;
+   }
    public function getCategoryMaison()
    {
       return [
@@ -270,7 +290,7 @@ class TypeOptionMenuService extends AbstractController
                ]
             ]
          ],
-         "Sante-hygiene" => [
+         "sante-hygiene" => [
             "category" => "Santé-hygiène",
             'sous_category' => [
                "sante-hygiene" => [
@@ -614,15 +634,15 @@ class TypeOptionMenuService extends AbstractController
                   'name' => 'Matériels informatique',
                   'options' => [
                      "Communication", "Promotion", "Publicité", "Contenus", "Vogue"
-                  ],
-                  "diagnostiques" => [
-
-                     'name' => 'Diagnostique',
-                     'options' => [
-                        "Communication", "Promotion", "Publicité", "Contenus", "Vogue"
-                     ]
                   ]
 
+               ],
+               "diagnostiques" => [
+
+                  'name' => 'Diagnostique',
+                  'options' => [
+                     "Communication", "Promotion", "Publicité", "Contenus", "Vogue"
+                  ]
                ]
             ]
          ],
@@ -630,7 +650,7 @@ class TypeOptionMenuService extends AbstractController
          [
             "category" => "Système domotique",
             'sous_category' => [
-               "systeme domotique" => [
+               "systeme-domotique" => [
 
                   'name' => "Système domotique",
                   'options' => [

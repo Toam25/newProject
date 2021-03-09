@@ -18,11 +18,13 @@
 					<label>Photo</label>
 					{{ form_widget(form.photos, {'attr': {'id' :'file_in', 'class':'file form-control'}}) }}
 					{{ form_widget(form.sous_category, {'attr': {'class':'type_article_in'}}) }}
-					{{ form_row(form.type,{'attr': {'class':''} }) }}
+					{{ form_row(form.type,{'attr': {'class':'form-control'} }) }}
 				</div>
 
 			</div>
-			<div class="modal-footer"></div>
+			<div class="modal-footer">
+				<button id="submitformarticle" type="submit" class="btn btn-success btn-submit"> Enregistrer</button>
+			</div>
 			{{ form_end(form)}}
 		</div>
 	</div>

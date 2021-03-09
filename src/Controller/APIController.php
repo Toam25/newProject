@@ -22,11 +22,13 @@ use App\Repository\ReferenceRepository;
 use App\Repository\SliderRepository;
 use App\Repository\SocialNetworkRepository;
 use App\Repository\UserConditionRepository;
+use App\Repository\UserRepository;
 use App\Repository\UserVoteRepository;
 use App\Repository\VoteRepository;
 use App\Service\ArticlePerShopService;
 use App\Service\CategoryOptionService;
 use App\Service\InsertFileServices;
+use App\Service\TypeOptionMenuService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\BrowserKit\Response as BrowserKitResponse;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -55,7 +57,17 @@ class APIController extends AbstractController
         }
         return new Response(json_encode($data));
     }
- 
+   
+    /**
+     * @Route("/getOptions/{sous_category}", name="get_option")
+     */
+    public function getOption(string $sous_category,TypeOptionMenuService $typeOptionMenuService )
+    {
+        $listOption = $typeOptionMenuService->getOption($sous_category);
+        
+        
+        return new JsonResponse($listOption,Response::HTTP_OK);
+    }
 
     /**
      * @Route("/set/numberVoteIndex/{status}-{id_vote}", name="set_number_vote_index", methods={"POST"})
@@ -145,7 +157,7 @@ class APIController extends AbstractController
     /**
      * @Route("/delete/boutique/{id}", name="deleteboutique")
      */
-    public function deteteBoutique(Boutique $boutique, BoutiqueRepository $boutiqueRepository,ArticleRepository $articleRepository)
+    public function deteteBoutique(Boutique $boutique, BoutiqueRepository $boutiqueRepository,UserRepository $userRepository, ArticleRepository $articleRepository)
     {
 
     
@@ -154,15 +166,18 @@ class APIController extends AbstractController
             if ($articles) {
                 foreach ($articles as $article) {
                     foreach ($article->getImages() as $image) {
-                        unlink('images/' . $image->getName());
+                       // unlink('images/' . $image->getName());
                     }
                 }
             }
            if($boutique->getLogo()!=="images_default/default_image.jpg"){
-              unlink('images/'.$boutique->getLogo());
+              //unlink('images/'.$boutique->getLogo());
             }
-            
             $em = $this->getDoctrine()->getManager();
+            $users=$boutique->getUser();
+         
+            $em->remove($users);
+
             $em->remove($boutique);
             $em->flush();
 
