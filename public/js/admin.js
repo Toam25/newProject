@@ -13,9 +13,10 @@ $(function () {
          
       },
       error : ()=>{
-
+            toastr.error('Il y a un erreur')
       }
   });
+});
   //edition vote
 
   $('._edit_vote').on('submit',function(e){
