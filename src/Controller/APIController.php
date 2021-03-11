@@ -481,7 +481,7 @@ class APIController extends AbstractController
                     $em->persist($header);
                     $em->flush();
                 }
-                return new JsonResponse(['images' => $file]);
+                return new JsonResponse(['images' => $file,"id"=>$header->getId()]);
             } else {
                 return new JsonResponse(['message' => "form fichier invalide"], Response::HTTP_NOT_ACCEPTABLE);
             }
@@ -502,6 +502,25 @@ class APIController extends AbstractController
         } else {
             return new JsonResponse(['status' => 'error'], Response::HTTP_NOT_EXTENDED);
         }
+    }
+    /**
+     * @Route("/delete/header_images", name="header_delete_shop", methods={"POST"})
+     */
+    public function header_delete_shop(HeaderRepository $headerRepository, BoutiqueRepository $boutiqueRepository): Response
+    {
+            $header= $headerRepository->findOneBy(['boutique'=>$boutiqueRepository->findOneBy(['user'=>$this->getUser()])]);
+            
+            if($header){
+                unlink('images/'.$header->getName());
+                $entityManager = $this->getDoctrine()->getManager();
+                $entityManager->remove($header);
+                $entityManager->flush();
+                return new JsonResponse(['images'=>'images/images_default/default_image.jpg','status' => 'success'], Response::HTTP_OK);
+            }
+            else{
+                return new JsonResponse(['status' => 'error'], Response::HTTP_NOT_EXTENDED);
+            }
+       
     }
      /**
      * @Route("/get/listArticlePerBoutique/{category}/{type}", name="listeArticlePerBoutique", methods={"GET"})

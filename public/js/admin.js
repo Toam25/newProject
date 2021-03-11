@@ -5,17 +5,45 @@ $(function () {
   //delete header 
   $('.del_header').on('click',function(e){
      e.preventDefault();
-     $.ajax({
-      url : "/api/delete/header_images",
-      type: 'POST',
-      dataType: 'json',
-      success : (data)=>{
-         
+     Lobibox.confirm({
+      msg: 'Voulez vous supprimer cette Video ?',
+      buttons : {
+         yes : {
+            text : 'Acceptez',
+
+        },
+        no : {
+            text : 'Annulez',
+
+        },
+       
       },
-      error : ()=>{
-            toastr.error('Il y a un erreur')
-      }
-  });
+
+      callback : ($this,type)=>{
+
+      if(type==="yes"){
+
+        $.ajax({
+          url : "/api/delete/header_images",
+          type: 'POST',
+          dataType: 'json',
+          beforeSend : ()=>{
+            toastr.info('En cours de suppression...')
+          },
+          success : (data)=>{
+             $('#header_index').children('img').attr('src',data.images);
+             toastr.success('Suppression reussite')
+          },
+          error : ()=>{
+                toastr.error('Ajouter une image avant !!!');
+          }
+      });
+
+     }  
+    } 
+
+   }); 
+     
 });
   //edition vote
 
@@ -1085,7 +1113,9 @@ $(function () {
       },
       success: (data)=>{
         toastr.success('Enregistrer avec success');
-        $('#header_index').children('img').prop('src', 'images/' + data.images);
+        $('#header_index').children('img').attr('src', 'images/' + data.images);
+        $(".del_header").attr('data-id',data.id);
+        $(this)[0].reset();
         $(this).children('div').children('button').children('.loader_ajax').remove();
         $('.btn-submit').prop('disabled', false);
         $('#add_header').modal('hide');
