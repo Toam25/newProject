@@ -14,7 +14,7 @@
 					{# <p class="Administrer_boutique">Administrer</p> } #}
 					<button class="supprimer_boutique js-delate-shop" data-id="{{ boutique.id }}">Supprimer</button>
 					{#  <button class="message-in btn btn-primary" data-id={{ boutique.user.id }}>Messages</button> #}
-					<a href="{{ path('shop',{ 'type':boutique.type, 'id' : boutique.id }) }}" about="_blank">Voir la boutique</a>
+					<a href="{{ path('shop',{ 'type':boutique.type, 'id' : boutique.id }) }}" target="_blank">Voir la boutique</a>
 				</div>
               {% endif %}
 				<p class="nom_boutique">{{ boutique.name}}</p>

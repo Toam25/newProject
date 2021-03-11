@@ -1083,15 +1083,16 @@ $(function () {
         $('.btn-submit').append('<span class="loader_ajax" style="height: 20px;width: 20px;display: inline-block;"><img src="/images/images_default/ajax-loader.gif" style="height: 100%;width: 100%;"></span>');
         $('.btn-submit').prop('disabled', true)
       },
-      success: function (data) {
+      success: (data)=>{
         toastr.success('Enregistrer avec success');
         $('#header_index').children('img').prop('src', 'images/' + data.images);
-        $(this).children('.loader_ajax').remove();
+        $(this).children('div').children('button').children('.loader_ajax').remove();
         $('.btn-submit').prop('disabled', false);
+        $('#add_header').modal('hide');
       },
-      error: function () {
+      error:  ()=>{
         toastr.error('Une erreur à été survenue');
-        $(this).children('.loader_ajax').remove();
+        $(this).children('div').children('button').children('.loader_ajax').remove();
         $('.btn-submit').prop('disabled', false);
       },
       complete: function () {
