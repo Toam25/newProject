@@ -268,7 +268,7 @@ class TypeOptionMenuService extends AbstractController
             "category" => "Formations",
 
             'sous_category' => [
-               "formation en ligne" => [
+               "formation-en-ligne" => [
                   'name' => 'Formation en ligne',
                   'options' => [
                      "BTP"
