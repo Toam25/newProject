@@ -115,7 +115,7 @@
 					</a>
 					<ul class="dropdown-menu dropdown-menu-right dropdown-default" aria-labelledby="userDropdown">
 						<li>
-							<a class="dropdown-item" href="{{path('profil',{'id': app.user.id})}}">
+							<a class="dropdown-item" href="{{path('profil',{'id': app.user.id,'slug' : slugify(app.user.name) ~"-"~slugify(app.user.firstname)~".html" })}}">
 								<i class="fa fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
 								Mon profil</a>
 						</li>

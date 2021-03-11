@@ -1,7 +1,7 @@
 <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
     <!-- Sidebar - Brand -->
-    <a class="sidebar-brand d-flex align-items-center justify-content-center" target="_blank" href="{{my_boutique_twig(app.user,'path')}}">
+    <a class="sidebar-brand d-flex align-items-center justify-content-center" target="_blank" {#href="{{my_boutique_twig(app.user,'path')}}" #} >
       <div class="sidebar-brand-icon container_logo">
            {{ my_boutique_twig(app.user,'images') }}
       </div>
@@ -19,7 +19,7 @@
 
     </li>
     <li class="nav-item">
-      <a class="nav-link" href="{{ path('home')}}">
+      <a class="nav-link" href="{{ path('index')}}">
         <i class="fas fa-fw fa-tachometer-alt"></i>
         <span>Accueil</span></a>
     </li>

@@ -10,7 +10,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class ProfilController extends AbstractController
 {
     /**
-     * @Route("/profil/{id}", name="profil")
+     * @Route("/profil/{id}-{slug}", name="profil")
      */
     public function index(User $user, BoutiqueRepository $boutiqueRepository)
     {  
