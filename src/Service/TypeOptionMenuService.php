@@ -21,9 +21,8 @@ class TypeOptionMenuService extends AbstractController
    {   
       $utils = $this->utilsService;
 
-      $typeMenu=$utils->getSlug($typeMenu);
-
-      if($typeMenu == "habillement"){
+     
+      if($typeMenu == "Habillement"){
         $type = [
             'habillement'=>$this->getCategoryHabillement(),
         ];
@@ -33,7 +32,7 @@ class TypeOptionMenuService extends AbstractController
              'accessoire'=>$this->getCategoryAccessoires()
           ];
       }
-      elseif($typeMenu=="beaute-et-bien-etre"){
+      elseif($typeMenu=="beaute_et_bien_etre"){
         [
             'beaute-et-bien-etre'=>$this->getCategoryBeauteEtBienEtre()
         ];
@@ -63,6 +62,7 @@ class TypeOptionMenuService extends AbstractController
          return $type[strtolower($typeMenu)][$utils->getSlug($category)]['sous_category'] ?? [];
       }
       else if ($typeMenu!=null){
+        
          return $type[strtolower($typeMenu)] ?? [];
       }
 
@@ -71,10 +71,11 @@ class TypeOptionMenuService extends AbstractController
    /**
     * return @array
     */
-   public function getOption($option,string $type=null){
+   public function getOption($option,string $type=""){
       $array = [];
        $utils= $this->utilsService;
-      if($type==null){
+      if($type==""){
+         
           $categories = $this->getTypeOptionMenu();
           foreach ($categories as $keyc=> $category) {
             foreach ($category as $keys=>$sous_category) {

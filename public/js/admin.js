@@ -2,11 +2,58 @@ $(function () {
   var $category;
 
 
+  //delete ess article 
+  $('body').on('click','.bnt_delete_article',function(e){
+    e.preventDefault();
+    let parents= $(this).parents('.list_produit');
+    let id = parents.children('input').val();
+
+    Lobibox.confirm({
+     msg: 'Voulez vous supprimer  ?',
+     buttons : {
+        yes : {
+           text : 'Acceptez',
+
+       },
+       no : {
+           text : 'Annulez',
+
+       },
+      
+     },
+
+     callback : ($this,type)=>{
+
+     if(type==="yes"){
+
+       $.ajax({
+         url : "/superadmin/es/article/"+id,
+         type: 'POST',
+         dataType: 'json',
+         beforeSend : ()=>{
+           toastr.info('En cours de suppression...')
+         },
+         success : (data)=>{
+            
+            parents.remove()
+            toastr.success('Suppression reussite')
+         },
+         error : ()=>{
+               toastr.error('Il y a un erreur !!!');
+         }
+     });
+
+    }  
+   } 
+
+  }); 
+    
+});
   //delete header 
   $('.del_header').on('click',function(e){
      e.preventDefault();
      Lobibox.confirm({
-      msg: 'Voulez vous supprimer cette Video ?',
+      msg: 'Voulez vous supprimer?',
       buttons : {
          yes : {
             text : 'Acceptez',
@@ -1179,7 +1226,7 @@ function list_type_other(arrays, value){
       cache: false,
       dataType: 'json',
       beforeSend: function () {
-        $('.name_menu').append(`<span><img class="loader_img_default"src="/images/images_default/ajax-loader.gif"/>`);
+        $('.btn-submit').append(`<span><img class="loader_img_default"src="/images/images_default/ajax-loader.gif"/>`);
       },
       success: function (data) {
         form[0].reset();
@@ -1188,7 +1235,6 @@ function list_type_other(arrays, value){
         $('.liste_article_in').prepend(`
             <div class="container_article col-xs-6 col-sm-3 col-md-2 col-lg-2">
             <div class="list_produit">
-              <input type="hidden" name="table" value="article_in">
                 <input type="hidden" name="id_image" value="`+ data.id + `">
                   <img class="image_produit" src="/images/`+ data.images + `" alt="` + data.type + `">
                     <p class="name_article">`+ data.type + `</p>
@@ -1202,7 +1248,7 @@ function list_type_other(arrays, value){
       },
       complete: function () {
         form.children('.inother-ajax').children('.div-inother').hide();
-        $('.name_menu').children('span').remove();
+        $('.btn-submit').children('span').remove();
 
       }
     });
