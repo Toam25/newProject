@@ -386,9 +386,11 @@ nav li:hover .submenu{
 }
 .container_resume_shop > h3{
     display: inline-block;
-max-width: 558px;
-color: white;
-text-shadow: 0px 0px .7px black
+    max-width: 90vw;
+    color: white;
+    text-shadow: 0px 0px .4px black;
+    text-align: center;
+    font-size: 1.5rem;
 }
 .container_resume_shop {
     position: absolute;

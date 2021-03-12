@@ -1,4 +1,4 @@
-{% if type is same as("High-tech")%}
+{#{% if type is same as("High-tech")%}
 <li class="nav-item">
       <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#telephonie_" aria-expanded="true" aria-controls="collapsePages">
         <i class="fas fa-fw fa-folder"></i>
@@ -58,6 +58,7 @@
           <i class="fas fa-fw fa-fw fa-folder"></i>
           <span>Impression</span></a>
 </li>
+
 {%  elseif type is same as("Habillement")%}
 <li class="nav-item">
       <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#habillement" aria-expanded="true" aria-controls="collapsePages">
@@ -117,8 +118,9 @@
       </div>
 </li>
 {% else %}
+#}
    {{ menu_super_admin(type ,"ADMIN")}} 
-{% endif %}
+{#{% endif %}#}
 <li class="nav-item">
       <a class="nav-link" href="{{ path('social_network_index')}}">
         <i class="fas fa-fw fa-tachometer-alt"></i>

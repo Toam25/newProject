@@ -12,6 +12,7 @@ use App\Service\InsertFileServices;
 use App\Service\TypeOptionMenuService;
 use App\Service\UtilsService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -56,7 +57,7 @@ class EsArticleController extends AbstractController
             return new Response(json_encode(['id'=>$esArticle->getId(),'images'=>$esArticle->getImage(),'type'=>$esArticle->getType()]));
         }
         $allArticle = $articleRepository->findBy(['boutique'=>$boutique] );
-
+    
         return $this->render('admin/index.html.twig', [
             'es_articles' => $esArticleRepository->findBy(['category'=>$category,'boutique'=>$boutique]),
             'pages'=>'list_es',
@@ -125,16 +126,22 @@ class EsArticleController extends AbstractController
     }
 
     /**
-     * @Route("/{id}", name="es_article_delete", methods={"DELETE"})
+     * @Route("/{id}", name="es_article_delete", methods={"POST"})
      */
-    public function delete(Request $request, EsArticle $esArticle): Response
+    public function delete(Request $request, EsArticle $esArticle, BoutiqueRepository $boutiqueRepository): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$esArticle->getId(), $request->request->get('_token'))) {
+        // if ($this->isCsrfTokenValid('delete'.$esArticle->getId(), $request->request->get('_token'))) {
+        //     $entityManager = $this->getDoctrine()->getManager();
+        //     $entityManager->remove($esArticle);
+        //     $entityManager->flush();
+        // }
+        $boutique= $boutiqueRepository->findOneBy(['user'=>$this->getUser()]);
+        if($boutique==$esArticle->getBoutique()){
+            unlink('images/'.$esArticle->getImage());
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->remove($esArticle);
             $entityManager->flush();
         }
-
-        return $this->redirectToRoute('es_article_index');
+        return new JsonResponse(['status'=>"success"], Response::HTTP_OK);
     }
 }

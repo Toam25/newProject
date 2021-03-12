@@ -18,23 +18,43 @@ class TypeOptionMenuService extends AbstractController
     * @return  array
     */
    public function getTypeOptionMenu($typeMenu=null, $category = null, $sous_category = null)
-   {
-
+   {   
       $utils = $this->utilsService;
-      $type = [
-         ////////informatique
-         'high-tech' => $this->getCategoryHighTech(),
 
-         ////////mode
-         'mode' => $this->getCategoryMode(),
-
-         ////////service
-         'services' => $this->getCategoryServices(),
-
-         //////////////maison
-         'maison' => $this->getCategoryMaison()
-
-      ];
+     
+      if($typeMenu == "Habillement"){
+        $type = [
+            'habillement'=>$this->getCategoryHabillement(),
+        ];
+      }
+      elseif($typeMenu=='accessoires'){
+          [
+             'accessoire'=>$this->getCategoryAccessoires()
+          ];
+      }
+      elseif($typeMenu=="beaute_et_bien_etre"){
+        [
+            'beaute-et-bien-etre'=>$this->getCategoryBeauteEtBienEtre()
+        ];
+      }
+      else{
+         $type = [
+            ////////informatique
+            'high-tech' => $this->getCategoryHighTech(),
+   
+            ////////mode
+            'mode' => $this->getCategoryMode(),
+   
+            ////////service
+            'services' => $this->getCategoryServices(),
+   
+            //////////////maison
+            'maison' => $this->getCategoryMaison()
+   
+         ];
+      }
+      
+      
 
       if ($sous_category != null) {
          return $type[strtolower($typeMenu)][$utils->getSlug($category)]['sous_category'][$utils->getSlug($sous_category)] ?? [];
@@ -42,30 +62,57 @@ class TypeOptionMenuService extends AbstractController
          return $type[strtolower($typeMenu)][$utils->getSlug($category)]['sous_category'] ?? [];
       }
       else if ($typeMenu!=null){
+        
          return $type[strtolower($typeMenu)] ?? [];
       }
 
       return $type;
    }
-   
-   public function getOption($option){
+   /**
+    * return @array
+    */
+   public function getOption($option,string $type=""){
       $array = [];
-      $categories = $this->getTypeOptionMenu();
-     foreach ($categories as $keyc=> $category) {
-          foreach ($category as $keys=>$sous_category) {
-            foreach ($sous_category['sous_category'] as $key=>$_sous_category) {
-                if($option == $key){
+       $utils= $this->utilsService;
+      if($type==""){
+         
+          $categories = $this->getTypeOptionMenu();
+          foreach ($categories as $keyc=> $category) {
+            foreach ($category as $keys=>$sous_category) {
+              foreach ($sous_category['sous_category'] as $key=>$_sous_category) {
+                  if($option == $key){
+  
+                    return  [
+                       'category'=>$keyc,
+                       'sous_category'=>$sous_category['category'],
+                       'name'=>$_sous_category['name'],
+                       'option'=>$_sous_category['options']
+                    ] ;
+                  }
+             }
+            }
+       }
+      }
+      else{
+         $categories = $this->getTypeOptionMenu($utils->getSlug($type));
+         
+            foreach ($categories as $keys=>$sous_category) {
+               
+              foreach ($sous_category['sous_category'] as $key=>$_sous_category) {
 
-                  return  [
-                     'category'=>$keyc,
-                     'sous_category'=>$sous_category['category'],
-                     'name'=>$_sous_category['name'],
-                     'option'=>$_sous_category['options']
-                  ] ;
-                }
-           }
-          }
-     }
+                  if($option == $key){
+                    return  [
+                       'category'=>$utils->getSlug($type),
+                       'sous_category'=>$sous_category['category'],
+                       'name'=>$_sous_category['name'],
+                       'option'=>$_sous_category['options']
+                    ] ;
+                  }
+             }
+            }
+      }
+      
+     
       return $array;
    }
    public function getCategoryMaison()
@@ -268,7 +315,7 @@ class TypeOptionMenuService extends AbstractController
             "category" => "Formations",
 
             'sous_category' => [
-               "formation en ligne" => [
+               "formation-en-ligne" => [
                   'name' => 'Formation en ligne',
                   'options' => [
                      "BTP"

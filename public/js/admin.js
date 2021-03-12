@@ -2,20 +2,95 @@ $(function () {
   var $category;
 
 
+  //delete ess article 
+  $('body').on('click','.bnt_delete_article',function(e){
+    e.preventDefault();
+    let parents= $(this).parents('.list_produit');
+    let id = parents.children('input').val();
+
+    Lobibox.confirm({
+     msg: 'Voulez vous supprimer  ?',
+     buttons : {
+        yes : {
+           text : 'Acceptez',
+
+       },
+       no : {
+           text : 'Annulez',
+
+       },
+      
+     },
+
+     callback : ($this,type)=>{
+
+     if(type==="yes"){
+
+       $.ajax({
+         url : "/superadmin/es/article/"+id,
+         type: 'POST',
+         dataType: 'json',
+         beforeSend : ()=>{
+           toastr.info('En cours de suppression...')
+         },
+         success : (data)=>{
+            
+            parents.remove()
+            toastr.success('Suppression reussite')
+         },
+         error : ()=>{
+               toastr.error('Il y a un erreur !!!');
+         }
+     });
+
+    }  
+   } 
+
+  }); 
+    
+});
   //delete header 
   $('.del_header').on('click',function(e){
      e.preventDefault();
-     $.ajax({
-      url : "/api/delete/header_images",
-      type: 'POST',
-      dataType: 'json',
-      success : (data)=>{
-         
+     Lobibox.confirm({
+      msg: 'Voulez vous supprimer?',
+      buttons : {
+         yes : {
+            text : 'Acceptez',
+
+        },
+        no : {
+            text : 'Annulez',
+
+        },
+       
       },
-      error : ()=>{
-            toastr.error('Il y a un erreur')
-      }
-  });
+
+      callback : ($this,type)=>{
+
+      if(type==="yes"){
+
+        $.ajax({
+          url : "/api/delete/header_images",
+          type: 'POST',
+          dataType: 'json',
+          beforeSend : ()=>{
+            toastr.info('En cours de suppression...')
+          },
+          success : (data)=>{
+             $('#header_index').children('img').attr('src',data.images);
+             toastr.success('Suppression reussite')
+          },
+          error : ()=>{
+                toastr.error('Ajouter une image avant !!!');
+          }
+      });
+
+     }  
+    } 
+
+   }); 
+     
 });
   //edition vote
 
@@ -240,7 +315,8 @@ $(function () {
           $('._view_simple_article_sous_category').val(data.sous_category)
           $('#view_sous_category').html(list_option(data.list_menu,data.sous_category));
           $('#view_type').html(list_type(data.list_menu,data.sous_category,data.type));
-          $('#view_simple_article_type').html(typeArticle(data.sous_category,data.type))
+        
+          $('#view_simple_article_type').html(list_type_other(data.list_menu[0],data.type))
           $('#view_referency').val(data.referency)
           $('#view_promo').children('option[value="'+data.promo+'"]').prop('selected',true);
           $('#view_promo_price').val(data.promo_price);
@@ -280,6 +356,28 @@ $(function () {
      }
 
     return option
+}
+function list_type_other(arrays, value){
+  let option="";
+  let selected ="";
+  let classe="";
+  
+         for (const arrayoption of arrays.option) {
+   
+          if(arrayoption===value){
+            selected="selected";
+            classe="selected_option";
+            }
+            else{
+              selected ="";
+              classe="";
+            }
+            option+= `<option class="view_sous_categorie  `+classe+`" data-name="`+arrayoption+`" value="`+arrayoption+`" `+selected+`>
+            `+arrayoption+`
+            </option>`;
+         }
+
+  return option
 }
   function list_option(arrays, value){
     let option="";
@@ -677,7 +775,7 @@ $(function () {
  
   // get Type 
 
-  $('.sous_category').on('change',function(e){
+  $('.sous_category, .view_sous_category').on('change',function(e){
              
     var sous_categorie= $(this).val();
 
@@ -709,6 +807,7 @@ $(function () {
                   `</option>`;
       }
       $('#type').html(option);
+      $('#view_type').html(option);
      },
 
      complete : function(){
@@ -1083,15 +1182,18 @@ $(function () {
         $('.btn-submit').append('<span class="loader_ajax" style="height: 20px;width: 20px;display: inline-block;"><img src="/images/images_default/ajax-loader.gif" style="height: 100%;width: 100%;"></span>');
         $('.btn-submit').prop('disabled', true)
       },
-      success: function (data) {
+      success: (data)=>{
         toastr.success('Enregistrer avec success');
-        $('#header_index').children('img').prop('src', 'images/' + data.images);
-        $(this).children('.loader_ajax').remove();
+        $('#header_index').children('img').attr('src', 'images/' + data.images);
+        $(".del_header").attr('data-id',data.id);
+        $(this)[0].reset();
+        $(this).children('div').children('button').children('.loader_ajax').remove();
         $('.btn-submit').prop('disabled', false);
+        $('#add_header').modal('hide');
       },
-      error: function () {
+      error:  ()=>{
         toastr.error('Une erreur à été survenue');
-        $(this).children('.loader_ajax').remove();
+        $(this).children('div').children('button').children('.loader_ajax').remove();
         $('.btn-submit').prop('disabled', false);
       },
       complete: function () {
@@ -1124,7 +1226,7 @@ $(function () {
       cache: false,
       dataType: 'json',
       beforeSend: function () {
-        $('.name_menu').append(`<span><img class="loader_img_default"src="/images/images_default/ajax-loader.gif"/>`);
+        $('.btn-submit').append(`<span><img class="loader_img_default"src="/images/images_default/ajax-loader.gif"/>`);
       },
       success: function (data) {
         form[0].reset();
@@ -1133,7 +1235,6 @@ $(function () {
         $('.liste_article_in').prepend(`
             <div class="container_article col-xs-6 col-sm-3 col-md-2 col-lg-2">
             <div class="list_produit">
-              <input type="hidden" name="table" value="article_in">
                 <input type="hidden" name="id_image" value="`+ data.id + `">
                   <img class="image_produit" src="/images/`+ data.images + `" alt="` + data.type + `">
                     <p class="name_article">`+ data.type + `</p>
@@ -1147,7 +1248,7 @@ $(function () {
       },
       complete: function () {
         form.children('.inother-ajax').children('.div-inother').hide();
-        $('.name_menu').children('span').remove();
+        $('.btn-submit').children('span').remove();
 
       }
     });

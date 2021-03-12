@@ -68,6 +68,7 @@ class BoutiqueController extends AbstractController
         $listShops = $this->getlistShop($boutiqueRepository->findBy(['type' => $type]), $type);
 
         $pageWasRefreshed = isset($_SERVER['HTTP_CACHE_CONTROL']) && $_SERVER['HTTP_CACHE_CONTROL'] === 'max-age=0';
+        
         if ($id == -1) {
             $boutique = $boutiqueRepository->findOneBy(['type' => $type]);
         } else {

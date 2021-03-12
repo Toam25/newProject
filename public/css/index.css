@@ -262,12 +262,12 @@ nav {
   margin-top: 0px;
 }
 #container_echatillon {
-  position: absolute;
-  width: 79vw;
+  position: fixed;
+  width: 80.5vw;
   z-index: 999;
   display: none;
   background: white;
-  left:  18.5vw;
+  left:  18.07vw;
   right: 5%;
   padding: 5px;
   box-shadow: 0px 0px 14px black;
@@ -332,9 +332,15 @@ nav {
   background-color: black;
   color: white;
 }
+.header-bottom{
+  background: #202340 !important;
+}
 .font_size_p {
   font-size: 12px;
   margin-left: 10px;
+}
+.redSelected {
+  color: #d93b3b !important;
 }
 .div-inother {
   background-color: green;

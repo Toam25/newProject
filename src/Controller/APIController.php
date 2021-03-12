@@ -318,13 +318,23 @@ class APIController extends AbstractController
     /**
      * @Route("/get/sous_category/type/{category}", name="getSousCategoryType")
      */
-    public function getSousCategoryType(string $category, MenuRepository $menuRepository, CategoryOptionService $categoryOptionService)
+    public function getSousCategoryType(string $category,TypeOptionMenuService $typeOptionMenuService, BoutiqueRepository $boutiqueRepository, MenuRepository $menuRepository, CategoryOptionService $categoryOptionService)
     {
 
         if ($this->getUser()) {
+            $boutique = $boutiqueRepository->findOneBy(['user'=>$this->getUser()]);
+            if($boutique->getType()=='Habillement'){
+                $category= $typeOptionMenuService->getOption($category,$boutique->getType());
+                $results = [
+                    'type'=>"",
+                    'option'=>$category['option'],
+                ];
+                return new JsonResponse(['status' => 'success', 'results' =>[$results]], 200);
+            }
+            
             $menu = $menuRepository->findBy(['category' => $category]);
-
             return new JsonResponse(['status' => 'success', 'results' => $categoryOptionService->getCategoryType($menu)], 200);
+
         } else {
             return new JsonResponse(['status' => 'error', 'message' => "Non authorise"], 403);
         }
@@ -333,13 +343,21 @@ class APIController extends AbstractController
     /**
      * @Route("/get/article/{id}", name="getOneArtilce")
      */
-    public function getOneArticle(CategoryOptionService $categoryOptionService, BoutiqueRepository $boutiqueRepository, ArticleRepository $articleRepository, int $id, MenuRepository $menuRepository)
+    public function getOneArticle(CategoryOptionService $categoryOptionService,TypeOptionMenuService $typeOptionMenuService, BoutiqueRepository $boutiqueRepository, ArticleRepository $articleRepository, int $id, MenuRepository $menuRepository)
     {
 
         if ($this->getUser()) {
             $boutique = $boutiqueRepository->findOneBy(['user' => $this->getUser()]);
             $article = $articleRepository->findOneArticleByBoutiqueWithImage($id, $boutique);
-            $list_menu = $categoryOptionService->getCategoryType($menuRepository->findBy(['category' => $article->getCategory()]));
+            if($boutique->getType()=='Habillement' or $boutique->getType()=="accessoires" or $boutique->getType()=="beaute_et_bien_etre" ){
+                $category= $typeOptionMenuService->getOption($article->getCategory(),$boutique->getType());
+                $list_menu = [[
+                    'type'=>"",
+                    'option'=>$category['option'],
+                ]];
+            }else{
+                 $list_menu = $categoryOptionService->getCategoryType($menuRepository->findBy(['category' => $article->getCategory()]));
+            }
             $image = $article->getImages();
             $list = [
                 'id' => $article->getId(),
@@ -481,7 +499,7 @@ class APIController extends AbstractController
                     $em->persist($header);
                     $em->flush();
                 }
-                return new JsonResponse(['images' => $file]);
+                return new JsonResponse(['images' => $file,"id"=>$header->getId()]);
             } else {
                 return new JsonResponse(['message' => "form fichier invalide"], Response::HTTP_NOT_ACCEPTABLE);
             }
@@ -502,6 +520,25 @@ class APIController extends AbstractController
         } else {
             return new JsonResponse(['status' => 'error'], Response::HTTP_NOT_EXTENDED);
         }
+    }
+    /**
+     * @Route("/delete/header_images", name="header_delete_shop", methods={"POST"})
+     */
+    public function header_delete_shop(HeaderRepository $headerRepository, BoutiqueRepository $boutiqueRepository): Response
+    {
+            $header= $headerRepository->findOneBy(['boutique'=>$boutiqueRepository->findOneBy(['user'=>$this->getUser()])]);
+            
+            if($header){
+                unlink('images/'.$header->getName());
+                $entityManager = $this->getDoctrine()->getManager();
+                $entityManager->remove($header);
+                $entityManager->flush();
+                return new JsonResponse(['images'=>'images/images_default/default_image.jpg','status' => 'success'], Response::HTTP_OK);
+            }
+            else{
+                return new JsonResponse(['status' => 'error'], Response::HTTP_NOT_EXTENDED);
+            }
+       
     }
      /**
      * @Route("/get/listArticlePerBoutique/{category}/{type}", name="listeArticlePerBoutique", methods={"GET"})

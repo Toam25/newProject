@@ -349,13 +349,13 @@ body.lobibox-open {
 }
 .lobibox.lobibox-confirm .lobibox-header {
   color: #eeeeee;
-  background-color: #C42323;
+  background-color: #e74a3b;
 }
 .lobibox.lobibox-confirm .lobibox-body .lobibox-icon {
   color: #3C2D2D;
 }
 .lobibox.lobibox-confirm .lobibox-footer {
-  background-color: #C42323;
+  background-color: #e74a3b;
 }
 .lobibox.lobibox-success {
   border: 1px solid #29B87E;

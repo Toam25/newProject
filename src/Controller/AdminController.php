@@ -104,7 +104,7 @@ class AdminController extends AbstractController
         */
 
         ///
-        
+     
         return $this->render('admin/index.html.twig', [
             'pages' => 'articleinshop',
             'articles' => $articleRepository->findBy(['boutique' => $boutique, 'category' => $sous_category]),

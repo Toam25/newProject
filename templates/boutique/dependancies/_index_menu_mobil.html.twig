@@ -1,4 +1,4 @@
-<li><a href="{{ path('shop',{'type':lastboutique.type,'id':  lastboutique.id})}}">{{ "Galerie Marchande"|upper }}</a></li>                
+<li><a href="{{ path('shop',{'type':lastboutique.type,'id':  lastboutique.id})}}" target="_blank">{{ "Galerie Marchande"|upper }}</a></li>                
 
 
 {% for key, menu in allMenus %}
@@ -10,7 +10,7 @@
             <a href="#">- &nbsp{{ _category['category']}}</a>
             <ul class="mobile-sub-menu">
                {% for sous_category in _category['sous_category'] %}
-                    <li id="{{ slugify(sous_category['name']) }}" class="echantillon_image"><a href="#">{{ sous_category['name']}}</a></li>
+                    <li id="{{ slugify(sous_category['name']) }}" class="echantillon_image mobil-{{ slugify(sous_category['name']) }}"><a href="#">{{ sous_category['name']}}</a></li>
                {% endfor %}
             </ul>
         </li>

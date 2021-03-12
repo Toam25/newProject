@@ -466,7 +466,7 @@ Layout - Offcanvas
 
 .offcanvas-menu li a {
   display: block;
-  color: black !important;
+  color: black ;
   text-decoration: none;
 }
 
