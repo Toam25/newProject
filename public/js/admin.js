@@ -268,7 +268,8 @@ $(function () {
           $('._view_simple_article_sous_category').val(data.sous_category)
           $('#view_sous_category').html(list_option(data.list_menu,data.sous_category));
           $('#view_type').html(list_type(data.list_menu,data.sous_category,data.type));
-          $('#view_simple_article_type').html(typeArticle(data.sous_category,data.type))
+        
+          $('#view_simple_article_type').html(list_type_other(data.list_menu[0],data.type))
           $('#view_referency').val(data.referency)
           $('#view_promo').children('option[value="'+data.promo+'"]').prop('selected',true);
           $('#view_promo_price').val(data.promo_price);
@@ -308,6 +309,28 @@ $(function () {
      }
 
     return option
+}
+function list_type_other(arrays, value){
+  let option="";
+  let selected ="";
+  let classe="";
+  
+         for (const arrayoption of arrays.option) {
+   
+          if(arrayoption===value){
+            selected="selected";
+            classe="selected_option";
+            }
+            else{
+              selected ="";
+              classe="";
+            }
+            option+= `<option class="view_sous_categorie  `+classe+`" data-name="`+arrayoption+`" value="`+arrayoption+`" `+selected+`>
+            `+arrayoption+`
+            </option>`;
+         }
+
+  return option
 }
   function list_option(arrays, value){
     let option="";
@@ -705,7 +728,7 @@ $(function () {
  
   // get Type 
 
-  $('.sous_category').on('change',function(e){
+  $('.sous_category, .view_sous_category').on('change',function(e){
              
     var sous_categorie= $(this).val();
 
@@ -737,6 +760,7 @@ $(function () {
                   `</option>`;
       }
       $('#type').html(option);
+      $('#view_type').html(option);
      },
 
      complete : function(){

@@ -18,23 +18,44 @@ class TypeOptionMenuService extends AbstractController
     * @return  array
     */
    public function getTypeOptionMenu($typeMenu=null, $category = null, $sous_category = null)
-   {
-
+   {   
       $utils = $this->utilsService;
-      $type = [
-         ////////informatique
-         'high-tech' => $this->getCategoryHighTech(),
 
-         ////////mode
-         'mode' => $this->getCategoryMode(),
+      $typeMenu=$utils->getSlug($typeMenu);
 
-         ////////service
-         'services' => $this->getCategoryServices(),
-
-         //////////////maison
-         'maison' => $this->getCategoryMaison()
-
-      ];
+      if($typeMenu == "habillement"){
+        $type = [
+            'habillement'=>$this->getCategoryHabillement(),
+        ];
+      }
+      elseif($typeMenu=='accessoires'){
+          [
+             'accessoire'=>$this->getCategoryAccessoires()
+          ];
+      }
+      elseif($typeMenu=="beaute-et-bien-etre"){
+        [
+            'beaute-et-bien-etre'=>$this->getCategoryBeauteEtBienEtre()
+        ];
+      }
+      else{
+         $type = [
+            ////////informatique
+            'high-tech' => $this->getCategoryHighTech(),
+   
+            ////////mode
+            'mode' => $this->getCategoryMode(),
+   
+            ////////service
+            'services' => $this->getCategoryServices(),
+   
+            //////////////maison
+            'maison' => $this->getCategoryMaison()
+   
+         ];
+      }
+      
+      
 
       if ($sous_category != null) {
          return $type[strtolower($typeMenu)][$utils->getSlug($category)]['sous_category'][$utils->getSlug($sous_category)] ?? [];
@@ -47,25 +68,50 @@ class TypeOptionMenuService extends AbstractController
 
       return $type;
    }
-   
-   public function getOption($option){
+   /**
+    * return @array
+    */
+   public function getOption($option,string $type=null){
       $array = [];
-      $categories = $this->getTypeOptionMenu();
-     foreach ($categories as $keyc=> $category) {
-          foreach ($category as $keys=>$sous_category) {
-            foreach ($sous_category['sous_category'] as $key=>$_sous_category) {
-                if($option == $key){
+       $utils= $this->utilsService;
+      if($type==null){
+          $categories = $this->getTypeOptionMenu();
+          foreach ($categories as $keyc=> $category) {
+            foreach ($category as $keys=>$sous_category) {
+              foreach ($sous_category['sous_category'] as $key=>$_sous_category) {
+                  if($option == $key){
+  
+                    return  [
+                       'category'=>$keyc,
+                       'sous_category'=>$sous_category['category'],
+                       'name'=>$_sous_category['name'],
+                       'option'=>$_sous_category['options']
+                    ] ;
+                  }
+             }
+            }
+       }
+      }
+      else{
+         $categories = $this->getTypeOptionMenu($utils->getSlug($type));
+         
+            foreach ($categories as $keys=>$sous_category) {
+               
+              foreach ($sous_category['sous_category'] as $key=>$_sous_category) {
 
-                  return  [
-                     'category'=>$keyc,
-                     'sous_category'=>$sous_category['category'],
-                     'name'=>$_sous_category['name'],
-                     'option'=>$_sous_category['options']
-                  ] ;
-                }
-           }
-          }
-     }
+                  if($option == $key){
+                    return  [
+                       'category'=>$utils->getSlug($type),
+                       'sous_category'=>$sous_category['category'],
+                       'name'=>$_sous_category['name'],
+                       'option'=>$_sous_category['options']
+                    ] ;
+                  }
+             }
+            }
+      }
+      
+     
       return $array;
    }
    public function getCategoryMaison()
