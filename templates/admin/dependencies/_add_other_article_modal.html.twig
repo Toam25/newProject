@@ -1,5 +1,6 @@
 <div class="modal fade" id="ajout_article" tabindex="-1" role="dialog" aria-labelledby="ajout_modal" aria-hidden="true">
 	<div class="modal-dialog modal-lg" role="document">
+		<div class="loader_ajax_"><img src="/images/images_default/ajax-loader.gif"></div>
 		<div class="modal-content">
 			<div class="modal-header">
 				<h5 class="modal-title" id="label">Ajout d'article</h5>
@@ -8,6 +9,7 @@
 				</button>
 			</div>
 			<form class="add_article_in_shop" action="/api/add/article">
+				
 				<div id="div_ajout_article" class="modal-body row" style="font-weight:none;">
 
 
@@ -39,13 +41,13 @@
 					<div class="col-md-6">
 						<label for="">Type :
 						</label>
-						<select id="sous_category" class="sous_category form-control" name="sous_category"></select>
+						<select id="sous_category" class="sous_category form-control" name="sous_category" required></select>
 					</div>
 					<div class="col-md-6 ">
 
 						<label class="valeur_type" for="type">Option :
 						</label>
-						<select id="type" class="type form-control" name="type"></select>
+						<select id="type" class="type form-control" name="type" required></select>
 					</div>
 					<div class="col-md-6">
 						<label for="file_in">Importer une image : *</label>
@@ -77,7 +79,7 @@
 				</div>
 
 				<div class="modal-footer">
-					<button class="btn btn-success submit_add_article margin-top-5 btn-submit" type="submit" name="submit_in">Ajouter</button>
+					<button class="btn btn-success btn-submit submit_add_article margin-top-5 btn-submit" type="submit" name="submit_in">Ajouter</button>
 				</div>
 			</form>
 		</div>

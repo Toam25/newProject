@@ -673,12 +673,13 @@ function list_type_other(arrays, value){
       cache: false,
       dataType: 'json',
       beforeSend: () => {
+        toastr.info('En cours d\'enregistrement...');
         $('.btn-submit').append('<span class="loader_ajax" style="height: 20px;width: 20px;display: inline-block;"><img src="/images/images_default/ajax-loader.gif" style="height: 100%;width: 100%;"></span>');
         $('.btn-submit').prop('disabled', true)
       },
       success: (data) => {
-        toastr.success('Ajouter avec success');
-        $('#ajout_article').modal('hide');
+        toastr.success('Article bien enregstrer');
+       // $('#ajout_article').modal('hide');
         $('.all_article').append(`
               <div class="container_article col-xs-6 col-sm-3 col-md-2 col-lg-2">
                       <div class="list_produit">
@@ -733,7 +734,7 @@ function list_type_other(arrays, value){
       data: {},
       dataType: 'json',
       beforeSend: () => {
-
+        $('.loader_ajax_').css('transform','scale(1)');
       },
       success: (data) => {
           let results=data.results;
@@ -762,8 +763,11 @@ function list_type_other(arrays, value){
         }
           $('#sous_category').html(sous_category);
           $('.type').html(type);
+          $('.loader_ajax_').css('transform','scale(0)');
       },
       error: () => {
+        $('.loader_ajax_').css('transform','scale(0)');
+        toastr.error('Un error à été survenue');
       },
       complete: function () {
 
