@@ -68,7 +68,7 @@ class BoutiqueController extends AbstractController
         $listShops = $this->getlistShop($boutiqueRepository->findBy(['type' => $type]), $type);
 
         $pageWasRefreshed = isset($_SERVER['HTTP_CACHE_CONTROL']) && $_SERVER['HTTP_CACHE_CONTROL'] === 'max-age=0';
-        
+
         if ($id == -1) {
             $boutique = $boutiqueRepository->findOneBy(['type' => $type]);
         } else {
@@ -105,18 +105,21 @@ class BoutiqueController extends AbstractController
     /**
      * @Route("/detail/{id}-{slug}", name="detail")
      */
-    public function detail(int $id, Article $article, BoutiqueRepository $boutiqueRepository, VotesRepository $votesRepository)
+    public function detail(int $id, Article $article, BoutiqueRepository $boutiqueRepository,UtilsService $utilsService, VotesRepository $votesRepository)
     {
 
         $votes = $votesRepository->findBy(['article' => $article]);
-        $getNumberVote = $this->getNumberTotalVote($votes);
 
+        $getNumberVote = $this->getNumberTotalVote($votes);
+        
+        $listOption=$this->typeOptionMenuService->getOption($utilsService->getSlug($article->getCategory()));
 
         return $this->render('boutique/detail.html.twig', [
             'controller_name' => 'BoutiqueController',
             'boutique' => $article->getBoutique(),
             'article' => $article,
             'votes' => $votes,
+             'category'=>$listOption,
             'valuevote' => $getNumberVote["votes"],
             'users' => $getNumberVote["user"],
         ]);
@@ -249,6 +252,7 @@ class BoutiqueController extends AbstractController
         $myListShops = "";
         $myListShop = "";
         $allShopId = [];
+        
         $first = (isset($_COOKIE[$types]) and is_numeric($_COOKIE[$types])) ? intval($_COOKIE[$types]) : 0;
 
         foreach ($shops as $key => $shop) {

@@ -24,15 +24,17 @@ class BoutiqueType extends AbstractType
                 ]
             ])
             ->add('address',TextType::class,[
-                'label'=>'Adresse de la boutique',
+                'label'=>'Lien de votre boutique',
                 'attr'=>[
-                    'class'=>'form-control'
+                    'class'=>'form-control',
+                    'placeholder'=>"http://www.monsiteweb.com"
                 ]
             ])
             ->add('link',TextType::class,[
                 'label'=>'Lien Fb de la boutique',
                 'attr'=>[
-                    'class'=>'form-control'
+                    'class'=>'form-control',
+                    'placeholder'=>"http://www.facebook.com"
                 ]
             ])
             ->add('mail',EmailType::class, [

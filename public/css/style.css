@@ -299,7 +299,7 @@ textarea.input {
 \*----------------------------*/
 
 .section {
-  padding-top: 30px;
+  padding-top: 5px;
   padding-bottom: 30px;
 }
 
@@ -473,9 +473,7 @@ textarea.input {
 	Search
 \*----------------------------*/
 
-.header-search {
- 
-}
+
 
 .header-search form {
   position: relative;
@@ -897,10 +895,7 @@ textarea.input {
   transition: 0.2s all;
 }
 
-.product:hover {
-  /**-webkit-box-shadow: 0px 0px 6px 0px #E4E7ED, 0px 0px 0px 2px #D10024;
-  box-shadow: 0px 0px 6px 0px #E4E7ED, 0px 0px 0px 2px #D10024;**/
-}
+
 
 .product .product-img {
   position: relative;
@@ -2261,8 +2256,12 @@ textarea.input {
 }
 
 @media only screen and (max-width: 480px) {
-  [class*='col-xs'] {
+ /* [class*='col-xs'] {
     width: 100%;
+  }
+  */
+  .container_image {
+    height: 12rem !important;  
   }
   .store-grid {
     float: none;

@@ -13,7 +13,7 @@
 							
 								<p>{{ boutique.apropos }}</p>
 								<ul class="footer-links">
-									<li><a href="#"><i class="fa fa-map-marker"></i>{{ boutique.address }}</a></li>
+									<li><i class="fa fa-map-marker"></i>Visitez notre  <a href="{{ boutique.address }}" target="_blank"style="color:#46b1e6">site web</a></li>
 									<li><a href="#"><i class="fa fa-phone"></i>{{ boutique.contact }}</a></li>
 									<li><a href="#"><i class="fa fa-envelope-o"></i>{{ boutique.mail}}</a></li>
 								</ul>
@@ -38,7 +38,7 @@
 									<li> Siège :  </li>
 									<li> Service en ligne  </li>
 									{% if boutique.link is defined %}
-										<li>Suivie nous sur notre page <a href="{{boutique.link}}" target="_blank" style="color:#46b1e6">facebook</a></li>
+										<li>Suivez nous sur notre page <a href="{{boutique.link}}" target="_blank" style="color:#46b1e6">facebook</a></li>
 									{% endif %}
 									{#
 									<li><a href="{{ path('show_cart',{'type':'panier'})}}">View Cart</a></li>

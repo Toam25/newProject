@@ -29,6 +29,7 @@ use App\Service\ArticlePerShopService;
 use App\Service\CategoryOptionService;
 use App\Service\InsertFileServices;
 use App\Service\TypeOptionMenuService;
+use App\Service\UtilsService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\BrowserKit\Response as BrowserKitResponse;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -46,13 +47,13 @@ class APIController extends AbstractController
     /**
      * @Route("/es_article/get/{sous_category}", name="get_es_article")
      */
-    public function getEsArticle(string $sous_category, EsArticleRepository $esArticleRepository)
+    public function getEsArticle(string $sous_category, EsArticleRepository $esArticleRepository, UtilsService $utilsService)
     {
         $es_article = $esArticleRepository->findBy(['sous_category' => $sous_category]);
         $data = [];
         foreach ($es_article as $key => $value) {
             $data[$key]['type'] = $value->getType();
-            $data[$key]['category'] = $value->getCategory();
+            $data[$key]['category'] = $utilsService->getSlug($value->getSousCategory());
             $data[$key]['image'] = $value->getImage();
         }
         return new Response(json_encode($data));
@@ -222,7 +223,7 @@ class APIController extends AbstractController
            $article->setMarque("");
            $article->setDescription( $request->request->get('description'));
            $article->setReferency( $request->request->get('referency'));
-           $article->setSousCategory( $request->request->get('sous_category'));
+           $article->setSousCategory($request->request->get('type'));
            $article->setSlide($request->request->get('slider'));
            $article->setBoutique($boutiqueRepository->findOneBy(['user'=>$this->getUser()]));
 
@@ -262,7 +263,7 @@ class APIController extends AbstractController
             $article->setMarque("");
             $article->setDescription($request->request->get('description'));
             $article->setReferency($request->request->get('referency'));
-            $article->setSousCategory($request->request->get('sous_category'));
+            $article->setSousCategory($request->request->get('type')??$request->request->get('sous_category'));
             $article->setSlide($request->request->get('slider'));
             $article->setBoutique($boutiqueRepository->findOneBy(['user' => $this->getUser()]));
             $article->setSlide(0);
@@ -323,8 +324,9 @@ class APIController extends AbstractController
 
         if ($this->getUser()) {
             $boutique = $boutiqueRepository->findOneBy(['user'=>$this->getUser()]);
-            if($boutique->getType()=='Habillement'){
+            if($boutique->getType()=='Habillement' or $boutique->getType()=='accessoires' or $boutique->getType()=='beaute-et-bien-etre'){
                 $category= $typeOptionMenuService->getOption($category,$boutique->getType());
+
                 $results = [
                     'type'=>"",
                     'option'=>$category['option'],
@@ -349,7 +351,7 @@ class APIController extends AbstractController
         if ($this->getUser()) {
             $boutique = $boutiqueRepository->findOneBy(['user' => $this->getUser()]);
             $article = $articleRepository->findOneArticleByBoutiqueWithImage($id, $boutique);
-            if($boutique->getType()=='Habillement' or $boutique->getType()=="accessoires" or $boutique->getType()=="beaute_et_bien_etre" ){
+            if($boutique->getType()=='Habillement' or $boutique->getType()=="accessoires" or $boutique->getType()=="beaute-et-bien-etre" ){
                 $category= $typeOptionMenuService->getOption($article->getCategory(),$boutique->getType());
                 $list_menu = [[
                     'type'=>"",
@@ -358,6 +360,7 @@ class APIController extends AbstractController
             }else{
                  $list_menu = $categoryOptionService->getCategoryType($menuRepository->findBy(['category' => $article->getCategory()]));
             }
+        
             $image = $article->getImages();
             $list = [
                 'id' => $article->getId(),
@@ -543,13 +546,15 @@ class APIController extends AbstractController
      /**
      * @Route("/get/listArticlePerBoutique/{category}/{type}", name="listeArticlePerBoutique", methods={"GET"})
      */
-    public function listArticlePerBoutique($category, $type, ArticleRepository $articleRepository, ArticlePerShopService $articlePerShopService): Response
+    public function listArticlePerBoutique($category,Request $request, $type, ArticleRepository $articleRepository, ArticlePerShopService $articlePerShopService): Response
     {
-            $articles = $articleRepository->findAllArticleBySousCategory($category,$type);
-
             
-
-            return new JsonResponse($articlePerShopService->getListArticlePerShop($articles), Response::HTTP_OK);
+            if($request->isXmlHttpRequest()){
+                return $this->render('boutique/index_list_article_per_shop.html.twig', [
+                    "articles" =>$articlePerShopService->getListArticlePerShop($articleRepository->findAllArticleBySousCategory($category,$type)) 
+            ]);
+            }
+            return new JsonResponse(['status'=>"error"], Response::HTTP_OK);
         
     }
 }

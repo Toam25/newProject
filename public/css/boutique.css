@@ -117,28 +117,34 @@
 }
 #container_description_reference {
     padding: 6px;
-    border-top: 1px solid rgba(0,0,0,0.1);
+    /*border-top: 1px solid rgba(0,0,0,0.1);*/
+    text-align: center;
 }
 #_container_images {
     display: flex;
     align-items: center;
     justify-content: center;
     height: 200px;
-    width: 200px;
+    border: 1px solid rgba(0,0,0,0.2)
 }
 #_container_images >img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
+    max-width: 100%;
+    max-height: 100%;
 }
 #_reference {
     background: white;
-    margin: 4px;
-    box-shadow: 0px 0px 3px -1px black;
-    width: 200px;
+    /*box-shadow: 0px 0px 3px -1px black;*/
+    width: 180px;
+    margin: 10px 35px;
 }
 #container_reference,#container_social_network {
     background: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+#container_selection{
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -201,10 +207,10 @@
     position: relative;
 }
 .container_image > img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    object-position: center;
+    max-width: 100%;
+    max-height: 100%;
+/*object-fit: cover;
+    object-position: center;*/
 }
 .product-rating {
     text-align: center;
@@ -224,9 +230,7 @@ ul > ul > li label, ul>li>label{
 .menulistshop a, #menulistshop a, .shop_name, #header-ctn a{
     color : white;
 }
-.containt_price {
-   
-}
+
 .containt_price .form-control {
     width: 100%;
     margin: 1px;
@@ -390,7 +394,7 @@ nav li:hover .submenu{
     color: white;
     text-shadow: 0px 0px .4px black;
     text-align: center;
-    font-size: 1.5rem;
+    font-size: 3rem;
 }
 .container_resume_shop {
     position: absolute;
@@ -450,3 +454,10 @@ nav li:hover .submenu{
 	cursor:pointer;
 	color:yellow;
 }
+
+@media (max-width: 700px){
+    .container_resume_shop > h3{
+        font-size: 1.5rem;
+    }
+}
+

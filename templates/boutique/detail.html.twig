@@ -45,6 +45,13 @@
 	<!-- SECTION -->
 
 
+	<ul class="breadcrumb-tree">
+		<li><a href="{{path('index')}}">Accueil</a></li>/
+		<li><a href="{{path('shop',{'type': boutique.type,'id': boutique.id })}}">{{boutique.name}}</a></li> /
+		<li><a href="#">{{article.category}}</a></li>/
+		<li><a href="#">{{article.sousCategory}}</a></li>/
+		<li class="active">{{article.name}}</li>
+	</ul>
 	<div
 		class="section">
 		<!-- container -->
@@ -113,12 +120,13 @@
 						<p>{{ article.description}}</p>
 						<div class="contain_share">
 
-
+						{#
 							<button class="share">
 								<a class="share" href="https://www.facebook.com/sharer/sharer.php?u=https://www.toutenone.com{{path('detail',{'id': boutique.id,'slug' : slugify(article.name ) })}}" target="_blank">
 									Partagé
 								</a>
 							</button>
+						#}
 							
 						</div>
 						{#
