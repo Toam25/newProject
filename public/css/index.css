@@ -270,16 +270,19 @@ nav {
   margin-top: 8px;
   overflow-y: hidden;
   margin-bottom: 7px;
+  display: flex;
+  justify-content: center;
 }
+
 .remove {
   padding: 0px;
   width: 30px;
   height: 30px;
   border-radius: 100%;
   border: none;
-  position: absolute;
+  /*position: absolute;
   right: 8px;
-  top: 10px;
+  top: 10px;*/
   cursor: pointer;
   transition: 300ms;
 }
@@ -315,15 +318,16 @@ nav {
 }
 #container_echatillon {
   position: fixed;
-  width: 80.5vw;
+  width: 94.5vw;
   z-index: 999;
   display: none;
   background: white;
-  left:  18.07vw;
+  left:  2.02vw;
   right: 5%;
   padding: 5px;
   box-shadow: 0px 0px 14px black;
   top: 3px;
+  height: 99vh;
 }
 .liste_categorie_vetement {
   cursor: pointer;
@@ -332,8 +336,20 @@ nav {
   display: inline-block;
   margin-left: 3px;
   margin-right: 3px;
-  border: 1px solid black;
+  border: 1px solid #0003;
   width: 263px;
+}
+.title {
+  font-size: 1.2em;
+  color: white;
+  background: #2B2D42;
+  padding: 7px;
+}
+#divider {
+  background: rgba(0,0,0,0.5);
+  height: 1Px;
+  width: 50vw;
+  margin: 9px auto;
 }
 .nom_boutique_vetement {
   display: inline-block;
@@ -401,7 +417,19 @@ nav {
 ._container_all_echantillon {
  
   border-radius: 7px;
-  margin-top : 43px;
+  margin-top : 12px;
+}
+.manu-close-bnt {
+  display: flex;
+  justify-content: space-between;
+}
+.mobile-menu-dash-index {
+  display: block;
+  width: 30px;
+  height: 2px;
+  background: black;
+  margin-top: 5px;
+  margin-bottom: 5px;
 }
 .inother-ajax {
   position: relative;
@@ -819,19 +847,6 @@ nav {
 
   margin-bottom: 8px;
 }
-
-.container_boutique {
-  display: inline-block;
-
-  margin-left: 3px;
-
-  margin-right: 3px;
-
-  border: 1px solid black;
-
-  /*width: 263px;*/
-}
-
 .image_vetement_boutique {
   max-width: 100%;
   transition: 500ms;
@@ -865,6 +880,7 @@ nav {
   width: 100%;
   white-space: initial;
   text-align: center;
+  padding: 0 14px;
 }
 
 .nbr_comment {
@@ -1411,6 +1427,10 @@ nav {
        display:none;
   
      }*/
+   .offcanvas{
+      width: 62vw !important;
+      min-width: 18vw !important;
+    }
   .containt_image_vote {
     height: 180px;
   }

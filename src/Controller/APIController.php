@@ -324,8 +324,9 @@ class APIController extends AbstractController
 
         if ($this->getUser()) {
             $boutique = $boutiqueRepository->findOneBy(['user'=>$this->getUser()]);
-            if($boutique->getType()=='Habillement'){
+            if($boutique->getType()=='Habillement' or $boutique->getType()=='accessoires' or $boutique->getType()=='beaute-et-bien-etre'){
                 $category= $typeOptionMenuService->getOption($category,$boutique->getType());
+
                 $results = [
                     'type'=>"",
                     'option'=>$category['option'],
@@ -350,7 +351,7 @@ class APIController extends AbstractController
         if ($this->getUser()) {
             $boutique = $boutiqueRepository->findOneBy(['user' => $this->getUser()]);
             $article = $articleRepository->findOneArticleByBoutiqueWithImage($id, $boutique);
-            if($boutique->getType()=='Habillement' or $boutique->getType()=="accessoires" or $boutique->getType()=="beaute_et_bien_etre" ){
+            if($boutique->getType()=='Habillement' or $boutique->getType()=="accessoires" or $boutique->getType()=="beaute-et-bien-etre" ){
                 $category= $typeOptionMenuService->getOption($article->getCategory(),$boutique->getType());
                 $list_menu = [[
                     'type'=>"",
@@ -359,6 +360,7 @@ class APIController extends AbstractController
             }else{
                  $list_menu = $categoryOptionService->getCategoryType($menuRepository->findBy(['category' => $article->getCategory()]));
             }
+        
             $image = $article->getImages();
             $list = [
                 'id' => $article->getId(),

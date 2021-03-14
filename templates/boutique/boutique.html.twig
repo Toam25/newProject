@@ -93,15 +93,19 @@
 				{# 
 				
 							#}
+			</div>
+			<hr style="width: 71vw;"/>
 				{% if newArticles |length > 0%}
-				<div id="container_social_network">
-					<h3 class="title_C" style="display:table-cell" text-align="center">Nos séléctions</h3>
-				</div>
-					{% include "boutique/dependancies/slide_shop.html.twig" with {'articles' : newArticles} %}	
+				  <div style="padding-top: 16px;margin: 15px 0;">
+					<div id="container_selection">
+						<h3 class="title_C" style="display:table-cell" text-align="center">Nos séléctions</h3>
+					</div>
+						{% include "boutique/dependancies/slide_shop.html.twig" with {'articles' : newArticles} %}	
+				 </div>
 				{% endif %}
 
-			</div>
-
+			
+			<hr style="width: 71vw;"/>
 			{% if boutique.socialNetworks|length > 0 %}
 			<div id="container_social_network">
 				<h3 class="title_C" style="display:table-cell">Réseau sociaux
@@ -115,7 +119,7 @@
 									<img src={{ asset('images/'~ socialnetwork.images)}} alt="{{ socialnetwork.description }}"/>
 								</div>
 								<p id="container_description_reference">{{  socialnetwork.description }}
-									<a href="{{ socialnetwork.link }}" target="_blank">{{ socialnetwork.nameLink }}</a>
+									<a href="{{ socialnetwork.link }}" style="color : #2878c1 !important" target="_blank">{{ socialnetwork.nameLink }}</a>
 								</p>
 							</div>
 						{% endfor %}
@@ -123,6 +127,7 @@
 				</div>
 			</div>
 			{% endif %}
+			<hr style="width: 71vw;" />
 			{% if boutique.shopReferences|length > 0 %}
 			<div id="container_reference">
 				<h3 class="title_C" style="display:table-cell">Nos References
