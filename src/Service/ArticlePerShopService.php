@@ -17,7 +17,7 @@ class ArticlePerShopService extends AbstractController{
          $list=[];
         
         foreach ($articles as $key => $article) {
-             
+            
             $isExiste = $this->categoryOptionService->in_array_type($article->getBoutique()->getName(),$list);
             if($isExiste!=-1){
                     array_push($list[$isExiste]['article'],[
@@ -25,7 +25,8 @@ class ArticlePerShopService extends AbstractController{
                         'images'=>$article->getImages()[0]->getName(),
                         'price'=>$article->getPrice(),
                         'referency'=> $article->getReferency(),
-                        'vote'=>$article->getVotes()->getValues()
+                        'vote'=>$article->getVotes()->getValues(),
+                        'article'=>$article
                     ]);
             }
             else{
@@ -39,7 +40,8 @@ class ArticlePerShopService extends AbstractController{
                                     'images'=>$article->getImages()[0]->getName(),
                                     'price'=>$article->getPrice(),
                                     'referency'=> $article->getReferency(),
-                                    'vote'=>$article->getVotes()->getValues()
+                                    'vote'=>$article->getVotes()->getValues(),
+                                    'article'=>$article
                                 ]
                                   
                             ]

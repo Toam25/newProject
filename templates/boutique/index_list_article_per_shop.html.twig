@@ -1,0 +1,27 @@
+{% for shop in articles %}
+     
+              <div class="container_boutique">
+                  <a href="/shop/{{ shop['type']}}/{{ shop['id'] }}" target="blank">
+                     <p class="nom_boutique_vetement">{{ shop['name'] }}</p>
+                  </a>
+                  <div class="boutique">
+
+            {% for article in shop['article'] %}
+                    
+               {% include "boutique/dependancies/_cart.html.twig" with {article :article['article'] } only %}
+
+              {#$prix = (data[i].article[j].price == 0) ? "<span class='prix_ala'>Prix : A la demande</span>" : 'Prix : ' + data[i].article[j].price;
+              message += ` <div class="_my_aricle_in">
+                                 <input type="hidden" value='.$resultat['id'].'>
+                                 <img class="image_vetement_boutique" id="`+ data[i].article[j].images + `" src="/images/`+ data[i].article[j].images + `" value="'.$resultat['name'].'">
+                                 <span class="separe"></span>
+                                 <p class="prix"> `+ $prix + `</p>
+                                 <p>
+                                 <span class="ref">Ref : `+ data[i].article[j].referency+ `</span>
+                                 </p>
+                          </div>`;
+            }#}
+            {% endfor %}
+            </div>
+        </div>
+{% endfor %}

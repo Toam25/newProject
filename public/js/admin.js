@@ -1,7 +1,70 @@
 $(function () {
   var $category;
 
+  //edit ess article 
+  $('.modify_es_article').on('submit', function(e){
+      e.preventDefault();
+      let id = $('.id_ess_article').val();
+      $.ajax({
+        url : "/superadmin/es/article/edit/es_artilce/"+id ,
+        type: 'POST',
+        data: new FormData(this),
+        contentType: false,
+        processData: false,
+        cache: false,
+        dataType: 'json',
+        beforeSend: () => {
+          $('.btn-submit2').append('<span class="loader_ajax" style="height: 20px;width: 20px;display: inline-block;"><img src="/images/images_default/ajax-loader.gif" style="height: 100%;width: 100%;"></span>');
+          $('.btn-submit2').prop('disabled', true)
+          toastr.info('Enregistrement en cours...');
+        },
+        success: (data) => {
+          toastr.success('Enregistrer avec success');
+          let input =$('.liste_article_in').children('div').children('div').children('input[value="'+id+'"]');
+          input.parent('div').children('img').attr('src','/images/'+data.image);
+          $('#preview_es_images_article').attr('src','/images/'+data.image);
+          input.parent('div').children('.name_article').text(data.type);
+          $('.btn-submit2').children('.loader_ajax').remove();
+          $('.btn-submit2').prop('disabled', false)
+          
+        },
+        error: () => {
+          toastr.error('Une error à été survenue');
+          $('.btn-submit2').children('.loader_ajax').remove();
+          $('.btn-submit2').prop('disabled', false)
+        },
+        complete: function () {
+  
+        }
+      });
 
+  });
+  //detail es article 
+  $('body').on('click','.btn_detail_article',function(){
+    let src = $(this).parent('div').parent('.list_produit').children('img').attr('src');
+    let id = $(this).parent('div').parent('.list_produit').children('input').val();
+    $('.id_ess_article').val(id);
+    $('#preview_es_images_article').attr('src',src);
+    $('#view_es_article').modal('show');
+    $.ajax({
+      url : "/superadmin/es/article/get/option/"+id,
+      type: 'POST',
+      dataType: 'json',
+      beforeSend : ()=>{
+        $('.loader_ajax_').css('transform','scale(1)');
+      },
+      success : (data)=>{
+        
+        $option=list_type_other(data.listoption,data.type);
+        $('.view_es_type').html($option);
+        $('.loader_ajax_').css('transform','scale(0)');
+      },
+      error : ()=>{
+        $('.loader_ajax_').css('transform','scale(0)');
+      }
+  });
+  });
+  
   //delete ess article 
   $('body').on('click','.bnt_delete_article',function(e){
     e.preventDefault();
@@ -35,7 +98,7 @@ $(function () {
          },
          success : (data)=>{
             
-            parents.remove()
+            parents.parent('div').remove()
             toastr.success('Suppression reussite')
          },
          error : ()=>{

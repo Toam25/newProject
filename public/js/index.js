@@ -201,7 +201,7 @@ $(function(){
     $.ajax({
       url: '/api/get/listArticlePerBoutique/' + categorie + '/' + nom_vetement_selectionner,
       type: 'GET',
-      dataType: 'json',
+      dataType: 'html',
       beforeSend: function () {
         $('.div-inother').css('display', 'block');
       },
@@ -209,7 +209,7 @@ $(function(){
        
         if (data.length > 0) {
           var message = " ";
-          for (var i = 0; i < data.length; i++) {
+         /* for (var i = 0; i < data.length; i++) {
             message += `
               <div class="container_boutique">
                   <a href="/shop/`+ data[i].type + `/` + data[i].id + `" target="blank">
@@ -236,9 +236,9 @@ $(function(){
             message += `</div>
                </div>`
 
-          }
+          }*/
 
-          $('._boutiqueContaintEchantillon').html(message);
+          $('._boutiqueContaintEchantillon').html(data);
         }
         else {
           $('._boutiqueContaintEchantillon').html("<h4 align='center'>Pas de resultat</h4'>");

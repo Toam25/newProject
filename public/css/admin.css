@@ -11,6 +11,16 @@ align-items: center;
 margin-top: 8px;
 width: 100%;
 }
+.container_es_image_article {
+    max-height: 200px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+#preview_es_images_article {
+    max-height: 100%;
+    width: 166px;
+}
 .container_category_setting {
     background: white;
     border-radius: 10px;

@@ -21,18 +21,18 @@ class TypeOptionMenuService extends AbstractController
    {   
       $utils = $this->utilsService;
 
-     
-      if($typeMenu == "Habillement"){
+    
+      if($utils->getSlug($typeMenu) == "habillement"){
         $type = [
             'habillement'=>$this->getCategoryHabillement(),
         ];
       }
-      elseif($typeMenu=='accessoires'){
+      elseif($utils->getSlug($typeMenu)=='accessoires'){
           [
              'accessoire'=>$this->getCategoryAccessoires()
           ];
       }
-      elseif($typeMenu=="beaute_et_bien_etre"){
+      elseif($utils->getSlug($typeMenu)=="beaute-et-bien-etre"){
         [
             'beaute-et-bien-etre'=>$this->getCategoryBeauteEtBienEtre()
         ];

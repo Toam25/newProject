@@ -19,19 +19,20 @@
 
     </li>
     <li class="nav-item">
-      <a class="nav-link" href="{{ path('index')}}">
+      <a class="nav-link" href="{{ path('index')}}" target="_blank">
         <i class="fas fa-fw fa-tachometer-alt"></i>
         <span>Accueil</span></a>
     </li>
     {% if "ROLE_SUPER_ADMIN" in app.user.roles %}
-      <li class="nav-item">
+     {# <li class="nav-item">
         <a class="nav-link" href="{{ path('shop',{'type' : 'habillement', 'id' : -1 })}}">
           <i class="fas fa-fw fa-tachometer-alt"></i>
-          <span>Shop</span></a>
+          <span>Galerie Marchande </span></a>
       </li>
+      #}
     {% else %}
       <li class="nav-item">
-        <a class="nav-link" href="{{ path('shop',{'type' : boutique.type, 'id' : boutique.id})}}">
+        <a class="nav-link" href="{{ path('shop',{'type' : boutique.type, 'id' : boutique.id})}}" target="_blank">
           <i class="fas fa-fw fa-tachometer-alt"></i>
           <span>Mon Site</span></a>
       </li>

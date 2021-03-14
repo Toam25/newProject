@@ -29,6 +29,32 @@ class EsArticleController extends AbstractController
         $this->typeOptionMenuService=$typeOptionMenuService;
         $this->utilsService=$utilsService;
     }
+
+    /**
+     * @Route("/get/option/{id}", name="es_get_opton_article_")
+     */
+    public function getEsArticleOption(EsArticle $esArticle, TypeOptionMenuService $typeOptionMenuService){
+        
+        $listOption = $typeOptionMenuService->getOption($esArticle->getSousCategory());
+        return new JsonResponse(['listoption'=>$listOption,"type"=>$esArticle->getType(),"image"=>$esArticle->getImage()],200);
+    }
+    /**
+     * @Route("/edit/es_artilce/{id}", name="es_edit_opton_article_")
+     */
+    public function editEsArticleOption(Request $request, EsArticle $esArticle, InsertFileServices $insertFileServices){
+        
+        $em = $this->getDoctrine()->getManager();
+        $esArticle->setType($request->request->get('type'));
+        $file= $esArticle->getImage();
+        if($request->files->get('image_es_article')!=""){
+            $file = $insertFileServices->insertFile($request->files->get('image_es_article'),['png','gif','jpeg','jpg']);
+            $esArticle->setImage($file);
+        }
+       
+        $em = $this->getDoctrine()->getManager();
+        $em->flush();
+        return new JsonResponse(['type'=>$esArticle->getType(),"image"=> $file],200);
+    }
     /**
      * @Route("/{shop}/{category}/{sous_category}", name="es_article_list")
      */
@@ -47,7 +73,7 @@ class EsArticleController extends AbstractController
 
             $file = $insertFileServices->insertFile($esArticle->getPhotos());
             $esArticle->setCategory($category);
-            $esArticle->setSousCategory($sous_category);
+            $esArticle->setSousCategory($request->request->get('es_article')['sous_category']);
             $esArticle->setType($request->request->get('es_article')['type']);
             $esArticle->setImage($file);
             $esArticle->setBoutique($boutique);
