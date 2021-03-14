@@ -230,9 +230,7 @@ ul > ul > li label, ul>li>label{
 .menulistshop a, #menulistshop a, .shop_name, #header-ctn a{
     color : white;
 }
-.containt_price {
-   
-}
+
 .containt_price .form-control {
     width: 100%;
     margin: 1px;

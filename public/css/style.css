@@ -473,9 +473,7 @@ textarea.input {
 	Search
 \*----------------------------*/
 
-.header-search {
- 
-}
+
 
 .header-search form {
   position: relative;
@@ -897,10 +895,7 @@ textarea.input {
   transition: 0.2s all;
 }
 
-.product:hover {
-  /**-webkit-box-shadow: 0px 0px 6px 0px #E4E7ED, 0px 0px 0px 2px #D10024;
-  box-shadow: 0px 0px 6px 0px #E4E7ED, 0px 0px 0px 2px #D10024;**/
-}
+
 
 .product .product-img {
   position: relative;
