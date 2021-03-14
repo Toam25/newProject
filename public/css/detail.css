@@ -14,6 +14,17 @@
 .New{
     background-color: #2D892D !important;
 }
+.breadcrumb-tree li a {
+    color: #3c3ca4;
+}
+.breadcrumb-tree {
+    display: flex;
+    padding: 9px;
+    flex-wrap: wrap;
+}
+.breadcrumb-tree li {
+    margin: 0 7px;
+}
 .Vendu {
     background-color: #0E5592 !important;
 }
