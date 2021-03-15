@@ -8,8 +8,11 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 class UtilsService extends AbstractController{
        
    
-     public static function getSlug($text)
-    {
+    public static function getSlug($text)
+    {    
+      $find    = array("à", "á", "â", "ã", "ä", "å", "ò", "ó", "ô", "õ", "ö", "ø", "è", "é", "ê", "ë", "ç", "ì", "í", "î", "ï", "ù", "ú", "û", "ü", "ÿ", "ñ");  
+      $replace = array("a", "a", "a", "a", "a", "a", "o", "o", "o", "o", "o", "o", "e", "e", "e", "e", "c", "i", "i", "i", "i", "u", "u", "u", "u", "u", "n");  
+      $text    = str_replace($find, $replace, $text);
         // replace non letter or digits by -
         $text = preg_replace('~[^\pL\d]+~u', '-', $text);
 
