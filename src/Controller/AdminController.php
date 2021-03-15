@@ -29,7 +29,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
-
+use Symfony\Flex\Unpack\Result;
 
 class AdminController extends AbstractController
 {   
@@ -39,6 +39,14 @@ class AdminController extends AbstractController
     {
         $this->typeOptionMenuService=$typeOptionMenuService;
         $this->utilsService=$utilsService;
+    }
+    /**
+     * @Route("/teste/slug/{slug}", name="teste_slug")
+     */
+
+    public function testeSlug(string $slug, UtilsService $utilsService){
+
+        return new Response($utilsService->getSlug($slug));
     }
     /**
      * @Route("/admin", name="home")
