@@ -218,12 +218,12 @@ class APIController extends AbstractController
            $article->setPriceGlobal( $request->request->get('global_price'));
            $article->setPricePromo( $request->request->get('price_promo'));
            $article->setPromo( $request->request->get('promotion'));
-           $article->setType( $request->request->get('type'));
+           $article->setType($request->request->get('type')??$request->request->get('sous_category'));
            $article->setQuantity( $request->request->get('quantity'));
            $article->setMarque("");
            $article->setDescription( $request->request->get('description'));
            $article->setReferency( $request->request->get('referency'));
-           $article->setSousCategory($request->request->get('type'));
+           $article->setSousCategory($request->request->get('sous_category'));
            $article->setSlide($request->request->get('slider'));
            $article->setBoutique($boutiqueRepository->findOneBy(['user'=>$this->getUser()]));
 
@@ -263,7 +263,7 @@ class APIController extends AbstractController
             $article->setMarque("");
             $article->setDescription($request->request->get('description'));
             $article->setReferency($request->request->get('referency'));
-            $article->setSousCategory($request->request->get('type')??$request->request->get('sous_category'));
+            $article->setSousCategory($request->request->get('sous_category'));
             $article->setSlide($request->request->get('slider'));
             $article->setBoutique($boutiqueRepository->findOneBy(['user' => $this->getUser()]));
             $article->setSlide(0);
