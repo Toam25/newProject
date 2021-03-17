@@ -1,5 +1,8 @@
 <div id="container_class">
-	<div class="form_edit_boutique">
+  <div class="photo_edit_boutique">
+    <img id="preview_image" src="{{ asset("images/"~ boutique.logo) }}"/>
+  </div>
+	<div class="container-fluid form_edit_boutique">
 		{{form_start(form, {'attr' : {'class': 'row shop_edit'}})}}
     
     <div class="col-md-6">{{ form_row(form.name)}}</div>
@@ -16,7 +19,5 @@
 		</div>
 		{{form_end(form)}}
 	</div>
-	<div class="photo_edit_boutique">
-    <img id="preview_image" src="{{ asset("images/"~ boutique.logo) }}"/>
-  </div>
+	
 </div>

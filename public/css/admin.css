@@ -53,8 +53,11 @@ width: 100%;
     justify-content: center;
     align-items: center;
     background: #8080800d;
-    height: 488px;
+    height: 140px;
     margin: 17px;
+    width: 140px;
+    border-radius: 50%;
+
 }
 .preview_image img {
         max-height: 100%;
@@ -66,8 +69,10 @@ width: 100%;
 }
 #container_class {
     background: white;
-    display: grid;
-    grid-template-columns: 3fr 2fr;
+    padding-top: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 .container_image_article_ {
     display: flex;
