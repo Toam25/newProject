@@ -65,7 +65,7 @@
 						{% endif %}
 
 					</div>
-					
+
 					<div class="article_boutique">
 						<div class="">
 						    <div  style="display: flex;justify-content: center;">
@@ -105,10 +105,11 @@
 					</div>
 						{% include "boutique/dependancies/slide_shop.html.twig" with {'articles' : newArticles} %}	
 				 </div>
+			<hr style="width: 71vw;"/>
 				{% endif %}
 
 			
-			<hr style="width: 71vw;"/>
+			
 			{% if boutique.socialNetworks|length > 0 %}
 			<div id="container_social_network">
 				<h3 class="title_C" style="display:table-cell">Réseau sociaux
@@ -118,7 +119,7 @@
 						{% for socialnetwork in boutique.socialNetworks %}
 
 							<div id="_reference">
-								<div id="_container_images">
+								<div class="_container_images">
 									<img src={{ asset('images/'~ socialnetwork.images)}} alt="{{ socialnetwork.description }}"/>
 								</div>
 								<p id="container_description_reference">{{  socialnetwork.description }}
@@ -129,8 +130,9 @@
 					{% endif %}
 				</div>
 			</div>
-			{% endif %}
 			<hr style="width: 71vw;" />
+			{% endif %}
+		
 			{% if boutique.shopReferences|length > 0 %}
 			<div id="container_reference">
 				<h3 class="title_C" style="display:table-cell">Nos Références
@@ -140,7 +142,7 @@
 						{% for reference in boutique.shopReferences %}
 
 							<div id="_reference">
-								<div id="_container_images">
+								<div class="_container_images">
 									<img src={{ asset('images/'~reference.images)}} alt="{{ reference.description }}"/>
 								</div>
 								<p id="container_description_reference">{{  reference.description }}
