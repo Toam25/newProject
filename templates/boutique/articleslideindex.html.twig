@@ -18,9 +18,11 @@
 							Voir boutique</a>
 					</div>
 					<div class="liste_image">
-						<p id="title_{{ vote.id }}" title="{{vote.description}}">
-							{{ cutWorld(vote.description,100, false)}}</p>
-						<span class="_d"></span>
+					   <div>
+							<p id="title_{{ vote.id }}" title="{{vote.description}}">
+								{{ cutWorld(vote.description,100, false)}}</p>
+							<span class="_d"></span>
+						</div>
 						<div class="containt_image_vote">
 							<img src="{{ asset('images/'~vote.images)}}" class="image-content" name="comment{{ vote.id }}">
 						</div>

@@ -89,7 +89,7 @@
 				<div class="pub_video_pub">
 					<iframe width="100%" height="333px" src="https://www.youtube.com/embed/-YN612no" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 				</div>
-				<div class='commentaire_video'>
+				{#<div class='commentaire_video'>
 				
 					{% if  app.user %}
 										<img src="{{ asset('images/'~ app.user.avatar)}}" id="video-comment">
@@ -103,6 +103,7 @@
 						</button>
 					</form>
 				</div>
+				#}
 			</div>
 
 			{#  list des pube video #}
