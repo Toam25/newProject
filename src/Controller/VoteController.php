@@ -104,8 +104,11 @@ class VoteController extends AbstractController
                     $images=$insertFileServices->insertFile($request->files->get('images'));
                     $vote->setImages($images);
               }
-        
-            $data['image']= $request->files->get('images') ?? $images ;
+            $vote->setImages($request->files->get('images') ?? $vote->getImages());
+            $vote->setDescription($description);
+            $em= $this->getDoctrine()->getManager();
+            $em->flush();
+            $data['image']= $request->files->get('images') ?? $vote->getImages() ;
             $data['description'] = $description;
             $data['status'] = "success";
         return new Response(json_encode($data));

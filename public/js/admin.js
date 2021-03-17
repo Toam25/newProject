@@ -160,8 +160,10 @@ $(function () {
   $('._edit_vote').on('submit',function(e){
     e.preventDefault();
     let id = $('.id-vote').val();
+    let parent=   $('.container_all_image_vote').children('div').children('div').children('.container_image_for_body').children('img[name="'+id+'"');
+       
     $.ajax({
-      url : "/api/edit/vote/"+1 ,
+      url : "/admin/vote/edit/"+id ,
       type: 'POST',
       data: new FormData(this),
       contentType: false,
@@ -169,13 +171,16 @@ $(function () {
       cache: false,
       dataType: 'json',
       beforeSend: () => {
+        toastr.info('Enregistrement en cours');
         $('.btn-submit2').append('<span class="loader_ajax" style="height: 20px;width: 20px;display: inline-block;"><img src="/images/images_default/ajax-loader.gif" style="height: 100%;width: 100%;"></span>');
         $('.btn-submit2').prop('disabled', true)
       },
-      success: () => {
+      success: (data) => {
         toastr.success('Enregistrer avec success');
         $('.btn-submit2').children('.loader_ajax').remove();
         $('.btn-submit2').prop('disabled', false)
+        parent.parent('div').children(input).val(data.description);
+        parent.attr('src',data.image);
       },
       error: () => {
         toastr.error('Une error à été survenue');
