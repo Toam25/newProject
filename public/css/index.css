@@ -1432,7 +1432,7 @@ nav {
       min-width: 18vw !important;
     }
   .containt_image_vote {
-    height: 180px;
+    height: 136px !important;
   }
   .send_ajax {
     font-size: 17px;
