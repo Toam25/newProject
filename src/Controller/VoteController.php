@@ -99,8 +99,8 @@ class VoteController extends AbstractController
     {      $data = [];
            $description=  $request->request->get('description');
             if($request->files->get('images')){
-                   
-                    unlink("/images/".$vote->getImages());
+                   if($vote->getImages())
+                    unlink('images/'.$vote->getImages());
                     $images=$insertFileServices->insertFile($request->files->get('images'));
                     $vote->setImages($images);
               }

@@ -160,7 +160,7 @@ $(function () {
   $('._edit_vote').on('submit',function(e){
     e.preventDefault();
     let id = $('.id-vote').val();
-    let parent=   $('.container_all_image_vote').children('div').children('div').children('.container_image_for_body').children('img[name="'+id+'"');
+    let parent=   $('.container_all_image_vote').children('div').children('.container_image_for_body').children('img[name="'+id+'"]');
        
     $.ajax({
       url : "/admin/vote/edit/"+id ,
@@ -179,7 +179,7 @@ $(function () {
         toastr.success('Enregistrer avec success');
         $('.btn-submit2').children('.loader_ajax').remove();
         $('.btn-submit2').prop('disabled', false)
-        parent.parent('div').children(input).val(data.description);
+        parent.parent('div').children('input').val(data.description);
         parent.attr('src',data.image);
       },
       error: () => {

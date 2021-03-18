@@ -232,7 +232,7 @@ class TypeOptionMenuService extends AbstractController
                'accessoires-des-cheveux' => [
                   'name' => 'Accessoires des cheveux',
                   'options' => [
-                     'Boucle d’oreilles', 'Colliers', 'Pendentif', 'Gourmette', 'Alliances', 'Boutons de manchette', 'Bracelets', 'Bague', 'Parure de bague', 'Chaine', 'Sautoir', 'Montres'
+                     'Noeud', 'Serre tête ', 'Pince à cheveux', 'Brousse', 'Elastique de cheveux', 'Barettes', 'Bandeau'
                   ]
                ]
 
@@ -246,7 +246,7 @@ class TypeOptionMenuService extends AbstractController
 
                   'name' => 'Bijoux et montres',
                   'options' => [
-                     "Communication", "Promotion", "Publicité", "Contenus", "Vogue"
+                     'Boucle d’oreilles', 'Colliers', 'Pendentif', 'Gourmette', 'Alliances', 'Boutons de manchette', 'Bracelets', 'Bague', 'Parure de bague', 'Chaine', 'Sautoir', 'Montres'
                   ]
                ]
 
@@ -462,7 +462,8 @@ class TypeOptionMenuService extends AbstractController
                'accessoires-des-cheveux' => [
                   'name' => 'Accessoires des cheveux',
                   'options' => [
-                     'Boucle d’oreilles', 'Colliers', 'Pendentif', 'Gourmette', 'Alliances', 'Boutons de manchette', 'Bracelets', 'Bague', 'Parure de bague', 'Chaine', 'Sautoir', 'Montres'
+                     'Noeud', 'Serre tête ', 'Pince à cheveux', 'Brousse', 'Elastique de cheveux', 'Barettes', 'Bandeau'
+                     
                   ]
                ]
 
@@ -476,7 +477,7 @@ class TypeOptionMenuService extends AbstractController
 
                   'name' => 'Bijoux et montres',
                   'options' => [
-                     "Communication", "Promotion", "Publicité", "Contenus", "Vogue"
+                     'Boucle d’oreilles', 'Colliers', 'Pendentif', 'Gourmette', 'Alliances', 'Boutons de manchette', 'Bracelets', 'Bague', 'Parure de bague', 'Chaine', 'Sautoir', 'Montres'
                   ]
                ]
 
