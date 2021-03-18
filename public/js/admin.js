@@ -513,7 +513,7 @@ function list_type_other(arrays, value){
     let sous_category= $(this).parent('form').children("input[name='categorie_sante']").val();
     let category = $(this).attr('id');
     
-    console.log(category);
+
 
     let attr_categorie_menu = $(this).val();
 

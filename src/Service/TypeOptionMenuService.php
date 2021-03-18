@@ -683,7 +683,7 @@ class TypeOptionMenuService extends AbstractController
 
                   'name' => 'Matériels informatique',
                   'options' => [
-                     "Communication", "Promotion", "Publicité", "Contenus", "Vogue"
+                     'Ordinateurs de bureau', 'ordinateurs portables', 'Tablette', 'Univers gaming', 'Composants - périférique', 'Stockage', 'Réseaux'
                   ]
 
                ],
@@ -691,7 +691,7 @@ class TypeOptionMenuService extends AbstractController
 
                   'name' => 'Diagnostique',
                   'options' => [
-                     "Communication", "Promotion", "Publicité", "Contenus", "Vogue"
+                     'Hardware', 'Software'
                   ]
                ]
             ]
@@ -704,7 +704,7 @@ class TypeOptionMenuService extends AbstractController
 
                   'name' => "Système domotique",
                   'options' => [
-                     "Communication", "Promotion", "Publicité", "Contenus", "Vogue"
+                     'Motorisation', 'portails et volets', 'Accessoires', 'Interphone video', 'Alerme-Détecteur', 'Caméra de surveillance', 'Sécurité  incendie'
                   ]
                ]
             ]
@@ -716,7 +716,7 @@ class TypeOptionMenuService extends AbstractController
                "impression" => [
                   'name' => "Impression",
                   'options' => [
-                     "Communication", "Promotion", "Publicité", "Contenus", "Vogue"
+                     'Imprimante jet d\'encre', 'Imprimante laser', 'Scaner', 'Cartouches', 'Toners'
                   ]
                ]
             ]
@@ -725,44 +725,34 @@ class TypeOptionMenuService extends AbstractController
          [
             "category" => "Images et son",
             'sous_category' => [
-               "Tv" => [
+               "tv" => [
                   'name' => 'Tv',
                   'options' => [
-                     "Offres d'emplois",
-                     "Demande d'emplois",
-                     "Profils"
+                     'TV LED-LCD', 'TV 4K-UHD', 'Support TV', 'TV connectée', 'Smart TV'
                   ]
                ],
                "video-projecteur" => [
                   'name' => 'Video projecteur',
                   'options' => [
-                     "Offres d'emplois",
-                     "Demande d'emplois",
-                     "Profils"
+                     'HD Ready', 'Full HD', '4K/UHD', 'Accessoires'
                   ]
                ],
                "son" => [
                   'name' => 'Son',
                   'options' => [
-                     "Offres d'emplois",
-                     "Demande d'emplois",
-                     "Profils"
+                     'Casque auto', 'Enceintes bleutooth', 'MP3', 'MP4', 'Radio', 'Dict,aphone', 'Hifi', 'Bare de son'
                   ]
                ],
                "photos-et-camera" => [
                   'name' => 'Photos et caméra',
                   'options' => [
-                     "Offres d'emplois",
-                     "Demande d'emplois",
-                     "Profils"
+                     'Flash photo', 'Filtre', 'Caméscope caméra', 'Objectif reflex', 'Objectif caméra', 'GoPro', 'Autre'
                   ]
                ],
                "tous-les-accessoires" => [
                   'name' => 'Tous les accessoires',
                   'options' => [
-                     "Offres d'emplois",
-                     "Demande d'emplois",
-                     "Profils"
+                     'Câble et connectique', 'Accessoires audio et video', 'Accessoires photos', 'Accessoires caméra'
                   ]
                ]
             ]
