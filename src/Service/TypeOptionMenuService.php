@@ -689,7 +689,7 @@ class TypeOptionMenuService extends AbstractController
                ],
                "diagnostiques" => [
 
-                  'name' => 'Diagnostique',
+                  'name' => 'Diagnostiques',
                   'options' => [
                      'Hardware', 'Software'
                   ]

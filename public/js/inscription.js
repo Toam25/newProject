@@ -1,10 +1,10 @@
 $(function () {
-  var numberTotal = recap();
+ // var numberTotal = recap();
 
   $(".FormulaireMembre").on("submit", function (e) {
     e.preventDefault();
     var isNumberTotal = $(".resultat").val();
-    if (0 === 0) {
+    /*if (0 === 0) {*/
       $.ajax({
         type: "POST",
         url: "/inscription",
@@ -15,27 +15,33 @@ $(function () {
         processData: false,
         beforeSend: function () {
           $(".ajax").css("display", "inline-block");
+          toastr.info('Inscription en cours ...');
+        },
+        error : ()=> {
+          toastr.error("Adresse mail existe déjà");
+          $("#id_email").next(".error-message").fadeIn().html('Adresse mail existe déjà');
+          $("#id_email").css("border-color", "red");
+          $(".ajax").css("display", "none");
+         // numberTotal = recap();
+          $(".resultat").val("");
         },
         success: function (data) {
-          if (data == "Enregistrer") {
+
             $(".enregistrer")
               .fadeIn()
               .html("Le systeme vous dirigera vers Inother :)");
             $(".ajax").css("display", "none");
-            alert(
-              "Inscripation reussite, merci de vous connecter avec votre numéro téléphone et mots de passe"
-            );
+            toastr.success('"Inscription reussite, merci de vous connecter avec votre numéro téléphone et mots de passe" ...');
             document.location = "index.php";
-          } else {
-            $("#id_email").next(".error-message").fadeIn().html(data);
-            $("#id_email").css("border-color", "red");
-            $(".ajax").css("display", "none");
-            numberTotal = recap();
-            $(".resultat").val("");
-          }
-        },
+          
+        }
       });
+    });
+  });
+    /*
     } else {
+
+      toastr.error(data.msg);
       numberTotal = recap();
       console.log(numberTotal);
       $(".resultat").addClass("hvr-buzz-out");
@@ -98,4 +104,4 @@ $(function () {
       number3.toString()
     );
   }
-});
+});*/

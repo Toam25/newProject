@@ -1,3 +1,50 @@
+{#
+{{ dump(options)}}
+{{ dump(listCategories)}}
+#}
+{% for option in options %}
+<div id="container_{{ slugify(option['category']) }}" class="container_category_setting">
+	<h3>{{ option['category'] }}
+	</h3>
+	<div id="container_button_add_{{slugify(option['category'])}}" class="containt_menu_sante">
+
+		{% for key, sous_category in option['sous_category'] %}
+
+		  <div class="containt-categories">
+			<p>
+				<h4>{{ sous_category.name }}</h4>
+			</p>
+			<label id="listOption-{{ slugify(sous_category.name) }}" class="labelListOption">Liste des Options :</label>
+			<div id="list-option-{{ slugify(sous_category.name) }}" class="list_option">
+				{{ getListOption(listCategories,option['sous_category'][slugify(sous_category.name)]['options'][0]) }}
+			</div>
+
+			<form class="form-inline add_option container_modif_menu">
+				<label>
+					Ajouter une option :
+				</label>
+				<input type="hidden" name="categorie_sante" value="{{ slugify(option['sous_category'][slugify(sous_category.name)]['name']) }} ">
+				<input class="form-control input-{{slugify(option['category'])}}" type="text" required name="name_option">
+				<select id="{{ slugify(option['category'] )}} " class="form-control attibute_article_in" name="sous_categorie_menu">
+					{% for key, _option in option['sous_category'][slugify(sous_category.name)]['options'] %}
+						{% set selected ="" %}
+						{% if key is same as(0) %}
+							{% set selected ="selected"%}
+						{% endif %}
+						<option value="{{ _option }}" {{selected}}>{{ _option }}</option>
+					{% endfor %}
+				</select>
+
+				<input type="submit" name="btn_valider" value="Enregistrer" class="btn btn-success btn-submit{{slugify(sous_category.name)}}">
+			</form>
+		 </div>
+		{% endfor %}
+
+	</div>
+</div>
+
+{% endfor %}
+{#
 {% for option in options %}
 	<div id="container_{{ slugify(option['category']) }}"class="container_category_setting">
 		<h3>{{ option['category'] }}
@@ -50,3 +97,4 @@
 		</form>
 	</div>
 {% endfor %}
+#}

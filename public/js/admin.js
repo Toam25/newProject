@@ -598,6 +598,7 @@ function list_type_other(arrays, value){
     e.preventDefault();
      var  form=$(this);
      let category = $(this).children('select').attr('id');
+     let sous_category = $(this).children('input[name="categorie_sante"]').val();
      $.ajax({
           url :'/api/add/listOption',
           type: 'POST',
@@ -607,9 +608,9 @@ function list_type_other(arrays, value){
           cache : false,
           dataType : 'json',
           beforeSend : ()=>{
-              $('#container_'+category).children('.loader_li').remove();
-               $('#listOption'+category).after('<img class="loader_li" style="height: 14px" src="/images/images_default/ajax-loader.gif"/>');
-              $('.btn-submit'+category).prop('disabled', true)
+              $('#container_'+sous_category).children('.loader_li').remove();
+               $('#listOption-'+sous_category).append('<img class="loader_li" style="height: 14px" src="/images/images_default/ajax-loader.gif"/>');
+              $('.btn-submit'+sous_category).prop('disabled', true)
           },
           success : (data)=>{
 
@@ -618,21 +619,21 @@ function list_type_other(arrays, value){
               <div class="option_menu">`+data.results.name+`<button class="delete_option" value="`+data.results.id+`">
               <span class="fa fa-trash"></span></button></div>
               `;
-              $('#list-option-'+category).append(content);
+              $('#list-option-'+sous_category).append(content);
 
               //$('.list_option').prepend(data.content);
              // $(this)[0].reset();
-              $('.btn-submit'+category).prop('disabled', false)
+              $('.btn-submit'+sous_category).prop('disabled', false)
 
           
           },
           complete : ()=>{
-            $('#container_'+category).children('.loader_li').remove();
+            $('#listOption-'+sous_category).children('.loader_li').remove();
           },
           error: () => {
             toastr.error('Une error à été survenue');
-            $('#container_'+category).children('.loader_li').remove();
-            $('.btn-submit'+category).prop('disabled', false)
+            $('#listOption-'+sous_category).children('.loader_li').remove();
+            $('.btn-submit'+sous_category).prop('disabled', false)
           },
      });
   });

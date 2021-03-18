@@ -8,6 +8,7 @@ use App\Form\UserType;
 use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request as HttpFoundationRequest;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -34,9 +35,9 @@ class SecurityController extends AbstractController
             if ($allUsers == NULL) {
                 $hash = $encoder->encodePassword($user, $user->getPassword());
                 $user->setPassword($hash);
-                $user->setRoles(["ROLE_SUPER_ADMIN"]);
+                $user->setRoles(["ROLE_USER"]);
 
-                $boutique->setName('myBoutiqueName')
+               /* $boutique->setName('myBoutiqueName')
                     ->setType("SuperAdmin")
                     ->setAddress('myBoutiqueAdress')
                     ->setLink('myLinkForSiteWeb')
@@ -44,20 +45,20 @@ class SecurityController extends AbstractController
                     ->setContact('myAdressContact')
                     ->setApropos('DescriptionOfMyBoutque')
                     ->setUser($user);
-                $manager->persist($user);
                 $manager->persist($boutique);
+
+                */
+                $manager->persist($user);
+                
 
                 $manager->flush();
             } else {
 
-                return new Response(json_encode(['status' => 'ko', 'msg' => 'Adresse mail existe']), 200, [
-                    'Content-Type' => 'application/json'
-                ]);
+                return new JsonResponse(['status' => 'ko', 'msg' => 'Adresse mail existe'], Response::HTTP_UNAUTHORIZED);
+                
             }
 
-            return new Response(json_encode(['status' => 'ok', 'msg' => 'Enregistrer avec succée']), 200, [
-                'Content-Type' => 'application/json'
-            ]);
+            return new JsonResponse(['status' => 'ok', 'msg' => 'Enregistrer avec succée'],200);
         }
 
         return $this->render('security/inscription.html.twig', [

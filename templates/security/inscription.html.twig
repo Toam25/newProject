@@ -41,7 +41,7 @@
 						<a href="condition.php" style="color: darkslateblue;">condition d"utilisation</a>
 					</span>
 				</p>
-				<p style="color: black !important;">
+				{#<p style="color: black !important;">
 					<span class="number1"></span>
 					<span class="number2"></span>
 					<span class="number3"></span>
@@ -49,6 +49,7 @@
 					=
 					<input type="text" name="resultat" class="resultat">
 				</p>
+				#}
 			</br>
 			<button id="bouton_inscr" class="btn btn-danger" type="submit">
 				Inscription
@@ -61,5 +62,7 @@
 	</div>
 </div>{% endblock %}
 {% block javascripts %}
-    <script type="text/javascript" src="{{ asset('js/inscription.js') }}"></script>
+	<script src="{{asset('toastr/toastr.min.js') }} "></script>
+	<script type="text/javascript" src="{{ asset('js/inscription.js') }}"></script>
+	
 {% endblock %}
