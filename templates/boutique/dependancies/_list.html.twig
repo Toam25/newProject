@@ -22,7 +22,7 @@
 				<h1 class="product-name">{{article.name}}</h1>
 				<h4 class="product-price">
 					{% if article.price is same as(0)  %}
-					    Prix : A la demande 
+					    <span></span>
 					{% else %}
 				         {% if article.promo is same as('Promo')%}
 							 {{article.pricePromo| number_format(0,',',' ') }}&nbspAr
