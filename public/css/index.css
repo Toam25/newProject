@@ -253,7 +253,7 @@ nav {
 }
 .liste_categorie_vetement {
   position: relative;
-  width: 131px;
+  /*width: 131px;*/
   display: inline-block;
   margin-right: 3px;
   margin-left: 3px;
