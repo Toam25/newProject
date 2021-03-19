@@ -472,5 +472,8 @@ nav li:hover .submenu{
     .container_resume_shop > h3{
         font-size: 1.5rem;
     }
+    #_reference {
+    width: 106px !important;
+}
 }
 
