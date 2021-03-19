@@ -145,6 +145,7 @@
     /*box-shadow: 0px 0px 3px -1px black;*/
     width: 180px;
     margin: 10px 35px;
+    display : inline-block;
 }
 #container_reference,#container_social_network {
     background: white;
@@ -160,14 +161,12 @@
     align-items: center;
 }
 .container_reference {
-    display: flex;
-    justify-content:center;
     padding: 10px;
     max-width: 80vw;
-    flex-wrap: nowrap;
     overflow-y: hidden;
     overflow-x: auto;
     scrollbar-width: thin;
+    white-space: nowrap;
 }
 
 .cart {
