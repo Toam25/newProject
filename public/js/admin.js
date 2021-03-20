@@ -294,7 +294,7 @@ $(function () {
   
         if(type==="yes"){
   
-          $(this).parents('.list_produit').remove()
+          $(this).parents('.list_produit').parent('div').remove()
           $.ajax({
             url,
            type :'POST',
