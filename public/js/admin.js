@@ -276,25 +276,50 @@ $(function () {
   $('body').on('click','.article_delete',function(e){
     e.preventDefault();
       url ='/admin/article/delete/'+$(this).data('id');
-      $(this).parents('.list_produit').remove()
-      $.ajax({
-        url,
-       type :'POST',
-       data :{
+      Lobibox.confirm({
+        msg: 'Voulez vous supprimer?',
+        buttons : {
+           yes : {
+              text : 'Acceptez',
+  
+          },
+          no : {
+              text : 'Annulez',
+  
+          },
+         
         },
-        dataType : 'json',
-       beforeSend : function(){
+  
+        callback : ($this,type)=>{
+  
+        if(type==="yes"){
+  
+          $(this).parents('.list_produit').remove()
+          $.ajax({
+            url,
+           type :'POST',
+           data :{
+            },
+            dataType : 'json',
+           beforeSend : function(){
+            toastr.info('Suppression en cours...');
+           },
+           success : function(data){
+            toastr.success('Supprimer avec success');
+    
+           },
+           error : function(){
+             toastr.error('Il y a un erreur');
+    
+           }
+         });
+  
+       }  
+      } 
+  
+     }); 
+      
 
-       },
-       success : function(data){
-        toastr.success('Supprimer avec success');
-
-       },
-       error : function(){
-         toastr.error('Il y a un erreur');
-
-       }
-     });
   });
    //update image 
    $('.form_view_update_image').on("submit",function(e){
