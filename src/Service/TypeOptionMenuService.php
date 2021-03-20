@@ -704,7 +704,7 @@ class TypeOptionMenuService extends AbstractController
 
                   'name' => "Système domotique",
                   'options' => [
-                     'Motorisation', 'portails et volets', 'Accessoires', 'Interphone video', 'Alerme-Détecteur', 'Caméra de surveillance', 'Sécurité  incendie'
+                     'Motorisation', 'portails et volets', 'Accessoires', 'Interphone video', 'Alarme-Détecteur', 'Caméra de surveillance', 'Sécurité  incendie'
                   ]
                ]
             ]
@@ -740,7 +740,7 @@ class TypeOptionMenuService extends AbstractController
                "son" => [
                   'name' => 'Son',
                   'options' => [
-                     'Casque auto', 'Enceintes bleutooth', 'MP3', 'MP4', 'Radio', 'Dict,aphone', 'Hifi', 'Bare de son'
+                     'Casque auto', 'Enceintes bleutooth', 'MP3', 'MP4', 'Radio', 'Dictaphone', 'Hifi', 'Bare de son'
                   ]
                ],
                "photos-et-camera" => [
