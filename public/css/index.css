@@ -1430,6 +1430,8 @@ nav {
      .my-btn-boutique {
         font-size: 11px !important;
         padding: 5px !important;
+        height: 31px;
+        width: 118px;
     }
    .offcanvas{
       width: 62vw !important;
