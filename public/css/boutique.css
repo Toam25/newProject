@@ -260,8 +260,8 @@ ul > ul > li label, ul>li>label{
 }
 .image_slider {
     min-height: 200px;
-width: 100%;
-object-fit: cover;
+    width: 100%;
+    /*object-fit: cover;*/
 }
 .product-rating > i.fa-star {
     color: #ef233c;
