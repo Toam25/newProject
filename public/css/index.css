@@ -237,7 +237,8 @@ nav {
   scroll-snap-align: start;
 }
 .echantillon {
-  width: 100%;
+  max-width: 100%;
+  min-width : 50%;
   height: 130px;
 }
 .name {
@@ -253,7 +254,7 @@ nav {
 }
 .liste_categorie_vetement {
   position: relative;
-  width: 131px;
+  /*width: 131px;*/
   display: inline-block;
   margin-right: 3px;
   margin-left: 3px;
@@ -1435,6 +1436,9 @@ nav {
   .send_ajax {
     font-size: 17px;
   }
+  #image_header {
+    height: 110px !important;
+    }
   .send_ajax img {
     height: 33px;
   }

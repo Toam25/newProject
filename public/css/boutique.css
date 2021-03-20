@@ -126,6 +126,8 @@
     padding: 6px;
     /*border-top: 1px solid rgba(0,0,0,0.1);*/
     text-align: center;
+    display: flex;
+    justify-content: center;
 }
 #_reference >._container_images {
     display: flex;
@@ -145,6 +147,7 @@
     /*box-shadow: 0px 0px 3px -1px black;*/
     width: 180px;
     margin: 10px 35px;
+    display : inline-block;
 }
 #container_reference,#container_social_network {
     background: white;
@@ -160,14 +163,12 @@
     align-items: center;
 }
 .container_reference {
-    display: flex;
-    justify-content:center;
     padding: 10px;
     max-width: 80vw;
-    flex-wrap: nowrap;
     overflow-y: hidden;
     overflow-x: auto;
     scrollbar-width: thin;
+    white-space: nowrap;
 }
 
 .cart {
@@ -471,5 +472,8 @@ nav li:hover .submenu{
     .container_resume_shop > h3{
         font-size: 1.5rem;
     }
+    #_reference {
+    width: 106px !important;
+}
 }
 
