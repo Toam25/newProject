@@ -109,7 +109,7 @@ class BoutiqueController extends AbstractController
     {
 
         $votes = $votesRepository->findBy(['article' => $article]);
-
+        
         $getNumberVote = $this->getNumberTotalVote($votes);
         
         $listOption=$this->typeOptionMenuService->getOption($utilsService->getSlug($article->getCategory()));
@@ -228,7 +228,9 @@ class BoutiqueController extends AbstractController
                 $user = [
                     'isComment' => true,
                     'comment' => $votes[$i]->getComment(),
-                    'value' => $votes[$i]->getValue()
+                    'value' => $votes[$i]->getValue(),
+                    'id'=>$votes[$i]->getId(),
+                    'owner'=>$votes[$i]->getUser()->getId()
                 ];
             }
             $nbr += $votes[$i]->getValue();

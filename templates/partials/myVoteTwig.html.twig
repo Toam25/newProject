@@ -1,3 +1,4 @@
+{% if editable is same as (false) %}
 {% for i in 0..4%}
    {% if i < vote %}
      <i class="fa fa-star"></i>
@@ -5,3 +6,26 @@
      <i class="fa fa-star-o empty"></i>
    {% endif %}
 {% endfor %}
+{% else %}
+<div class="stars">
+     {% for i in 5..1 %}
+        {% if i < vote+1 %}
+           {% if i is same as(vote)%}
+             <input id="star{{i}}" name="rating" value="{{i}}" type="radio" class="checkereview" checked="true"><label for="star{{i}}"></label>
+           {% else %}
+             <input id="star{{i}}" name="rating" value="{{i}}" type="radio" class="checkereview"><label for="star{{i}}"></label>
+           {% endif %}
+           
+        {% else %}
+           <input id="star{{i}}" name="rating" value="{{i}}" type="radio"><label for="star{{i}}"></label>
+        {% endif %}
+        	
+					{#<input id="star4" name="rating" value="4" type="radio"><label for="star4"></label>
+					<input id="star3" name="rating" value="3" type="radio"><label for="star3"></label>
+					<input id="star2" name="rating" value="2" type="radio"><label for="star2"></label>
+						<input id="star1" name="rating" value="1" type="radio"><label for="star1"></label>
+          #}
+     {% endfor %}
+					
+</div>
+{% endif %}

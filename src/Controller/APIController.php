@@ -12,6 +12,7 @@ use App\Entity\User;
 use App\Entity\UserCondition;
 use App\Entity\UserVote;
 use App\Entity\Vote;
+use App\Entity\Votes;
 use App\Repository\ArticleRepository;
 use App\Repository\BoutiqueRepository;
 use App\Repository\EsArticleRepository;
@@ -58,7 +59,20 @@ class APIController extends AbstractController
         }
         return new Response(json_encode($data));
     }
-   
+   /**
+    * @Route("/delete/review/{id}", name="delete-review", methods={"POST"})
+    */
+
+    public function deleteReview(Votes $votes){
+        
+        if($this->getUser() and $votes){
+            $em= $this->getDoctrine()->getManager();
+            $em->remove($votes);
+            $em->flush();
+            return new JsonResponse(['status'=>'success'],Response::HTTP_OK);
+        }
+        return new JsonResponse(['status'=>'error'], Response::HTTP_UNAUTHORIZED);
+    }
     /**
      * @Route("/getOptions/{sous_category}", name="get_option")
      */

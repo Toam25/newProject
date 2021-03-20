@@ -1810,8 +1810,8 @@ textarea.input {
 .reviews .review-heading {
   position: absolute;
   width: 130px;
-  left: 0;
-  top: 0;
+  left: 10px;
+  top: 10px;
   height: 70px;
 }
 
@@ -1911,7 +1911,10 @@ textarea.input {
 .review-form .input-rating .stars>label:hover:before, .review-form .input-rating .stars>label:hover~label:before {
   color: #D10024;
 }
-
+.checkereview~label:before{
+  content: "\f005" !important;
+  color: #D10024 !important;
+}
 .review-form .input-rating .stars>input:checked label:before, .review-form .input-rating .stars>input:checked~label:before {
   content: "\f005";
   color: #D10024;

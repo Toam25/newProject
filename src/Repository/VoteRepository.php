@@ -40,6 +40,19 @@ class VoteRepository extends ServiceEntityRepository
                     ->getQuery()
                     ->getResult()
                     ;
+    
+    }
+    public function findOnWithUserVote(int $id_vote)
+    {
+        return $this->createQueryBuilder('v')
+                    ->select('v','u')
+                    ->leftJoin('v.userVotes','u')
+                    ->orderBy('v.placement',"DESC")
+                    ->where('v.id = :id')
+                    ->setParameter('id',$id_vote)
+                    ->getQuery()
+                    ->getOneOrNullResult()
+                    ;
         
     }
     // /**

@@ -26,7 +26,7 @@ class VoteTwig extends AbstractExtension{
         ];
     }
 
-    public function getNumberVote($vote){
+    public function getNumberVote($vote, $editable = false){
        
         
        
@@ -52,6 +52,7 @@ class VoteTwig extends AbstractExtension{
 
         return $this->twig->render('partials/myVoteTwig.html.twig',[
             'vote'=>$nbrVote,
+            'editable'=>$editable
         ]);
     }
 }

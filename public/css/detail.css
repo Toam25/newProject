@@ -13,8 +13,20 @@
 .New{
     background-color: #2D892D !important;
 }
+.li-review {
+    padding: 10px 10px 0 10px;
+    box-shadow: 0px 1px 2px #dee9f2;
+    border-radius: 6px;
+    transition: 5000ms ease-in-out;
+    transform: scale(1);
+}
 .breadcrumb-tree li a {
     color: #3c3ca4;
+}
+.delete-vote {
+    position: absolute;
+    right: 5px;
+    bottom: 3px;
 }
 .breadcrumb-tree {
     display: flex;

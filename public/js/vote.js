@@ -3,6 +3,8 @@ $(function(){
     var vote=1;
     $('input[name="rating"]').on('click',function(){
         vote = $(this).val();
+        $(this).removeClass('checkereview');
+        console.log(vote);
     });
 
     $('.review-form').on('submit',function(e){

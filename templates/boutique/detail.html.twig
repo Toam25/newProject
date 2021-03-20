@@ -31,6 +31,7 @@
 
 	<!-- Custom stlylesheet -->
 	<link type="text/css" rel="stylesheet" href="{{ asset('css/boutique.css') }}"/>
+	<link type="text/css" rel="stylesheet" href="{{ asset('css/lobibox.css') }}"/>
 	<link type="text/css" rel="stylesheet" href="{{ asset('css/style.css') }}"/>
 	<link type="text/css" rel="stylesheet" href="{{ asset('css/cart.css') }}"/>
 	<link type="text/css" rel="stylesheet" href="{{ asset('css/detail.css') }}"/>
@@ -118,6 +119,7 @@
 							</h3>
 						</div>
 						<p>{{ article.description}}</p>
+
 						<div class="contain_share">
 
 						{#
@@ -163,159 +165,28 @@
 						<!-- /product tab nav -->
 
 						<!-- product tab content -->
-						<div
-							class="tab-content">
-
+						<div class="tab-content">
 							<!-- tab3  -->
 							<div id="tab1">
-								<div
-									class="row">
+								<div class="row">
 									<!-- Rating -->
 									<div class="col-md-3">
-										<div id="rating">
-											<div class="rating-avg">
-												{% set totalVote = votes|length==0 ? 1 : votes|length %}
-												<span>{{ (valuevote['total']/ totalVote) | number_format(1,'.',' ') }}</span>
-												<div class="rating-stars">
-													{{my_vote_twig(votes)}}
-												</div>
-											</div>
-											<ul class="rating">
-												<li>
-													<div class="rating-stars">
-														{{ my_vote_twig(5) }}
-
-													</div>
-													<div class="rating-progress">
-														<div style="width: {{ valuevote['five']/totalVote*100}}%"></div>
-													</div>
-													<span class="sum">{{valuevote['five']}}</span>
-												</li>
-												<li>
-													<div class="rating-stars">
-														{{ my_vote_twig(4) }}
-													</div>
-													<div class="rating-progress">
-														<div style="width: {{ valuevote['four']/totalVote*100}}%"></div>
-													</div>
-													<span class="sum">{{valuevote['four']}}</span>
-												</li>
-												<li>
-													<div class="rating-stars">
-														{{ my_vote_twig(3) }}
-													</div>
-													<div class="rating-progress">
-														<div style="width: {{ valuevote['tree']/totalVote*100}}%"></div>
-													</div>
-													<span class="sum">{{valuevote['tree']}}</span>
-												</li>
-												<li>
-													<div class="rating-stars">
-														{{ my_vote_twig(2) }}
-													</div>
-													<div class="rating-progress">
-														<div style="width: {{ valuevote['two']/totalVote*100}}%"></div>
-													</div>
-													<span class="sum">{{valuevote['two']}}</span>
-												</li>
-												<li>
-													<div class="rating-stars">
-														{{ my_vote_twig(1) }}
-													</div>
-													<div class="rating-progress">
-														<div style="width: {{ valuevote['one']/totalVote*100}}%"></div>
-													</div>
-													<span class="sum">{{valuevote['one']}}</span>
-												</li>
-											</ul>
-										</div>
+											{% include "boutique/dependancies/_rating.html.twig" %}
 									</div>
 									<!-- /Rating -->
 
 									<!-- Reviews -->
 									<div class="col-md-6">
-										<div id="reviews">
-											<ul class="reviews">
-												{% for vote in votes %}
-													<li>
-														<div class="review-heading">
-															<h5 class="name">{{ vote.user.name}}</h5>
-															<p class="date">dd</p>
-															<div class="review-rating">
-																{{my_vote_twig(vote.value)}}
-															</div>
-														</div>
-														<div class="review-body">
-															<p>{{ vote.comment}}</p>
-														</div>
-													</li>
-												{% endfor %}
-											</ul>
-											{#
-																																												<ul class="reviews-pagination">
-																																													<li class="active">1</li>
-																																													<li>
-																																														<a href="#">2</a>
-																																													</li>
-																																													<li>
-																																														<a href="#">3</a>
-																																													</li>
-																																													<li>
-																																														<a href="#">4</a>
-																																													</li>
-																																													<li>
-																																														<a href="#">
-																																															<i class="fa fa-angle-right"></i>
-																																														</a>
-																																													</li>
-																																												</ul>
-																																											#}
-										</div>
+									 {% include "boutique/dependancies/_list_comment_review.html.twig" %}
 									</div>
 									<!-- /Reviews -->
 
 									<!-- Review Form -->
-									{% if users['isComment'] %}
-										<div id="avis" class="col-md-3">
-											<div id="review-form">
-												<form id="{{ article.id }}" class="review-form">
-													<div class="input-rating">
-														<span>Votre satisfaction :
-														</span>
-														<br>
-														<div class="myvoting">
-															{{my_vote_twig(users['value'])}}
-														</div>
-														<p>
-															{{ users['comment'] }}
-														</p>
-													</div>
-												</form>
-											</div>
-										</div>
-									{% elseif app.user %}
-										<div id="avis" class="col-md-3">
-											<div id="review-form">
-												<form id="{{ article.id }}" class="review-form">
-													<div class="input-rating">
-														<span>Votre satisfaction :
-														</span>
-														<br>
-														<div class="stars">
-															<input id="star5" name="rating" value="5" type="radio"><label for="star5"></label>
-															<input id="star4" name="rating" value="4" type="radio"><label for="star4"></label>
-															<input id="star3" name="rating" value="3" type="radio"><label for="star3"></label>
-															<input id="star2" name="rating" value="2" type="radio"><label for="star2"></label>
-															<input id="star1" name="rating" value="1" type="radio"><label for="star1"></label>
-														</div>
-														<textarea class="input comment" placeholder="Commentaire" required></textarea>
-													</div>
-													<button class="primary-btn btn-submit">Enregistrer</button>
-												</form>
-											</div>
-										</div>
-									{% endif %}
+									<div id="avis" class="col-md-3">
+										 {% include "boutique/dependancies/_add_review.html.twig" %}
+									</div>
 									<!-- /Review Form -->
+
 								</div>
 							</div>
 							<!-- /tab3  -->
@@ -333,12 +204,15 @@
 	{% if not app.user%}
 		{% include 'boutique/dependancies/connexion.html.twig'%}
 	{% endif %}
-	{% include "boutique/dependancies/footer.html.twig" %}
+	    {% include "boutique/dependancies/footer.html.twig" %}
 {% endblock %}
 
 {% block javascripts %}
 	<script src="{{ asset('js/slick.min.js') }}"></script>
+	<script src="{{ asset('toastr/toastr.min.js') }}"></script>
+	<script src="{{ asset('js/lobibox.js') }}"></script>
 	<script src="{{ asset('js/connexion.js') }}"></script>
+	<script src="{{ asset('js/detail.js') }}"></script>
 	<script src=" {{ asset('js/nouislider.min.js') }}"></script>
 	<script src="{{ asset('js/jquery.zoom.min.js') }}"></script>
 	<script src="{{ asset('js/index.js') }}"></script>
