@@ -1,0 +1,24 @@
+
+	<div id="reviews">
+		<ul class="reviews">
+			{% for vote in votes %}
+				<li id="li-review-{{vote.id}}" class="li-review">
+					<div class="review-heading">
+						<h5 class="name">{{ vote.user.name}}</h5>
+						<p class="date">{{vote.createdAt|date}}</p>
+						<div class="review-rating">
+							{{my_vote_twig(vote.value)}}
+						</div>
+					</div>
+					<div class="review-body">
+						<p>{{ vote.comment}}</p>
+					</div>
+
+					{% if app.user is not same as(null) and 'ROLE_SUPER_ADMIN' in app.user.roles  %}
+						<button class="delete-vote btn btn-danger" data-id="{{vote.id}}">Supprimez</button>
+					{% endif %}
+
+				</li>
+			{% endfor %}
+		</ul>
+	</div>

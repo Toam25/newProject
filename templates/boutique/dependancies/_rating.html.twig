@@ -1,0 +1,57 @@
+<div id="rating">
+	<div class="rating-avg">
+		{% set totalVote = votes|length==0 ? 1 : votes|length %}
+		<span>{{ (valuevote['total']/ totalVote) | number_format(1,'.',' ') }}</span>
+		<div class="rating-stars">
+			{{my_vote_twig(votes)}}
+		</div>
+	</div>
+	<ul class="rating">
+		<li>
+			<div class="rating-stars">
+				{{ my_vote_twig(5) }}
+
+			</div>
+			<div class="rating-progress">
+				<div style="width: {{ valuevote['five']/totalVote*100}}%"></div>
+			</div>
+			<span class="sum">{{valuevote['five']}}</span>
+		</li>
+		<li>
+			<div class="rating-stars">
+				{{ my_vote_twig(4) }}
+			</div>
+			<div class="rating-progress">
+				<div style="width: {{ valuevote['four']/totalVote*100}}%"></div>
+			</div>
+			<span class="sum">{{valuevote['four']}}</span>
+		</li>
+		<li>
+			<div class="rating-stars">
+				{{ my_vote_twig(3) }}
+			</div>
+			<div class="rating-progress">
+				<div style="width: {{ valuevote['tree']/totalVote*100}}%"></div>
+			</div>
+			<span class="sum">{{valuevote['tree']}}</span>
+		</li>
+		<li>
+			<div class="rating-stars">
+				{{ my_vote_twig(2) }}
+			</div>
+			<div class="rating-progress">
+				<div style="width: {{ valuevote['two']/totalVote*100}}%"></div>
+			</div>
+			<span class="sum">{{valuevote['two']}}</span>
+		</li>
+		<li>
+			<div class="rating-stars">
+				{{ my_vote_twig(1) }}
+			</div>
+			<div class="rating-progress">
+				<div style="width: {{ valuevote['one']/totalVote*100}}%"></div>
+			</div>
+			<span class="sum">{{valuevote['one']}}</span>
+		</li>
+	</ul>
+</div>
