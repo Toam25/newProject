@@ -1429,6 +1429,7 @@ nav {
      }*/
      .my-btn-boutique {
         font-size: 11px !important;
+        padding: 5px !important;
     }
    .offcanvas{
       width: 62vw !important;
