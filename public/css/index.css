@@ -19,6 +19,9 @@ nav {
   top: 30px;
   transform: rotate(45deg);
 }
+.name > span{
+   white-space: initial;
+}
 .ribbon span {
   position: absolute;
   display: block;
@@ -270,8 +273,9 @@ nav {
   margin-top: 8px;
   overflow-y: hidden;
   margin-bottom: 7px;
-  display: flex;
+  /*display: flex;
   justify-content: center;
+  */
 }
 
 .remove {
