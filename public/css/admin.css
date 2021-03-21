@@ -532,3 +532,27 @@ background: #e4087e;
 .image_vote{
     transition : all 500ms ease-out;
 }
+.ajout_article_ev {
+    margin: 5px;
+    font-size: 12px;
+    display: inline-block;
+}
+@media (max-width: 768px) {
+    .list_produit > div {
+        opacity: 1;
+        transform: translate(0%);
+        display: flex;
+        flex-direction: row;
+        align-items: end;
+        height: auto;
+        bottom: 0;
+        top: auto;
+        padding: 5px;
+    }
+    .list_produit > div > button {
+        margin: 0 5px;
+        width: 43%;
+        padding: 3px;
+        font-size: 13px;
+    }
+ }
