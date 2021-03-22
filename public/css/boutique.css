@@ -456,7 +456,8 @@ nav li:hover .submenu{
 }
 
 .mode .submenu{
-	background-color: #202340;
+    /*background-color: #202340;*/
+    background-color : #5fa0bf;
 }
 
 .sante .submenu{
@@ -468,6 +469,10 @@ nav li:hover .submenu{
 	color:yellow;
 }
 
+.menu_selected{
+    color: #931717c9 !important;
+    font-weight: bold;
+}
 @media (max-width: 700px){
     .container_resume_shop > h3{
         font-size: 1.5rem;

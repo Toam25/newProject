@@ -61,7 +61,7 @@ class BoutiqueController extends AbstractController
     /**
      * @Route("/shop/{type}/{id}", name="shop", defaults = {"id"=null})
      */
-    public function boutique($type = null, $id, Request $request, BoutiqueRepository $boutiqueRepository, SearchService $searchService, ArticleRepository $articleRepository)
+    public function boutique($type = "", $id, Request $request, BoutiqueRepository $boutiqueRepository, SearchService $searchService, ArticleRepository $articleRepository)
     {
 
 
@@ -97,7 +97,8 @@ class BoutiqueController extends AbstractController
             'newArticles' => $articleRepository->findAllArticleSliderByBoutique($boutique),
             'listShop' => $listShops['listShops'],
             'type' => $type,
-            'filtreCategory' => $this->getCategoryPerArticle($article)
+            'filtreCategory' => $this->getCategoryPerArticle($article),
+            'menu'=>$type
 
         ]);
     }

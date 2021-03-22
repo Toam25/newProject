@@ -17,16 +17,34 @@
 					<a href="{{ path('index')}}">ACCUEIL</a>
 				</li>
 				<li class='mode js-category'>
-					<a href="#">MODE</a>
+					<a href="#" {%
+					 if menu is same as ("habillement") or menu is same as ("beaute_et_bien_etre") or menu is same as ("accessoires") %}
+						class = "menu_selected"
+					{% endif %}
+					>
+					 MODE
+					  </a>
 					<ul class="submenu">
 						<li>
-							<a href="{{ path('shop',{'type':'habillement','id':-1})}}">Habillement</a>
+							<a href="{{ path('shop',{'type':'habillement','id':-1})}}"
+								{% if menu is same as ("habillement") %}
+									class = "menu_selected"
+								{% endif %}
+							>Habillement</a>
 						</li>
 						<li>
-							<a href="{{ path('shop',{'type':'beaute_bien_etre','id': -1})}}">Beauté Bien-être</a>
+							<a href="{{ path('shop',{'type':'beaute_bien_etre','id': -1})}}"
+							 {% if menu is same as ("beaute_et_bien_etre") %}
+									class = "menu_selected"
+							 {% endif %}
+							>Beauté Bien-être</a>
 						</li>
 						<li>
-							<a href="{{ path('shop',{'type':'accessoire','id':-1})}}">Accessoires</a>
+							<a href="{{ path('shop',{'type':'accessoires','id':-1})}}"
+							  {% if menu is same as ("accessoires") %}
+									class = "menu_selected"
+							 {% endif %}
+							>Accessoires</a>
 						</li>
 						
 						<!--li>
@@ -35,13 +53,25 @@
 					</ul>
 				</li>
 				<li class="mode">
-					<a href="{{ path('shop',{'type':'high-tech','id':-1})}}">HIGH-TECH</a>
+					<a href="{{ path('shop',{'type':'high-tech','id':-1})}}"
+					  {% if menu is same as ("high-tech") %}
+									class = "menu_selected"
+					 {% endif %}
+					>HIGH-TECH</a>
 				</li>
 				<li class="mode">
-					<a href="{{ path('shop',{'type':'Maison','id':-1})}}">MAISON</a>
+					<a href="{{ path('shop',{'type':'Maison','id':-1})}}" 
+					 {% if menu is same as ("Maison") %}
+									class = "menu_selected"
+					{% endif %}
+					>MAISON</a>
 				</li>
 				<li class="mode">
-					<a href="{{ path('shop',{'type':'services','id':-1})}}">SERVICES</a>
+					<a href="{{ path('shop',{'type':'services','id':-1})}}"
+					 {% if menu is same as ("services") %}
+									class = "menu_selected"
+					{% endif %}
+					>SERVICES</a>
 				</li>
 
 				<li class='ConnecterMembre'></li>
