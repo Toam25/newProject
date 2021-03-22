@@ -61,35 +61,18 @@ class BoutiqueController extends AbstractController
     /**
      * @Route("/shop/{type}/{id}", name="shop", defaults = {"id"=null})
      */
+
     public function boutique($type = "", $id, Request $request, BoutiqueRepository $boutiqueRepository, SearchService $searchService, ArticleRepository $articleRepository)
     {
 
+        $pageWasRefreshed = isset($_SERVER['HTTP_CACHE_CONTROL']) && $_SERVER['HTTP_CACHE_CONTROL'] === 'max-age=0';
 
         $listShops = $this->getlistShop($boutiqueRepository->findBy(['type' => $type]), $type);
 
-        $pageWasRefreshed = isset($_SERVER['HTTP_CACHE_CONTROL']) && $_SERVER['HTTP_CACHE_CONTROL'] === 'max-age=0';
-
-        if ($id == -1) {
-            $boutique = $boutiqueRepository->findOneBy(['type' => $type]);
-        } else {
-
-            if ($pageWasRefreshed) {
-                $shopId = $id;
-            } else {
-                $shopId = $id; //$this->lastShopVisited($listShops['allShopId']);
-            }
-
-            $boutique = $boutiqueRepository->findOneByWithHeaderReference($type,intval($shopId));
-        }
-
-        if ($request->get('shop_id')) {
-            $article = $searchService->getResultSearch($request);
-        } else {
-            $article = $articleRepository->findAllArticleByBoutique($boutique);
-        }
-
-
-
+        $boutique = $type!="" ? $boutiqueRepository->findOneByWithHeaderReference($type,intval($id)) : 'super_admin';
+        
+        $article = $request->get('shop_id') ? $article = $searchService->getResultSearch($request) : $articleRepository->findAllArticleByBoutique($boutique);
+     
         return $this->render('boutique/boutique.html.twig', [
             'controller_name' => 'BoutiqueController',
             'boutique' => $boutique,
