@@ -7,20 +7,12 @@
 					</span>
 					<br>
 					<div class="myvoting">
-						{{my_vote_twig(users['value'])}}
+						{{my_vote_twig(users['value'], true)}}
 					</div>
-					{#{% if app.user.roles is same as('ROLE_SUPER_ADMIN') %}
-																				<p class="input comment" placeholder="Commentaire">{{users['comment']}}</p>
-																		    {% else %}
-																				<textarea class="input comment" placeholder="Commentaire">{{users['comment']}}</textarea>
-																			{% endif %}
-																			#}
-					<p>{{users['comment']}}</p>
+					    <textarea class="input comment" placeholder="Commentaire">{{users['comment']}}</textarea>					
 				</div>
-				{#
-																	<button class="danger-btn btn-submit" data-id="{{users['id']}}">Supprimer</button>
-																	<button class="primary-btn btn-submit">Enregistrer</button>
-																	#}
+					<button class="js-delete-vote secondary-btn" data-id="{{users['id']}}">Supprimer</button>
+					<button class="primary-btn btn-submit">Enregistrer</button>
 			</form>
 
 		</div>

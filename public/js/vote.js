@@ -2,8 +2,10 @@ $(function(){
     
     var vote=1;
     $('input[name="rating"]').on('click',function(){
-        vote = $(this).val();
+        /* var vote = $(this).val();*/
+        $('input[name="rating"]').removeClass('js-value-note');
         $(this).removeClass('checkereview');
+        $(this).addClass('js-value-note');
         console.log(vote);
     });
 
@@ -11,6 +13,7 @@ $(function(){
         e.preventDefault();
         var id = $(this).attr('id');
         var comment = $('.comment').val();
+        let vote = $('.js-value-note').val() ?? 1;
         $.ajax({
             url: "/vote/"+id+"/add",
             type: 'POST',
@@ -33,8 +36,10 @@ $(function(){
            },
            success : (data)=>{
                toastr.success("Merci pour votre avis");
-               $('.primary-btn').remove();
+              // $('.primary-btn').remove();
                $('.input').prop('disabled',true);
+               $('.btn-submit').children('.loader_ajax').remove();
+               $(this).parent('form').children('.delete-vote').data('id',data.id);
             /*  if(data.status=='ok'){
                toastr.success(data.msg); 
                 $("form[name='user']")[0].reset()

@@ -11,7 +11,7 @@
      {% for i in 5..1 %}
         {% if i < vote+1 %}
            {% if i is same as(vote)%}
-             <input id="star{{i}}" name="rating" value="{{i}}" type="radio" class="checkereview" checked="true"><label for="star{{i}}"></label>
+             <input id="star{{i}}" name="rating" value="{{i}}" type="radio" class="checkereview js-value-note"><label for="star{{i}}"></label>
            {% else %}
              <input id="star{{i}}" name="rating" value="{{i}}" type="radio" class="checkereview"><label for="star{{i}}"></label>
            {% endif %}

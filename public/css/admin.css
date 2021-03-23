@@ -292,10 +292,15 @@ img.header_boutique {
 }
 
 .images_header_admin img {
-    object-fit: cover;
+    /*object-fit: cover;
     object-position: center;
     height: 100%;
     width: 100%;
+    transition: 300ms all ease-in;
+    cursor: pointer;
+    */
+    max-height: 100%;
+    max-width: 100%;
     transition: 300ms all ease-in;
     cursor: pointer;
 }

@@ -111,25 +111,36 @@ class BoutiqueController extends AbstractController
      * @Route("/vote/{id}/add" , name="addVote")
      */
 
-    public function addVote(Article $article, Request $request)
+    public function addVote(Article $article, Request $request, VotesRepository $votesRepository)
     {
-
+        
         if ($this->getUser() != null) {
-
 
             $comment = $request->request->get('comment');
             $value = $request->request->get('vote');
+            $manager = $this->getDoctrine()->getManager();
 
-            $vote = new Votes();
-            $vote->setValue($value)
+            $vote= $votesRepository->findOneBy(['user'=>$this->getUser(),'article'=>$article]);
+            if($vote){
+                $vote->setValue($value)
                 ->setComment($comment)
                 ->setUser($this->getUser())
                 ->setVotearticle($article);
-            $article->addVote($vote);
-            $manager = $this->getDoctrine()->getManager();
-            $manager->persist($vote);
-            $manager->flush();
-            $array = ['status' => 'ok', 'msg' => 'Enregistrer avec success'];
+                $article->addVote($vote);
+                $manager->flush();
+
+            }else{
+                $vote = new Votes();
+                $vote->setValue($value)
+                ->setComment($comment)
+                ->setUser($this->getUser())
+                ->setVotearticle($article);
+                $article->addVote($vote);
+                $manager->persist($vote);
+                $manager->flush();
+            }
+            
+            $array = ['status' => 'ok', 'msg' => 'Enregistrer avec success','id'=>$vote->getId()];
             $code = 200;
         } else {
             $array = ['status' => 'ko', 'msg' => 'Unautorized'];
