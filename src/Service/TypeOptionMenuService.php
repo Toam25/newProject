@@ -320,7 +320,7 @@ class TypeOptionMenuService extends AbstractController
                "formation-en-ligne" => [
                   'name' => 'Formation en ligne',
                   'options' => [
-                     "BTP","DIGITALISATION","DEVELOPPEMENT","COMPTABILITE","RESOURCE HUMAINE","GENERALE"
+                     "BTP","Digitalisation","Développement","Comptabilité","Resource humaine","Générale"
                   ]
                ]
 
