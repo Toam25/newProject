@@ -97,10 +97,10 @@ ul, ol {
 	Buttons
 \*----------------------------*/
 
-.primary-btn {
+.primary-btn,  .secondary-btn {
   display: inline-block;
-  padding: 12px 30px;
-  background-color: #D10024;
+  padding: 4px 16px;
+  background-color: #21731F;
   border: none;
   border-radius: 40px;
   color: #FFF;
@@ -109,6 +109,9 @@ ul, ol {
   text-align: center;
   -webkit-transition: 0.2s all;
   transition: 0.2s all;
+}
+.secondary-btn{
+  background-color: #D10024 !important;
 }
 
 .primary-btn:hover, .primary-btn:focus {
