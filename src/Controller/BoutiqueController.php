@@ -64,14 +64,32 @@ class BoutiqueController extends AbstractController
     public function boutique($type = "", int $id, Request $request, BoutiqueRepository $boutiqueRepository, SearchService $searchService, ArticleRepository $articleRepository)
     {
 
-        $pageWasRefreshed = isset($_SERVER['HTTP_CACHE_CONTROL']) && $_SERVER['HTTP_CACHE_CONTROL'] === 'max-age=0';
-
+        
         $listShops = $this->getlistShop($boutiqueRepository->findBy(['type' => $type]), $type);
 
-        $boutique = $type!="" ? $boutiqueRepository->findOneByWithHeaderReference($type,intval($id)) : 'super_admin';
-        
-        $article = $request->get('shop_id') ? $article = $searchService->getResultSearch($request) : $articleRepository->findAllArticleByBoutique($boutique);
-     
+        $pageWasRefreshed = isset($_SERVER['HTTP_CACHE_CONTROL']) && $_SERVER['HTTP_CACHE_CONTROL'] === 'max-age=0';
+
+        if ($id == -1) {
+            $boutique = $boutiqueRepository->findOneBy(['type' => $type]);
+        } else {
+
+            if ($pageWasRefreshed) {
+                $shopId = $id;
+            } else {
+                $shopId = $id; //$this->lastShopVisited($listShops['allShopId']);
+            }
+
+            $boutique = $boutiqueRepository->findOneByWithHeaderReference($type,intval($shopId));
+        }
+
+        if ($request->get('shop_id')) {
+            $article = $searchService->getResultSearch($request);
+        } else {
+            $article = $articleRepository->findAllArticleByBoutique($boutique);
+        }
+
+
+
         return $this->render('boutique/boutique.html.twig', [
             'controller_name' => 'BoutiqueController',
             'boutique' => $boutique,
@@ -79,7 +97,8 @@ class BoutiqueController extends AbstractController
             'newArticles' => $articleRepository->findAllArticleSliderByBoutique($boutique),
             'listShop' => $listShops['listShops'],
             'type' => $type,
-            'filtreCategory' => $this->getCategoryPerArticle($article)
+            'filtreCategory' => $this->getCategoryPerArticle($article),
+            'menu'=>$type 
 
         ]);
     }
