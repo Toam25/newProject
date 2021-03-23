@@ -13,8 +13,8 @@
 					<div class="review-body">
 						<p>{{ vote.comment}}</p>
 					</div>
-
-					{% if app.user is not same as(null) and 'ROLE_SUPER_ADMIN' in app.user.roles or vote.boutique is same as (boutique) %}
+					
+					{% if app.user is not same as(null) and 'ROLE_SUPER_ADMIN' in app.user.roles or vote.article.boutique is same as(boutique) %}
 						<button class="js-delete-vote delete-vote btn btn-danger" data-id="{{vote.id}}">Supprimez</button>
 					{% endif %}
 
