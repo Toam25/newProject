@@ -1247,6 +1247,27 @@ function list_type_other(arrays, value){
   $('body').on('click', '.remove_vote ', function (e) {
     e.preventDefault();
     var id = parseInt($(this).attr('data-idartcle'));
+
+
+    Lobibox.confirm({
+      msg: 'Voulez vous supprimer  ?',
+      buttons : {
+         yes : {
+            text : 'Acceptez',
+ 
+        },
+        no : {
+            text : 'Annulez',
+ 
+        },
+       
+      },
+ 
+      callback : ($this,type)=>{
+ 
+      if(type==="yes"){
+ 
+         
     $.ajax({
       url: '/admin/vote/delete/' + id,
       type: 'DELETE',
@@ -1271,6 +1292,11 @@ function list_type_other(arrays, value){
 
       }
     });
+ 
+     }  
+    } 
+ 
+   });
 
   });
   //delate header
