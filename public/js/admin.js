@@ -952,32 +952,53 @@ function list_type_other(arrays, value){
   $('.delete_reference').on('click', function (e) {
     e.preventDefault()
     var id = parseInt($(this).attr('data-idreference'));
-    $.ajax({
-      url: '/admin/reference/' + id,
-      type: 'DELETE',
-      data: {},
-      dataType: 'json',
-      beforeSend: () => {
-        $(this).append('<span class="loader_ajax" style="height: 20px;width: 20px;display: inline-block;"><img src="/images/images_default/ajax-loader.gif" style="height: 100%;width: 100%;"></span>');
-        $(this).prop('disabled', true)
-      },
-      success: (data) => {
-        toastr.success('Supprimer avec avec success')
-        ;
-        $(this).parents('.slide_animation ').css('transform', 'scale(0)');
-        setTimeout(() => {
-          $(this).parents('.slide_animation ').remove();
-        }, 500);
-      },
-      error: () => {
-        toastr.error('Une error à été survenue');
-        $(this).children('.loader_ajax').remove();
-        $(this).prop('disabled', false)
-      },
-      complete: function () {
+    Lobibox.confirm({
+      msg: 'Voulez vous supprimer cette Video ?',
+      buttons : {
+         yes : {
+            text : 'Acceptez',
 
-      }
-    });
+        },
+        no : {
+            text : 'Annulez',
+
+        },
+       
+      },
+
+      callback : ($this,type)=>{
+
+      if(type==="yes"){
+        $.ajax({
+          url: '/admin/reference/' + id,
+          type: 'DELETE',
+          data: {},
+          dataType: 'json',
+          beforeSend: () => {
+            $(this).append('<span class="loader_ajax" style="height: 20px;width: 20px;display: inline-block;"><img src="/images/images_default/ajax-loader.gif" style="height: 100%;width: 100%;"></span>');
+            $(this).prop('disabled', true)
+          },
+          success: (data) => {
+            toastr.success('Supprimer avec avec success')
+            ;
+            $(this).parents('.slide_animation ').css('transform', 'scale(0)');
+            setTimeout(() => {
+              $(this).parents('.slide_animation ').remove();
+            }, 500);
+          },
+          error: () => {
+            toastr.error('Une error à été survenue');
+            $(this).children('.loader_ajax').remove();
+            $(this).prop('disabled', false)
+          },
+          complete: function () {
+    
+          }
+        });
+     }  
+    } 
+
+   });
   });
   // delete social network
 

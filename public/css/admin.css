@@ -319,6 +319,7 @@ img.header_boutique {
     opacity: 0;
     transition: all 100ms ease-in;
    cursor: pointer;
+   
 }
 .images_header_admin:hover div{
    
@@ -365,8 +366,8 @@ max-height: 100%;
 }
 /*reference */
 .image_slider_to{
-	height: 250px;
-	width: 200PX;
+	max-height: 100%;
+	max-width: 100%;
 }
 .slide_animation {
     margin-right: 8px;
@@ -377,11 +378,18 @@ max-height: 100%;
     margin: 5px;
     box-shadow: 5px 5px 11px -9px black;
     width: 200px;
+    display: inline-block
+}
+.container_image_reference {
+    height: 200px;
+    display: flex;
+    align-items: center;
 }
 .scrol_slide_animation {
-        display: flex;
+        /*display: flex;
         justify-content: center;
         flex-wrap: wrap;
+        */
 }
 .ajout_article_ev{
     margin-left:5px;

@@ -9,14 +9,16 @@
 
 	{% for reference in references %}
 		<div id="{{reference.id}}" class="slide_animation">
-			<img class="image_slider_to" src="{{asset('images/'~reference.images)}}">
+			 <div class="container_image_reference">
+				 <img class="image_slider_to" src="{{asset('images/'~reference.images)}}">
+			 </div>
 			<div>
 				<p id="{{'description'~reference.id}}">
 					{{ reference.description }}
 				</p>
 			</div>
 			<span class="dropdown-divider"></span>
-		 <div style="display: grid; grid-template-columns: 1fr 1fr">
+		 <div style="display: grid; grid-template-columns: 1fr 1fr; grid-gap: 6px">
 			<a class="btn btn-primary" href="{{ path('reference_edit',{'id':reference.id})}}">
 				Editer
 			</a>
