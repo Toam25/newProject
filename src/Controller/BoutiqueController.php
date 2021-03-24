@@ -63,11 +63,7 @@ class BoutiqueController extends AbstractController
      */
 
     public function boutique($type = "", $id, Request $request, BoutiqueRepository $boutiqueRepository, SearchService $searchService, ArticleRepository $articleRepository)
-    {
-        $listShops = $this->getlistShop($boutiqueRepository->findBy(['type' => $type]), $type);
-
-        
-        $listShops = $this->getlistShop($boutiqueRepository->findBy(['type' => $type]), $type);
+    {   
 
         $pageWasRefreshed = isset($_SERVER['HTTP_CACHE_CONTROL']) && $_SERVER['HTTP_CACHE_CONTROL'] === 'max-age=0';
         
@@ -76,14 +72,16 @@ class BoutiqueController extends AbstractController
         if($type!=""){
 
             $id = ($id != null and is_numeric($id)) ? intval($id) : $first;
-            dd($id);
             $boutique = $boutiqueRepository->findOneByWithHeaderReference($type,intval($id));
             $isHomeShop = false;
-            dd($boutique);
+            $listShops = $this->getlistShop($boutiqueRepository->findBy(['type' => $type]), $type);
+
         }
         else{
             $boutique = $boutiqueRepository->findOneBoutiqueByUserPerRole("ROLE_SUPER_ADMIN");
-            $isHomeShop =false;
+            $listShops = $this->getlistShop($boutiqueRepository->findAll(), $type);
+            $isHomeShop =true;
+            $type="g_marchande";
         }
 
         
@@ -93,9 +91,6 @@ class BoutiqueController extends AbstractController
         } else {
             $article = $articleRepository->findAllArticleByBoutique($boutique);
         }
-
-
-        dd($boutique);
 
         return $this->render('boutique/boutique.html.twig', [
             'controller_name' => 'BoutiqueController',
