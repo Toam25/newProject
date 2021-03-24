@@ -4,6 +4,11 @@
 	{{ boutique.name }}
 {% endblock %}
 
+
+{% block meta%}
+    <meta name="description" content="{{ boutique.apropos}}">
+{% endblock %}
+
 {% block stylesheets %}
 	 <link href="https://fonts.googleapis.com/css?family=Montserrat:400,500,700" rel="stylesheet">
    
@@ -23,6 +28,7 @@
     <link type="text/css" rel="stylesheet" href="{{ asset('css/index.css') }}"/>
 	<link rel="stylesheet" href="{{ asset('css/indexmenu.css') }}" />
     <link type="text/css" rel="stylesheet" href="{{ asset('css/slideindexvote.css') }}"/>
+    <link rel="icon" type="image/png" href="{{asset('images/'~boutique.logo)}}">
 {% endblock %}
 
 
