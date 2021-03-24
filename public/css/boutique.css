@@ -126,8 +126,9 @@
     padding: 6px;
     /*border-top: 1px solid rgba(0,0,0,0.1);*/
     text-align: center;
-    display: flex;
-    justify-content: center;
+    /*display: flex;
+    justify-content: center;*/
+    white-space: normal;
 }
 #_reference >._container_images {
     display: flex;

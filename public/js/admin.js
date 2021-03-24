@@ -500,25 +500,48 @@ function list_type_other(arrays, value){
     e.preventDefault();
 
        var id=$(this).attr('value');
-      
-      $.ajax({
-         url :'/api/delete/option/'+id,
-        type :'POST',
-        data :{
-         },
-         dataType : 'json',
-        beforeSend : ()=>{
-          $(this).parent('.option_menu').addClass('scale0');
+       Lobibox.confirm({
+        msg: 'Voulez vous supprimer  ?',
+        buttons : {
+           yes : {
+              text : 'Acceptez',
+   
+          },
+          no : {
+              text : 'Annulez',
+   
+          },
+         
         },
-        success : (data)=>{
-          toastr.success('Supprimer avec success');
-          $(this).parent('.option_menu').remove();
-        },
-        error : ()=>{
-          toastr.error('Il y a un erreur');
-          $(this).parent('.option_menu').removeClass('scale1');
-        }
-      })
+   
+        callback : ($this,type)=>{
+   
+        if(type==="yes"){
+          
+          $.ajax({
+            url :'/api/delete/option/'+id,
+           type :'POST',
+           data :{
+            },
+            dataType : 'json',
+           beforeSend : ()=>{
+             $(this).parent('.option_menu').addClass('scale0');
+           },
+           success : (data)=>{
+             toastr.success('Supprimer avec success');
+             $(this).parent('.option_menu').remove();
+           },
+           error : ()=>{
+             toastr.error('Il y a un erreur');
+             $(this).parent('.option_menu').removeClass('scale1');
+           }
+         })
+   
+       }  
+      } 
+   
+     }); 
+  
 });
 
  /* $('body').on('click','.tab_men',function(e){
