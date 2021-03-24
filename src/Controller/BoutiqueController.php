@@ -70,19 +70,23 @@ class BoutiqueController extends AbstractController
         $listShops = $this->getlistShop($boutiqueRepository->findBy(['type' => $type]), $type);
 
         $pageWasRefreshed = isset($_SERVER['HTTP_CACHE_CONTROL']) && $_SERVER['HTTP_CACHE_CONTROL'] === 'max-age=0';
+        
+        $first = intval($request->cookies->get($type));
 
-        if ($id == -1) {
-            $boutique = $boutiqueRepository->findOneBy(['type' => $type]);
-        } else {
+        if($type!=""){
 
-            if ($pageWasRefreshed) {
-                $shopId = $id;
-            } else {
-                $shopId = $id; //$this->lastShopVisited($listShops['allShopId']);
-            }
-
-            $boutique = $boutiqueRepository->findOneByWithHeaderReference($type,intval($shopId));
+            $id = ($id != null and is_numeric($id)) ? intval($id) : $first;
+            dd($id);
+            $boutique = $boutiqueRepository->findOneByWithHeaderReference($type,intval($id));
+            $isHomeShop = false;
+            dd($boutique);
         }
+        else{
+            $boutique = $boutiqueRepository->findOneBoutiqueByUserPerRole("ROLE_SUPER_ADMIN");
+            $isHomeShop =false;
+        }
+
+        
 
         if ($request->get('shop_id')) {
             $article = $searchService->getResultSearch($request);
@@ -91,6 +95,7 @@ class BoutiqueController extends AbstractController
         }
 
 
+        dd($boutique);
 
         return $this->render('boutique/boutique.html.twig', [
             'controller_name' => 'BoutiqueController',
@@ -100,7 +105,8 @@ class BoutiqueController extends AbstractController
             'listShop' => $listShops['listShops'],
             'type' => $type,
             'filtreCategory' => $this->getCategoryPerArticle($article),
-            'menu'=>$type 
+            'menu'=>$type,
+            'isHomeShop'=>$isHomeShop
 
         ]);
     }

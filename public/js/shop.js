@@ -24,10 +24,10 @@ $(function(){
              });
 
         last=$('#listshops .text-center').eq(1);
-        var id=last.attr('id');
+        var id=last.attr('id') ? last.attr('id') :  $('#listshops .text-center').attr('id');
 
         document.cookie =$('.shop_type').val()+"="+parseInt(id); 
-
+        console.log($('.shop_type').val(),id);
 
    }
     $('.aside').on('change',function(e){ 
