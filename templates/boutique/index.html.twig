@@ -4,6 +4,11 @@
 	{{ boutique.name }}
 {% endblock %}
 
+
+{% block meta%}
+    <meta name="description" content="{{ boutique.description}}">
+{% endblock %}
+
 {% block stylesheets %}
 	 <link href="https://fonts.googleapis.com/css?family=Montserrat:400,500,700" rel="stylesheet">
    
