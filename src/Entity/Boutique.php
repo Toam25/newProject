@@ -113,6 +113,16 @@ class Boutique
      */
     private $resume;
 
+    /**
+     * @ORM\Column(type="boolean", nullable=true)
+     */
+    private $showArticle;
+
+    /**
+     * @ORM\Column(type="boolean", nullable=true)
+     */
+    private $showBlog;
+
     public function __construct()
     {
         $this->logo = "images_default/default_logo.png";
@@ -124,6 +134,8 @@ class Boutique
         $this->menus = new ArrayCollection();
         $this->esArticles = new ArrayCollection();
         $this->vote= new ArrayCollection();
+        $this->showArticle= 1;
+        $this->showBlog=0;
     }
 
     public function getId(): ?int
@@ -507,6 +519,30 @@ class Boutique
     public function setResume(?string $resume): self
     {
         $this->resume = $resume;
+
+        return $this;
+    }
+
+    public function getShowArticle(): ?bool
+    {
+        return $this->showArticle;
+    }
+
+    public function setShowArticle(?bool $showArticle): self
+    {
+        $this->showArticle = $showArticle;
+
+        return $this;
+    }
+
+    public function getShowBlog(): ?bool
+    {
+        return $this->showBlog;
+    }
+
+    public function setShowBlog(?bool $showBlog): self
+    {
+        $this->showBlog = $showBlog;
 
         return $this;
     }

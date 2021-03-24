@@ -31,6 +31,7 @@ use App\Service\CategoryOptionService;
 use App\Service\InsertFileServices;
 use App\Service\TypeOptionMenuService;
 use App\Service\UtilsService;
+use Doctrine\Common\Collections\Expr\Value;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\BrowserKit\Response as BrowserKitResponse;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -44,7 +45,26 @@ use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
  * @Route("/api", name="api")
  */
 class APIController extends AbstractController
-{
+{    
+
+    /**
+     * @Route("/{type}/update/{value}/{id}" , name="showBlogArticle", methods={"POST"})
+     */
+     
+    public function showBlogArticle(string $type, $value,Boutique $boutique){
+        $value = $value==1 ? true : false;
+        if($type=="articleShow"){
+          $boutique->setShowArticle($value);
+        }
+        elseif($type=="blogShow"){
+            $boutique->setShowBlog($value);
+        }
+        $em = $this->getDoctrine()->getManager();
+        $em->flush();
+        
+        return new JsonResponse(["status"=>"success"], Response::HTTP_OK);
+    }
+
     /**
      * @Route("/es_article/get/{sous_category}", name="get_es_article")
      */

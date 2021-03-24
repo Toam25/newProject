@@ -1,6 +1,49 @@
 $(function () {
   var $category;
 
+
+  $('input[name="articleShow"]').on('change',function(e){
+
+    e.preventDefault(); 
+    let value = $(this).val();
+    let id= $('.boutique-id').val();
+    // $(this).prop('disabled',true);
+    $.ajax({
+          url : "/api/articleShow/update/"+value+"/"+id,
+          type: 'POST',
+          dataType: 'json',
+          beforeSend : ()=>{
+            toastr.info('Enregistrement en cours ;) ');
+          },
+          success : (data)=>{
+             toastr.success('Enregistrer avec success ;) ')
+          },
+          error : ()=>{
+            toastr.error('Erreur d\'enregistrement ');
+          }
+      });
+  });
+
+  $('input[name="blogShow"]').on('change',function(e){
+    
+    e.preventDefault(); 
+    let value = $(this).val();
+    let id= $('.boutique-id').val();
+      $.ajax({
+        url : "/api/blogShow/update/"+value+"/"+id,
+        type: 'POST',
+        dataType: 'json',
+        beforeSend : ()=>{
+          toastr.info('Enregistrement en cours ;) ');
+        },
+        success : (data)=>{
+          toastr.success('Enregistrer avec success ;) ');
+        },
+        error : ()=>{
+          toastr.error('Erreur d\'enregistrement ');
+        }
+    });  
+  });
   //edit ess article 
   $('.modify_es_article').on('submit', function(e){
       e.preventDefault();
