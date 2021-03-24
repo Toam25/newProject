@@ -72,7 +72,7 @@ class BoutiqueController extends AbstractController
         $pageWasRefreshed = isset($_SERVER['HTTP_CACHE_CONTROL']) && $_SERVER['HTTP_CACHE_CONTROL'] === 'max-age=0';
         
         $first = intval($request->cookies->get($type));
-
+        
         if($type!=""){
 
             $id = ($id != null and is_numeric($id)) ? intval($id) : $first;
