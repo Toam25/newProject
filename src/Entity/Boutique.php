@@ -123,6 +123,11 @@ class Boutique
      */
     private $showBlog;
 
+    /**
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    private $nbrOfVisitor;
+
     public function __construct()
     {
         $this->logo = "images_default/default_logo.png";
@@ -134,8 +139,10 @@ class Boutique
         $this->menus = new ArrayCollection();
         $this->esArticles = new ArrayCollection();
         $this->vote= new ArrayCollection();
-        $this->showArticle= 1;
-        $this->showBlog=0;
+        $this->showArticle= true;
+        $this->showBlog=false;
+        $this->nbrOfVisitor = 0;
+
     }
 
     public function getId(): ?int
@@ -543,6 +550,18 @@ class Boutique
     public function setShowBlog(?bool $showBlog): self
     {
         $this->showBlog = $showBlog;
+
+        return $this;
+    }
+
+    public function getNbrOfVisitor(): ?int
+    {
+        return $this->nbrOfVisitor;
+    }
+
+    public function setNbrOfVisitor(?int $nbrOfVisitor): self
+    {
+        $this->nbrOfVisitor = $nbrOfVisitor;
 
         return $this;
     }
