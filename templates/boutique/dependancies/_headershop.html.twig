@@ -16,6 +16,9 @@
 				</span>
 			</div>
 		</div>
+		{% if shopLink is not same as("") %}
+			<a href={{boutique.address }} target="_blank" class="link_my_shop">{{ shopLink }}</a>
+		{% endif %}
 		{#<form style="margin-top: 7px;" class="aside">
 		<div class="header-search">
 			

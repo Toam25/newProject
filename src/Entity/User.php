@@ -90,6 +90,11 @@ class User implements UserInterface
      */
     private $userVotes;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Blog", mappedBy="user")
+     */
+    private $blogs;
+
     public function __construct()
     {
         $this->boutiques = new ArrayCollection();
@@ -100,6 +105,7 @@ class User implements UserInterface
         $this->categories = new ArrayCollection();
         $this->userVotes = new ArrayCollection();
         $this->birthday = new \DateTime();
+        $this->blogs = new ArrayCollection();
  
     }
 
@@ -402,6 +408,37 @@ class User implements UserInterface
             // set the owning side to null (unless already changed)
             if ($userVote->getUser() === $this) {
                 $userVote->setUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Blog[]
+     */
+    public function getBlogs(): Collection
+    {
+        return $this->blogs;
+    }
+
+    public function addBlog(Blog $blog): self
+    {
+        if (!$this->blogs->contains($blog)) {
+            $this->blogs[] = $blog;
+            $blog->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeBlog(Blog $blog): self
+    {
+        if ($this->blogs->contains($blog)) {
+            $this->blogs->removeElement($blog);
+            // set the owning side to null (unless already changed)
+            if ($blog->getUser() === $this) {
+                $blog->setUser(null);
             }
         }
 

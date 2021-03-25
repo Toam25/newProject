@@ -91,7 +91,9 @@ class BoutiqueController extends AbstractController
         } else {
             $article = $articleRepository->findAllArticleByBoutique($boutique);
         }
-
+        
+        preg_match('%(http[s]?:\/\/|www\/)([a-zA-Z0-9-_\.\/\?=&]+)%i',$boutique->getAddress(),$matches);
+        
         return $this->render('boutique/boutique.html.twig', [
             'controller_name' => 'BoutiqueController',
             'boutique' => $boutique,
@@ -101,7 +103,8 @@ class BoutiqueController extends AbstractController
             'type' => $type,
             'filtreCategory' => $this->getCategoryPerArticle($article),
             'menu'=>$type,
-            'isHomeShop'=>$isHomeShop
+            'isHomeShop'=>$isHomeShop,
+            'shopLink'=> sizeof($matches) > 2 ? $matches[2] : ""
 
         ]);
     }

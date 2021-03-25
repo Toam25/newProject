@@ -128,6 +128,11 @@ class Boutique
      */
     private $nbrOfVisitor;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Blog", mappedBy="boutique")
+     */
+    private $blogs;
+
     public function __construct()
     {
         $this->logo = "images_default/default_logo.png";
@@ -142,6 +147,7 @@ class Boutique
         $this->showArticle= true;
         $this->showBlog=false;
         $this->nbrOfVisitor = 0;
+        $this->blogs = new ArrayCollection();
 
     }
 
@@ -562,6 +568,37 @@ class Boutique
     public function setNbrOfVisitor(?int $nbrOfVisitor): self
     {
         $this->nbrOfVisitor = $nbrOfVisitor;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Blog[]
+     */
+    public function getBlogs(): Collection
+    {
+        return $this->blogs;
+    }
+
+    public function addBlog(Blog $blog): self
+    {
+        if (!$this->blogs->contains($blog)) {
+            $this->blogs[] = $blog;
+            $blog->setBoutique($this);
+        }
+
+        return $this;
+    }
+
+    public function removeBlog(Blog $blog): self
+    {
+        if ($this->blogs->contains($blog)) {
+            $this->blogs->removeElement($blog);
+            // set the owning side to null (unless already changed)
+            if ($blog->getBoutique() === $this) {
+                $blog->setBoutique(null);
+            }
+        }
 
         return $this;
     }

@@ -104,9 +104,16 @@
          {% elseif pages == "detail_article"%}
             {% include 'admin/dependencies/detail_article.html.twig' %}
 
-          {% elseif pages == "articleinshop"%}
+        {% elseif pages == "articleinshop"%}
             {% include 'admin/dependencies/articleinshop.html.twig' %}
             {% include 'admin/dependencies/add_article_modal.html.twig' %}
+
+        {# add Blog #}
+          {% elseif pages == "blogAdd"%}
+            {% include 'admin/dependencies/blogAdd.html.twig' %}
+        {# list Blog#}
+        {% elseif pages == "bloglist"%}
+            {% include 'admin/dependencies/articleinshop.html.twig' %}
             
 
 
