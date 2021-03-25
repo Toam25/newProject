@@ -484,5 +484,8 @@ nav li:hover .submenu{
     #_reference {
     width: 53% !important;
     }
+    .link_my_shop{
+        display: none;
+    }
 }
 
