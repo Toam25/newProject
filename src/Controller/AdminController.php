@@ -12,6 +12,7 @@ use App\Form\BoutiqueType;
 use App\Form\ReferenceType;
 use App\Form\UserType;
 use App\Repository\ArticleRepository;
+use App\Repository\BlogRepository;
 use App\Repository\BoutiqueRepository;
 use App\Repository\HeaderRepository;
 use App\Repository\MenuRepository;
@@ -51,7 +52,7 @@ class AdminController extends AbstractController
     /**
      * @Route("/admin", name="home")
      */
-    public function index(BoutiqueRepository $boutiqueRepository, HeaderRepository $headerRepository)
+    public function index(BoutiqueRepository $boutiqueRepository, HeaderRepository $headerRepository,BlogRepository $blogRepository )
     {
 
         // $allArticle = $articleRepository->findBy(['boutique'=>$boutiqueRepository->findOneBy(['user'=>$this->getUser()])] );
@@ -63,7 +64,10 @@ class AdminController extends AbstractController
             'pages' => 'home',
             'img_header' => $img_header,
             'id' => $id,
-            'boutique' => $boutique
+            'boutique' => $boutique,
+            'peddingBlogs'=>$blogRepository->findBy(['boutique'=>$boutique,'status'=>'PENDING']),
+            'closedBlogs'=>$blogRepository->findBy(['boutique'=>$boutique,'status'=>'CLOSED']),
+            'validateBlogs'=>$blogRepository->findBy(['boutique'=>$boutique,'validate'=>true])
         ]);
     }
     /**
