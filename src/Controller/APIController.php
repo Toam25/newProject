@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Article;
+use App\Entity\Blog;
 use App\Entity\Boutique;
 use App\Entity\EsArticle;
 use App\Entity\Header;
@@ -64,7 +65,39 @@ class APIController extends AbstractController
         
         return new JsonResponse(["status"=>"success"], Response::HTTP_OK);
     }
+    /**
+     * @Route("/v1/saveblog", name="saveBlog", methods="POST")
+     */
 
+    public function saveBlog(Request $request, BoutiqueRepository $boutiqueRepository,UtilsService $utilsService){
+        
+
+        $boutique = $boutiqueRepository->findOneBy(['user'=>$this->getUser()->getId()]);
+
+        $blogData=$request->request->get('blog');
+
+       if($boutique){
+            $blog= new Blog();
+            $blog->setTitle($blogData['title'])
+                ->setStatus($request->request->get('status'))
+                ->setResume($blogData['resume'])
+                ->setKeywords($blogData['keywords'])
+                ->setCategory($blogData['category'])
+                ->setMetaDescription($blogData['metaDescription'])
+                ->setLink($utilsService->getSlug($blogData['link']))
+                ->setDescription($blogData['description'])
+                ->setUser($this->getUser())
+                ->setBoutique($boutique);
+            $em= $this->getDoctrine()->getManager();
+            $em->persist($blog);
+            $em->flush();
+            return new JsonResponse(['status'=>"success",'id'=>$blog->getId()]);
+            
+        }else{
+            return new JsonResponse(['status'=>"error"],Response::HTTP_UNAUTHORIZED);
+        }
+        
+    }
     /**
      * @Route("/es_article/get/{sous_category}", name="get_es_article")
      */

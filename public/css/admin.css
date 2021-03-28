@@ -11,6 +11,14 @@
     border: 0;
     overflow: hidden;
 }
+.conbtnSubmit{
+    display: flex;
+    justify-content: end;
+    margin-top: 5px;
+}
+.conbtnSubmit button {
+    margin: 5px;
+}
 .switch-field label {
     background-color:  #e4e4e4;
     color : rgba(0,0,0,0.6);

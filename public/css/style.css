@@ -1752,7 +1752,8 @@ textarea.input {
 /*-- Rating --*/
 
 .rating-avg {
-  font-size: 24px;
+  /*font-size: 24px;*/
+  font-size: 16px;
   font-weight: 700;
   margin-bottom: 15px;
 }
@@ -1780,7 +1781,7 @@ textarea.input {
 .rating .rating-progress {
   position: relative;
   display: inline-block;
-  height: 9px;
+  height: 7px;
   background-color: #E4E7ED;
   width: 120px;
   margin: 0px 10px;

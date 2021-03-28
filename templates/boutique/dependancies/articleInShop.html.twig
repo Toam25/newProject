@@ -1,115 +1,80 @@
 	<div class='image_header'>
 		{% include 'boutique/dependancies/bannierboutique.html.twig' %}
 	</div>
+	
 	{% if  boutique   %}
-		<div>
-			<div class="container-fluid">
-				<div class="boutique_container">
-				   
-					<div class="menu_v ">
-					    <div class="title_c_and_menu">
-						<h3 class="title_C" style="display:table-cell">Filtres
-						</h3>
-						 <span class="close_menu js-hide-menu">Fermer</span>
-						</div>
-						<input class="shop_type" type="hidden" name="shop_type" value="{{ type }}">
-						{% if boutique %}
-							<form action="" class="aside" style="margin-top: 13px;">
-								<input type="hidden" name="shop_id" value="{{ boutique.id }}">
-								{{ filtreCategory | raw }}
-								{# {{ categorie(boutique) }} #}
-							</form>
-						{% endif %}
-
-					</div>
-
-					<div class="article_boutique">
-						<div class="">
-						    <div  style="display: flex;justify-content: center;">
-							 <button class="shop_menu js-show-menu">Menu</button>
-							<h3 class="title_C" style="display:table-cell">Nos articles</h3>
-							</div>
-							<div class="container_list_article">
-								<div class="row js_list_article">
-									{% if articles %}
-										{% include "boutique/dependancies/_list.html.twig" with {'articles': articles} only %}
-									{% else %}
-										Pas de resultat
-									{% endif %}
-								</div>
-							</div>
-						</div>
-					</div>
-
-					{#<div class="col-md-2 col-sm-12 col-xs-12 col-lg-2">
-					
-											<h3 class="title_C" style="display:table-cell">Video</h3>
-											<div class="pub_video_pub">
-												<iframe width="100%" height="333px" src="https://www.youtube.com/embed/-YN612DOzno" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-											</div>
-					
-										</div>#}
-				</div>
-				{# 
-				
-							#}
-			</div>
-			<hr style="width: 71vw;"/>
+	  {# list article #}
+		 {% if boutique.showArticle is not same as (false)%}
+				{% include "boutique/dependancies/listArticle.html.twig" %}
+				<hr style="width: 71vw;"/>
+		 {% endif %}
+		{# end list article #}
+			{# selection #}
 				{% if newArticles |length > 0%}
-				  <div style="padding-top: 16px;margin: 15px 0;">
-					<div id="container_selection">
-						<h3 class="title_C" style="display:table-cell" text-align="center">Nos séléctions</h3>
+					<div style="padding-top: 16px;margin: 15px 0;">
+						<div id="container_selection">
+							<h3 class="title_C" style="display:table-cell" text-align="center">Nos séléctions</h3>
+						</div>
+							{% include "boutique/dependancies/slide_shop.html.twig" with {'articles' : newArticles} %}	
 					</div>
-						{% include "boutique/dependancies/slide_shop.html.twig" with {'articles' : newArticles} %}	
-				 </div>
-			<hr style="width: 71vw;"/>
+			
+					<hr style="width: 71vw;"/>
 				{% endif %}
+			{# end selection #}
 
-			
-			
+			{# show blog #}
+				{% if boutique.showBlog is not same as (false)%}
+						{% include "boutique/dependancies/listBlog.html.twig" with {'articles' : newArticles} %}	
+						<hr style="width: 71vw;"/>
+				{% endif %}
+				
+			{# end show blog #}
+			{# social network #}
 			{% if boutique.socialNetworks|length > 0 %}
-			<div id="container_social_network">
-				<h3 class="title_C" style="display:table-cell">Réseau sociaux
-				</h3>
-				<div class="container_reference">
-					{% if boutique.shopReferences is defined  %}
-						{% for socialnetwork in boutique.socialNetworks %}
+				<div id="container_social_network">
+					<h3 class="title_C" style="display:table-cell">Réseau sociaux
+					</h3>
+					<div class="container_reference">
+						{% if boutique.shopReferences is defined  %}
+							{% for socialnetwork in boutique.socialNetworks %}
 
-							<div id="_reference">
-								<div class="_container_images">
-									<img src={{ asset('images/'~ socialnetwork.images)}} alt="{{ socialnetwork.description }}"/>
+								<div id="_reference">
+									<div class="_container_images">
+										<img src={{ asset('images/'~ socialnetwork.images)}} alt="{{ socialnetwork.description }}"/>
+									</div>
+									<p id="container_description_reference">{{  socialnetwork.description }}
+										<a href="{{ socialnetwork.link }}" style="color : #2878c1 !important" target="_blank">{{ socialnetwork.nameLink }}</a>
+									</p>
 								</div>
-								<p id="container_description_reference">{{  socialnetwork.description }}
-									<a href="{{ socialnetwork.link }}" style="color : #2878c1 !important" target="_blank">{{ socialnetwork.nameLink }}</a>
-								</p>
-							</div>
-						{% endfor %}
-					{% endif %}
+							{% endfor %}
+						{% endif %}
+					</div>
 				</div>
-			</div>
-			<hr style="width: 71vw;" />
+				<hr style="width: 71vw;" />
 			{% endif %}
-		
-			{% if boutique.shopReferences|length > 0 %}
-			<div id="container_reference">
-				<h3 class="title_C" style="display:table-cell">Nos Références
-				</h3>
-				<div class="container_reference">
-					{% if boutique.shopReferences is defined  %}
-						{% for reference in boutique.shopReferences %}
+			{# end social network #}
+		    {# reference #}
+				{% if boutique.shopReferences|length > 0 %}
+					<div id="container_reference">
+						<h3 class="title_C" style="display:table-cell">Nos Références
+						</h3>
+						<div class="container_reference">
+							{% if boutique.shopReferences is defined  %}
+								{% for reference in boutique.shopReferences %}
 
-							<div id="_reference">
-								<div class="_container_images">
-									<img src={{ asset('images/'~reference.images)}} alt="{{ reference.description }}"/>
-								</div>
-								<p id="container_description_reference">{{  reference.description }}
-								</p>
-							</div>
-						{% endfor %}
-					{% endif %}
-				</div>
-			</div>
-			{% endif %}
+									<div id="_reference">
+										<div class="_container_images">
+											<img src={{ asset('images/'~reference.images)}} alt="{{ reference.description }}"/>
+										</div>
+										<p id="container_description_reference">{{  reference.description }}
+										</p>
+									</div>
+								{% endfor %}
+							{% endif %}
+						</div>
+					</div>
+				{% endif %}
+			{# end  reference #}
 		</div>
 	{% else %}
 		<p>La boutique n'existe pas</p>

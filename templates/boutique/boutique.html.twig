@@ -46,9 +46,11 @@
    En cours ....
 {% endif %}
 
+
 	{% if not app.user%}
 		{% include 'boutique/dependancies/connexion.html.twig'%}
 	{% endif %}
+
 	{% include 'boutique/dependancies/footer.html.twig' %}
 
 {% endblock %}

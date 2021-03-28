@@ -1,0 +1,42 @@
+{{ form_start(blogForm)}}
+<div class="row">
+    <input type="hidden" class="status" name="status" val="">
+    
+	<div class="col-md-6">
+		{{ form_row(blogForm.title) }}
+	</div>
+	<div class="col-md-6">
+		{{ form_row(blogForm.category) }}
+	</div>
+	<div class="col-md-12">
+
+		{{ form_row(blogForm.resume) }}
+	</div>
+
+	<div class="col-md-12">
+
+		{{ form_row(blogForm.keywords) }}
+	</div>
+
+	<div class="col-md-12">
+
+		{{ form_row(blogForm.metaDescription) }}
+	</div>
+
+	<div class="col-md-12">
+
+		{{ form_row(blogForm.link) }}
+	</div>
+
+	<div class="col-md-12">
+
+		{{ form_row(blogForm.description) }}
+	</div>
+
+</div>
+<div class="conbtnSubmit">
+	<button class="view_blog btn btn-primary">Appercu</button>
+	<button class="save_blog btn btn-success">Enregistrer</button>
+</div>
+
+{{ form_end(blogForm) }}

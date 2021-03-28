@@ -4,10 +4,12 @@ namespace App\Controller;
 
 use App\Data\Search;
 use App\Entity\Article;
+use App\Entity\Blog;
 use App\Entity\Boutique;
 use App\Entity\Votes;
 use App\Form\SearchType;
 use App\Repository\ArticleRepository;
+use App\Repository\BlogRepository;
 use App\Repository\BoutiqueRepository;
 use App\Repository\CartRepository;
 use App\Repository\HeaderRepository;
@@ -62,11 +64,11 @@ class BoutiqueController extends AbstractController
      * @Route("/shop/{type}/{id}", name="shop", defaults = {"id"=null})
      */
 
-    public function boutique($type = "", $id, Request $request, BoutiqueRepository $boutiqueRepository, SearchService $searchService, ArticleRepository $articleRepository)
+    public function boutique($type = "", $id, Request $request,BlogRepository $blogRepository, BoutiqueRepository $boutiqueRepository, SearchService $searchService, ArticleRepository $articleRepository)
     {   
 
         $pageWasRefreshed = isset($_SERVER['HTTP_CACHE_CONTROL']) && $_SERVER['HTTP_CACHE_CONTROL'] === 'max-age=0';
-        
+        $blog="";
         $first = intval($request->cookies->get($type));
         
         if($type!=""){
@@ -89,7 +91,9 @@ class BoutiqueController extends AbstractController
         if ($request->get('shop_id')) {
             $article = $searchService->getResultSearch($request);
         } else {
+
             $article = $articleRepository->findAllArticleByBoutique($boutique);
+            $blogs=$blogRepository->findAllArticleByBoutique($boutique);
         }
         
         preg_match('%(http[s]?:\/\/|www\/)([a-zA-Z0-9-_\.\/\?=&]+)%i',$boutique->getAddress(),$matches);
@@ -104,8 +108,33 @@ class BoutiqueController extends AbstractController
             'filtreCategory' => $this->getCategoryPerArticle($article),
             'menu'=>$type,
             'isHomeShop'=>$isHomeShop,
+            'blogs'=>$blogs,
             'shopLink'=> sizeof($matches) > 2 ? $matches[2] : ""
 
+        ]);
+    }
+
+     /**
+     * @Route("/show/blog/{id}-{slug}", name="showBlog")
+     */
+    public function showBlog(Blog $blog,BlogRepository $blogRepository, VotesRepository $votesRepository)
+    {
+
+        // $allArticle = $articleRepository->findBy(['boutique'=>$boutiqueRepository->findOneBy(['user'=>$this->getUser()])] );
+            $votes = $votesRepository->findBy(['blog' => $blog]);
+            $astuce= $blogRepository->findBy(['boutique'=>$blog->getBoutique(),"category"=>"Astuces","validate"=>true],["id"=>"DESC"]);
+            $view= $blogRepository->findBy(['boutique'=>$blog->getBoutique(),"validate"=>true],["view"=>"DESC"]);
+            $share= $blogRepository->findBy(['boutique'=>$blog->getBoutique(),"validate"=>true],["shareNbr"=>"DESC"],5);
+            $getNumberVote = $this->getNumberTotalVote($votes);
+        return $this->render('boutique/detailblog.html.twig', [
+                'blog' => $blog,
+                'views'=>$view,
+                'shares'=>$share,
+                'boutique' => $blog->getBoutique(),
+                'astuces'=>$astuce,
+                'votes'=>$votes,
+                'users' => $getNumberVote["user"],
+                'valuevote' => $getNumberVote["votes"],
         ]);
     }
 
@@ -161,6 +190,47 @@ class BoutiqueController extends AbstractController
                 ->setUser($this->getUser())
                 ->setVotearticle($article);
                 $article->addVote($vote);
+                $manager->persist($vote);
+                $manager->flush();
+            }
+            
+            $array = ['status' => 'ok', 'msg' => 'Enregistrer avec success','id'=>$vote->getId()];
+            $code = 200;
+        } else {
+            $array = ['status' => 'ko', 'msg' => 'Unautorized'];
+            $code = 402;
+        }
+        return  new Response(json_encode($array), $code, [
+            'Content-Type' => 'application/json'
+        ]);
+    }
+        /**
+     * @Route("/vote/blog/{id}/add" , name="addVoteBlog")
+     */
+
+    public function addVoteBlog(Blog $blog, Request $request, VotesRepository $votesRepository)
+    {
+        
+        if ($this->getUser() != null) {
+
+            $comment = $request->request->get('comment');
+            $value = $request->request->get('vote');
+            $manager = $this->getDoctrine()->getManager();
+
+            $vote= $votesRepository->findOneBy(['user'=>$this->getUser(),'blog'=>$blog]);
+            if($vote){
+                $vote->setValue($value)
+                ->setComment($comment)
+                ->setUser($this->getUser());
+                $blog->addVote($vote);
+                $manager->flush();
+
+            }else{
+                $vote = new Votes();
+                $vote->setValue($value)
+                ->setComment($comment)
+                ->setUser($this->getUser());
+                $blog->addVote($vote);
                 $manager->persist($vote);
                 $manager->flush();
             }

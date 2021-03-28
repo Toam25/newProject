@@ -1,5 +1,59 @@
 $(function () {
+
+
   var $category;
+
+
+  $('.save_blog').on('click',function(e){
+     e.preventDefault();
+    let form = $('.save_blog').parent('div').parent('form')[0];
+     $('.status').val('CLOSED');
+     $.ajax({
+      url : "/api/v1/saveblog",
+      type: 'POST',
+      contentType: false,
+      processData: false,
+      cache: false,
+      dataType: 'json',
+      data : new FormData(form),
+      beforeSend : ()=>{
+        toastr.info('Enregistrement en cours ;) ');
+      },
+      success : (data)=>{
+         toastr.success('Enregistrer avec success ;) ')
+      },
+      error : ()=>{
+        toastr.error('Erreur d\'enregistrement ');
+      }
+  });
+
+  });
+
+  $('.view_blog').on('click',function(e){
+    e.preventDefault();
+   let form = $('.save_blog').parent('div').parent('form')[0];
+    $('.status').val('PENDING');
+    $.ajax({
+     url : "/api/v1/saveblog",
+     type: 'POST',
+     contentType: false,
+     processData: false,
+     cache: false,
+     dataType: 'json',
+     data : new FormData(form),
+     beforeSend : ()=>{
+       toastr.info('Enregistrement en cours ;) ');
+     },
+     success : (data)=>{
+        toastr.success('Enregistrer avec success ;) ')
+     },
+     error : ()=>{
+       toastr.error('Erreur d\'enregistrement ');
+     }
+ });
+
+ });
+
 
 
   $('input[name="articleShow"]').on('change',function(e){
