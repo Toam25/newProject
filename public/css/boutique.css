@@ -243,17 +243,36 @@
 }
 
 .logo_image_boutique_header {
-    width: 55px !important;
-    height: 55px !important;
+    max-width: 100% !important;
+    max-height: 100% !important;
     border-radius: 50%;
 }
 .text-center {
-    display: inline-block;
     margin: 0 15px;
     position: relative;
     text-align: center;
     font-weight: bold;
     color: #d10024;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+._container_image_shop {
+    position: relative;
+    border: 1px solid rgba(0,0,0,0.1);
+    border-radius: 50%;
+    width: 66px;
+    height: 66px;
+}
+.onLigne {
+    height: 16px;
+    width: 16px;
+    background: #43bf43;
+    position: absolute;
+    bottom: 3px;
+    right: 0;
+    border-radius: 50%;
+    padding: 1px;
 }
 .container_image {
     width: 100%;
