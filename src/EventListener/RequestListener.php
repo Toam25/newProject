@@ -31,8 +31,8 @@ class  RequestListener {
                 if ($user instanceof UserInterface){
                     $boutique = $this->boutiqueRepository->findOneBy(['user'=>$user]);
                     $boutique->setLastActivityAt(new \DateTime());
-                    $user->setLastActivityAt(new \DateTime());
-                    $this->entityManagerInterface->flush($user);
+                    //$user->setLastActivityAt(new \DateTime());
+                    //$this->entityManagerInterface->flush($user);
                     $this->entityManagerInterface->flush($boutique);
     
                 }   
