@@ -20,6 +20,7 @@ use App\Service\Cart\CartService;
 use App\Service\SearchService;
 use App\Service\TypeOptionMenuService;
 use App\Service\UtilsService;
+use App\Service\VotesService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -69,14 +70,22 @@ class BoutiqueController extends AbstractController
 
         $pageWasRefreshed = isset($_SERVER['HTTP_CACHE_CONTROL']) && $_SERVER['HTTP_CACHE_CONTROL'] === 'max-age=0';
         $blog="";
+        $matches =[];
         $first = intval($request->cookies->get($type));
         
         if($type!=""){
+            
+                $boutiques=$boutiqueRepository->findBy(['type' => $type]);
+                $id = ($id != null and is_numeric($id)) ? intval($id) : $first;
+                $boutique = $boutiqueRepository->findOneByWithHeaderReference($type,intval($id));
 
-            $id = ($id != null and is_numeric($id)) ? intval($id) : $first;
-            $boutique = $boutiqueRepository->findOneByWithHeaderReference($type,intval($id));
+                
+                if($boutique==null){
+                    $boutique = $boutiqueRepository->findOneByWithHeaderReference($type,intval($boutiques[0]->getId()));         
+                }
+            
             $isHomeShop = false;
-            $listShops = $this->getlistShop($boutiqueRepository->findBy(['type' => $type]), $type);
+            $listShops = $this->getlistShop($boutiques, $type);
 
         }
         else{
@@ -96,7 +105,9 @@ class BoutiqueController extends AbstractController
             $blogs=$blogRepository->findAllArticleByBoutique($boutique);
         }
         
-        preg_match('%(http[s]?:\/\/|www\/)([a-zA-Z0-9-_\.\/\?=&]+)%i',$boutique->getAddress(),$matches);
+       if($boutique){
+         preg_match('%(http[s]?:\/\/|www\/)([a-zA-Z0-9-_\.\/\?=&]+)%i',$boutique->getAddress(),$matches);
+       }
         
         return $this->render('boutique/boutique.html.twig', [
             'controller_name' => 'BoutiqueController',
@@ -117,7 +128,7 @@ class BoutiqueController extends AbstractController
      /**
      * @Route("/show/blog/{id}-{slug}", name="showBlog")
      */
-    public function showBlog(Blog $blog,BlogRepository $blogRepository, VotesRepository $votesRepository)
+    public function showBlog(Blog $blog,BlogRepository $blogRepository,VotesService $votesService, VotesRepository $votesRepository)
     {
 
         // $allArticle = $articleRepository->findBy(['boutique'=>$boutiqueRepository->findOneBy(['user'=>$this->getUser()])] );
@@ -125,7 +136,7 @@ class BoutiqueController extends AbstractController
             $astuce= $blogRepository->findBy(['boutique'=>$blog->getBoutique(),"category"=>"Astuces","validate"=>true],["id"=>"DESC"]);
             $view= $blogRepository->findBy(['boutique'=>$blog->getBoutique(),"validate"=>true],["view"=>"DESC"]);
             $share= $blogRepository->findBy(['boutique'=>$blog->getBoutique(),"validate"=>true],["shareNbr"=>"DESC"],5);
-            $getNumberVote = $this->getNumberTotalVote($votes);
+            $getNumberVote = $votesService->getNumberTotalVote($votes);
         return $this->render('boutique/detailblog.html.twig', [
                 'blog' => $blog,
                 'views'=>$view,
@@ -141,12 +152,12 @@ class BoutiqueController extends AbstractController
     /**
      * @Route("/detail/{id}-{slug}", name="detail")
      */
-    public function detail(int $id, Article $article, BoutiqueRepository $boutiqueRepository,UtilsService $utilsService, VotesRepository $votesRepository)
+    public function detail(int $id, Article $article,VotesService $votesService, BoutiqueRepository $boutiqueRepository,UtilsService $utilsService, VotesRepository $votesRepository)
     {
 
         $votes = $votesRepository->findBy(['article' => $article]);
         
-        $getNumberVote = $this->getNumberTotalVote($votes);
+        $getNumberVote = $votesService->getNumberTotalVote($votes);
         
         $listOption=$this->typeOptionMenuService->getOption($utilsService->getSlug($article->getCategory()));
 
@@ -281,61 +292,7 @@ class BoutiqueController extends AbstractController
 
         
     }
-    /**
-     * @return array 
-     */
-    private function getNumberTotalVote(array $votes)
-    {
-        $nbr = 0;
-        $five = 0;
-        $four = 0;
-        $tree = 0;
-        $two = 0;
-        $one = 0;
-        $array = [];
-        $user = [
-            'isComment' => false
-        ];
-        for ($i = 0; $i < sizeof($votes); $i++) {
-            if ($votes[$i]->getValue() == 5) {
-                $five++;
-            }
-            if ($votes[$i]->getValue() == 4) {
-                $four++;
-            }
-            if ($votes[$i]->getValue() == 3) {
-                $tree++;
-            }
-            if ($votes[$i]->getValue() == 2) {
-                $two++;
-            }
-            if ($votes[$i]->getValue() == 1) {
-                $one++;
-            }
-            if ($votes[$i]->getUser() == $this->getUser()) {
-                $user = [
-                    'isComment' => true,
-                    'comment' => $votes[$i]->getComment(),
-                    'value' => $votes[$i]->getValue(),
-                    'id'=>$votes[$i]->getId(),
-                    'owner'=>$votes[$i]->getUser()->getId()
-                ];
-            }
-            $nbr += $votes[$i]->getValue();
-        }
-        return [
-            'user' => $user,
-            'votes' => [
-                'five' => $five,
-                'four' => $four,
-                'tree' => $tree,
-                'two' => $two,
-                'one' => $one,
-                'total' => $nbr,
-            ]
-        ];
-    }
-
+   
     private function getlistShop(array $shops, $types)
     {
         $newlistShop = [];
@@ -347,6 +304,9 @@ class BoutiqueController extends AbstractController
 
         foreach ($shops as $key => $shop) {
 
+            if($key==0){
+                $firstShop = $shop->getId();
+            }
             array_push($allShopId, $shop->getId());
              $shopSli= '<a class="text-center" href="/shop/' . $shop->getType() . '/' . $shop->getId() . '" id="' . $key . '"> 
             <div class="_container_image_shop">
@@ -371,7 +331,8 @@ class BoutiqueController extends AbstractController
         } else {
             $newlistShop['listShops'] = " <p>Pas de résultat :(  </p>";
         }
-        $newlistShop['allShopId'] = $allShopId;
+        $newlistShop['allShopId'] = $this->changePlace($allShopId,$first);
+
         return $newlistShop;
     }
 
