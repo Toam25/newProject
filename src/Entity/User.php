@@ -5,6 +5,7 @@ namespace App\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use PhpParser\Node\Expr\FuncCall;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
@@ -94,6 +95,11 @@ class User implements UserInterface
      * @ORM\OneToMany(targetEntity="App\Entity\Blog", mappedBy="user")
      */
     private $blogs;
+
+    /**
+     * @ORM\Column(type="datetime", nullable=true)
+     */
+    private $lastActivityAt;
 
     public function __construct()
     {
@@ -444,4 +450,26 @@ class User implements UserInterface
 
         return $this;
     }
+
+    public function getLastActivityAt(): ?\DateTimeInterface
+    {
+        return $this->lastActivityAt;
+    }
+
+    public function setLastActivityAt(?\DateTimeInterface $lastActivityAt): self
+    {
+        $this->lastActivityAt = $lastActivityAt;
+
+        return $this;
+    }
+
+    /**
+     * @return Bool whether the user is active or not
+     */
+
+     public function isActiveNow(){
+         $delay = new \DateTime("2 minutes ago");
+
+         return ($this->getLastActivityAt()>$delay);
+     }
 }

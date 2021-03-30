@@ -348,13 +348,18 @@ class BoutiqueController extends AbstractController
         foreach ($shops as $key => $shop) {
 
             array_push($allShopId, $shop->getId());
-            $newlistShop[$key] = '<a class="text-center" href="/shop/' . $shop->getType() . '/' . $shop->getId() . '" id="' . $key . '"> 
+             $shopSli= '<a class="text-center" href="/shop/' . $shop->getType() . '/' . $shop->getId() . '" id="' . $key . '"> 
             <div class="_container_image_shop">
-                 <img class="logo_image_boutique_header" src="/images/' . $shop->getLogo() . '" alt="' . $shop->getName() . '">
-                <div class="onLigne"></div>
-            </div>
+                 <img class="logo_image_boutique_header" src="/images/' . $shop->getLogo() . '" alt="' . $shop->getName() . '">';
+                if($shop->isActiveNow()){
+                    $shopSli.='<div class="onLigne"></div>';
+                }
+                 
+           $shopSli.='</div>
          <br> 
          <p class="nom_boutique" style="display: block;"> ' . $shop->getName() . '</p></a>';
+
+         $newlistShop[$key]=$shopSli;
         }
 
         if (isset($newlistShop) and sizeof($newlistShop) > 0) {

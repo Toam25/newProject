@@ -133,6 +133,11 @@ class Boutique
      */
     private $blogs;
 
+    /**
+     * @ORM\Column(type="datetime", nullable=true)
+     */
+    private $lastActivityAt;
+
     public function __construct()
     {
         $this->logo = "images_default/default_logo.png";
@@ -601,5 +606,26 @@ class Boutique
         }
 
         return $this;
+    }
+
+    public function getLastActivityAt(): ?\DateTimeInterface
+    {
+        return $this->lastActivityAt;
+    }
+
+    public function setLastActivityAt(?\DateTimeInterface $lastActivityAt): self
+    {
+        $this->lastActivityAt = $lastActivityAt;
+
+        return $this;
+    }
+     /**
+     * @return Bool whether the user is active or not
+     */
+
+    public function isActiveNow(){
+        $delay = new \DateTime("2 minutes ago");
+
+        return ($this->getLastActivityAt()>$delay);
     }
 }
