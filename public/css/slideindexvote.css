@@ -45,6 +45,16 @@ h3 {
     margin-right: 10px;
 }
 
+.line>.btn-success {
+    color: #FFF;
+    background-color: #05c6e5 !important;
+    border-color: #05c6e5  !important;
+}
+.line>.btn-success:hover {
+    color: #FFF;
+    background-color: #05c6e5 !important;
+    border-color: #05c6e5  !important;
+}
 .my-carousel-item  li{
     display: inline-block;
 }
