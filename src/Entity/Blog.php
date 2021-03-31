@@ -102,7 +102,7 @@ class Blog
     {
         $this->view=0;
         $this->createdAt = new \DateTime();
-        $this->validate="PENDING";
+        $this->validate=false;
         $this->shareNbr=0;
         $this->votes = new ArrayCollection();
     }
