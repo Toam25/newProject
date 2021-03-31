@@ -113,7 +113,11 @@
             {% include 'admin/dependencies/blogAdd.html.twig' %}
         {# list Blog#}
         {% elseif pages == "bloglist"%}
-            {% include 'admin/dependencies/articleinshop.html.twig' %}
+            {% include 'admin/dependencies/listBlog.html.twig' %}
+        
+        {# edit Blog#}
+        {% elseif pages == "blogEdit"%}
+            {% include 'admin/dependencies/editBlog.html.twig' %}
             
 
 

@@ -30,7 +30,7 @@
 <div style="display:flex; flex-direction:column;align-items: center;">
 
 <h1>{{ boutique.name }} </h1>
-<p>  {{ boutique.usercondition | raw }} </p>
+<div style="width:100%">  {{ boutique.usercondition|raw }} </div>
 
 </div>
 	{% if not app.user%}

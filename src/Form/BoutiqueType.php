@@ -69,10 +69,11 @@ class BoutiqueType extends AbstractType
                      'class'=>'form-control file'
                  ]
             ])
-            ->add('user_condition',TextareaType::class,[
+            ->add('user_condition',CKEditorType::class,[
                 'attr'=>[
                     'class'=>'form-control'
-                ]
+                ],
+                'input_sync'=> true
             ])
         ;
     }

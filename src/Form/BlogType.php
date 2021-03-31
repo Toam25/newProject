@@ -65,7 +65,8 @@ class BlogType extends AbstractType
                 'label'=>'Déscription',
                 'attr'=>[
                     'class'=>'form-control'
-                ]
+                ],
+                'input_sync'=> true
             ])
         ;
     }

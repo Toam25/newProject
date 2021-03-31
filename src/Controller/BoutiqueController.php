@@ -83,7 +83,12 @@ class BoutiqueController extends AbstractController
                 if($boutique==null){
                     $boutique = $boutiqueRepository->findOneByWithHeaderReference($type,intval($boutiques[0]->getId()));         
                 }
-            
+
+            if(!$pageWasRefreshed){
+                $boutique->setNbrOfVisitor($boutique->getNbrOfVisitor()+1);
+                $em= $this->getDoctrine()->getManager();
+                $em->flush($boutique);
+            }
             $isHomeShop = false;
             $listShops = $this->getlistShop($boutiques, $type);
 
