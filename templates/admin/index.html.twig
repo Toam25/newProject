@@ -118,9 +118,10 @@
         {# edit Blog#}
         {% elseif pages == "blogEdit"%}
             {% include 'admin/dependencies/editBlog.html.twig' %}
+        {# preview Blog#}
+        {% elseif pages == "blogpreview"%}
+            {% include 'admin/dependencies/blogpreview.html.twig' %}
             
-
-
          {% elseif pages == "list_socialNetwork"%}
             {% include 'admin/dependencies/list_socialNetwork.html.twig' with { 'list_socialNetworks' : list_socialNetworks } only %}
          

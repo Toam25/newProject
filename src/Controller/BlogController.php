@@ -9,6 +9,7 @@ use App\Repository\BoutiqueRepository;
 use App\Service\TypeOptionMenuService;
 use App\Service\UtilsService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -47,17 +48,28 @@ class BlogController extends AbstractController
 
         // $allArticle = $articleRepository->findBy(['boutique'=>$boutiqueRepository->findOneBy(['user'=>$this->getUser()])] );
         $boutique = $boutiqueRepository->findOneBy(['user' => $this->getUser()]);
-        $blog= $blogRepository->findOneBy(['boutique'=>$boutique,'id'=>$id ]);
+        
+        if(in_array('ROLE_SUPER_ADMIN', $this->getUser()->getRoles())){
+            $blog= $blogRepository->findOneBy(['id'=>$id ]);
+        }
+        else{
+            $blog= $blogRepository->findOneBy(['boutique'=>$boutique,'id'=>$id ]);
+        }
         $blogForm = $this->createForm(BlogType::class,$blog);
-
-        if($blogForm->isSubmitted() and $blogForm->isValid() and $request->isXmlHttpRequest()){
+        
+        if($blogForm->isSubmitted() and $request->isXmlHttpRequest()){
             $em= $this->getDoctrine()->getManager();
-            $em->flush($blog);
+            dd($blog);
+            $em->persist($blog);
+            $em->flush();
+            return new JsonResponse(['status'=>"success"]);
         }
     
         return $this->render('admin/index.html.twig', [
             'pages' => 'blogEdit',
             'boutique' => $boutique,
+            'id_blog'=>$blog->getId(),
+            'blog'=>$blog,
             'blogForm'=>$blogForm->createView()
         ]);
     }
@@ -78,6 +90,18 @@ class BlogController extends AbstractController
             'boutique' => $boutique,
             'blogs'=>$blogRepository->findAllArticleByBoutique($boutique)
             //'blogForm'=>$blogForm->createView()
+        ]);
+    }
+    /**
+     * @Route("/preview/blog/{id}", name="previewBlog")
+     */
+    public function previewBlog(BoutiqueRepository $boutiqueRepository,Blog $blog)
+    {
+        $boutique = $boutiqueRepository->findOneBy(['user' => $this->getUser()]);
+        return $this->render('admin/index.html.twig', [
+            'pages' => 'blogpreview',
+            'boutique' => $boutique,
+            'blog'=>$blog
         ]);
     }
 }

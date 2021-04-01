@@ -3,7 +3,13 @@
 		<div class="cart container_cart">
 			<a href="{{path('showBlog',{'id' : blog.id,'slug' :blog.link })}}" class="cnt_image_date_bloc" target="_blank">
 				<div class="container_image_blog">
-					<img src="/images/images_default/default_logo.png" alt="">
+					<img 
+					 {% if blog.image is not same as (null )%}
+                        src="{{ asset('images/'~blog.image)}}"
+                     {% else %}
+                        src="/images/images_default/default_logo.png"
+                     {% endif %}  
+					 alt="{{blog.title}}">
 				</div>
                 <div class="date_blog">
                     <p>{{ blog.createdAt|date('y') }}</p>
@@ -14,7 +20,7 @@
 			</a>
             <h1 class="title_blog">{{ cutWorld(blog.title,50) }}</h1>
             <p class="_category">#{{blog.category}}</p>
-            <p class="_description_blog">{{ cutWorld(blog.description,100) }}
+            <p class="_description_blog">{{ cutWorld(blog.resume,100) }}
 			<div class="detail">
 				<div class="product-rating">
 					{{ my_vote_twig(blog.votes) }}

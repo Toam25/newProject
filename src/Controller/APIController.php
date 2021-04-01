@@ -69,7 +69,7 @@ class APIController extends AbstractController
      * @Route("/v1/saveblog", name="saveBlog", methods="POST")
      */
 
-    public function saveBlog(Request $request, BoutiqueRepository $boutiqueRepository,UtilsService $utilsService){
+    public function saveBlog(Request $request,InsertFileServices $insertFileServices, BoutiqueRepository $boutiqueRepository,UtilsService $utilsService){
         
 
         $boutique = $boutiqueRepository->findOneBy(['user'=>$this->getUser()->getId()]);
@@ -88,6 +88,47 @@ class APIController extends AbstractController
                 ->setDescription($blogData['description'])
                 ->setUser($this->getUser())
                 ->setBoutique($boutique);
+          if($request->files->get('image_blog')){
+                    $file= $insertFileServices->insertFile($request->files->get('image_blog'));
+                    $blog->setImage($file);
+            }
+            $em= $this->getDoctrine()->getManager();
+            $em->persist($blog);
+            $em->flush();
+            return new JsonResponse(['status'=>"success",'id'=>$blog->getId()]);
+            
+        }else{
+            return new JsonResponse(['status'=>"error"],Response::HTTP_UNAUTHORIZED);
+        }
+        
+    }
+        /**
+     * @Route("/v1/edit/blog/{id}", name="editBlog", methods="POST")
+     */
+
+    public function editBlog(Request $request,Blog $blog,InsertFileServices $insertFileServices, BoutiqueRepository $boutiqueRepository,UtilsService $utilsService){
+        
+
+        $boutique = $boutiqueRepository->findOneBy(['user'=>$this->getUser()->getId()]);
+
+        $blogData=$request->request->get('blog');
+
+       if(in_array("ROLE_SUPER_ADMIN", $this->getUser()->getRoles()) or $boutique and $blog->getBoutique()== $boutique){
+            $blog->setTitle($blogData['title'])
+                ->setStatus($request->request->get('status'))
+                ->setResume($blogData['resume'])
+                ->setKeywords($blogData['keywords'])
+                ->setCategory($blogData['category'])
+                ->setMetaDescription($blogData['metaDescription'])
+                ->setLink($utilsService->getSlug($blogData['link']))
+                ->setDescription($blogData['description'])
+                ->setUser($this->getUser())
+                ->setBoutique($boutique);
+            
+            if($request->files->get('image_blog')){
+                  $file= $insertFileServices->insertFile($request->files->get('image_blog'));
+                  $blog->setImage($file);
+            }
             $em= $this->getDoctrine()->getManager();
             $em->persist($blog);
             $em->flush();

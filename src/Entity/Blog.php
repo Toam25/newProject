@@ -97,6 +97,11 @@ class Blog
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $image;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $images;
    
     public function __construct()
     {
@@ -318,6 +323,18 @@ class Blog
     public function setImage(?string $image): self
     {
         $this->image = $image;
+
+        return $this;
+    }
+
+    public function getImages(): ?string
+    {
+        return $this->images;
+    }
+
+    public function setImages(string $images): self
+    {
+        $this->images = $images;
 
         return $this;
     }

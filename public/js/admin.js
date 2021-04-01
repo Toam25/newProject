@@ -54,7 +54,33 @@ $(function () {
 
  });
 
+ /**Edit Blog */
 
+ $('.edit_vote').on('submit',function(e){
+       e.preventDefault();
+       let form = $(this);
+       $.ajax({
+        url : form.attr('action'),
+        type: 'POST',
+        contentType: false,
+        processData: false,
+        cache: false,
+        dataType: 'json',
+        data : new FormData(this),
+        beforeSend : ()=>{
+          toastr.info('Enregistrement en cours ;) ');
+        },
+        success : (data)=>{
+           toastr.success('Blog publié avec success ;) ')
+        },
+        error : ()=>{
+          toastr.error('Erreur d\'enregistrement ');
+        }
+    });
+
+ });
+
+ //////////////////////////
 
   $('input[name="articleShow"]').on('change',function(e){
 
