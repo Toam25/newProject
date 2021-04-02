@@ -21,7 +21,9 @@ use App\Service\SearchService;
 use App\Service\TypeOptionMenuService;
 use App\Service\UtilsService;
 use App\Service\VotesService;
+use ProxyManager\Factory\RemoteObject\Adapter\JsonRpc;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -107,7 +109,7 @@ class BoutiqueController extends AbstractController
         } else {
 
             $article = $articleRepository->findAllArticleByBoutique($boutique);
-            $blogs=$blogRepository->findAllArticleByBoutique($boutique);
+            $blogs=$blogRepository->findAllBlogByBoutique($boutique);
         }
         
        if($boutique){
@@ -283,6 +285,31 @@ class BoutiqueController extends AbstractController
                 'articles' => $search->getResultSearch($request),
             ]
         );
+    }
+
+        /**
+     * @Route("/blog/list", name="_blog_list")
+     */
+    public function _blogList(Request $request, SearchService $search)
+    {
+        
+        
+        if ($request->isXmlHttpRequest()) {
+
+            return $this->render(
+                'boutique/dependancies/_listBlogs.html.twig',
+                [
+                    'blogs' => $search->getResultSearchForBlog($request),
+                ]
+            );
+        }
+        return new JsonResponse(['status'=>"error"],Response::HTTP_UNAUTHORIZED);
+       /* return $this->render(
+            'boutique/list.html.twig',
+            [
+                'articles' => $search->getResultSearch($request),
+            ]
+        );*/
     }
         /**
      * @Route("/condition/{id}", name="condition")

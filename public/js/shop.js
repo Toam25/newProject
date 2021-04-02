@@ -27,9 +27,14 @@ $(function(){
         var id=last.attr('id') ? last.attr('id') :  $('#listshops .text-center').attr('id');
 
         document.cookie =$('.shop_type').val()+"="+parseInt(id); 
-        console.log($('.shop_type').val(),id);
 
    }
+   $('.aside').on('submit',function(e){
+      e.preventDefault()
+   }); 
+   $('.js-blog').on('submit',function(e){
+      e.preventDefault()
+   });
     $('.aside').on('change',function(e){ 
         e.preventDefault(); 
          let data = new FormData(this);
@@ -78,6 +83,53 @@ $(function(){
        });
     })
 
+$('.js-blog').on('change',function(e){ 
+      e.preventDefault(); 
+       let data = new FormData(this);
+/* 
+       const url = new URL($(this).attr('action') || window.location.href );
+       const params = new URLSearchParams();
+       data.forEach((value, key)=>params.append(key,value));
+       generateUrl(url.pathname+"?"+params.toString());
+
+*/
+      $.ajax({
+          url: "/blog/list",
+          type : 'POST',
+          data,
+          contentType: false,
+          processData : false,
+          cache : false,
+          dataType :'html',
+           beforeSend : ()=>{
+               $('.div-inother').show();  
+               
+           },
+         error : ()=>{
+              toastr.error('Erreur inconue'); 
+              $('.div-inother').hide(); 
+              //$("form")[0].reset()
+         },
+         success : (data)=>{
+             $('.js_list_blog').html(data);
+             $('.div-inother').hide(); 
+          /*  if(data.status=='ok'){
+             toastr.success(data.msg); 
+              $("form[name='user']")[0].reset()
+         
+           }
+           if(data.status=='ko'){
+              toastr.error(data.msg); 
+              $("form[name='user']")[0].reset()
+           }
+            */
+           
+         },
+         complete: ()=>{
+                    
+         }
+     });
+  })
     function generateUrl(url){
        history.replaceState({},"",url);
     }

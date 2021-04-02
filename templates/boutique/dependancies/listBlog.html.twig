@@ -10,9 +10,18 @@
 				</div>
 				<input class="shop_type" type="hidden" name="shop_type" value="{{ type }}">
 				{% if boutique %}
-					<form action="" class="aside" style="margin-top: 13px;">
+					<form action="" class="js-blog" style="margin-top: 13px;">
 						<input type="hidden" name="shop_id" value="{{ boutique.id }}">
-						{{ filtreCategory | raw }}
+						<input name="q" class="form-control" placeholder="Recherche">
+						<label>Type de blog</label>
+						<ul>
+							<li><input type="checkbox" name="blog[]" value="Actualités" ><label>Actualités</label></li>
+							<li><input type="checkbox" name="blog[]" value="Atouts"><label>Atouts</label></li>
+							<li><input type="checkbox" name="blog[]" value="Astuces"><label>Astuces</label></li>
+							<li><input type="checkbox" name="blog[]" value="Test"><label>Test</label></li>
+							<li><input type="checkbox" name="blog[]" value="Tutoriels"><label>Tutoriels</label></li>
+						</ul>
+						{#{{ filtreCategory | raw }}#}
 						{# {{ categorie(boutique) }} #}
 					</form>
 				{% endif %}
@@ -26,7 +35,7 @@
 						<h3 class="title_C" style="display:table-cell">Liste Blogs</h3>
 					</div>
 					<div class="container_list_article">
-						<div class="row js_list_article">
+						<div class="row js_list_blog">
 							{% if blogs %}
 								{% include "boutique/dependancies/_listblogs.html.twig" with {'blogs': blogs} only %}
 							{% else %}

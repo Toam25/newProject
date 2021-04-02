@@ -2,6 +2,7 @@
 
 namespace App\Repository;
 
+use App\Data\Search;
 use App\Entity\Blog;
 use App\Entity\Boutique;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
@@ -20,7 +21,7 @@ class BlogRepository extends ServiceEntityRepository
         parent::__construct($registry, Blog::class);
     }
 
-    public function findAllArticleByBoutique(?Boutique $boutique)
+    public function findAllBlogByBoutique(?Boutique $boutique)
     {
 
         if ($boutique != null) {
@@ -34,6 +35,38 @@ class BlogRepository extends ServiceEntityRepository
                 ->getResult();
         }
         return [];
+    }
+    public function getAllBlogWithDataBy(Search $data,$validate=true)
+    {   
+        
+        $query = $this->createQueryBuilder('bl')
+            ->select('bl', 'b', 'v')
+            ->leftJoin('bl.votes', 'v')
+            ->leftJoin('bl.boutique', 'b');
+        if ($data->q) {
+            $query->andWhere('bl.title LIKE :q')
+                ->orWhere('bl.category LIKE :q')
+                ->orWhere('bl.resume LIKE :q')
+                ->orWhere('bl.keywords LIKE :q')
+                ->orWhere('bl.metaDescription LIKE :q')
+                ->orWhere('bl.description LIKE :q')
+                ->setParameter('q', '%' . $data->q . '%');
+        }
+        if ($data->category) {
+            $query->andWhere('bl.category IN (:category)')
+                ->setParameter('category', $data->category);
+        }
+       
+        if ($data->boutique_id) {
+            $query->andWhere('b.id = :boutiqueId')
+                ->setParameter('boutiqueId', $data->boutique_id);
+        }
+        if($validate==true){
+            $query->andWhere('bl.validate = :validate')
+                ->setParameter('validate', true);
+        }
+
+        return $query->getQuery()->getResult();
     }
     // /**
     //  * @return Blog[] Returns an array of Blog objects

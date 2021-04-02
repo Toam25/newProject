@@ -229,7 +229,7 @@
 .cart:hover{
     box-shadow: 0 0 9px 0px #0000001c;
 }
-.js_list_article{
+.js_list_article, .js_list_blog{
     display: flex;
     flex-wrap: wrap;
 }
