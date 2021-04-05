@@ -101,6 +101,12 @@ class User implements UserInterface
      */
     private $lastActivityAt;
 
+    /**
+     * @ORM\ManyToMany(targetEntity="App\Entity\Notification", mappedBy="toUser")
+     */
+    private $notifications;
+
+
     public function __construct()
     {
         $this->boutiques = new ArrayCollection();
@@ -112,6 +118,7 @@ class User implements UserInterface
         $this->userVotes = new ArrayCollection();
         $this->birthday = new \DateTime();
         $this->blogs = new ArrayCollection();
+        $this->notifications = new ArrayCollection();
  
     }
 
@@ -472,4 +479,33 @@ class User implements UserInterface
 
          return ($this->getLastActivityAt()>$delay);
      }
+
+     /**
+      * @return Collection|Notification[]
+      */
+     public function getNotifications(): Collection
+     {
+         return $this->notifications;
+     }
+
+     public function addNotification(Notification $notification): self
+     {
+         if (!$this->notifications->contains($notification)) {
+             $this->notifications[] = $notification;
+             $notification->addToUser($this);
+         }
+
+         return $this;
+     }
+
+     public function removeNotification(Notification $notification): self
+     {
+         if ($this->notifications->contains($notification)) {
+             $this->notifications->removeElement($notification);
+             $notification->removeToUser($this);
+         }
+
+         return $this;
+     }
+
 }

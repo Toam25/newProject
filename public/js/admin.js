@@ -81,7 +81,41 @@ $(function () {
  });
 
  //////////////////////////
+ ///Aprouver un blog 
+ $('body').on('click','.validate_blog',function(e){
+      e.preventDefault();
+      let id = $(this).data('id')
+      let nbr_blog= parseInt($('.nbr_blog').text());
+      let parent = $(this).parent('div').parent('.validate_action_button').parent('.validate_link_a');
+     
+     
+      $.ajax({
+        url : "/superadmin/validate/blog/"+id,
+        type: 'POST',
+        dataType: 'json',
+        beforeSend : ()=>{
+          toastr.info('Approbation en cours ;) ');
+          $(this).prop('disabled',true);
+        },
+        success : (data)=>{
+          toastr.success('Approuver avec success ;) ');
 
+          if( nbr_blog> 1){
+            $('.nbr_blog').text(nbr_blog -1);
+          }
+
+          parent.css('transform','translate(3000px)');
+          setInterval(()=>{
+            parent.remove();
+          },1000)
+        },
+        error : ()=>{
+          toastr.error('Erreur d\'approbation ');
+          $(this).prop('disabled',false);
+        }
+    });
+ });
+///////
   $('input[name="articleShow"]').on('change',function(e){
 
     e.preventDefault(); 

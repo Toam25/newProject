@@ -51,6 +51,20 @@ class BoutiqueRepository extends ServiceEntityRepository
                     ->getResult()
         ;
     }
+
+    public function findAllBoutiqueWithOutUserRoleSuperAdmin(String $role){
+        $query = $this->createQueryBuilder('b')
+                        ->select('b','u')
+                        ->leftJoin('b.user', 'u')
+                        ->where('u.roles LIKE :role')
+                        ->setParameter('role', '%'.$role.'%')
+                        ->getQuery()
+                        ->getResult()
+        
+        ;
+
+        return $query;
+    }
     // /**
     //  * @return Boutique[] Returns an array of Boutique objects
     //  */

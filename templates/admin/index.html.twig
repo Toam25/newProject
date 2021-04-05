@@ -121,6 +121,9 @@
         {# preview Blog#}
         {% elseif pages == "blogpreview"%}
             {% include 'admin/dependencies/blogpreview.html.twig' %}
+        {# validate list Blog#}
+        {% elseif pages == "blogValidatelist"%}
+            {% include 'admin/dependencies/blog/blogValidatelist.html.twig' %}
             
          {% elseif pages == "list_socialNetwork"%}
             {% include 'admin/dependencies/list_socialNetwork.html.twig' with { 'list_socialNetworks' : list_socialNetworks } only %}

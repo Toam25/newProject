@@ -97,7 +97,7 @@ class BoutiqueController extends AbstractController
         }
         else{
             $boutique = $boutiqueRepository->findOneBoutiqueByUserPerRole("ROLE_SUPER_ADMIN");
-            $listShops = $this->getlistShop($boutiqueRepository->findAll(), $type);
+            $listShops = $this->getlistShop($boutiqueRepository->findAllBoutiqueWithOutUserRoleSuperAdmin("ROLE_ADMIN"), $type);
             $isHomeShop =true;
             $type="g_marchande";
         }

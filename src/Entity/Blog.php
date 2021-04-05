@@ -102,6 +102,11 @@ class Blog
      * @ORM\Column(type="string", length=255)
      */
     private $images;
+
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $validateInHomePage;
    
     public function __construct()
     {
@@ -335,6 +340,18 @@ class Blog
     public function setImages(string $images): self
     {
         $this->images = $images;
+
+        return $this;
+    }
+
+    public function getValidateInHomePage(): ?bool
+    {
+        return $this->validateInHomePage;
+    }
+
+    public function setValidateInHomePage(bool $validateInHomePage): self
+    {
+        $this->validateInHomePage = $validateInHomePage;
 
         return $this;
     }

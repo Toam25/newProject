@@ -9,6 +9,7 @@ use App\Entity\EsArticle;
 use App\Entity\Header;
 use App\Entity\Images;
 use App\Entity\Menu;
+use App\Entity\Notification;
 use App\Entity\User;
 use App\Entity\UserCondition;
 use App\Entity\UserVote;
@@ -92,9 +93,12 @@ class APIController extends AbstractController
                     $file= $insertFileServices->insertFile($request->files->get('image_blog'));
                     $blog->setImage($file);
             }
-            $em= $this->getDoctrine()->getManager();
+            $em = $this->getDoctrine()->getManager();
             $em->persist($blog);
             $em->flush();
+           /* 
+            
+           */
             return new JsonResponse(['status'=>"success",'id'=>$blog->getId()]);
             
         }else{
