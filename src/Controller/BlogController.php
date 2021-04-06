@@ -105,25 +105,31 @@ class BlogController extends AbstractController
         return $this->render('admin/index.html.twig', [
             'pages' => 'blogValidatelist',
             'boutique' => $boutique,
-            'blogs'=>$blogRepository->findBy(['validate'=>false])
+            'blogs'=>$blogRepository->findByNotValidateBlog()
             
         ]);
     }
     /**
-     * @Route("/superadmin/validate/blog/{id}", name="superadminvalidateBlog", methods="POST")
+     * @Route("/superadmin/validate/blog/{type}-{id}", name="superadminvalidateBlog", methods="POST")
      */
-    public function validateBlog(Blog $blog, UserRepository $userRepository)
+    public function validateBlog(Blog $blog,string $type, UserRepository $userRepository)
     {     
         $users= $userRepository->findAll();
-         if($blog->getValidate()==false){
+         if($blog->getValidate()==false or $blog->getValidateInHomePage()==false){
 
             $notification = new Notification(); 
-            $notification->setSubject('APPROUVED');
+            $notification->setSubject($type);
             $notification->addToUser($blog->getBoutique()->getUser());
             $notification->setFromUser($this->getUser()->getId());
             $notification->setCreatedAt(new \DateTime());
             $notification->setDescription($blog->getId());
-            $blog->setValidate(true);
+            if($type=="APROUVED"){
+                $blog->setValidate(true);
+            }
+            else {
+                $blog->setValidateInHomePage(true);
+            }
+            
             $em = $this->getDoctrine()->getManager();
             $em->persist($notification);
             $em->flush();

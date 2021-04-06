@@ -16,11 +16,13 @@ use App\Repository\BlogRepository;
 use App\Repository\BoutiqueRepository;
 use App\Repository\HeaderRepository;
 use App\Repository\MenuRepository;
+use App\Repository\NotificationRepository;
 use App\Repository\ReferenceRepository;
 use App\Repository\UserRepository;
 use App\Service\CategoryOptionService;
 use App\Service\CategoryService;
 use App\Service\InsertFileServices;
+use App\Service\NotificationService;
 use App\Service\TypeOptionMenuService;
 use App\Service\UtilsService;
 use Doctrine\ORM\EntityManagerInterface;
@@ -56,6 +58,7 @@ class AdminController extends AbstractController
     {
 
         // $allArticle = $articleRepository->findBy(['boutique'=>$boutiqueRepository->findOneBy(['user'=>$this->getUser()])] );
+        
         $boutique = $boutiqueRepository->findOneBy(['user' => $this->getUser()]);
         $header = $headerRepository->findOneBy(['boutique' => $boutique]);
         $img_header = ($header) ? $header->getName() : 'images_default/default_image.jpg';

@@ -7,7 +7,11 @@
 			{% for vote in votes %}
 				<li id="li-review-{{vote.id}}" class="li-review">
 					<div class="review-heading">
-						<h5 class="name">{{ vote.user.name}}</h5>
+						<div class="container_image_user_vote">
+							<img src="{{asset('images/'~vote.user.avatar)}}" />
+							<h5 class="name">{{ vote.user.name}}</h5>
+						</div>
+						
 						<p class="date">{{vote.createdAt|date}}</p>
 						<div class="review-rating">
 							{{my_vote_twig(vote.value)}}

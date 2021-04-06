@@ -87,10 +87,11 @@ $(function () {
       let id = $(this).data('id')
       let nbr_blog= parseInt($('.nbr_blog').text());
       let parent = $(this).parent('div').parent('.validate_action_button').parent('.validate_link_a');
+      let type = $(this).data('validate');
      
      
       $.ajax({
-        url : "/superadmin/validate/blog/"+id,
+        url : "/superadmin/validate/blog/"+type+"-"+id,
         type: 'POST',
         dataType: 'json',
         beforeSend : ()=>{
@@ -103,11 +104,12 @@ $(function () {
           if( nbr_blog> 1){
             $('.nbr_blog').text(nbr_blog -1);
           }
-
-          parent.css('transform','translate(3000px)');
+          $(this).remove();
+          /*parent.css('transform','translate(3000px)');
           setInterval(()=>{
             parent.remove();
           },1000)
+          */
         },
         error : ()=>{
           toastr.error('Erreur d\'approbation ');

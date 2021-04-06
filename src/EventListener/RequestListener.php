@@ -33,7 +33,8 @@ class  RequestListener {
                     $boutique->setLastActivityAt(new \DateTime());
                     //$user->setLastActivityAt(new \DateTime());
                     //$this->entityManagerInterface->flush($user);
-                    $this->entityManagerInterface->flush($boutique);
+                    $this->entityManagerInterface->persist($boutique);
+                    $this->entityManagerInterface->flush();
     
                 }   
            }

@@ -31,9 +31,11 @@ use App\Repository\VoteRepository;
 use App\Service\ArticlePerShopService;
 use App\Service\CategoryOptionService;
 use App\Service\InsertFileServices;
+use App\Service\NotificationService;
 use App\Service\TypeOptionMenuService;
 use App\Service\UtilsService;
 use Doctrine\Common\Collections\Expr\Value;
+use ProxyManager\Factory\RemoteObject\Adapter\JsonRpc;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\BrowserKit\Response as BrowserKitResponse;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -669,4 +671,11 @@ class APIController extends AbstractController
             return new JsonResponse(['status'=>"error"], Response::HTTP_OK);
         
     }
+    /**
+     * @Route("/get/notification", name="getNotifications")
+     */
+
+     public function getNotification(NotificationService $notificationService){
+        return new JsonResponse($notificationService->getMessageNotification(),Response::HTTP_OK);
+     }
 }

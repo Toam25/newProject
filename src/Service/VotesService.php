@@ -3,14 +3,13 @@
 namespace App\Service;
 
 use App\Data\Search;
-use App\Repository\ArticleRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Security;
 
 class VotesService
 {
 
-    private $articleRepository;
+  
     private $security;
 
     public function __construct(Security $security)

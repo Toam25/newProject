@@ -41,15 +41,14 @@ class BoutiqueController extends AbstractController
     /**
      * @Route("/", name="index")
      */
-    public function index(VoteRepository $voteRepository, HeaderRepository $headerRepository, BoutiqueRepository $boutiqueRepository, CartRepository $cartRepository, ArticleRepository $articleRepository)
+    public function index(VoteRepository $voteRepository,BlogRepository $blogRepository, HeaderRepository $headerRepository, BoutiqueRepository $boutiqueRepository, CartRepository $cartRepository, ArticleRepository $articleRepository)
     {
 
         $boutique = $boutiqueRepository->findOneBoutiqueByUserPerRole('ROLE_SUPER_ADMIN');
         $allMenu= $this->typeOptionMenuService->getTypeOptionMenu();
 
         $vote = $voteRepository->findAllWithUserVote();
-         
-        $lastboutique = $boutiqueRepository->findAll();
+
         $header = $headerRepository->findOneBy(['boutique' => $boutique]);
         $header_image = ($header) ? $header->getName() : "images_default/default_image.jpg";
         $articles = $articleRepository->getArticleWithVote();
@@ -60,7 +59,7 @@ class BoutiqueController extends AbstractController
             'header_image' => $header_image,
             'votes' => $vote,
             'allMenus'=>$allMenu,
-            'lastboutique' => $lastboutique[1]
+            'blogs'=>$blogRepository->findByBlogValidateInHomePage()
         ]);
     }
     /**
@@ -141,7 +140,7 @@ class BoutiqueController extends AbstractController
         // $allArticle = $articleRepository->findBy(['boutique'=>$boutiqueRepository->findOneBy(['user'=>$this->getUser()])] );
             $votes = $votesRepository->findBy(['blog' => $blog]);
             $astuce= $blogRepository->findBy(['boutique'=>$blog->getBoutique(),"category"=>"Astuces","validate"=>true],["id"=>"DESC"]);
-            $view= $blogRepository->findBy(['boutique'=>$blog->getBoutique(),"validate"=>true],["view"=>"DESC"]);
+            $view= $blogRepository->findBy(['boutique'=>$blog->getBoutique(),"validate"=>true],["view"=>"DESC"],4);
             $share= $blogRepository->findBy(['boutique'=>$blog->getBoutique(),"validate"=>true],["shareNbr"=>"DESC"],5);
             $getNumberVote = $votesService->getNumberTotalVote($votes);
         return $this->render('boutique/detailblog.html.twig', [
