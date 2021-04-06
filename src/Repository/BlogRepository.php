@@ -6,7 +6,7 @@ use App\Data\Search;
 use App\Entity\Blog;
 use App\Entity\Boutique;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
-use Doctrine\Common\Persistence\ManagerRegistry;
+use Doctrine\Persistence\ManagerRegistry;
 
 /**
  * @method Blog|null find($id, $lockMode = null, $lockVersion = null)
