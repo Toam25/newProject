@@ -1,6 +1,165 @@
 $(function () {
+
+
   var $category;
 
+
+  $('.save_blog').on('click',function(e){
+     e.preventDefault();
+    let form = $('.save_blog').parent('div').parent('form')[0];
+     $('.status').val('CLOSED');
+     $.ajax({
+      url : "/api/v1/saveblog",
+      type: 'POST',
+      contentType: false,
+      processData: false,
+      cache: false,
+      dataType: 'json',
+      data : new FormData(form),
+      beforeSend : ()=>{
+        toastr.info('Enregistrement en cours ;) ');
+      },
+      success : (data)=>{
+         toastr.success('Enregistrer avec success ;) ')
+      },
+      error : ()=>{
+        toastr.error('Erreur d\'enregistrement ');
+      }
+  });
+
+  });
+
+  $('.view_blog').on('click',function(e){
+    e.preventDefault();
+   let form = $('.save_blog').parent('div').parent('form')[0];
+    $('.status').val('PENDING');
+    $.ajax({
+     url : "/api/v1/saveblog",
+     type: 'POST',
+     contentType: false,
+     processData: false,
+     cache: false,
+     dataType: 'json',
+     data : new FormData(form),
+     beforeSend : ()=>{
+       toastr.info('Enregistrement en cours ;) ');
+     },
+     success : (data)=>{
+        toastr.success('Enregistrer avec success ;) ')
+     },
+     error : ()=>{
+       toastr.error('Erreur d\'enregistrement ');
+     }
+ });
+
+ });
+
+ /**Edit Blog */
+
+ $('.edit_vote').on('submit',function(e){
+       e.preventDefault();
+       let form = $(this);
+       $.ajax({
+        url : form.attr('action'),
+        type: 'POST',
+        contentType: false,
+        processData: false,
+        cache: false,
+        dataType: 'json',
+        data : new FormData(this),
+        beforeSend : ()=>{
+          toastr.info('Enregistrement en cours ;) ');
+        },
+        success : (data)=>{
+           toastr.success('Blog publié avec success ;) ')
+        },
+        error : ()=>{
+          toastr.error('Erreur d\'enregistrement ');
+        }
+    });
+
+ });
+
+ //////////////////////////
+ ///Aprouver un blog 
+ $('body').on('click','.validate_blog',function(e){
+      e.preventDefault();
+      let id = $(this).data('id')
+      let nbr_blog= parseInt($('.nbr_blog').text());
+      let parent = $(this).parent('div').parent('.validate_action_button').parent('.validate_link_a');
+      let type = $(this).data('validate');
+     
+     
+      $.ajax({
+        url : "/superadmin/validate/blog/"+type+"-"+id,
+        type: 'POST',
+        dataType: 'json',
+        beforeSend : ()=>{
+          toastr.info('Approbation en cours ;) ');
+          $(this).prop('disabled',true);
+        },
+        success : (data)=>{
+          toastr.success('Approuver avec success ;) ');
+
+          if( nbr_blog> 1){
+            $('.nbr_blog').text(nbr_blog -1);
+          }
+          $(this).remove();
+          /*parent.css('transform','translate(3000px)');
+          setInterval(()=>{
+            parent.remove();
+          },1000)
+          */
+        },
+        error : ()=>{
+          toastr.error('Erreur d\'approbation ');
+          $(this).prop('disabled',false);
+        }
+    });
+ });
+///////
+  $('input[name="articleShow"]').on('change',function(e){
+
+    e.preventDefault(); 
+    let value = $(this).val();
+    let id= $('.boutique-id').val();
+    // $(this).prop('disabled',true);
+    $.ajax({
+          url : "/api/articleShow/update/"+value+"/"+id,
+          type: 'POST',
+          dataType: 'json',
+          beforeSend : ()=>{
+            toastr.info('Enregistrement en cours ;) ');
+          },
+          success : (data)=>{
+             toastr.success('Enregistrer avec success ;) ')
+          },
+          error : ()=>{
+            toastr.error('Erreur d\'enregistrement ');
+          }
+      });
+  });
+
+  $('input[name="blogShow"]').on('change',function(e){
+    
+    e.preventDefault(); 
+    let value = $(this).val();
+    let id= $('.boutique-id').val();
+      $.ajax({
+        url : "/api/blogShow/update/"+value+"/"+id,
+        type: 'POST',
+        dataType: 'json',
+        beforeSend : ()=>{
+          toastr.info('Enregistrement en cours ;) ');
+        },
+        success : (data)=>{
+          toastr.success('Enregistrer avec success ;) ');
+        },
+        error : ()=>{
+          toastr.error('Erreur d\'enregistrement ');
+        }
+    });  
+  });
   //edit ess article 
   $('.modify_es_article').on('submit', function(e){
       e.preventDefault();

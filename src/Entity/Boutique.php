@@ -113,6 +113,31 @@ class Boutique
      */
     private $resume;
 
+    /**
+     * @ORM\Column(type="boolean", nullable=true)
+     */
+    private $showArticle;
+
+    /**
+     * @ORM\Column(type="boolean", nullable=true)
+     */
+    private $showBlog;
+
+    /**
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    private $nbrOfVisitor;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Blog", mappedBy="boutique")
+     */
+    private $blogs;
+
+    /**
+     * @ORM\Column(type="datetime", nullable=true)
+     */
+    private $lastActivityAt;
+
     public function __construct()
     {
         $this->logo = "images_default/default_logo.png";
@@ -124,6 +149,11 @@ class Boutique
         $this->menus = new ArrayCollection();
         $this->esArticles = new ArrayCollection();
         $this->vote= new ArrayCollection();
+        $this->showArticle= true;
+        $this->showBlog=false;
+        $this->nbrOfVisitor = 0;
+        $this->blogs = new ArrayCollection();
+
     }
 
     public function getId(): ?int
@@ -509,5 +539,93 @@ class Boutique
         $this->resume = $resume;
 
         return $this;
+    }
+
+    public function getShowArticle(): ?bool
+    {
+        return $this->showArticle;
+    }
+
+    public function setShowArticle(?bool $showArticle): self
+    {
+        $this->showArticle = $showArticle;
+
+        return $this;
+    }
+
+    public function getShowBlog(): ?bool
+    {
+        return $this->showBlog;
+    }
+
+    public function setShowBlog(?bool $showBlog): self
+    {
+        $this->showBlog = $showBlog;
+
+        return $this;
+    }
+
+    public function getNbrOfVisitor(): ?int
+    {
+        return $this->nbrOfVisitor;
+    }
+
+    public function setNbrOfVisitor(?int $nbrOfVisitor): self
+    {
+        $this->nbrOfVisitor = $nbrOfVisitor;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Blog[]
+     */
+    public function getBlogs(): Collection
+    {
+        return $this->blogs;
+    }
+
+    public function addBlog(Blog $blog): self
+    {
+        if (!$this->blogs->contains($blog)) {
+            $this->blogs[] = $blog;
+            $blog->setBoutique($this);
+        }
+
+        return $this;
+    }
+
+    public function removeBlog(Blog $blog): self
+    {
+        if ($this->blogs->contains($blog)) {
+            $this->blogs->removeElement($blog);
+            // set the owning side to null (unless already changed)
+            if ($blog->getBoutique() === $this) {
+                $blog->setBoutique(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function getLastActivityAt(): ?\DateTimeInterface
+    {
+        return $this->lastActivityAt;
+    }
+
+    public function setLastActivityAt(?\DateTimeInterface $lastActivityAt): self
+    {
+        $this->lastActivityAt = $lastActivityAt;
+
+        return $this;
+    }
+     /**
+     * @return Bool whether the user is active or not
+     */
+
+    public function isActiveNow(){
+        $delay = new \DateTime("2 minutes ago");
+
+        return ($this->getLastActivityAt()>$delay);
     }
 }

@@ -5,6 +5,7 @@ namespace App\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use PhpParser\Node\Expr\FuncCall;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
@@ -90,6 +91,22 @@ class User implements UserInterface
      */
     private $userVotes;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Blog", mappedBy="user")
+     */
+    private $blogs;
+
+    /**
+     * @ORM\Column(type="datetime", nullable=true)
+     */
+    private $lastActivityAt;
+
+    /**
+     * @ORM\ManyToMany(targetEntity="App\Entity\Notification", mappedBy="toUser")
+     */
+    private $notifications;
+
+
     public function __construct()
     {
         $this->boutiques = new ArrayCollection();
@@ -100,6 +117,8 @@ class User implements UserInterface
         $this->categories = new ArrayCollection();
         $this->userVotes = new ArrayCollection();
         $this->birthday = new \DateTime();
+        $this->blogs = new ArrayCollection();
+        $this->notifications = new ArrayCollection();
  
     }
 
@@ -407,4 +426,86 @@ class User implements UserInterface
 
         return $this;
     }
+
+    /**
+     * @return Collection|Blog[]
+     */
+    public function getBlogs(): Collection
+    {
+        return $this->blogs;
+    }
+
+    public function addBlog(Blog $blog): self
+    {
+        if (!$this->blogs->contains($blog)) {
+            $this->blogs[] = $blog;
+            $blog->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeBlog(Blog $blog): self
+    {
+        if ($this->blogs->contains($blog)) {
+            $this->blogs->removeElement($blog);
+            // set the owning side to null (unless already changed)
+            if ($blog->getUser() === $this) {
+                $blog->setUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function getLastActivityAt(): ?\DateTimeInterface
+    {
+        return $this->lastActivityAt;
+    }
+
+    public function setLastActivityAt(?\DateTimeInterface $lastActivityAt): self
+    {
+        $this->lastActivityAt = $lastActivityAt;
+
+        return $this;
+    }
+
+    /**
+     * @return Bool whether the user is active or not
+     */
+
+     public function isActiveNow(){
+         $delay = new \DateTime("2 minutes ago");
+
+         return ($this->getLastActivityAt()>$delay);
+     }
+
+     /**
+      * @return Collection|Notification[]
+      */
+     public function getNotifications(): Collection
+     {
+         return $this->notifications;
+     }
+
+     public function addNotification(Notification $notification): self
+     {
+         if (!$this->notifications->contains($notification)) {
+             $this->notifications[] = $notification;
+             $notification->addToUser($this);
+         }
+
+         return $this;
+     }
+
+     public function removeNotification(Notification $notification): self
+     {
+         if ($this->notifications->contains($notification)) {
+             $this->notifications->removeElement($notification);
+             $notification->removeToUser($this);
+         }
+
+         return $this;
+     }
+
 }

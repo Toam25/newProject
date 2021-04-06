@@ -14,7 +14,16 @@
 
 			<ul class="nav navbar-nav" id="menulistshop" style="margin-top: 3px;">
 				<li class="mode">
-					<a href="{{ path('index')}}">ACCUEIL</a>
+					<a href="{{ path('index')}}">Accueil</a>
+				</li>
+				<li class="mode">
+					<a 
+					 href="{{ path('shop')}}"
+					  {%
+					 if menu is same as ("g_marchande") %}
+						class = "menu_selected"
+					{% endif %}
+					>Galerie Marchande</a>
 				</li>
 				<li class='mode js-category'>
 					<a href="#" {%
@@ -22,7 +31,7 @@
 						class = "menu_selected"
 					{% endif %}
 					>
-					 MODE
+					 Mode
 					  </a>
 					<ul class="submenu">
 						<li>
@@ -57,21 +66,21 @@
 					  {% if menu is same as ("high-tech") %}
 									class = "menu_selected"
 					 {% endif %}
-					>HIGH-TECH</a>
+					>High-tech</a>
 				</li>
 				<li class="mode">
 					<a href="{{ path('shop',{'type':'Maison','id':-1})}}" 
 					 {% if menu is same as ("Maison") %}
 									class = "menu_selected"
 					{% endif %}
-					>MAISON</a>
+					>Maison</a>
 				</li>
 				<li class="mode">
 					<a href="{{ path('shop',{'type':'services','id':-1})}}"
 					 {% if menu is same as ("services") %}
 									class = "menu_selected"
 					{% endif %}
-					>SERVICES</a>
+					>Services</a>
 				</li>
 
 				<li class='ConnecterMembre'></li>

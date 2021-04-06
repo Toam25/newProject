@@ -1,0 +1,41 @@
+{% if users['isComment'] %}
+		<div id="review-form">
+			<form id="{{ blog.id }}" class="review-form-blog review-form edit-review-form">
+				<input name="id-vote" value="{{users['id']}}" type="hidden"/>
+				<div class="input-rating">
+					<span>Votre satisfaction :
+					</span>
+					<br>
+					<div class="myvoting">
+						{{my_vote_twig(users['value'], true)}}
+					</div>
+					    <textarea class="input comment" placeholder="Commentaire">{{users['comment']}}</textarea>					
+				</div>
+					<button class="js-delete-vote secondary-btn" data-id="{{users['id']}}">Supprimer</button>
+					<button class="primary-btn btn-submit">Enregistrer</button>
+			</form>
+
+		</div>
+{% elseif app.user %}
+	
+		<div id="review-form">
+			<form id="{{ blog.id }}" class="review-form-blog review-form">
+				<div class="input-rating">
+					<span>Votre satisfaction :
+					</span>
+					<br>
+					<div class="stars">
+						<input id="star5" name="rating" value="5" type="radio"><label for="star5"></label>
+						<input id="star4" name="rating" value="4" type="radio"><label for="star4"></label>
+						<input id="star3" name="rating" value="3" type="radio"><label for="star3"></label>
+						<input id="star2" name="rating" value="2" type="radio"><label for="star2"></label>
+						<input id="star1" name="rating" value="1" type="radio"><label for="star1"></label>
+					</div>
+					<textarea class="input comment" placeholder="Commentaire" required></textarea>
+				</div>
+				<button class="primary-btn btn-submit">Enregistrer</button>
+			</form>
+		</div>
+ {% else %}
+    <button class="btn btn-success">Connectez vous pour donner un avis</button>
+{% endif %}

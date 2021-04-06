@@ -1,6 +1,6 @@
 {% if users['isComment'] %}
 		<div id="review-form">
-			<form id="{{ article.id }}" class="review-form edit-review-form">
+			<form id="{{ article.id }}" class="review-form review-form-article edit-review-form">
 				<input name="id-vote" value="{{users['id']}}" type="hidden"/>
 				<div class="input-rating">
 					<span>Votre satisfaction :
@@ -19,7 +19,7 @@
 {% elseif app.user %}
 	
 		<div id="review-form">
-			<form id="{{ article.id }}" class="review-form">
+			<form id="{{ article.id }}" class="review-form review-form-article">
 				<div class="input-rating">
 					<span>Votre satisfaction :
 					</span>

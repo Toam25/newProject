@@ -1,0 +1,9 @@
+<div>
+{% if "ROLE_SUPER_ADMIN" in app.user.roles %}
+     Boutique : {{blog.boutique.name}} / category : {{blog.category}} / <button class="btn btn-success" data-id="{{ blog.id}}">Approuver</button >
+{% endif %}
+</div>
+<div style="background-color: white;padding: 5px;margin: 10px 0px;">
+    {{ blog.description|raw}}
+</div>
+

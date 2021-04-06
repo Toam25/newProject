@@ -45,6 +45,11 @@ class Votes
      * @ORM\ManyToOne(targetEntity="App\Entity\Article", inversedBy="votesarticle")
      */
     private $votearticle;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Blog", inversedBy="votes")
+     */
+    private $blog;
     
     public function __construct()
     {
@@ -123,6 +128,18 @@ class Votes
     public function setVotearticle(?Article $votearticle): self
     {
         $this->votearticle = $votearticle;
+
+        return $this;
+    }
+
+    public function getBlog(): ?Blog
+    {
+        return $this->blog;
+    }
+
+    public function setBlog(?Blog $blog): self
+    {
+        $this->blog = $blog;
 
         return $this;
     }

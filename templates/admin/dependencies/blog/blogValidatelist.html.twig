@@ -1,0 +1,22 @@
+<h4>Total : <span class="nbr_blog"> {{ blogs|length }} </span></h4>
+{% for blog in blogs %}
+    <div class="validate_link_a" >
+        <div class="validate_container_title_category_boutique"> 
+           <p><span>Titre : </span>{{ cutWorld(blog.title,50)}}</p>
+           <p><span>category : </span>{{ blog.category}}</p>
+           <p><span>Boutique : </span>{{ blog.boutique.name}}</p>
+        </div>
+        <div class="validate_action_button">
+            <p class="validate_resume_blog">{{ blog.resume}}</p>
+            <div class="validate_button">
+                <a class="btn btn-primary" href="{{ path('previewBlog',{'id': boutique.id,'slug' : blog.link })}}" target="_blank">Voir</a>
+               {% if blog.validate is same as (false)%}
+                 <button class="btn btn-success validate_blog" data-id= "{{blog.id}}" data-validate="APROUVED">Approuver</button>
+                {% endif %}
+                {% if blog.validateInHomePage is same as (false)%}
+                   <button class="btn btn-secondary  validate_blog" data-id= "{{blog.id}}" data-validate="APROUVED_IN_HOME_PAGE">Approuver dans l'accueil</button>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+{% endfor %}

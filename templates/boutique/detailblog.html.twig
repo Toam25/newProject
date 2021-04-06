@@ -1,0 +1,181 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+	{{ boutique.name }}
+{% endblock %}
+{% block meta%}
+	{#<meta property="og:url" content="https://www.toutenone.com{{path('detail',{'id': boutique.id,'slug' : slugify(article.name ) })}}"/>
+	<meta property="og:type" content="website"/>
+	<meta property="og:title" content="{{ boutique.name }}"/>
+	<meta property="og:description" content="{{ boutique.apropos }}"/>
+	<meta property="og:image" content="https://www.toutenone.com{{ asset('images/'~ article.images[0].name )}}"/>
+    #}
+{% endblock %}
+{% block stylesheets %}
+	<link href="https://fonts.googleapis.com/css?family=Montserrat:400,500,700" rel="stylesheet">
+
+	<link
+	href="{{ asset('css/bootstrap3.3.css')}}" rel="stylesheet" type="text/css">
+	<!-- Slick -->
+	<link type="text/css" rel="stylesheet" href="{{asset('css/slick.css') }}"/>
+	<link
+	type="text/css" rel="stylesheet" href="{{asset('css/slick-theme.css') }}"/>
+
+	<!-- nouislider -->
+	<link
+	type="text/css" rel="stylesheet" href="{{asset('css/nouislider.min.css') }}"/>
+
+	<!-- Font Awesome Icon -->
+		<link rel="stylesheet" href="{{ asset('css/font-awesome.min.css') }}">
+	<link
+	rel="icon" type="image/png" href="{{asset('images/'~boutique.logo)}}">
+
+	<!-- Custom stlylesheet -->
+	<link type="text/css" rel="stylesheet" href="{{ asset('css/boutique.css') }}"/>
+	<link type="text/css" rel="stylesheet" href="{{ asset('css/lobibox.css') }}"/>
+	<link type="text/css" rel="stylesheet" href="{{ asset('css/style.css') }}"/>
+	<link type="text/css" rel="stylesheet" href="{{ asset('css/cart.css') }}"/>
+	<link type="text/css" rel="stylesheet" href="{{ asset('css/detail.css') }}"/>
+	<link
+	type="text/css" rel="stylesheet" href="{{ asset('css/connexion.css') }}"/>
+	{# <link type="text/css" rel="stylesheet" href="{{ asset('css/index.css') }}"/> #}
+	
+
+{% endblock %}
+{% block body %}
+	{% include "boutique/dependancies/header.html.twig" %}
+    
+   <div class="container">
+    <div class ="row">
+       <div class="col-md-8">
+       <ul class="breadcrumb-tree">
+            <li><a href="{{path('index')}}">Accueil</a></li>/
+            <li><a href="{{path('shop',{'type': boutique.type,'id': boutique.id })}}">{{boutique.name}}</a></li> /
+            <li><a href="#">{{blog.category}}</a></li>/
+            <li class="active">{{ cutWorld(blog.title,50) }}</li>
+        </ul>
+         <div class="" >
+            {{ blog.description|raw }}
+
+            <hr/>
+           <div class="rating_review_blog">
+              
+               {% include "boutique/dependancies/_rating_blog.html.twig" %}
+               {% include "boutique/dependancies/_add_review_blog.html.twig" %}
+           </div>
+            {% include "boutique/dependancies/_list_comment_review_blog.html.twig" %}
+
+          </div>
+       </div>
+       <div class="col-md-4">
+         <div class="astuce_blog" >
+            <h1>Astuce recente</h1>
+            {% for astuce in astuces %}
+            <div class="contaier_astuce">
+                <div class="container_image_astuce">
+                   <img src="/images/images_default/default_logo.png">
+                </div>
+                <div>
+                  <p><span class="title_astuce"> {{ cutWorld(astuce.title,50)}} </span> {{ cutWorld(astuce.resume, 100)}} </p>
+                </div>
+            </div>
+            {% endfor %}
+         </div>
+         <div class="astuce_blog">
+            <h1>Les plus lus</h1>
+            <hr/>
+            
+              {% for view in views %}
+                  <a href="{{ path('showBlog',{'id': view.id, 'slug': view.link})}}" class="view_on_title">
+                        <p>{{ cutWorld(view.title,40)}}</p><span class="fa fa-arrow-circle-right"></span>
+                  </a>
+                  <hr/>
+              {% endfor %}
+              
+         </div>
+         <div class="astuce_blog">
+            <h1>Aricle les plus partagé</h1>
+            {% for share in shares %}
+                  <a href="{{ path('showBlog',{'id': share.id, 'slug': share.link})}}" class="view_on_title">
+                        <p>{{ cutWorld(share.title,40)}}</p><span class="fa fa-arrow-circle-right"></span>
+                  </a>
+                  <hr/>
+              {% endfor %}
+         </div>
+         <div class="astuce_blog">
+            <h1>Thématique</h1>
+            <div class="container_thematique">
+               <div class="container_detail_thematique">
+                 <div class="container_image_thematique">
+                  <img src="/images/images_default/default_logo.png" class="image_thematique"/>
+                 </div>
+                  <p class="name_thematique">Actualités</p>
+               </div>
+               
+               <div class="container_detail_thematique">
+                  <div class="container_image_thematique">
+                     <img src="/images/images_default/default_logo.png" class="image_thematique"/>
+                 </div>
+                  <p class="name_thematique">Atouts</p>
+               </div>
+
+               <div class="container_detail_thematique">
+                 <div class="container_image_thematique">
+                     <img src="/images/images_default/default_logo.png" class="image_thematique"/>
+                 </div>
+                  <p class="name_thematique">Astuces</p>
+               </div>
+
+               <div class="container_detail_thematique">
+                  <div class="container_image_thematique">
+                    <img src="/images/images_default/default_logo.png" class="image_thematique"/>
+                 </div>
+                 <div class="container_title_thematique">
+                      <p class="name_thematique">Conseils</p>
+                 </div>
+               </div>
+
+               <div class="container_detail_thematique">
+                  <div class="container_image_thematique">
+                         <img src="/images/images_default/default_logo.png" class="image_thematique"/>
+                  </div>
+                  <p class="name_thematique">Tests</p>
+               </div>
+
+               <div class="container_detail_thematique">
+                 <div class="container_image_thematique">
+                        <img src="/images/images_default/default_logo.png" class="image_thematique"/>
+                 </div>
+                  <p class="name_thematique">Tutoriel</p>
+               </div>
+
+            </div>
+         </div>
+         <div class="astuce_blog">
+            <h1>Sontage du moment</h1>
+
+            {{ dump(valuevote)}}
+         </div>
+       </div>
+    </div>
+    </div>
+    
+
+
+	{% if not app.user%}
+		{% include 'boutique/dependancies/connexion.html.twig'%}
+	{% endif %}
+	    {% include "boutique/dependancies/footer.html.twig" %}
+{% endblock %}
+
+{% block javascripts %}
+	<script src="{{ asset('js/slick.min.js') }}"></script>
+	<script src="{{ asset('toastr/toastr.min.js') }}"></script>
+	<script src="{{ asset('js/lobibox.js') }}"></script>
+	<script src="{{ asset('js/connexion.js') }}"></script>
+	<script src="{{ asset('js/detail.js') }}"></script>
+	<script src=" {{ asset('js/nouislider.min.js') }}"></script>
+	<script src="{{ asset('js/jquery.zoom.min.js') }}"></script>
+	<script src="{{ asset('js/index.js') }}"></script>
+	<script src="{{ asset('js/vote.js') }}"></script>
+{% endblock %}

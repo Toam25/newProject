@@ -3,11 +3,13 @@
 namespace App\Controller;
 
 use App\Entity\Article;
+use App\Entity\Blog;
 use App\Entity\Boutique;
 use App\Entity\EsArticle;
 use App\Entity\Header;
 use App\Entity\Images;
 use App\Entity\Menu;
+use App\Entity\Notification;
 use App\Entity\User;
 use App\Entity\UserCondition;
 use App\Entity\UserVote;
@@ -29,8 +31,11 @@ use App\Repository\VoteRepository;
 use App\Service\ArticlePerShopService;
 use App\Service\CategoryOptionService;
 use App\Service\InsertFileServices;
+use App\Service\NotificationService;
 use App\Service\TypeOptionMenuService;
 use App\Service\UtilsService;
+use Doctrine\Common\Collections\Expr\Value;
+use ProxyManager\Factory\RemoteObject\Adapter\JsonRpc;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\BrowserKit\Response as BrowserKitResponse;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -44,7 +49,102 @@ use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
  * @Route("/api", name="api")
  */
 class APIController extends AbstractController
-{
+{    
+
+    /**
+     * @Route("/{type}/update/{value}/{id}" , name="showBlogArticle", methods={"POST"})
+     */
+     
+    public function showBlogArticle(string $type, $value,Boutique $boutique){
+        $value = $value==1 ? true : false;
+        if($type=="articleShow"){
+          $boutique->setShowArticle($value);
+        }
+        elseif($type=="blogShow"){
+            $boutique->setShowBlog($value);
+        }
+        $em = $this->getDoctrine()->getManager();
+        $em->flush();
+        
+        return new JsonResponse(["status"=>"success"], Response::HTTP_OK);
+    }
+    /**
+     * @Route("/v1/saveblog", name="saveBlog", methods="POST")
+     */
+
+    public function saveBlog(Request $request,InsertFileServices $insertFileServices, BoutiqueRepository $boutiqueRepository,UtilsService $utilsService){
+        
+
+        $boutique = $boutiqueRepository->findOneBy(['user'=>$this->getUser()->getId()]);
+
+        $blogData=$request->request->get('blog');
+
+       if($boutique){
+            $blog= new Blog();
+            $blog->setTitle($blogData['title'])
+                ->setStatus($request->request->get('status'))
+                ->setResume($blogData['resume'])
+                ->setKeywords($blogData['keywords'])
+                ->setCategory($blogData['category'])
+                ->setMetaDescription($blogData['metaDescription'])
+                ->setLink($utilsService->getSlug($blogData['link']))
+                ->setDescription($blogData['description'])
+                ->setUser($this->getUser())
+                ->setBoutique($boutique);
+          if($request->files->get('image_blog')){
+                    $file= $insertFileServices->insertFile($request->files->get('image_blog'));
+                    $blog->setImage($file);
+            }
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($blog);
+            $em->flush();
+           /* 
+            
+           */
+            return new JsonResponse(['status'=>"success",'id'=>$blog->getId()]);
+            
+        }else{
+            return new JsonResponse(['status'=>"error"],Response::HTTP_UNAUTHORIZED);
+        }
+        
+    }
+        /**
+     * @Route("/v1/edit/blog/{id}", name="editBlog", methods="POST")
+     */
+
+    public function editBlog(Request $request,Blog $blog,InsertFileServices $insertFileServices, BoutiqueRepository $boutiqueRepository,UtilsService $utilsService){
+        
+
+        $boutique = $boutiqueRepository->findOneBy(['user'=>$this->getUser()->getId()]);
+
+        $blogData=$request->request->get('blog');
+
+       if(in_array("ROLE_SUPER_ADMIN", $this->getUser()->getRoles()) or $boutique and $blog->getBoutique()== $boutique){
+            $blog->setTitle($blogData['title'])
+                ->setStatus($request->request->get('status'))
+                ->setResume($blogData['resume'])
+                ->setKeywords($blogData['keywords'])
+                ->setCategory($blogData['category'])
+                ->setMetaDescription($blogData['metaDescription'])
+                ->setLink($utilsService->getSlug($blogData['link']))
+                ->setDescription($blogData['description'])
+                ->setUser($this->getUser())
+                ->setBoutique($boutique);
+            
+            if($request->files->get('image_blog')){
+                  $file= $insertFileServices->insertFile($request->files->get('image_blog'));
+                  $blog->setImage($file);
+            }
+            $em= $this->getDoctrine()->getManager();
+            $em->persist($blog);
+            $em->flush();
+            return new JsonResponse(['status'=>"success",'id'=>$blog->getId()]);
+            
+        }else{
+            return new JsonResponse(['status'=>"error"],Response::HTTP_UNAUTHORIZED);
+        }
+        
+    }
     /**
      * @Route("/es_article/get/{sous_category}", name="get_es_article")
      */
@@ -571,4 +671,11 @@ class APIController extends AbstractController
             return new JsonResponse(['status'=>"error"], Response::HTTP_OK);
         
     }
+    /**
+     * @Route("/get/notification", name="getNotifications")
+     */
+
+     public function getNotification(NotificationService $notificationService){
+        return new JsonResponse($notificationService->getMessageNotification(),Response::HTTP_OK);
+     }
 }

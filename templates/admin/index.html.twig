@@ -104,12 +104,27 @@
          {% elseif pages == "detail_article"%}
             {% include 'admin/dependencies/detail_article.html.twig' %}
 
-          {% elseif pages == "articleinshop"%}
+        {% elseif pages == "articleinshop"%}
             {% include 'admin/dependencies/articleinshop.html.twig' %}
             {% include 'admin/dependencies/add_article_modal.html.twig' %}
+
+        {# add Blog #}
+          {% elseif pages == "blogAdd"%}
+            {% include 'admin/dependencies/blogAdd.html.twig' %}
+        {# list Blog#}
+        {% elseif pages == "bloglist"%}
+            {% include 'admin/dependencies/listBlog.html.twig' %}
+        
+        {# edit Blog#}
+        {% elseif pages == "blogEdit"%}
+            {% include 'admin/dependencies/editBlog.html.twig' %}
+        {# preview Blog#}
+        {% elseif pages == "blogpreview"%}
+            {% include 'admin/dependencies/blogpreview.html.twig' %}
+        {# validate list Blog#}
+        {% elseif pages == "blogValidatelist"%}
+            {% include 'admin/dependencies/blog/blogValidatelist.html.twig' %}
             
-
-
          {% elseif pages == "list_socialNetwork"%}
             {% include 'admin/dependencies/list_socialNetwork.html.twig' with { 'list_socialNetworks' : list_socialNetworks } only %}
          
