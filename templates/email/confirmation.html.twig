@@ -1,2 +1,2 @@
-
-<a href="{{ absolute_url(path('confirmationUser',{'token': token}))}}">Confirmé votre compte içi</a>
+Bonjour <strong>{{ user.name}} </strong>,
+<a href="{{ absolute_url(path('confirmationUser',{'token': user.confimation}))}}">Confirmé votre compte içi</a>

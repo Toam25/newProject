@@ -56,12 +56,12 @@ class SecurityController extends AbstractController
                 */
                 
                 $email = (new TemplatedEmail())
-                      ->from('info@toutenone.com')
+                      ->from('toutenone@toutenone.com')
                       ->to($user->getEmail())
                       ->subject('Merçi d\'être parmi nous')
                       ->htmlTemplate('email/confirmation.html.twig')
                       ->context([
-                            'token'=>$user->getConfimation()
+                            'user'=>$user
                       ])
                       ;
                 try {
@@ -129,4 +129,23 @@ class SecurityController extends AbstractController
                   'boutique'=> $boutiqueRepository->findOneBoutiqueByUserPerRole('ROLE_SUPER_ADMIN')
             ]);
     }
+
+    // /**
+    //  *@Route("testemail/", name="testemail")
+    //  */
+    // public function testeMail(MailerInterface $mailern, UserRepository $userRepository){
+    //     // $email = (new TemplatedEmail())
+    //     // ->from('toutenone@toutenone.com')
+    //     // ->to("toarymanana@gmail.com")
+    //     // ->subject('Merçi d\'être parmi nous')
+    //     // ->htmlTemplate('email/confirmation.html.twig')
+    //     // ->context([
+    //     //       'token'=>"mkjmljmlj"
+    //     // ]);
+    //     // $mailer->send($email);
+
+    //     return  $this->render('email/confirmation.html.twig',[
+    //         'user'=>$userRepository->findOneBy(['confimation'=>"398b3d56503f53dd781709fcee54c100"])
+    //     ]);
+    // }
 }
