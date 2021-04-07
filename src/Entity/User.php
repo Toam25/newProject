@@ -106,6 +106,11 @@ class User implements UserInterface
      */
     private $notifications;
 
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $confimation;
+
 
     public function __construct()
     {
@@ -504,6 +509,18 @@ class User implements UserInterface
              $this->notifications->removeElement($notification);
              $notification->removeToUser($this);
          }
+
+         return $this;
+     }
+
+     public function getConfimation(): ?string
+     {
+         return $this->confimation;
+     }
+
+     public function setConfimation(?string $confimation): self
+     {
+         $this->confimation = $confimation;
 
          return $this;
      }
