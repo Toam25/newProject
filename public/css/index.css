@@ -1,5 +1,5 @@
 #image_header {
-  height: 150px;
+ /* height: 150px;*/
 }
 #image_header img {
   width: 100%;
@@ -1447,9 +1447,10 @@ nav {
   .send_ajax {
     font-size: 17px;
   }
-  #image_header {
+ /* #image_header {
     height: 90px !important;
     }
+*/
   .send_ajax img {
     height: 33px;
   }
