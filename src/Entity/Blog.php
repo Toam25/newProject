@@ -115,6 +115,8 @@ class Blog
         $this->validate=false;
         $this->shareNbr=0;
         $this->votes = new ArrayCollection();
+        $this->validate=false;
+        $this->validateInHomePage=false;
     }
     public function getId(): ?int
     {

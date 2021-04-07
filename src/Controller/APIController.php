@@ -35,6 +35,8 @@ use App\Service\NotificationService;
 use App\Service\TypeOptionMenuService;
 use App\Service\UtilsService;
 use Doctrine\Common\Collections\Expr\Value;
+use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityManagerInterface;
 use ProxyManager\Factory\RemoteObject\Adapter\JsonRpc;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\BrowserKit\Response as BrowserKitResponse;
@@ -72,13 +74,13 @@ class APIController extends AbstractController
      * @Route("/v1/saveblog", name="saveBlog", methods="POST")
      */
 
-    public function saveBlog(Request $request,InsertFileServices $insertFileServices, BoutiqueRepository $boutiqueRepository,UtilsService $utilsService){
+    public function saveBlog(Request $request,InsertFileServices $insertFileServices,EntityManagerInterface $em, BoutiqueRepository $boutiqueRepository,UtilsService $utilsService){
         
 
         $boutique = $boutiqueRepository->findOneBy(['user'=>$this->getUser()->getId()]);
 
         $blogData=$request->request->get('blog');
-
+      
        if($boutique){
             $blog= new Blog();
             $blog->setTitle($blogData['title'])
@@ -90,17 +92,16 @@ class APIController extends AbstractController
                 ->setLink($utilsService->getSlug($blogData['link']))
                 ->setDescription($blogData['description'])
                 ->setUser($this->getUser())
-                ->setBoutique($boutique);
+                ->setBoutique($boutique)
+                ->setImages("null");;
           if($request->files->get('image_blog')){
                     $file= $insertFileServices->insertFile($request->files->get('image_blog'));
                     $blog->setImage($file);
             }
-            $em = $this->getDoctrine()->getManager();
+           
             $em->persist($blog);
             $em->flush();
-           /* 
-            
-           */
+           
             return new JsonResponse(['status'=>"success",'id'=>$blog->getId()]);
             
         }else{
