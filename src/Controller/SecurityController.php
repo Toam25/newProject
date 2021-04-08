@@ -130,22 +130,23 @@ class SecurityController extends AbstractController
             ]);
     }
 
-    // /**
-    //  *@Route("testemail/", name="testemail")
-    //  */
-    // public function testeMail(MailerInterface $mailern, UserRepository $userRepository){
-    //     // $email = (new TemplatedEmail())
-    //     // ->from('toutenone@toutenone.com')
-    //     // ->to("toarymanana@gmail.com")
-    //     // ->subject('Merçi d\'être parmi nous')
-    //     // ->htmlTemplate('email/confirmation.html.twig')
-    //     // ->context([
-    //     //       'token'=>"mkjmljmlj"
-    //     // ]);
-    //     // $mailer->send($email);
+   //  /**
+  //    *@Route("/testemail", name="testemail")
+  //    */
+  //   public function testeMail(MailerInterface $mailer, UserRepository //$userRepository){
+    //     $user=$userRepository->findOneBy(['id'=>1]);
+  //       $user->setConfimation('amkjmlaj');
+  //      $email = (new TemplatedEmail())
+ //  ->from('toutenone@toutenone.com')
+  // ->to("toarymanana@gmail.com")
+  //   ->subject('Merçi d\'être parmi nous')
+    // ->htmlTemplate('email/confirmation.html.twig')
+  //   ->context([
+  //       "user"=>$user
+  //   ]);
+   // $mailer->send($email);
 
-    //     return  $this->render('email/confirmation.html.twig',[
-    //         'user'=>$userRepository->findOneBy(['confimation'=>"398b3d56503f53dd781709fcee54c100"])
-    //     ]);
-    // }
+  //   return  new Response('Ok');
+        
+   // }
 }
