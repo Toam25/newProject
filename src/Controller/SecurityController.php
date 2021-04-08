@@ -67,7 +67,7 @@ class SecurityController extends AbstractController
                 try {
                         $mailer->send($email);
                 } catch (TransportExceptionInterface $e) {
-                     return new JsonResponse(['status' => 'ko', 'msg' => "Ereur inconue"], Response::HTTP_UNAUTHORIZED);
+                     return new JsonResponse("Erreur de connexion au serveur", Response::HTTP_UNAUTHORIZED);
                     
                 }
 
@@ -75,11 +75,11 @@ class SecurityController extends AbstractController
                 $manager->flush();
             } else {
 
-                return new JsonResponse(['status' => 'ko', 'msg' => 'Adresse mail existe'], Response::HTTP_UNAUTHORIZED);
+                return new JsonResponse('Adresse mail existe', Response::HTTP_UNAUTHORIZED);
                 
             }
 
-            return new JsonResponse(['status' => 'ok', 'msg' => 'Enregistrer avec succée'],200);
+            return new JsonResponse('Enregistrer avec succée',200);
         }
 
         return $this->render('security/inscription.html.twig', [

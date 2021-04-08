@@ -1,51 +1,120 @@
-body {
+#container_message {
+    position: absolute;
+    height: 116%;
+    background: #007cff;
+    width: 116%;
+    border-radius: 50%;
+    z-index: -1;
+    transition: 500ms;
+    transform: translate(-200px,-200px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.message {
+    color: white;
+    font-size: 2rem;
+    text-align: center;
+    font-weight: bold;
+}
+.container_btn {
+    display: flex;
+    justify-content: space-evenly;
+    transform: scale(0);
+}
+.container_btn > a {
+    color: #0e0e4a;
+    font-size: 15px;
+    font-weight: bold;
+}
+body{
+    overflow: hidden;
+}
+.container_inscription {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+.conatiner_btn_submit {
+    display: flex;
+    justify-content: end;
+}
+input::placeholder {
+    color: #ffffffc2 !important;
+}
+#bouton_inscr {
+    color: white;
+    padding: 7px 16px;
+    background: #0070ff;
+    border: none;
+    box-shadow: 0 0 5px;
+    border-radius: 0 10px;
+    font-weight: bold;
+    width: 117px;
+}
+input, select {
+    border-radius: 8px !important;
+    background: transparent !important;
+    border: none !important;
+    border-bottom: 1px solid white !important;
+    color: white !important;
+    margin-top: 5px;
+    margin-bottom: 10px;
+}
+.accept:after{
+    content:""
+}
+.style_inscription {
 
+    box-shadow: 0 0 5px;
+    border-radius: 30px 0 17px 0;
+    background: linear-gradient(rgb(112, 67, 155),rgb(3, 157, 236));
+    color: white;
+    font-size: 13px;
+    padding: 22px 22px 0px 22px;
+    max-width: 358px;
 
-
-    padding-top: 50px;
-    
-    
-    
-    }
-    .starter-template {
+}
+.starter-template {
     padding: 40px 15px;
     text-align: center;
     }
-    img{
+ img{
         vertical-align: middle;
       border-style: none;
         width: 100px;
         height:50px;	
     }
-    .accept {
+.accept {
         display: inline-block;
         width: 19px;
         height: 10px;
     }
-    p{
+p{
         display: inline-block;
     }
-    .achat{
+.achat{
      color:grey;
     }
-    .affiche_filleuil_parrainage{
+.affiche_filleuil_parrainage{
         border: 1px solid grey;
     }
-    #connexion{
+#connexion{
         margin-top: 0px;
         font-size:60%;
     }
-    #marge_index{
+#marge_index{
         margin-left: 670px;
     }
-    .margedec{
+.margedec{
             margin-left: 300px;
             display:inline;
     }
-    .btn{
+.btn{
         display: inline-block;
     }
-    .backgroundimage{
+.backgroundimage{
        background: url(../images/sar.jpg) no-repeat;
        width: 70px;
        height: 70px;
@@ -66,401 +135,98 @@ body {
        font-size:90%;
        margin-left: 10px;
     }
-    
-    
-    
-    
-    
-    
-    
-    .backgroundimage_connexion
-    
-    
-    
-    {
-    
-    
-    
+     .backgroundimage_connexion{
        background: url(../images/inother.jpg) no-repeat;
-    
-    
-    
        width: 300px;
-    
-    
-    
        height: 100px;
-    
-    
-    
        margin-left: 75px;
-    
-    
-    
-    }
-    
-    
-    
-    
-    
-    
-    
-    .backgroundimage_header
-    
-    
-    
-    {
-    
-    
-    
+ } 
+.backgroundimage_header{
        background: url(../images/welcome.jpg) no-repeat;
-    
-    
-    
        width: 1000px;
-    
-    
-    
        height: 350px;
-    
-    
-    
-       margin-left: 300px;
-    
-    
-    
-    
-    
-    
-    
-    }
-    
-    
-    
-    
-    
-    
-    
-    .backgroundimage_reduit
-    
-    
-    
-    {
-    
-    
-    
+       margin-left: 300px; 
+    }  
+.backgroundimage_reduit {
        background: url(../images/inother_réduit.jpg) no-repeat;
-    
-    
-    
        width: 400px;
-    
-    
-    
        height: 155px;
-    
-    
-    
        margin-left: 75px
-    
-    
-    
-    }
-    
-    
-    
-    
-    
-    
-    
-    .backgroundimage_tous
-    
-    
-    
-    {
-    
-    
-    
+    } 
+.backgroundimage_tous{
         background: url(../images/inother.jpg) no-repeat;
-    
-    
-    
         width: 100px;
+        height: 100px;
     
-    
-    
-           height: 100px
-    
-    
-    
-    }
-    
-    
-    
-    
-    
-    
-    
-    .backgroundimage_vueentreenom
-    
-    
-    
-    {
-    
-    
-    
-        background: url(../images/inother_réduit.jpg) no-repeat;
-    
-    
-    
-        width: 100px;
-    
-    
-    
-           height: 100px
-    
-    
-    
-    }
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    .Benefic
-    
-    
-    
-    {
-    
-    
-    
+}
+ .backgroundimage_vueentreenom{
+    background: url(../images/inother_réduit.jpg) no-repeat;
+     width: 100px;
+     height: 100px
+     
+}   
+.Benefic{
         margin-left: 775px;
     
-    
-    
-    }
-    
-    
-    
-    
-    
-    
-    
-    #couleur_yellow
-    
-    
-    
-    {
-    
-    
-    
+ }
+ #couleur_yellow {
         color:white;
-    
-    
-    
-    }
-    #couleur_red{
+}
+#couleur_red{
         color:red;
         border-color: grey;
     }
-    
-    #couleur_red_dec
-    
-    
-    
-    {
-    
-    
-    
+ #couleur_red_dec{
         color:red;
-    
-    
-    
-        border-color: red;
-    
-    
-    
-    }
-    
-    
-    
-    
-    
-    
-    
-    .divcentre
-    
-    
-    
-     {
-    
-    
-    
+       border-color: red;
+}
+.divcentre{
         margin-left: auto;
-    
-    
-    
         margin-right: auto;
-    
-    
-    
-        width: 6em
-    
-    
-    
+        width: 6em;
     }
-    
-    
-    
-    .email
-    
-    
-    
-    {
-    
-    
-    
+.email {
       width: 200px;
-    
-    
-    
-      height:200px;
-    
-    
-    
+      height:200px; 
     }
-    
-    
-    
-    .error-message
-    
-    
-    
-    {
-    
-    
-    
+.error-message {
         display: none;
-    
-    
-    
         color:red;
     
-    
-    
-    }
-    
-    
-    
-    
-    
-    
-    
-    .en-tete_tableau_parrain
-    
-    
-    
-    {
-    
-    
-    
+    }   
+.en-tete_tableau_parrain{
         font-size:60%;
-    
-    
-    
         border: 1px solid white;
-    
-    
-    
-        background-color:#dc3539;
-    
-    
-    
-        color:white;
-    
-    
-    
-    }
-    
-    
-    
-    
-    
-    
-    
-    .griser_lien
-    
-    
-    
-    {
-    
-    
-    
+    background-color:#dc3539;
+     color:white;
+ }   
+.griser_lien {
       pointer-events: none;
-    
-    
-    
       cursor: default;
-    
-    
-    
-    }
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    .navbar {
+}
+ .navbar {
       position: relative;
       min-height: 50px;
       margin-bottom: 20px;
       border: 1px solid transparent;
-    
-    
-    
-    }
-    
-    
-    
-    
-    
-    
-    
-    .navbar-default {
-    
-    
-    
+     }
+ .navbar-default {
+
       background-color: #f8f8f8;
-    
-    
-    
       border-color: #e7e7e7;
     }
-    .police{
+.police{
             font-size:60%; 
         }
-    .police2{
+.police2{
             font-size:50%;
     
         }
-    .r{
+.r{
         height:200px;
         overflow:scroll;
     }
-    .scroll{
+.scroll{
         margin-left: 25px;
       width:90%;
       height:500px;
@@ -470,17 +236,16 @@ body {
       display: inline-block;
     
     }
-    input:required{
+input:required{
         box-shadow: none;
     }
-    .ajax{
+.ajax{
         display:none;
         width: 33px;
         height: 26px;
         margin-left: 4px;
     }
-    
-    @media (max-width: 1000px) {
+@media (max-width: 1000px) {
         
          .backgroundimage_connexion
          {

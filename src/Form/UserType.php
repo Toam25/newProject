@@ -20,37 +20,41 @@ class UserType extends AbstractType
         $builder
             ->add('email',EmailType::class,[
                 'attr'=>[
-                    'class'=>'form-control'
+                    'class'=>'form-control',
+                    'placeholder'=>'Adresse mail'
                 ]
             ])
             ->add('password', PasswordType::class,[
                 'attr'=>[
-                    'class'=>'form-control'
+                    'class'=>'form-control',
+                    'placeholder'=>"Mot de passe"
                 ]
             ])
             ->add('name',TextType::class,[
                 'attr'=>[
-                    'class'=>'form-control'
+                    'class'=>'form-control',
+                    'placeholder'=>"Nom"
                 ]
             ])
             ->add('firstname',TextType::class,[
                 'attr'=>[
-                    'class'=>'form-control'
+                    'class'=>'form-control',
+                    'placeholder'=>"Prenom"
                 ]
             ])
-            ->add('birthday',DateType::class,[
-                'years'=>$this->mydate(),
-                'format'=>'dd-MMM-yyyy',
-                'attr'=>[
-                        'class'=>'form-control'
-                    ]
+            // ->add('birthday',DateType::class,[
+            //     'years'=>$this->mydate(),
+            //     'format'=>'dd-MMM-yyyy',
+            //     'attr'=>[
+            //             'class'=>'form-control'
+            //         ]
                 
-                ])
+            //     ])
             ->add('genre', ChoiceType::class,[
                 'choices'=>[
                     'Homme'=>'homme',
-                    'Femme'=>'femme',
-                    'Autre'=>'autre'
+                    'Femme'=>'femme'
+                    
                 ],
                     'attr'=>[
                         'class'=>'form-control'
