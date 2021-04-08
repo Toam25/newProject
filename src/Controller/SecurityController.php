@@ -20,13 +20,14 @@ use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
+use Symfony\Contracts\HttpClient\HttpClientInterface;
 
 class SecurityController extends AbstractController
 {
     /**
      * @Route("/inscription", name="registration")
      */
-    public function registration(HttpFoundationRequest $request,MailerInterface $mailer, UserRepository $userRepository, EntityManagerInterface $manager, UserPasswordEncoderInterface $encoder)
+    public function registration(HttpFoundationRequest $request,MailerInterface $mailer,HttpClientInterface $httpClient, UserRepository $userRepository, EntityManagerInterface $manager, UserPasswordEncoderInterface $encoder)
     {
         $user = new User();
         $boutique = new Boutique();
@@ -43,7 +44,6 @@ class SecurityController extends AbstractController
             $token = $request->request->get('h-captcha-response');
             $data = ['secret' => $SECRET_KEY,'response'=> $token] ; 
 
-            $httpClient = HttpClient::create();
             $response= $httpClient->request('POST',$VERIFY_URL,$data);
             $response_json = json_encode($response);
             $success=$response_json['success'];
