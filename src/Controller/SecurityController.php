@@ -11,6 +11,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use phpDocumentor\Reflection\Types\Null_;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpClient\HttpClient;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request as HttpFoundationRequest;
 use Symfony\Component\HttpFoundation\Response;
@@ -35,7 +36,19 @@ class SecurityController extends AbstractController
         $form = $this->createForm(UserType::class, $user);
         $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
+        if ($request->isXmlHttpRequest()) {
+
+            $SECRET_KEY="0x026EF02b5283Bf6656BFb0D67E06fF70a610395a";
+            $VERIFY_URL ="https://hcaptcha.com/siteverify";
+            $token = $request->request->get('h-captcha-response');
+            $data = ['secret' => $SECRET_KEY,'response'=> $token] ; 
+
+            $httpClient = HttpClient::create();
+            $response= $httpClient->request('POST',$VERIFY_URL,$data);
+            $response_json = json_encode($response);
+            $success=$response_json['success'];
+            
+        if($success){
             $allUsers = $userRepository->findOneBy(['email' => $user->getEmail()]);
             if ($allUsers == NULL) {
                 $hash = $encoder->encodePassword($user, $user->getPassword());
@@ -78,8 +91,10 @@ class SecurityController extends AbstractController
                 return new JsonResponse('Adresse mail existe', Response::HTTP_UNAUTHORIZED);
                 
             }
-
-            return new JsonResponse('Enregistrer avec succée',200);
+           
+            return new JsonResponse($user->getEmail(),200);
+          }
+          return new JsonResponse('Erreur d\'enregistrement',301);
         }
 
         return $this->render('security/inscription.html.twig', [

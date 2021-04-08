@@ -62,11 +62,11 @@ class UserType extends AbstractType
                 
             ]
             )
-           // ->add('captcha', HCaptchaType::class, [
-               // 'label' => 'Anti-bot test',
+           ->add('captcha', HCaptchaType::class, [
+               'label' => 'Anti-bot test',
                 // optionally: use a different site key than the default one:
-                //'hcaptcha_site_key' => 'd5cadd80-035b-44e3-ae5c-15a844f83877',
-            //])
+                'hcaptcha_site_key' => 'd5cadd80-035b-44e3-ae5c-15a844f83877',
+            ])
         ;
     }
 
