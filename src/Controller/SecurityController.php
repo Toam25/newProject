@@ -41,14 +41,36 @@ class SecurityController extends AbstractController
 
             $SECRET_KEY="0x026EF02b5283Bf6656BFb0D67E06fF70a610395a";
             $VERIFY_URL ="https://hcaptcha.com/siteverify";
-            $token = $request->request->get('h-captcha-response');
-            $data = ['secret' => $SECRET_KEY,'response'=> $token] ; 
-
-            $response= $httpClient->request('POST',$VERIFY_URL,$data);
-            $response_json = json_encode($response);
-            $success=$response_json['success'];
+            $htoken = $request->request->get('h-captcha-response');
             
-        if($success){
+            $data = [
+                'secret' => $SECRET_KEY,
+                'response'=> $htoken
+                ] ; 
+            
+            $curlconfig = [
+                CURLOPT_URL => $VERIFY_URL,
+                CURLOPT_POST => true,
+                CURLOPT_RETURNTRANSFER => true,
+                CURLOPT_POSTFIELDS => $data,
+                CURLOPT_HEADER => false
+                ];
+            //$response= $httpClient->request('POST',$VERIFY_URL,[
+              //  'query'=>$data
+              //  ]
+          //  );
+          
+          $ch=curl_init();
+          curl_setopt_array($ch,$curlconfig);
+          $response= curl_exec($ch);
+          curl_close($ch);
+          
+          $responseData= json_decode($response);
+           // dd($response);
+           // $response_json = json_encode($response);
+           // $success=$response_json['success'];
+            
+        if($responseData->success){
             $allUsers = $userRepository->findOneBy(['email' => $user->getEmail()]);
             if ($allUsers == NULL) {
                 $hash = $encoder->encodePassword($user, $user->getPassword());

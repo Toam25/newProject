@@ -50,7 +50,8 @@
 				</p>
 				#}
 			</br>
-			{{form_row(forms.captcha)}}
+			{#{{form_row(forms.captcha)}}#}
+			<div class="h-captcha" data-sitekey="975034ea-14b3-4cca-b49c-8f0523bef3d3"></div>
 			<div class="conatiner_btn_submit">
 				<button id="bouton_inscr" type="submit">
 					Enregistrer
@@ -65,6 +66,7 @@
 {% endblock %}
 {% block javascripts %}
 	<script src="{{asset('toastr/toastr.min.js') }} "></script>
+	<script src="https://hcaptcha.com/1/api.js" async defer></script>
 	<script type="text/javascript" src="{{ asset('js/inscription.js') }}"></script>
 	
 {% endblock %}

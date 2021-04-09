@@ -5,8 +5,7 @@ twig:
     exception_controller: null
     globals : 
             name_boutique : '%name_boutique%'
-    form_themes:
-        - '@MeteoConceptHCaptcha/hcaptcha_form.html.twig'
+
     #form_themes : ['bootstrap_4_layout.html.twig']
     #form-themes : 
         #- "@FOSCKEditor/form/ckeditor_widget.html.twig"
