@@ -63,7 +63,7 @@ class BlogRepository extends ServiceEntityRepository
                 ->leftJoin('bl.boutique', 'b')
                 ->andwhere('bl.validate = :validate')
                 ->setParameters([
-                    'validate'=>false
+                    'validate'=>true
                 ])
                 ;
             if($boutique!=null){
