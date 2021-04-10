@@ -84,13 +84,15 @@
          <div class="astuce_blog">
             <h1>Les plus lus</h1>
             <hr/>
-               {% set break = false %}
+               {% set break = 0 %}
               {% for view in views  %}
+                 {% if break < 3  %}
                   <a href="{{ path('showBlog',{'id': view.id, 'slug': view.link})}}" class="view_on_title">
                         <p>{{ cutWorld(view.title,40)}}</p><span class="fa fa-arrow-circle-right"></span>
                   </a>
                   <hr/>
-                  {% set break = true %}
+                  {% endif %}
+                  {% set break = break + 1 %}
               {% endfor %}
               
          </div>
