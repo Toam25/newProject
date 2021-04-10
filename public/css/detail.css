@@ -120,6 +120,7 @@
     display: grid;
     grid-template-columns: 1fr 1fr;
     margin: 25px 0px;
+    align-items: center;
 }
 .container_detail_thematique {
     display: flex;
@@ -170,4 +171,17 @@
     max-width: 100%;
     max-height: 100%;
     border-radius: 50%;
+}
+.container_percent {
+    display: block;
+    background: #bfbfbf94;
+    height: 16px;
+    border-radius: 6px;
+    position: relative;
+    overflow: hidden;
+}
+.percent {
+    position: absolute;
+    height: 100%;
+    background: #D10024;
 }

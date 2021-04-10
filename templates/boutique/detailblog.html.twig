@@ -84,12 +84,13 @@
          <div class="astuce_blog">
             <h1>Les plus lus</h1>
             <hr/>
-            
-              {% for view in views %}
+               {% set break = false %}
+              {% for view in views  %}
                   <a href="{{ path('showBlog',{'id': view.id, 'slug': view.link})}}" class="view_on_title">
                         <p>{{ cutWorld(view.title,40)}}</p><span class="fa fa-arrow-circle-right"></span>
                   </a>
                   <hr/>
+                  {% set break = true %}
               {% endfor %}
               
          </div>
@@ -153,8 +154,19 @@
          </div>
          <div class="astuce_blog">
             <h1>Sontage du moment</h1>
-
-            {{ dump(valuevote)}}
+             <hr>
+             {% for sondage in sondages.blogs %}
+                 <a  href="{{ path('showBlog',{'id' : sondage.id,'slug' :sondage.slug})}}">
+                    ( {{ sondage.total/sondages.total*100}}% ) {{ cutWorld(sondage.title,100)}} ({{sondage.total}})
+                     <div class="container_percent">
+                          <div class="percent" style = "width: {{ sondage.total/sondages.total*100}}%"></div>
+                     </div>
+                 </a>
+                 <hr>
+             {% endfor %}
+             {% if not app.user %}
+                  <p  class="_connexion " style="text-align: center; cursor: pointer">Connecter vous pour voter !</p>
+             {% endif %}
          </div>
        </div>
     </div>

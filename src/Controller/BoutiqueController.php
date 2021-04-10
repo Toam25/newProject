@@ -140,9 +140,13 @@ class BoutiqueController extends AbstractController
         // $allArticle = $articleRepository->findBy(['boutique'=>$boutiqueRepository->findOneBy(['user'=>$this->getUser()])] );
             $votes = $votesRepository->findBy(['blog' => $blog]);
             $astuce= $blogRepository->findBy(['boutique'=>$blog->getBoutique(),"category"=>"Astuces","validate"=>true],["id"=>"DESC"]);
-            $view= $blogRepository->findBy(['boutique'=>$blog->getBoutique(),"validate"=>true],["view"=>"DESC"],4);
+            $view= $blogRepository->findBy(['boutique'=>$blog->getBoutique(),"validate"=>true],["view"=>"DESC"]);
             $share= $blogRepository->findBy(['boutique'=>$blog->getBoutique(),"validate"=>true],["shareNbr"=>"DESC"],5);
             $getNumberVote = $votesService->getNumberTotalVote($votes);
+            
+
+            
+           
         return $this->render('boutique/detailblog.html.twig', [
                 'blog' => $blog,
                 'views'=>$view,
@@ -152,6 +156,7 @@ class BoutiqueController extends AbstractController
                 'votes'=>$votes,
                 'users' => $getNumberVote["user"],
                 'valuevote' => $getNumberVote["votes"],
+                'sondages'=>$this->persisteSondageBlog($view)
         ]);
     }
 
@@ -485,5 +490,53 @@ class BoutiqueController extends AbstractController
         }
 
         return $last_shop_visited;
+    }
+
+    public function persisteSondageBlog(array $blogs,$nbr=3){
+        $newBlogs = [];
+        $returnBlogs=[];
+        $nbrTotalBlog=0;
+        
+        for ($i=0; $i<sizeof($blogs);$i++){
+            $total = $this->getNumberTotalVote($blogs[$i])['total'];
+            $nbrTotalBlog+=$total;
+            array_push($newBlogs,[
+                'title'=>$blogs[$i]->getTitle(),
+                'id'=>$blogs[$i]->getId(),
+                'slug'=>$blogs[$i]->getLink(),
+                'total'=>$total
+            ]);
+            
+        }
+        $total= [];
+            foreach ($newBlogs as $key => $value) {
+                $total[$key]=$value['total'];
+            }
+            array_multisort($total,SORT_DESC,$newBlogs);
+
+            foreach ($newBlogs as $key => $value) {
+                
+                if($key==$nbr){
+                    break;
+                }
+                array_push($returnBlogs,$value);
+                
+            }
+        return [
+                  'blogs'=>$returnBlogs,
+                  'total'=>$nbrTotalBlog
+        ]  ;
+    }
+
+    public function getNumberTotalVote(Blog $blog){
+        $votes=$blog->getVotes();
+        $nbrTotalVote=0;
+        for($i=0; $i<sizeof($votes);$i++){
+            $nbrTotalVote+=$votes[$i]->getValue();
+        }
+        $newNbrTotalVote=[
+            'total'=>$nbrTotalVote,
+        ];
+        return $newNbrTotalVote;
     }
 }
