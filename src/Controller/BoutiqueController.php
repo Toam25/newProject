@@ -134,10 +134,11 @@ class BoutiqueController extends AbstractController
      /**
      * @Route("/show/blog/{id}-{slug}", name="showBlog")
      */
-    public function showBlog(Blog $blog,BlogRepository $blogRepository,VotesService $votesService, VotesRepository $votesRepository)
+    public function showBlog($id, BlogRepository $blogRepository,VotesService $votesService, VotesRepository $votesRepository)
     {
 
         // $allArticle = $articleRepository->findBy(['boutique'=>$boutiqueRepository->findOneBy(['user'=>$this->getUser()])] );
+            $blog=$blogRepository->findOneBy(['id'=>$id,"validate"=>true]);
             $votes = $votesRepository->findBy(['blog' => $blog]);
             $astuce= $blogRepository->findBy(['boutique'=>$blog->getBoutique(),"category"=>"Astuces","validate"=>true],["id"=>"DESC"]);
             $view= $blogRepository->findBy(['boutique'=>$blog->getBoutique(),"validate"=>true],["view"=>"DESC"]);
