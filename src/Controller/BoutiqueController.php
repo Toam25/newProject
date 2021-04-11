@@ -273,24 +273,92 @@ class BoutiqueController extends AbstractController
      */
     public function list(Request $request,BoutiqueRepository $boutiqueRepository, SearchService $search)
     {
-        
-        if ($request->isXmlHttpRequest()) {
+       
+        $q = $request->query->get('q')??""; 
 
+        switch ($request->query->get('searchtype')) {
+            case 'blog': {
 
-            return $this->render(
-                'boutique/dependancies/_list.html.twig',
-                [
-                    'articles' => $search->getResultSearch($request),
-                ]
-            );
+                    
+                    if ($request->isXmlHttpRequest()) {
+    
+                        return $this->render(
+                            'boutique/dependancies/_list.html.twig',
+                            [
+                               
+                                
+                            ]
+                        );
+                    }
+                    
+                    return $this->render(
+                        'boutique/list.html.twig',
+                        [
+                            'blogs' => $search->getResultSearchForBlog($request),
+                            'boutique'=> $boutiqueRepository->findOneBoutiqueByUserPerRole('ROLE_SUPER_ADMIN'),
+                            'type'=>'blog',
+                            'search'=>$q,
+                        ]
+                    );
+    
+                }
+            break;
+            case 'shop':
+                {
+
+                    
+                    if ($request->isXmlHttpRequest()) {
+    
+                        return $this->render(
+                            'boutique/dependancies/_list.html.twig',
+                            [
+                               
+                                
+                            ]
+                        );
+                    }
+                    
+                    return $this->render(
+                        'boutique/list.html.twig',
+                        [
+                            'shops' => $search->getResultSearchForShops($request),
+                            'boutique'=> $boutiqueRepository->findOneBoutiqueByUserPerRole('ROLE_SUPER_ADMIN'),
+                            'type'=>'shop',
+                            'search'=>$q,
+                        ]
+                    );
+    
+                }
+            break;
+                
+            default: {
+
+                $article= $search->getResultSearch($request);
+                if ($request->isXmlHttpRequest()) {
+
+                    return $this->render(
+                        'boutique/dependancies/_list.html.twig',
+                        [
+                            'articles' => $article,
+                            
+                        ]
+                    );
+                }
+                
+                return $this->render('boutique/list.html.twig',[
+                        'articles' => $article,
+                        'boutique'=> $boutiqueRepository->findOneBoutiqueByUserPerRole('ROLE_SUPER_ADMIN'),
+                        'filtreCategory' => $this->getCategoryPerArticle($article),
+                        'type'=>'article',
+                        'search'=>$q,
+                        
+                    ]
+                );
+
+            }
+            break;
         }
-        return $this->render(
-            'boutique/list.html.twig',
-            [
-                'articles' => $search->getResultSearch($request),
-                'boutique'=> $boutiqueRepository->findOneBoutiqueByUserPerRole('ROLE_SUPER_ADMIN')
-            ]
-        );
+
     }
 
         /**

@@ -125,12 +125,11 @@ ul, ol {
 
 /*-- Text input --*/
 
-.input {
-  height: 40px;
-  padding: 0px 15px;
-  border: 1px solid #E4E7ED;
-  background-color: #FFF;
-  width: 100%;
+.input, select {
+    height: 40px;
+    padding: 0px 15px;
+    border: 1px solid #E4E7ED;
+    background-color: #FFF;
 }
 
 textarea.input {
@@ -488,7 +487,7 @@ textarea.input {
 }
 
 .header-search form .input {
-    width: calc(100% - 116px);
+   width: calc(100% - 244px);
     margin-right: -4px;
     border-radius: 13px 0 0 13px;
 }

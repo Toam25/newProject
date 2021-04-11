@@ -2,6 +2,7 @@
 
 namespace App\Repository;
 
+use App\Data\Search;
 use App\Entity\Boutique;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
@@ -64,6 +65,28 @@ class BoutiqueRepository extends ServiceEntityRepository
         ;
 
         return $query;
+    }
+
+    public function getAllShopsBy(Search $data)
+    {   
+        
+        $query = $this->createQueryBuilder('b')
+            ->select('b', 'u','h')
+            ->leftJoin('b.user', 'u')
+            ->leftJoin('b.headers', 'h')
+            ->andWhere('b.type != :SuperAdmin')
+            ->setParameter('SuperAdmin','SuperAdmin');
+        if ($data->q) {
+            $query->andWhere('b.name LIKE :q')
+                ->setParameter('q', '%' . $data->q . '%');
+        }
+        if ($data->category) {
+            $query->andWhere('b.type IN (:category)')
+                ->setParameter('category', $data->category);
+        }
+        
+
+        return $query->getQuery()->getResult();
     }
     // /**
     //  * @return Boutique[] Returns an array of Boutique objects
