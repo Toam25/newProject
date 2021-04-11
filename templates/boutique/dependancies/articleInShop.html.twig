@@ -3,11 +3,11 @@
 	</div>
 	
 	{% if  boutique   %}
+		{% if boutique.showArticle is not same as (false)%}
 	  {# list article #}
-		 {% if boutique.showArticle is not same as (false)%}
 				{% include "boutique/dependancies/listArticle.html.twig" %}
 				<hr style="width: 71vw;"/>
-		 {% endif %}
+		 
 		{# end list article #}
 			{# selection #}
 				{% if newArticles |length > 0%}
@@ -21,7 +21,7 @@
 					<hr style="width: 71vw;"/>
 				{% endif %}
 			{# end selection #}
-
+		{% endif %}
 			{# show blog #}
 				{% if boutique.showBlog is not same as (false)%}
 						{% include "boutique/dependancies/listBlog.html.twig" with {'articles' : newArticles} %}	

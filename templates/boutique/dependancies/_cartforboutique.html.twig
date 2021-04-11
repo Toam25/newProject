@@ -3,11 +3,12 @@
         <a href="{{path('detail',{'id' : article.id,'slug' : slugify(article.name )})}}">
             <div class="product-img">
                 <img src="{{asset('images/'~article.images[0].name)}}" alt="">
-                <div id="_action_for_cart" class="product-btns">
+                {#<div id="_action_for_cart" class="product-btns">
                     <button class="add-to-wishlist"><i class="fa fa-heart-o"></i></button>
                     <button class="add-to-compare"><i class="fa fa-shopping-cart"></i></button>
                     <button class="quick-view"><i class="fa fa-eye"></i></button>
                 </div>
+                #}
             </div>
         </a>
         <div class="product-body">

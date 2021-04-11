@@ -61,7 +61,7 @@ class BlogRepository extends ServiceEntityRepository
                 ->select('bl', 'b', 'v')
                 ->leftJoin('bl.votes', 'v')
                 ->leftJoin('bl.boutique', 'b')
-                ->andwhere('bl.validate = :validate')
+                ->andwhere('bl.validateInHomePage = :validate')
                 ->setParameters([
                     'validate'=>true
                 ])

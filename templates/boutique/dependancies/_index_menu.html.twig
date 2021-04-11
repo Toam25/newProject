@@ -39,3 +39,9 @@
                       </div>
     </li>
 {% endfor %}
+<li class="header-search">
+      <form method="Get" action="{{path('list_product')}}">
+        <input class="input" name="q" placeholder="Recherche dans {{ boutique.name}}">
+        <button class="search-btn">Search</button>
+      </form>
+</li>

@@ -271,9 +271,9 @@ class BoutiqueController extends AbstractController
     /**
      * @Route("/product/list", name="list_product")
      */
-    public function list(Request $request, SearchService $search)
+    public function list(Request $request,BoutiqueRepository $boutiqueRepository, SearchService $search)
     {
-
+        
         if ($request->isXmlHttpRequest()) {
 
 
@@ -288,6 +288,7 @@ class BoutiqueController extends AbstractController
             'boutique/list.html.twig',
             [
                 'articles' => $search->getResultSearch($request),
+                'boutique'=> $boutiqueRepository->findOneBoutiqueByUserPerRole('ROLE_SUPER_ADMIN')
             ]
         );
     }
