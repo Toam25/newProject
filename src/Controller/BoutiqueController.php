@@ -33,19 +33,19 @@ class BoutiqueController extends AbstractController
 {
 
     private $typeOptionMenuService;
-  
-    public function __construct(UtilsService $utilsService, TypeOptionMenuService $typeOptionMenuService )
+
+    public function __construct(UtilsService $utilsService, TypeOptionMenuService $typeOptionMenuService)
     {
-        $this->typeOptionMenuService=$typeOptionMenuService;
+        $this->typeOptionMenuService = $typeOptionMenuService;
     }
     /**
      * @Route("/", name="index")
      */
-    public function index(VoteRepository $voteRepository,BlogRepository $blogRepository, HeaderRepository $headerRepository, BoutiqueRepository $boutiqueRepository, CartRepository $cartRepository, ArticleRepository $articleRepository)
+    public function index(VoteRepository $voteRepository, BlogRepository $blogRepository, HeaderRepository $headerRepository, BoutiqueRepository $boutiqueRepository, CartRepository $cartRepository, ArticleRepository $articleRepository)
     {
 
         $boutique = $boutiqueRepository->findOneBoutiqueByUserPerRole('ROLE_SUPER_ADMIN');
-        $allMenu= $this->typeOptionMenuService->getTypeOptionMenu();
+        $allMenu = $this->typeOptionMenuService->getTypeOptionMenu();
 
         $vote = $voteRepository->findAllWithUserVote();
 
@@ -58,63 +58,61 @@ class BoutiqueController extends AbstractController
             'articles' => $articles,
             'header_image' => $header_image,
             'votes' => $vote,
-            'allMenus'=>$allMenu,
-            'blogs'=>$blogRepository->findByBlogValidateInHomePage()
+            'allMenus' => $allMenu,
+            'blogs' => $blogRepository->findByBlogValidateInHomePage()
         ]);
     }
     /**
      * @Route("/shop/{type}/{id}", name="shop", defaults = {"id"=null})
      */
 
-    public function boutique($type = "", $id, Request $request,BlogRepository $blogRepository, BoutiqueRepository $boutiqueRepository, SearchService $searchService, ArticleRepository $articleRepository)
-    {   
+    public function boutique($type = "", $id, Request $request, BlogRepository $blogRepository, BoutiqueRepository $boutiqueRepository, SearchService $searchService, ArticleRepository $articleRepository)
+    {
 
         $pageWasRefreshed = isset($_SERVER['HTTP_CACHE_CONTROL']) && $_SERVER['HTTP_CACHE_CONTROL'] === 'max-age=0';
-        $blog="";
-        $matches =[];
+        $blog = "";
+        $matches = [];
         $first = intval($request->cookies->get($type));
-        
-        if($type!=""){
-            
-                $boutiques=$boutiqueRepository->findBy(['type' => $type]);
-                $id = ($id != null and is_numeric($id)) ? intval($id) : $first;
-                $boutique = $boutiqueRepository->findOneByWithHeaderReference($type,intval($id));
 
-                
-                if($boutique==null){
-                    $boutique = $boutiqueRepository->findOneByWithHeaderReference($type,intval($boutiques[0]->getId()));         
-                }
+        if ($type != "") {
 
-            if(!$pageWasRefreshed){
-                $boutique->setNbrOfVisitor($boutique->getNbrOfVisitor()+1);
-                $em= $this->getDoctrine()->getManager();
+            $boutiques = $boutiqueRepository->findBy(['type' => $type]);
+            $id = ($id != null and is_numeric($id)) ? intval($id) : $first;
+            $boutique = $boutiqueRepository->findOneByWithHeaderReference($type, intval($id));
+
+
+            if ($boutique == null) {
+                $boutique = $boutiqueRepository->findOneByWithHeaderReference($type, intval($boutiques[0]->getId()));
+            }
+
+            if (!$pageWasRefreshed) {
+                $boutique->setNbrOfVisitor($boutique->getNbrOfVisitor() + 1);
+                $em = $this->getDoctrine()->getManager();
                 $em->flush($boutique);
             }
             $isHomeShop = false;
             $listShops = $this->getlistShop($boutiques, $type);
-
-        }
-        else{
+        } else {
             $boutique = $boutiqueRepository->findOneBoutiqueByUserPerRole("ROLE_SUPER_ADMIN");
             $listShops = $this->getlistShop($boutiqueRepository->findAllBoutiqueWithOutUserRoleSuperAdmin("ROLE_ADMIN"), $type);
-            $isHomeShop =true;
-            $type="g_marchande";
+            $isHomeShop = true;
+            $type = "g_marchande";
         }
 
-        
+
 
         if ($request->get('shop_id')) {
             $article = $searchService->getResultSearch($request);
         } else {
 
             $article = $articleRepository->findAllArticleByBoutique($boutique);
-            $blogs=$blogRepository->findAllBlogByBoutique($boutique);
+            $blogs = $blogRepository->findAllBlogByBoutique($boutique);
         }
-        
-       if($boutique){
-         preg_match('%(http[s]?:\/\/|www\/)([a-zA-Z0-9-_\.\/\?=&]+)%i',$boutique->getAddress(),$matches);
-       }
-        
+
+        if ($boutique) {
+            preg_match('%(http[s]?:\/\/|www\/)([a-zA-Z0-9-_\.\/\?=&]+)%i', $boutique->getAddress(), $matches);
+        }
+
         return $this->render('boutique/boutique.html.twig', [
             'controller_name' => 'BoutiqueController',
             'boutique' => $boutique,
@@ -123,62 +121,62 @@ class BoutiqueController extends AbstractController
             'listShop' => $listShops['listShops'],
             'type' => $type,
             'filtreCategory' => $this->getCategoryPerArticle($article),
-            'menu'=>$type,
-            'isHomeShop'=>$isHomeShop,
-            'blogs'=>$blogs,
-            'shopLink'=> sizeof($matches) > 2 ? $matches[2] : ""
+            'menu' => $type,
+            'isHomeShop' => $isHomeShop,
+            'blogs' => $blogs,
+            'shopLink' => sizeof($matches) > 2 ? $matches[2] : ""
 
         ]);
     }
 
-     /**
+    /**
      * @Route("/show/blog/{id}-{slug}", name="showBlog")
      */
-    public function showBlog($id, BlogRepository $blogRepository,VotesService $votesService, VotesRepository $votesRepository)
+    public function showBlog($id, BlogRepository $blogRepository, VotesService $votesService, VotesRepository $votesRepository)
     {
 
         // $allArticle = $articleRepository->findBy(['boutique'=>$boutiqueRepository->findOneBy(['user'=>$this->getUser()])] );
-            $blog=$blogRepository->findOneBy(['id'=>$id,"validate"=>true]);
-            $votes = $votesRepository->findBy(['blog' => $blog]);
-            $astuce= $blogRepository->findBy(['boutique'=>$blog->getBoutique(),"category"=>"Astuces","validate"=>true],["id"=>"DESC"]);
-            $view= $blogRepository->findBy(['boutique'=>$blog->getBoutique(),"validate"=>true],["view"=>"DESC"]);
-            $share= $blogRepository->findBy(['boutique'=>$blog->getBoutique(),"validate"=>true],["shareNbr"=>"DESC"],5);
-            $getNumberVote = $votesService->getNumberTotalVote($votes);
-            
+        $blog = $blogRepository->findOneBy(['id' => $id, "validate" => true]);
+        $votes = $votesRepository->findBy(['blog' => $blog]);
+        $astuce = $blogRepository->findBy(['boutique' => $blog->getBoutique(), "category" => "Astuces", "validate" => true], ["id" => "DESC"]);
+        $view = $blogRepository->findBy(['boutique' => $blog->getBoutique(), "validate" => true], ["view" => "DESC"]);
+        $share = $blogRepository->findBy(['boutique' => $blog->getBoutique(), "validate" => true], ["shareNbr" => "DESC"], 5);
+        $getNumberVote = $votesService->getNumberTotalVote($votes);
 
-            
-           
+
+
+
         return $this->render('boutique/detailblog.html.twig', [
-                'blog' => $blog,
-                'views'=>$view,
-                'shares'=>$share,
-                'boutique' => $blog->getBoutique(),
-                'astuces'=>$astuce,
-                'votes'=>$votes,
-                'users' => $getNumberVote["user"],
-                'valuevote' => $getNumberVote["votes"],
-                'sondages'=>$this->persisteSondageBlog($view)
+            'blog' => $blog,
+            'views' => $view,
+            'shares' => $share,
+            'boutique' => $blog->getBoutique(),
+            'astuces' => $astuce,
+            'votes' => $votes,
+            'users' => $getNumberVote["user"],
+            'valuevote' => $getNumberVote["votes"],
+            'sondages' => $this->persisteSondageBlog($view)
         ]);
     }
 
     /**
      * @Route("/detail/{id}-{slug}", name="detail")
      */
-    public function detail(int $id, Article $article,VotesService $votesService, BoutiqueRepository $boutiqueRepository,UtilsService $utilsService, VotesRepository $votesRepository)
+    public function detail(int $id, Article $article, VotesService $votesService, BoutiqueRepository $boutiqueRepository, UtilsService $utilsService, VotesRepository $votesRepository)
     {
 
         $votes = $votesRepository->findBy(['article' => $article]);
-        
+
         $getNumberVote = $votesService->getNumberTotalVote($votes);
-        
-        $listOption=$this->typeOptionMenuService->getOption($utilsService->getSlug($article->getCategory()));
+
+        $listOption = $this->typeOptionMenuService->getOption($utilsService->getSlug($article->getCategory()));
 
         return $this->render('boutique/detail.html.twig', [
             'controller_name' => 'BoutiqueController',
             'boutique' => $article->getBoutique(),
             'article' => $article,
             'votes' => $votes,
-             'category'=>$listOption,
+            'category' => $listOption,
             'valuevote' => $getNumberVote["votes"],
             'users' => $getNumberVote["user"],
         ]);
@@ -190,34 +188,33 @@ class BoutiqueController extends AbstractController
 
     public function addVote(Article $article, Request $request, VotesRepository $votesRepository)
     {
-        
+
         if ($this->getUser() != null) {
 
             $comment = $request->request->get('comment');
             $value = $request->request->get('vote');
             $manager = $this->getDoctrine()->getManager();
 
-            $vote= $votesRepository->findOneBy(['user'=>$this->getUser(),'article'=>$article]);
-            if($vote){
+            $vote = $votesRepository->findOneBy(['user' => $this->getUser(), 'article' => $article]);
+            if ($vote) {
                 $vote->setValue($value)
-                ->setComment($comment)
-                ->setUser($this->getUser())
-                ->setVotearticle($article);
+                    ->setComment($comment)
+                    ->setUser($this->getUser())
+                    ->setVotearticle($article);
                 $article->addVote($vote);
                 $manager->flush();
-
-            }else{
+            } else {
                 $vote = new Votes();
                 $vote->setValue($value)
-                ->setComment($comment)
-                ->setUser($this->getUser())
-                ->setVotearticle($article);
+                    ->setComment($comment)
+                    ->setUser($this->getUser())
+                    ->setVotearticle($article);
                 $article->addVote($vote);
                 $manager->persist($vote);
                 $manager->flush();
             }
-            
-            $array = ['status' => 'ok', 'msg' => 'Enregistrer avec success','id'=>$vote->getId()];
+
+            $array = ['status' => 'ok', 'msg' => 'Enregistrer avec success', 'id' => $vote->getId()];
             $code = 200;
         } else {
             $array = ['status' => 'ko', 'msg' => 'Unautorized'];
@@ -227,38 +224,37 @@ class BoutiqueController extends AbstractController
             'Content-Type' => 'application/json'
         ]);
     }
-        /**
+    /**
      * @Route("/vote/blog/{id}/add" , name="addVoteBlog")
      */
 
     public function addVoteBlog(Blog $blog, Request $request, VotesRepository $votesRepository)
     {
-        
+
         if ($this->getUser() != null) {
 
             $comment = $request->request->get('comment');
             $value = $request->request->get('vote');
             $manager = $this->getDoctrine()->getManager();
 
-            $vote= $votesRepository->findOneBy(['user'=>$this->getUser(),'blog'=>$blog]);
-            if($vote){
+            $vote = $votesRepository->findOneBy(['user' => $this->getUser(), 'blog' => $blog]);
+            if ($vote) {
                 $vote->setValue($value)
-                ->setComment($comment)
-                ->setUser($this->getUser());
+                    ->setComment($comment)
+                    ->setUser($this->getUser());
                 $blog->addVote($vote);
                 $manager->flush();
-
-            }else{
+            } else {
                 $vote = new Votes();
                 $vote->setValue($value)
-                ->setComment($comment)
-                ->setUser($this->getUser());
+                    ->setComment($comment)
+                    ->setUser($this->getUser());
                 $blog->addVote($vote);
                 $manager->persist($vote);
                 $manager->flush();
             }
-            
-            $array = ['status' => 'ok', 'msg' => 'Enregistrer avec success','id'=>$vote->getId()];
+
+            $array = ['status' => 'ok', 'msg' => 'Enregistrer avec success', 'id' => $vote->getId()];
             $code = 200;
         } else {
             $array = ['status' => 'ko', 'msg' => 'Unautorized'];
@@ -271,103 +267,91 @@ class BoutiqueController extends AbstractController
     /**
      * @Route("/product/list", name="list_product")
      */
-    public function list(Request $request,BoutiqueRepository $boutiqueRepository, SearchService $search)
+    public function list(Request $request, BoutiqueRepository $boutiqueRepository, SearchService $search)
     {
-       
-        $q = $request->query->get('q')??""; 
+
+        $q = $request->query->get('q') ?? "";
 
         switch ($request->query->get('searchtype')) {
             case 'blog': {
 
-                    
+
                     if ($request->isXmlHttpRequest()) {
-    
+
                         return $this->render(
                             'boutique/dependancies/_list.html.twig',
-                            [
-                               
-                                
-                            ]
+                            []
                         );
                     }
-                    
+
                     return $this->render(
                         'boutique/list.html.twig',
                         [
                             'blogs' => $search->getResultSearchForBlog($request),
-                            'boutique'=> $boutiqueRepository->findOneBoutiqueByUserPerRole('ROLE_SUPER_ADMIN'),
-                            'type'=>'blog',
-                            'search'=>$q,
+                            'boutique' => $boutiqueRepository->findOneBoutiqueByUserPerRole('ROLE_SUPER_ADMIN'),
+                            'type' => 'blog',
+                            'search' => $q,
                         ]
                     );
-    
                 }
-            break;
-            case 'shop':
-                {
+                break;
+            case 'shop': {
 
-                    
+
                     if ($request->isXmlHttpRequest()) {
-    
+
                         return $this->render(
                             'boutique/dependancies/_list.html.twig',
-                            [
-                               
-                                
-                            ]
+                            []
                         );
                     }
-                    
+
                     return $this->render(
                         'boutique/list.html.twig',
                         [
                             'shops' => $search->getResultSearchForShops($request),
-                            'boutique'=> $boutiqueRepository->findOneBoutiqueByUserPerRole('ROLE_SUPER_ADMIN'),
-                            'type'=>'shop',
-                            'search'=>$q,
+                            'boutique' => $boutiqueRepository->findOneBoutiqueByUserPerRole('ROLE_SUPER_ADMIN'),
+                            'type' => 'shop',
+                            'search' => $q,
                         ]
                     );
-    
                 }
-            break;
-                
+                break;
+
             default: {
 
-                $article= $search->getResultSearch($request);
-                if ($request->isXmlHttpRequest()) {
+                    $article = $search->getResultSearch($request);
+                    if ($request->isXmlHttpRequest()) {
 
-                    return $this->render(
-                        'boutique/dependancies/_list.html.twig',
-                        [
-                            'articles' => $article,
-                            
-                        ]
-                    );
-                }
-                
-                return $this->render('boutique/list.html.twig',[
+                        return $this->render(
+                            'boutique/dependancies/_list.html.twig',
+                            [
+                                'articles' => $article,
+
+                            ]
+                        );
+                    }
+
+                    return $this->render('boutique/list.html.twig', [
                         'articles' => $article,
-                        'boutique'=> $boutiqueRepository->findOneBoutiqueByUserPerRole('ROLE_SUPER_ADMIN'),
+                        'boutique' => $boutiqueRepository->findOneBoutiqueByUserPerRole('ROLE_SUPER_ADMIN'),
                         'filtreCategory' => $this->getCategoryPerArticle($article),
-                        'type'=>'article',
-                        'search'=>$q,
-                        
-                    ]
-                );
+                        'type' => 'article',
+                        'search' => $q,
 
-            }
-            break;
+                    ]);
+                }
+                break;
         }
-
     }
 
-        /**
+    /**
      * @Route("/blog/list", name="_blog_list")
      */
     public function _blogList(Request $request, SearchService $search)
     {
-        
-        
+
+
         if ($request->isXmlHttpRequest()) {
 
             return $this->render(
@@ -377,55 +361,53 @@ class BoutiqueController extends AbstractController
                 ]
             );
         }
-        return new JsonResponse(['status'=>"error"],Response::HTTP_UNAUTHORIZED);
-       /* return $this->render(
+        return new JsonResponse(['status' => "error"], Response::HTTP_UNAUTHORIZED);
+        /* return $this->render(
             'boutique/list.html.twig',
             [
                 'articles' => $search->getResultSearch($request),
             ]
         );*/
     }
-        /**
+    /**
      * @Route("/condition/{id}", name="condition")
      */
     public function condition(Boutique $boutique, BoutiqueRepository $boutiqueRepository)
     {
         $lastboutique = $boutiqueRepository->findAll();
-        return $this->render("boutique/condition.html.twig",[
-            'boutique'=>$boutique,
+        return $this->render("boutique/condition.html.twig", [
+            'boutique' => $boutique,
             'lastboutique' => $lastboutique[1]
         ]);
-
-        
     }
-   
+
     private function getlistShop(array $shops, $types)
     {
         $newlistShop = [];
         $myListShops = "";
         $myListShop = "";
         $allShopId = [];
-        
+
         $first = (isset($_COOKIE[$types]) and is_numeric($_COOKIE[$types])) ? intval($_COOKIE[$types]) : 0;
 
         foreach ($shops as $key => $shop) {
 
-            if($key==0){
+            if ($key == 0) {
                 $firstShop = $shop->getId();
             }
             array_push($allShopId, $shop->getId());
-             $shopSli= '<a class="text-center" href="/shop/' . $shop->getType() . '/' . $shop->getId() . '" id="' . $key . '"> 
+            $shopSli = '<a class="text-center" href="/shop/' . $shop->getType() . '/' . $shop->getId() . '" id="' . $key . '"> 
             <div class="_container_image_shop">
                  <img class="logo_image_boutique_header" src="/images/' . $shop->getLogo() . '" alt="' . $shop->getName() . '">';
-                if($shop->isActiveNow()){
-                    $shopSli.='<div class="onLigne"></div>';
-                }
-                 
-           $shopSli.='</div>
+            if ($shop->isActiveNow()) {
+                $shopSli .= '<div class="onLigne"></div>';
+            }
+
+            $shopSli .= '</div>
          <br> 
          <p class="nom_boutique" style="display: block;"> ' . $shop->getName() . '</p></a>';
 
-         $newlistShop[$key]=$shopSli;
+            $newlistShop[$key] = $shopSli;
         }
 
         if (isset($newlistShop) and sizeof($newlistShop) > 0) {
@@ -437,7 +419,7 @@ class BoutiqueController extends AbstractController
         } else {
             $newlistShop['listShops'] = " <p>Pas de résultat :(  </p>";
         }
-        $newlistShop['allShopId'] = $this->changePlace($allShopId,$first);
+        $newlistShop['allShopId'] = $this->changePlace($allShopId, $first);
 
         return $newlistShop;
     }
@@ -562,50 +544,50 @@ class BoutiqueController extends AbstractController
         return $last_shop_visited;
     }
 
-    public function persisteSondageBlog(array $blogs,$nbr=3){
+    public function persisteSondageBlog(array $blogs, $nbr = 3)
+    {
         $newBlogs = [];
-        $returnBlogs=[];
-        $nbrTotalBlog=0;
-        
-        for ($i=0; $i<sizeof($blogs);$i++){
-            $total = $this->getNumberTotalVote($blogs[$i])['total'];
-            $nbrTotalBlog+=$total;
-            array_push($newBlogs,[
-                'title'=>$blogs[$i]->getTitle(),
-                'id'=>$blogs[$i]->getId(),
-                'slug'=>$blogs[$i]->getLink(),
-                'total'=>$total
-            ]);
-            
-        }
-        $total= [];
-            foreach ($newBlogs as $key => $value) {
-                $total[$key]=$value['total'];
-            }
-            array_multisort($total,SORT_DESC,$newBlogs);
+        $returnBlogs = [];
+        $nbrTotalBlog = 0;
 
-            foreach ($newBlogs as $key => $value) {
-                
-                if($key==$nbr){
-                    break;
-                }
-                array_push($returnBlogs,$value);
-                
+        for ($i = 0; $i < sizeof($blogs); $i++) {
+            $total = $this->getNumberTotalVote($blogs[$i])['total'];
+            $nbrTotalBlog += $total;
+            array_push($newBlogs, [
+                'title' => $blogs[$i]->getTitle(),
+                'id' => $blogs[$i]->getId(),
+                'slug' => $blogs[$i]->getLink(),
+                'total' => $total
+            ]);
+        }
+        $total = [];
+        foreach ($newBlogs as $key => $value) {
+            $total[$key] = $value['total'];
+        }
+        array_multisort($total, SORT_DESC, $newBlogs);
+
+        foreach ($newBlogs as $key => $value) {
+
+            if ($key == $nbr) {
+                break;
             }
+            array_push($returnBlogs, $value);
+        }
         return [
-                  'blogs'=>$returnBlogs,
-                  'total'=>$nbrTotalBlog
-        ]  ;
+            'blogs' => $returnBlogs,
+            'total' => $nbrTotalBlog
+        ];
     }
 
-    public function getNumberTotalVote(Blog $blog){
-        $votes=$blog->getVotes();
-        $nbrTotalVote=0;
-        for($i=0; $i<sizeof($votes);$i++){
-            $nbrTotalVote+=$votes[$i]->getValue();
+    public function getNumberTotalVote(Blog $blog)
+    {
+        $votes = $blog->getVotes();
+        $nbrTotalVote = 0;
+        for ($i = 0; $i < sizeof($votes); $i++) {
+            $nbrTotalVote += $votes[$i]->getValue();
         }
-        $newNbrTotalVote=[
-            'total'=>$nbrTotalVote,
+        $newNbrTotalVote = [
+            'total' => $nbrTotalVote,
         ];
         return $newNbrTotalVote;
     }
