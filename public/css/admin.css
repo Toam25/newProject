@@ -683,7 +683,7 @@ background: #e4087e;
     grid-column-gap: 2px;
 }
 .validate_container_title_category_boutique p span{
-    color: black !important;
+    color: black ;
     font-weight: bold;
 }
 .validate_action_button {
@@ -693,4 +693,8 @@ background: #e4087e;
 .validate_button .btn{
     margin : 0 5px;
     color: white !important;
+}
+.date{
+    font-size: 9px;
+    color: #76bddf !important;
 }

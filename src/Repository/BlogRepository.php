@@ -37,64 +37,66 @@ class BlogRepository extends ServiceEntityRepository
         return [];
     }
 
-    public function findByNotValidateBlog(Boutique $boutique=null){
+    public function findByNotValidateBlog(Boutique $boutique = null)
+    {
         $query = $this->createQueryBuilder('bl')
-                ->select('bl', 'b', 'v')
-                ->leftJoin('bl.votes', 'v')
-                ->leftJoin('bl.boutique', 'b')
-                ->andwhere('bl.validate = :validate')
-                ->orwhere('bl.validateInHomePage = :validateInHomePage')
-                ->setParameters([
-                    'validate'=>false,
-                    'validateInHomePage'=>false
-                ])
-                ;
-            if($boutique!=null){
-                $query ->andwhere('bl.boutique = :boutiqueid')
+            ->select('bl', 'b', 'v')
+            ->leftJoin('bl.votes', 'v')
+            ->leftJoin('bl.boutique', 'b')
+            ->andwhere('bl.validate = :validate')
+            ->orwhere('bl.validateInHomePage = :validateInHomePage')
+            ->setParameters([
+                'validate' => false,
+                'validateInHomePage' => false
+            ]);
+        if ($boutique != null) {
+            $query->andwhere('bl.boutique = :boutiqueid')
                 ->setParameter('boutiqueid', $boutique->getId());
-            }
-               
-            return $query->getQuery()->getResult();
+        }
+
+        $query->orderBy('bl.id', 'DESC');
+
+        return $query->getQuery()->getResult();
     }
-    public function findByBlogValidateInHomePage(Boutique $boutique=null){
+    public function findByBlogValidateInHomePage(Boutique $boutique = null)
+    {
         $query = $this->createQueryBuilder('bl')
-                ->select('bl', 'b', 'v')
-                ->leftJoin('bl.votes', 'v')
-                ->leftJoin('bl.boutique', 'b')
-                ->andwhere('bl.validateInHomePage = :validate')
-                ->setParameters([
-                    'validate'=>true
-                ])
-                ;
-            if($boutique!=null){
-                $query ->andwhere('bl.boutique = :boutiqueid')
+            ->select('bl', 'b', 'v')
+            ->leftJoin('bl.votes', 'v')
+            ->leftJoin('bl.boutique', 'b')
+            ->andwhere('bl.validateInHomePage = :validate')
+            ->setParameters([
+                'validate' => true
+            ]);
+        if ($boutique != null) {
+            $query->andwhere('bl.boutique = :boutiqueid')
                 ->setParameter('boutiqueid', $boutique->getId());
-            }
-               
-            return $query->getQuery()->getResult();
+        }
+
+        return $query->getQuery()->getResult();
     }
 
-    public function findByBlogValidate(Boutique $boutique=null){
+    public function findByBlogValidate(Boutique $boutique = null)
+    {
         $query = $this->createQueryBuilder('bl')
-                ->select('bl', 'b', 'v')
-                ->leftJoin('bl.votes', 'v')
-                ->leftJoin('bl.boutique', 'b')
-                ->andwhere('bl.validateInHomePage = :validateInHomePage')
-                ->setParameters([
-                    'validateInHomePage'=>false
-                ])
-                ;
-            if($boutique!=null){
-                $query ->andwhere('bl.boutique = :boutiqueid')
+            ->select('bl', 'b', 'v')
+            ->leftJoin('bl.votes', 'v')
+            ->leftJoin('bl.boutique', 'b')
+            ->andwhere('bl.validateInHomePage = :validateInHomePage')
+            ->setParameters([
+                'validateInHomePage' => false
+            ]);
+        if ($boutique != null) {
+            $query->andwhere('bl.boutique = :boutiqueid')
                 ->setParameter('boutiqueid', $boutique->getId());
-            }
-               
-            return $query->getQuery()->getResult();
+        }
+
+        return $query->getQuery()->getResult();
     }
 
-    public function getAllBlogWithDataBy(Search $data,$validate=true)
-    {   
-        
+    public function getAllBlogWithDataBy(Search $data, $validate = true)
+    {
+
         $query = $this->createQueryBuilder('bl')
             ->select('bl', 'b', 'v')
             ->leftJoin('bl.votes', 'v')
@@ -112,12 +114,12 @@ class BlogRepository extends ServiceEntityRepository
             $query->andWhere('bl.category IN (:category)')
                 ->setParameter('category', $data->category);
         }
-       
+
         if ($data->boutique_id) {
             $query->andWhere('b.id = :boutiqueId')
                 ->setParameter('boutiqueId', $data->boutique_id);
         }
-        if($validate==true){
+        if ($validate == true) {
             $query->andWhere('bl.validate = :validate')
                 ->setParameter('validate', true);
         }

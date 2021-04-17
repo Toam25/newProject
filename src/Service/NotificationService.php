@@ -1,40 +1,78 @@
-<?php 
-  namespace App\Service;
+<?php
+
+namespace App\Service;
 
 use App\Repository\NotificationRepository;
 use App\Repository\NotifyRepository;
 use App\Repository\UserRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
-class NotificationService extends AbstractController{
-       
-    private $notificationRepository;
+class NotificationService extends AbstractController
+{
+
+     private $notificationRepository;
      public function __construct(NotificationRepository $notificationRepository)
      {
-          $this->notificationRepository=$notificationRepository;
-         
+          $this->notificationRepository = $notificationRepository;
      }
-     public function getNotification(){
-          if($this->getUser()){
+     public function getNotification()
+     {
+          if ($this->getUser()) {
                return  $this->notificationRepository->findNotificationBy($this->getUser());
           }
           return [];
      }
 
-     public function getMessageNotification(){
-          $notification=[];
-          foreach ($this->getNotification() as $key => $value) {
-               if($value->getSubject()=="APROUVED_IN_HOME_PAGE"){
-                    array_push($notification,[ 
-                         "message"=>"Votre blog est ajouté dans le home pages avec success",
-                         "id_blog"=>(int)$value->getDescription(),
-                         ]);
-               }
-               else if($value->getSubject()=="APROUVED"){
-                    array_push($notification,["message"=>"Votre blog est approuver avec success","id_blog"=>(int)$value->getDescription()]);
+     public function getNbrNotificationNotViewByUser()
+     {
+          $nbr = 0;
 
+          if ($this->getUser()) {
+               $notifications =  $this->getNotification();
+               foreach ($notifications as  $notification) {
+                    if (!in_array($this->getUser()->getId(), $notification->getView())) {
+                         $nbr = $nbr + 1;
+                    }
                }
           }
-          return $notification;
+
+          return $nbr;
+     }
+
+     public function getMessageNotification()
+     {
+          $notifications = [];
+
+          foreach ($this->getNotification() as $notification) {
+               if ($notification->getSubject() == "APPROUVED_IN_HOME_PAGE") {
+                    array_push($notifications, [
+                         "message" => "Votre blog est ajouté dans le home pages avec success",
+                         'idNotification' => (int)$notification->getId(),
+                         "idBlog" => (int)$notification->getDescription(),
+                         'status' => 'APPROUVED_BLOG',
+                         'createdat' => $notification->getCreatedAt()->format("d/m/Y h:m:s"),
+                         'isView' => in_array($this->getUser()->getId(), $notification->getView())
+                    ]);
+               } else if ($notification->getSubject() == "APPROUVED") {
+                    array_push($notifications, [
+                         "message" => "Votre blog est approuver avec success",
+                         "idBlog" => (int)$notification->getDescription(),
+                         'idNotification' => (int)$notification->getId(),
+                         'status' => 'APPROUVED_BLOG',
+                         'createdat' => $notification->getCreatedAt()->format("d/m/Y h:m:s"),
+                         'isView' => in_array($this->getUser()->getId(), $notification->getView())
+                    ]);
+               } else if ($notification->getSubject() == "REQUEST_APPROVAL_BLOG") {
+                    array_push($notifications, [
+                         "message" => "Une demande d'approuver un blog a été posté",
+                         "idBlog" => (int)$notification->getDescription(),
+                         'status' => 'REQUEST_APPROVAL_BLOG',
+                         'idNotification' => (int)$notification->getId(),
+                         'createdat' => $notification->getCreatedAt()->format("d/m/Y h:m:s"),
+                         'isView' => in_array($this->getUser()->getId(), $notification->getView())
+                    ]);
+               }
+          }
+          return $notifications;
      }
 }

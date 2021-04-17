@@ -51,6 +51,7 @@ class Notification
     public function __construct()
     {
         $this->toUser = new ArrayCollection();
+        $this->createdAt = new \DateTime();
     }
 
     public function getId(): ?int

@@ -35,30 +35,32 @@ use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Symfony\Flex\Unpack\Result;
 
 class AdminController extends AbstractController
-{   
+{
     private $typeOptionMenuService;
     private $utilsService;
-    public function __construct(UtilsService $utilsService, TypeOptionMenuService $typeOptionMenuService )
+    public function __construct(UtilsService $utilsService, TypeOptionMenuService $typeOptionMenuService)
     {
-        $this->typeOptionMenuService=$typeOptionMenuService;
-        $this->utilsService=$utilsService;
+        $this->typeOptionMenuService = $typeOptionMenuService;
+        $this->utilsService = $utilsService;
     }
     /**
      * @Route("/teste/slug/{slug}", name="teste_slug")
      */
 
-    public function testeSlug(string $slug, UtilsService $utilsService){
+    public function testeSlug(string $slug, NotificationService $notificationService,  UtilsService $utilsService)
+    {
 
+        dd($notificationService->getMessageNotification());
         return new Response($utilsService->getSlug($slug));
     }
     /**
      * @Route("/admin", name="home")
      */
-    public function index(BoutiqueRepository $boutiqueRepository, HeaderRepository $headerRepository,BlogRepository $blogRepository )
+    public function index(BoutiqueRepository $boutiqueRepository, HeaderRepository $headerRepository, BlogRepository $blogRepository)
     {
 
         // $allArticle = $articleRepository->findBy(['boutique'=>$boutiqueRepository->findOneBy(['user'=>$this->getUser()])] );
-        
+
         $boutique = $boutiqueRepository->findOneBy(['user' => $this->getUser()]);
         $header = $headerRepository->findOneBy(['boutique' => $boutique]);
         $img_header = ($header) ? $header->getName() : 'images_default/default_image.jpg';
@@ -68,26 +70,26 @@ class AdminController extends AbstractController
             'img_header' => $img_header,
             'id' => $id,
             'boutique' => $boutique,
-            'peddingBlogs'=>$blogRepository->findBy(['boutique'=>$boutique,'status'=>'PENDING']),
-            'closedBlogs'=>$blogRepository->findBy(['boutique'=>$boutique,'status'=>'CLOSED']),
-            'validateBlogs'=>$blogRepository->findBy(['boutique'=>$boutique,'validate'=>true])
+            'peddingBlogs' => $blogRepository->findBy(['boutique' => $boutique, 'status' => 'PENDING']),
+            'closedBlogs' => $blogRepository->findBy(['boutique' => $boutique, 'status' => 'CLOSED']),
+            'validateBlogs' => $blogRepository->findBy(['boutique' => $boutique, 'validate' => true])
         ]);
     }
     /**
      * @Route("/admin/article_list/{category}/{sous_category}", name="article_list")
      */
-    public function addArticleInShop($category,$sous_category,CategoryOptionService $categoryOptionService, Request $request,CategoryService $categoryService, BoutiqueRepository $boutiqueRepository, InsertFileServices $insertFileServices, ArticleRepository $articleRepository)
+    public function addArticleInShop($category, $sous_category, CategoryOptionService $categoryOptionService, Request $request, CategoryService $categoryService, BoutiqueRepository $boutiqueRepository, InsertFileServices $insertFileServices, ArticleRepository $articleRepository)
     {
-        
-      
+
+
         // $allArticle = $articleRepository->findBy(['boutique'=>$boutiqueRepository->findOneBy(['user'=>$this->getUser()])] );
         $boutique = $boutiqueRepository->findOneBy(['user' => $this->getUser()]);
         $article = new Article();
         $form = $this->createForm(ArticleType::class, $article);
         $form->handleRequest($request);
         ////
-         
-      /*  if ($form->isSubmitted()) {
+
+        /*  if ($form->isSubmitted()) {
             $allImages = [];
             $entityManager = $this->getDoctrine()->getManager();
             $images = $form->get('images')->getData();
@@ -119,14 +121,14 @@ class AdminController extends AbstractController
         */
 
         ///
-     
+
         return $this->render('admin/index.html.twig', [
             'pages' => 'articleinshop',
             'articles' => $articleRepository->findBy(['boutique' => $boutique, 'category' => $sous_category]),
             'boutique' => $boutique,
-            'add_button' => $categoryService->getAddButton($this->typeOptionMenuService->getTypeOptionMenu($boutique->getType(),$category),"btn btn-success ajout_article_ev"),
+            'add_button' => $categoryService->getAddButton($this->typeOptionMenuService->getTypeOptionMenu($boutique->getType(), $category), "btn btn-success ajout_article_ev"),
             'form' => $form->createView(),
-            'category' =>$sous_category
+            'category' => $sous_category
         ]);
     }
     /**
@@ -203,13 +205,13 @@ class AdminController extends AbstractController
     /**
      * @Route("/superadmin/inscription", name="admin_registration")
      */
-    public function registration(Request $request,BoutiqueRepository $boutiqueRepository, UserRepository $userRepository, EntityManagerInterface $manager, UserPasswordEncoderInterface $encoder)
+    public function registration(Request $request, BoutiqueRepository $boutiqueRepository, UserRepository $userRepository, EntityManagerInterface $manager, UserPasswordEncoderInterface $encoder)
     {
         $user = new User();
         $boutique = new Boutique();
 
 
-        
+
         $form = $this->createForm(UserType::class, $user);
         $form->handleRequest($request);
 
@@ -299,15 +301,16 @@ class AdminController extends AbstractController
         return $this->render('admin/index.html.twig', [
             'pages' => 'list_boutique',
             'boutiques' => $boutiques,
-            'boutique'=>$boutique
+            'boutique' => $boutique
         ]);
     }
 
-    public function buttonAddProduct(array $categories,string $class){
-         $button = "";
-         foreach ($categories as $key => $category) {
-            $button .= '<button id="'.$this->utilsService::getSlug($category).'"class="'. $class .'">'.$category.'</button>';
-         }
+    public function buttonAddProduct(array $categories, string $class)
+    {
+        $button = "";
+        foreach ($categories as $key => $category) {
+            $button .= '<button id="' . $this->utilsService::getSlug($category) . '"class="' . $class . '">' . $category . '</button>';
+        }
         return $button;
     }
     static function button_add_boutique(string $categorie, $class)
@@ -466,7 +469,7 @@ class AdminController extends AbstractController
 
             default:
                 $button = "";
-            break;
+                break;
         }
 
 

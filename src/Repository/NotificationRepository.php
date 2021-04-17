@@ -19,17 +19,33 @@ class NotificationRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Notification::class);
     }
-    
+
     public function findNotificationBy(User $user)
     {
         return $this->createQueryBuilder('n')
-                ->select('n','u')
-                ->leftJoin('n.toUser','u')
-                ->andWhere('u = :val')
-                ->setParameter('val', $user->getId())
-                ->getQuery()
-                ->getResult()
-        ;
+            ->select('n', 'u')
+            ->leftJoin('n.toUser', 'u')
+            ->andWhere('u = :user')
+            ->setParameter('user', $user->getId())
+            ->orderBy('n.id', 'DESC')
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function findNotificationNotViewBy(User $user)
+    {
+        $qb = $this->createQueryBuilder('n');
+        $qb->select('n', 'u')
+            ->leftJoin('n.toUser', 'u')
+            ->andWhere('u = :user')
+            // ->andWhere('n.view LIKE :idUser ')
+            ->setParameters([
+                'user' => $user->getId(),
+                // 'idUser' => sprintf('%%,s,%%', $user->getId())
+            ])
+            ->orderBy('n.id', 'DESC');
+
+        return $qb->getQuery()->getResult();
     }
     // /**
     //  * @return Notification[] Returns an array of Notification objects

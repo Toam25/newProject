@@ -6,7 +6,7 @@
 </select>
 <div class="row">
 {% for blog in blogs %}
-	<div class="col-md-4 col-sm-6 col-xs-6 col-lg-4 " style="margin-top: 3px;">
+	<div id="id-{{blog.id}}"class="col-md-4 col-sm-6 col-xs-6 col-lg-4 " style="margin-top: 3px;">
      <a href="{{path('editBlog', {'id': blog.id })}}" >
 		<div class="cart container_cart container_blog">
 			<div class="cnt_image_date_bloc">
