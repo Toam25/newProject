@@ -36,7 +36,9 @@
           #}
         </div>
   </div>
- <p></p>   
+  <p></p>
+
+ {% if "ROLE_ADMIN" in app.user.roles %} 
     <div class="row">
             <!-- Earnings (Monthly) Card Example -->
             <div class="col-xl-4 col-md-4 mb-4">
@@ -315,5 +317,7 @@
     </div>
   </div>
 #}
+
+{% endif %}
 
 
