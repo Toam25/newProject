@@ -32,11 +32,14 @@ class  RequestListener
     if ($this->tokenStorage->getToken()) {
       $user = $this->tokenStorage->getToken()->getUser();
       if ($user instanceof UserInterface) {
-        $boutique = $this->boutiqueRepository->findOneBy(['user' => $user]);
-        $boutique->setLastActivityAt(new \DateTime());
-        //$user->setLastActivityAt(new \DateTime());
-        //$this->entityManagerInterface->flush($user);
-        $this->entityManagerInterface->persist($boutique);
+        if (in_array('ROLE_ADMIN', $user->getRoles())) {
+          $boutique = $this->boutiqueRepository->findOneBy(['user' => $user]);
+          $boutique->setLastActivityAt(new \DateTime());
+          $this->entityManagerInterface->persist($boutique);
+          $this->entityManagerInterface->flush();
+        }
+        $user->setLastActivityAt(new \DateTime());
+        $this->entityManagerInterface->persist($user);
         $this->entityManagerInterface->flush();
       }
     }

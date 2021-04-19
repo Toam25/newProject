@@ -16,4 +16,5 @@
 /phpunit.xml
 ###< symfony/phpunit-bridge ###
 /public/images
+/public/pdf
 /src/Migrations

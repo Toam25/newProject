@@ -111,6 +111,11 @@ class User implements UserInterface
      */
     private $confimation;
 
+    /**
+     * @ORM\OneToMany(targetEntity=ProfilJob::class, mappedBy="user")
+     */
+    private $profilJobs;
+
 
     public function __construct()
     {
@@ -124,6 +129,7 @@ class User implements UserInterface
         $this->birthday = new \DateTime();
         $this->blogs = new ArrayCollection();
         $this->notifications = new ArrayCollection();
+        $this->profilJobs = new ArrayCollection();
  
     }
 
@@ -521,6 +527,36 @@ class User implements UserInterface
      public function setConfimation(?string $confimation): self
      {
          $this->confimation = $confimation;
+
+         return $this;
+     }
+
+     /**
+      * @return Collection|ProfilJob[]
+      */
+     public function getProfilJobs(): Collection
+     {
+         return $this->profilJobs;
+     }
+
+     public function addProfilJob(ProfilJob $profilJob): self
+     {
+         if (!$this->profilJobs->contains($profilJob)) {
+             $this->profilJobs[] = $profilJob;
+             $profilJob->setUser($this);
+         }
+
+         return $this;
+     }
+
+     public function removeProfilJob(ProfilJob $profilJob): self
+     {
+         if ($this->profilJobs->removeElement($profilJob)) {
+             // set the owning side to null (unless already changed)
+             if ($profilJob->getUser() === $this) {
+                 $profilJob->setUser(null);
+             }
+         }
 
          return $this;
      }

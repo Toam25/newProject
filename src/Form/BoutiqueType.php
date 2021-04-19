@@ -18,64 +18,61 @@ class BoutiqueType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('name',TextType::class,[
-                'label'=>'Nom de la boutique',
-                'attr'=>[
-                    'class'=>'form-control'
+            ->add('name', TextType::class, [
+                'label' => 'Nom de la boutique',
+                'attr' => [
+                    'class' => 'form-control'
                 ]
             ])
-            ->add('address',TextType::class,[
-                'label'=>'Lien de votre boutique',
-                'attr'=>[
-                    'class'=>'form-control',
-                    'placeholder'=>"http://www.monsiteweb.com"
+            ->add('address', TextType::class, [
+                'label' => 'Lien de votre boutique',
+                'attr' => [
+                    'class' => 'form-control',
+                    'placeholder' => "http://www.monsiteweb.com"
                 ]
             ])
-            ->add('link',TextType::class,[
-                'label'=>'Lien Fb de la boutique',
-                'attr'=>[
-                    'class'=>'form-control',
-                    'placeholder'=>"http://www.facebook.com"
+            ->add('link', TextType::class, [
+                'label' => 'Lien Fb de la boutique',
+                'attr' => [
+                    'class' => 'form-control',
+                    'placeholder' => "http://www.facebook.com"
                 ]
             ])
-            ->add('mail',EmailType::class, [
-                'attr'=>[
-                    'class'=>'form-control'
+            ->add('mail', EmailType::class, [
+                'attr' => [
+                    'class' => 'form-control'
                 ]
             ])
-            ->add('contact',TextType::class,[
-                'attr'=>[
-                    'class'=>'form-control'
+            ->add('contact', TextType::class, [
+                'attr' => [
+                    'class' => 'form-control'
                 ]
             ])
-            
-            ->add('resume',TextareaType::class,[
-                'attr'=>[
-                    'class'=>'form-control'
+
+            ->add('resume', TextareaType::class, [
+                'attr' => [
+                    'class' => 'form-control'
                 ]
             ])
-            ->add('apropos',TextareaType::class,[
-                'attr'=>[
-                    'class'=>'form-control'
+            ->add('apropos', TextareaType::class, [
+                'attr' => [
+                    'class' => 'form-control'
                 ]
             ])
-            ->add('image',FileType::class,[
-                'label'=>'Logo',
-                'required'=>true,
-                 'mapped'=>false,
-                 'required'=>false,
-                 'attr'=>[
-                     'required'=>false,
-                     'class'=>'form-control file'
-                 ]
+            ->add('image', FileType::class, [
+                'label' => 'Logo',
+                'required' => true,
+                'mapped' => false,
+                'required' => false,
+                'attr' => [
+                    'required' => false,
+                    'class' => 'form-control file'
+                ]
             ])
-            ->add('user_condition',CKEditorType::class,[
-                'attr'=>[
-                    'class'=>'form-control'
-                ],
-                'input_sync'=> true
-            ])
-        ;
+            ->add('user_condition', CKEditorType::class, [
+
+                'input_sync' => true
+            ]);
     }
 
     public function configureOptions(OptionsResolver $resolver)

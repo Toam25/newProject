@@ -10,6 +10,7 @@ use App\Entity\Header;
 use App\Entity\Images;
 use App\Entity\Menu;
 use App\Entity\Notification;
+use App\Entity\ProfilJob;
 use App\Entity\User;
 use App\Entity\UserCondition;
 use App\Entity\UserVote;
@@ -22,6 +23,7 @@ use App\Repository\HeaderRepository;
 use App\Repository\ImagesRepository;
 use App\Repository\MenuRepository;
 use App\Repository\NotificationRepository;
+use App\Repository\ProfilJobRepository;
 use App\Repository\ReferenceRepository;
 use App\Repository\SliderRepository;
 use App\Repository\SocialNetworkRepository;
@@ -254,7 +256,7 @@ class APIController extends AbstractController
         }
     }
     /**
-     * @Route("/api/login/update/user/{id}", name="profil_password", methods="POST")
+     * @Route("/login/update/user/{id}", name="profil_password", methods="POST")
      */
     public function upPassWordUser(Request $request, User $user, $id, InsertFileServices $insertFileServices, UserPasswordEncoderInterface $encoder)
     {
@@ -269,6 +271,52 @@ class APIController extends AbstractController
             }
 
             $em = $this->getDoctrine()->getManager();
+            $em->flush();
+            return new JsonResponse(["status" => "sucess"], Response::HTTP_OK);
+        } else {
+            return new JsonResponse(["status" => "error", 'message' => "Mot de passe incorect"], Response::HTTP_UNAUTHORIZED);
+        }
+    }
+    /**
+     * @Route("/profil/cv/user/{id}", name="profil_cv", methods="POST")
+     */
+    public function upProfilCvUser(Request $request, User $user, $id, UtilsService $utilsService, ProfilJobRepository $profilJobRepository, InsertFileServices $insertFileServices)
+    {
+
+
+        if ($this->getUser()->getId() == intVal($id)) {
+            $profilJob = $profilJobRepository->findOneBy(['user' => $user]);
+            $file = $insertFileServices->insertFile($request->files->get('cv'), ['pdf'], $this->getParameter('pdf_directory'));
+            $em = $this->getDoctrine()->getManager();
+            if ($profilJob != null) {
+
+                //  unlink($this->getParameter('pdf_directory') . '/' . $profilJob->getCv());
+                $profilJob->setCv($file);
+            } else {
+                $newProfilJob = new ProfilJob();
+                $newProfilJob->setCv($file);
+                $newProfilJob->setUser($user);
+                $em->persist($newProfilJob);
+            }
+            $em->flush();
+            return new JsonResponse(["status" => "sucess", "name" => $file], Response::HTTP_OK);
+        } else {
+            return new JsonResponse(["status" => "error", 'message' => "Mot de passe incorect"], Response::HTTP_UNAUTHORIZED);
+        }
+    }
+
+    /**
+     * @Route("/profil/delete/cv", name="delete_profil_cv", methods="POST")
+     */
+    public function deleteProfilCvUser(Request $request, ProfilJobRepository $profilJobRepository)
+    {
+
+        $profilJob = $profilJobRepository->findOneBy(['user' => $this->getUser()]);
+        if ($this->getUser()) {
+
+            unlink($this->getParameter('pdf_directory') . "/" . $profilJob->getCv());
+            $em = $this->getDoctrine()->getManager();
+            $em->remove($profilJob);
             $em->flush();
             return new JsonResponse(["status" => "sucess"], Response::HTTP_OK);
         } else {

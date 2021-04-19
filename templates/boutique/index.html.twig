@@ -27,6 +27,7 @@
     <link type="text/css" rel="stylesheet" href="{{ asset('css/style.css') }}"/>
     <link type="text/css" rel="stylesheet" href="{{ asset('css/boutique.css') }}"/>
     <link type="text/css" rel="stylesheet" href="{{ asset('css/index.css') }}"/>
+    {# <link type="text/css" rel="stylesheet" href="{{ asset('css/contact.css') }}"/> #}
 	<link rel="stylesheet" href="{{ asset('css/indexmenu.css') }}" />
     <link type="text/css" rel="stylesheet" href="{{ asset('css/slideindexvote.css') }}"/>
     <link rel="icon" type="image/png" href="{{asset('images/'~boutique.logo)}}">
@@ -123,6 +124,8 @@
 		{% include "boutique/pubvideo.html.twig" %}
 	</div>
 	<p></p>
+	 
+	{# <div class="message_footer">{% include "boutique/message.twig" %}Nous contacter</div> #}
 	{% if not app.user%}
 		{% include 'boutique/dependancies/connexion.html.twig'%}
 	{% endif %}

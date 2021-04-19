@@ -84,4 +84,16 @@ $(function () {
     });
 
   })
+
+  $('.message_footer').on('click', function (e) {
+
+    e.preventDefault();
+    $('.head_message').css({
+      'height': '350px',
+      'width': '266px',
+      'display': 'block'
+    });
+
+  });
+
 })
