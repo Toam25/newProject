@@ -138,6 +138,21 @@ class Boutique
      */
     private $lastActivityAt;
 
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $externalLink;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $offer;
+
+    /**
+     * @ORM\Column(type="array")
+     */
+    private $longLat = [];
+
     public function __construct()
     {
         $this->logo = "images_default/default_logo.png";
@@ -148,12 +163,16 @@ class Boutique
         $this->shopReferences = new ArrayCollection();
         $this->menus = new ArrayCollection();
         $this->esArticles = new ArrayCollection();
-        $this->vote= new ArrayCollection();
-        $this->showArticle= true;
-        $this->showBlog=false;
+        $this->vote = new ArrayCollection();
+        $this->showArticle = true;
+        $this->showBlog = false;
         $this->nbrOfVisitor = 0;
         $this->blogs = new ArrayCollection();
-
+        $this->offer = "FREE";
+        $this->longLat = [
+            'long' => -0.096,
+            'lat' => 51.49
+        ];
     }
 
     public function getId(): ?int
@@ -619,13 +638,50 @@ class Boutique
 
         return $this;
     }
-     /**
+    /**
      * @return Bool whether the user is active or not
      */
 
-    public function isActiveNow(){
+    public function isActiveNow()
+    {
         $delay = new \DateTime("2 minutes ago");
 
-        return ($this->getLastActivityAt()>$delay);
+        return ($this->getLastActivityAt() > $delay);
+    }
+
+    public function getExternalLink(): ?string
+    {
+        return $this->externalLink;
+    }
+
+    public function setExternalLink(string $externalLink): self
+    {
+        $this->externalLink = $externalLink;
+
+        return $this;
+    }
+
+    public function getOffer(): ?string
+    {
+        return $this->offer;
+    }
+
+    public function setOffer(string $offer): self
+    {
+        $this->offer = $offer;
+
+        return $this;
+    }
+
+    public function getLongLat(): ?array
+    {
+        return $this->longLat;
+    }
+
+    public function setLongLat(array $longLat): self
+    {
+        $this->longLat = $longLat;
+
+        return $this;
     }
 }

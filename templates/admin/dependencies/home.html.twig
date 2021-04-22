@@ -319,5 +319,31 @@
 #}
 
 {% endif %}
+<div id="container_cart">
+  <h4>Enregistrer votre Coordonné</h4>
+  <div id="container_long_lat">
+      <div>
+        <form action="" class="locate_me_form">
+          <label for="logitude">Ville</label>
+            <textarea name="ville" id="ville" rows="5" disabled class="form-control"></textarea>
+          <label for="logitude">Longitude</label>
+            <input type="text" id="longitude" name="longitude" class="form-control" 
+             {% if boutique.longLat|length > 0%}
+              value = "{{boutique.longLat['long']}}"
+             {% endif %}
+             required>
+          <label for="logitude">Latitude</label>
+            <input type="text" id="latitude" name="latitude"  class="form-control" 
+            {% if boutique.longLat|length > 0%}
+              value = "{{boutique.longLat['lat']}}"
+             {% endif %}
 
-
+            required>
+            <button id="locate_me" type="button">Me localisé</button>
+            <button class="btn btn-success" type="submit">Enregister</button>
+        </form>
+      </div>
+      <div id ="map">
+      </div>
+  </div>
+</div>

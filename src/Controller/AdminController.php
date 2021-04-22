@@ -304,7 +304,25 @@ class AdminController extends AbstractController
             'boutique' => $boutique
         ]);
     }
+    /**
+     * @Route("admin/shop/longLat", name="setLongLat", methods={"POST"})
+     */
+    public function setLongLat(BoutiqueRepository $boutiqueRepository, Request $request)
+    {
 
+        // $allArticle = $articleRepository->findBy(['boutique'=>$boutiqueRepository->findOneBy(['user'=>$this->getUser()])] );
+        $boutique = $boutiqueRepository->findOneBy(['user' => $this->getUser()]);
+
+        $em = $this->getDoctrine()->getManager();
+        $boutique->setLongLat([
+            "long" => $request->request->get('long'),
+            "lat" => $request->request->get('lat'),
+        ]);
+        $em->persist($boutique);
+        $em->flush();
+
+        return new JsonResponse(['status' => 'success'], Response::HTTP_OK);
+    }
     public function buttonAddProduct(array $categories, string $class)
     {
         $button = "";

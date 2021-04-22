@@ -73,6 +73,7 @@ class BoutiqueController extends AbstractController
         $blog = "";
         $matches = [];
         $first = intval($request->cookies->get($type));
+        $boutiques = [];
 
         if ($type != "") {
 
@@ -97,6 +98,7 @@ class BoutiqueController extends AbstractController
             $listShops = $this->getlistShop($boutiqueRepository->findAllBoutiqueWithOutUserRoleSuperAdmin("ROLE_ADMIN"), $type);
             $isHomeShop = true;
             $type = "g_marchande";
+            $boutiques = $boutiqueRepository->findAllBoutiqueWithOutUserRoleSuperAdmin("ROLE_ADMIN");
         }
 
 
@@ -124,6 +126,7 @@ class BoutiqueController extends AbstractController
             'menu' => $type,
             'isHomeShop' => $isHomeShop,
             'blogs' => $blogs,
+            'shops' => $boutiques,
             'shopLink' => sizeof($matches) > 2 ? $matches[2] : ""
 
         ]);

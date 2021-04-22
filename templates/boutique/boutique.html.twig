@@ -11,7 +11,9 @@
 {% block meta%}{% endblock %}
 {% block stylesheets %}
 	<link href="https://fonts.googleapis.com/css?family=Montserrat:400,500,700" rel="stylesheet">
-
+	<link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
+   integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
+   crossorigin=""/>
 	<link
 	href="{{ asset('css/bootstrap3.3.css')}}" rel="stylesheet" type="text/css">
 	<!-- Slick -->
@@ -43,7 +45,27 @@
 {% if isHomeShop is same as (false) %}
 		{% include "boutique/dependancies/articleInShop.html.twig" %}
 {% else %}
-   En cours ....
+      <div id="container_map">
+	      <div id="search_shop">
+		     <h3>TROUVER UNE BOUTIQUE</h3>
+			   <button id="geolocate_me">Me geolocalise</button>
+			 <input type="text" id="search_in_map"class="form-control" name="q">
+			 <p><span id="nbr_result"> {{ shops| length }} </span> RESULTAT(S)</p>
+			 <div id="container_list_shop">
+			     {% set Lat = 43.57 %}
+			     {% for shop in shops %}
+				       {% set Lat = Lat +3 %}
+					  <div class="list_shop js_market" data-lat = "{{Lat}}" data-log="3.5" data-name="{{shop.name}}">
+					  		<h4>{{ shop.name }}</h4>
+							<address>tsetaate</address>
+							<a href="{{ path('shop',{'id': shop.id, 'type' : shop.type} )}}">En savoir plus</a>
+					  </div>
+				 {% endfor %}
+			 </div>
+		  </div>
+		  <div id="map">
+		  </div>
+	  </div>
 {% endif %}
 
 
@@ -56,6 +78,10 @@
 {% endblock %}
 
 {% block javascripts %}
+	<script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
+   integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
+   crossorigin=""></script>
+	<script src="{{ asset('js/config-leaflet.js') }}"></script>
 	<script src="{{ asset('js/slick.min.js') }}"></script>
 	<script src=" {{ asset('js/nouislider.min.js') }}"></script>
 	<script src="{{ asset('js/jquery.zoom.min.js') }}"></script>

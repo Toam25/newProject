@@ -548,4 +548,43 @@ nav li:hover .submenu{
         display: none;
     }
 }
-
+#container_map {
+    display: grid;
+    grid-template-columns: 1fr 3fr;
+    padding: 0 11px;
+    justify-content: center;
+}
+#map{
+    height: 100%;
+    background: rebeccapurple;
+}
+#search_shop > h3 {
+    font-size: 16px;
+    text-align: center;
+}
+.list_shop {
+    border: 1px solid rgba(0,0,0,0.1);
+    padding: 13px 16px;
+}
+ 
+ .list_shop> h4 {
+        color: #2bbee2;
+ }
+ .is-active .leaflet-popup-content-wrapper{
+     background-color: red !important ;
+ }
+ .is-expanded {
+     z-index: 301;
+ }
+.list_shop > a{
+    background: #216373;
+    padding: 8px;
+    color: white;
+    text-decoration: none;
+}
+#container_list_shop {
+    overflow-y: auto;
+    height: 50vh;
+    padding: 0 5px 0 0;
+    margin: 5px 0px;
+}
