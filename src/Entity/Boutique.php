@@ -149,9 +149,14 @@ class Boutique
     private $offer;
 
     /**
-     * @ORM\Column(type="array")
+     * @ORM\Column(type="array", nullable=true)
      */
     private $longLat = [];
+
+    /**
+     * @ORM\Column(type="text", nullable=true)
+     */
+    private $slogan;
 
     public function __construct()
     {
@@ -681,6 +686,18 @@ class Boutique
     public function setLongLat(array $longLat): self
     {
         $this->longLat = $longLat;
+
+        return $this;
+    }
+
+    public function getSlogan(): ?string
+    {
+        return $this->slogan;
+    }
+
+    public function setSlogan(?string $slogan): self
+    {
+        $this->slogan = $slogan;
 
         return $this;
     }

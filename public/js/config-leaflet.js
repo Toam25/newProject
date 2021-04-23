@@ -94,34 +94,36 @@ $(function () {
         await map.load($map);
 
         Array.from(document.querySelectorAll('.js_market')).forEach(item => {
-            let marker = map.addMarker(item.dataset.lat, item.dataset.log, item.dataset.name);
-            markers.push(marker);
-            item.addEventListener('mouseover', function () {
+
+            if (item.dataset.lat !== "") {
+                let marker = map.addMarker(item.dataset.lat, item.dataset.log, item.dataset.name);
 
 
-                if (hoverMarker !== null) {
-                    hoverMarker.unsetActive();
-                }
-                marker.setActive();
-                hoverMarker = marker;
-            })
-            item.addEventListener('mouseleave', function () {
-                if (hoverMarker !== null) {
-                    hoverMarker.unsetActive();
-                }
-            })
-            marker.addEventListener('click', function () {
-                if (activeMarker !== null) {
-                    activeMarker.resetContent();
-                }
-                marker.setContent(item.innerHTML)
-                activeMarker = marker;
-            });
+                markers.push(L.marker([item.dataset.lat, item.dataset.log]));
+
+                item.addEventListener('mouseover', function () {
+
+
+                    if (hoverMarker !== null) {
+                        hoverMarker.unsetActive();
+                    }
+                    marker.setActive();
+                    hoverMarker = marker;
+                })
+                item.addEventListener('mouseleave', function () {
+                    if (hoverMarker !== null) {
+                        hoverMarker.unsetActive();
+                    }
+                })
+                // marker.addEventListener('click', function () {
+                //     if (activeMarker !== null) {
+                //         activeMarker.resetContent();
+                //     }
+                //     marker.setContent(item.innerHTML)
+                //     activeMarker = marker;
+                // });
+            }
         });
-
-
-
-
 
         $('#geolocate_me').on('click', function () {
             navigator.geolocation.getCurrentPosition(function (position) {
@@ -129,17 +131,66 @@ $(function () {
 
             });
         });
-        $('#search_in_map').on('keyup', function (e) {
+
+        markers.forEach(element => {
+            map.removeLayer(element);
+
+        });
+
+        console.log(markers);
+        for (var i = 0; i < markers.length; i++) {
+            map.removeLayer(markers[i]);
+        }
+        $('#search_in_map').on('blur', function (e) {
             e.preventDefault();
             let text = $(this).val();
             $.ajax({
-                url: "",
+                url: "/galery_marchande/shop",
                 type: 'GET',
+                data: {
+                    q: text
+                },
                 dataType: 'html',
                 beforeSend: () => {
                 },
                 success: (data) => {
-                    map.removeLayer();
+                    $('#container_list_shop').html(data);
+
+                    markers.forEach(element => {
+                        map.removeLayer(element);
+
+                    });
+                    Array.from(document.querySelectorAll('.js_market')).forEach(item => {
+
+                        if (item.dataset.lat !== "") {
+                            let marker = map.addMarker(item.dataset.lat, item.dataset.log, item.dataset.name);
+
+
+                            markers.push([item.dataset.lat, item.dataset.log]);
+                            item.addEventListener('mouseover', function () {
+
+
+                                if (hoverMarker !== null) {
+                                    hoverMarker.unsetActive();
+                                }
+                                marker.setActive();
+                                hoverMarker = marker;
+                            })
+                            item.addEventListener('mouseleave', function () {
+                                if (hoverMarker !== null) {
+                                    hoverMarker.unsetActive();
+                                }
+                            })
+                            // marker.addEventListener('click', function () {
+                            //     if (activeMarker !== null) {
+                            //         activeMarker.resetContent();
+                            //     }
+                            //     marker.setContent(item.innerHTML)
+                            //     activeMarker = marker;
+                            // });
+                        }
+                    });
+
                 },
                 error: () => {
                     toastr.error('Erreur de connexion au serveur');
@@ -147,8 +198,28 @@ $(function () {
                 }
             });
         });
-        map.center();
 
+        $('#search_in_map').on('blur', function (e) {
+            e.preventDefault();
+            let text = $(this).val();
+            $.ajax({
+                url: "/galery_marchande/shop/nbr",
+                type: 'GET',
+                data: {
+                    q: text
+                },
+                dataType: 'json',
+                beforeSend: () => {
+                },
+                success: (data) => {
+                    $('#nbr_result').text(data.nbr);
+
+                },
+                error: () => {
+                }
+            });
+        });
+        map.center();
     }
     if ($map !== null) {
         initMap();

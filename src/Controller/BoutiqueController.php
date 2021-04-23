@@ -112,7 +112,7 @@ class BoutiqueController extends AbstractController
         }
 
         if ($boutique) {
-            preg_match('%(http[s]?:\/\/|www\/)([a-zA-Z0-9-_\.\/\?=&]+)%i', $boutique->getAddress(), $matches);
+            preg_match('%(http[s]?:\/\/|www\/)([a-zA-Z0-9-_\.\/\?=&]+)%i', $boutique->getExternalLink(), $matches);
         }
 
         return $this->render('boutique/boutique.html.twig', [
@@ -185,6 +185,27 @@ class BoutiqueController extends AbstractController
         ]);
     }
 
+    /**
+     * @Route("/galery_marchande/shop", name="shopsGaleryMarchande", methods={"GET"})
+     */
+    public function shopsGaleryMarchande(BoutiqueRepository $boutiqueRepository, SearchService $search, Request $request)
+    {
+        $boutiques = $search->getResultSearchForShops($request);
+
+        return $this->render('boutique/dependancies//list_shop_galery_marchande.html.twig', [
+            'shops' => $boutiques
+        ]);
+    }
+
+    /**
+     * @Route("/galery_marchande/shop/nbr", name="shopsGaleryMarchandeNbr", methods={"GET"})
+     */
+    public function shopsGaleryMarchandeNbr(BoutiqueRepository $boutiqueRepository, SearchService $search, Request $request)
+    {
+        $boutiques = $search->getResultSearchForShops($request);
+        $nbr = sizeof($boutiques) != "" ? sizeof($boutiques)  : 0;
+        return new JsonResponse(['nbr' => $nbr], Response::HTTP_OK);
+    }
     /**
      * @Route("/vote/{id}/add" , name="addVote")
      */

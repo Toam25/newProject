@@ -1,3 +1,6 @@
+body {
+    overflow-x: hidden;
+}
 .container_cart {
     margin: 0;
     padding: 0 !important;
@@ -240,6 +243,8 @@
     position: relative;
     overflow-y: hidden;
     white-space: nowrap;
+    z-index: 2;
+    background: white;
 }
 
 .logo_image_boutique_header {
@@ -367,7 +372,7 @@ ul > ul > li label, ul>li>label{
 #header{
     position: sticky;
     top: 0;
-    z-index: 11;
+    z-index: 9999;
     background-color: #202340 !important;
 }
 .navbar-light .navbar-nav .nav-link:hover, .navbar-light .navbar-nav .nav-link:focus {
@@ -548,15 +553,33 @@ nav li:hover .submenu{
         display: none;
     }
 }
-#container_map {
-    display: grid;
-    grid-template-columns: 1fr 3fr;
-    padding: 0 11px;
-    justify-content: center;
+
+@media (min-width: 768px){
+
+    #container_map {
+        display: grid;
+        grid-template-columns: 1fr 3fr;
+        padding: 0 11px;
+        justify-content: center;
+        background: white;
+    }
+    .__{
+        width: 100vw;
+    }
+    .__2{
+        width: 100vw;
+    }
+    #map{
+        height: 100%;
+    }
 }
+
 #map{
-    height: 100%;
-    background: rebeccapurple;
+    height: 400px;
+    z-index: 1;
+}
+.datail_echantillon_shops h3, .datail_echantillon_shops h2 {
+     font-size : 13px ;
 }
 #search_shop > h3 {
     font-size: 16px;
@@ -571,7 +594,11 @@ nav li:hover .submenu{
         color: #2bbee2;
  }
  .is-active .leaflet-popup-content-wrapper{
-     background-color: red !important ;
+    background: #08a8f7 !important;
+    color: white !important;
+ }
+ .is-active .leaflet-popup-tip{
+    background: #08a8f7 !important;
  }
  .is-expanded {
      z-index: 301;
@@ -588,3 +615,111 @@ nav li:hover .submenu{
     padding: 0 5px 0 0;
     margin: 5px 0px;
 }
+.leaflet-marker-pane {
+    z-index: 990 !important;
+}
+#geolocate_me {
+    border: none;
+    background: none;
+    font-size: 12px;
+    margin: 5px;
+}
+#search_shop {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 0px 5px;
+    z-index: 1;
+    background: white;
+}
+#search_shop p {
+    text-align: center;
+    font-size: 13px;
+    margin-top: 5px;
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+}
+.logo-img > img {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+}
+.logo-img {
+    height: 80px;
+    width: 80px;
+    border-radius: 50%;
+    padding: 5px;
+    background: white;
+}
+.container_product {
+    height: 260px;
+    display: flex !important;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    box-shadow: 0 0 5px #00000040;
+    margin: 5px;
+    background: white
+}
+
+.slogan {
+    font-size: 11px;
+    text-align: center;
+    font-weight: normal;
+}
+
+.shop_name_g {
+
+    text-align: center;
+    font-size: 14px;
+
+}
+.__2{
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    border: 1px solid rgba(0,0,0,0.1);
+    width: 50vw !important;
+    z-index: 1;
+    background: white;
+}
+.__{
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    border: 1px solid rgba(0,0,0,0.1);
+    width: 50vw !important;
+    border-top: none;
+    z-index: 1;
+    background: white;
+}
+.image_echatillon_shop > img {
+    width: 100%;
+    height: 100%;
+}
+.image_echatillon_shop {
+    height: 200px;
+    padding: 7px;
+    display: flex;
+    justify-content: center;
+}
+#echatillon_shops {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 10px;
+}
+.datail_echantillon_shops {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+/* .bol1 {
+    width: 2000px;
+    height: 2000px;
+    background: #2bbee2;
+    position: absolute;
+    border-radius: 50%;
+    top: 20%;
+    z-index: -1;
+} */

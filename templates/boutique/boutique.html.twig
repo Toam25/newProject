@@ -11,9 +11,7 @@
 {% block meta%}{% endblock %}
 {% block stylesheets %}
 	<link href="https://fonts.googleapis.com/css?family=Montserrat:400,500,700" rel="stylesheet">
-	<link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
-   integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
-   crossorigin=""/>
+	<link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A==" crossorigin=""/>
 	<link
 	href="{{ asset('css/bootstrap3.3.css')}}" rel="stylesheet" type="text/css">
 	<!-- Slick -->
@@ -42,31 +40,115 @@
 
 	{% include 'boutique/dependancies/headershop.html.twig' %}
 
-{% if isHomeShop is same as (false) %}
+	{% if isHomeShop is same as (false) %}
 		{% include "boutique/dependancies/articleInShop.html.twig" %}
-{% else %}
-      <div id="container_map">
-	      <div id="search_shop">
-		     <h3>TROUVER UNE BOUTIQUE</h3>
-			   <button id="geolocate_me">Me geolocalise</button>
-			 <input type="text" id="search_in_map"class="form-control" name="q">
-			 <p><span id="nbr_result"> {{ shops| length }} </span> RESULTAT(S)</p>
-			 <div id="container_list_shop">
-			     {% set Lat = 43.57 %}
-			     {% for shop in shops %}
-				       {% set Lat = Lat +3 %}
-					  <div class="list_shop js_market" data-lat = "{{Lat}}" data-log="3.5" data-name="{{shop.name}}">
-					  		<h4>{{ shop.name }}</h4>
-							<address>tsetaate</address>
-							<a href="{{ path('shop',{'id': shop.id, 'type' : shop.type} )}}">En savoir plus</a>
-					  </div>
-				 {% endfor %}
-			 </div>
-		  </div>
-		  <div id="map">
-		  </div>
-	  </div>
-{% endif %}
+	{% else %}
+		<div id="echantillon_shop">
+			<div
+				class="section">
+				<!-- container -->
+				<div
+					class="container">
+					<!-- row -->
+					<div
+						class="row">
+						<!-- Products tab & slick -->
+						<div class="col-md-12">
+							<div class="row">
+								<div
+									class="products-tabs">
+									<!-- tab -->
+									<div id="tab2" class="tab-pane fade in active">
+										<div
+											class="products-slick" data-nav="#slick-nav-2">
+											<!-- product -->
+											{% for shop in shops %}
+												{% include "boutique/dependancies/list_shops_slide_galery_marchande.html.twig" %}
+											{% endfor %}
+
+											<!-- /product -->
+										</div>
+										<div id="slick-nav-2" class="products-slick-nav"></div>
+									</div>
+									<!-- /tab -->
+								</div>
+							</div>
+						</div>
+						<!-- /Products tab & slick -->
+					</div>
+					<!-- /row -->
+				</div>
+				<!-- /container -->
+			</div>
+		</div>
+		<div class="bol1">
+		</div>
+		<h3 style="text-align: center;background: white;margin: 0;">TROUVER UNE BOUTIQUE</h3>
+		<div id="container_map">
+			<div id="search_shop">
+
+				<input type="text" id="search_in_map" class="form-control" placeholder="Recherche boutique" name="q">
+				<p>
+					<span>
+						<span id="nbr_result">
+							{{ shops| length }}
+						</span>
+						RESULTAT(S)</span>
+					<button id="geolocate_me">Me geolocalise</button>
+				</p>
+
+				<div id="container_list_shop">
+					{% include "boutique/dependancies/list_shop_galery_marchande.html.twig" %}
+				</div>
+			</div>
+			<div id="map"></div>
+		</div>
+
+		<div id="echatillon_shops">
+			{% set i = 0 %}
+			{% set echatillons_shops = shops %}
+
+			{% for echatillon in echatillons_shops %}
+				{% set i = i + 1 %}
+				{% if i < 5 %}
+					{% if i % 2 == 0  %}
+
+						<div class="__">
+							<div class="datail_echantillon_shops">
+								<h2>{{ echatillon.name }}</h2>
+								<h3>
+									{{ echatillon.slogan}}
+								</h3>
+								<p>
+									{{ echatillon.apropos }}
+								</p>
+							</div>
+							<div class="image_echatillon_shop">
+								<img src="{{asset('images/'~echatillon.logo)}}">
+							</div>
+						</div>
+					{% else %}
+						<div class="__2">
+							<div class="image_echatillon_shop">
+								<img src="{{asset('images/'~echatillon.logo)}}">
+							</div>
+							<div class="datail_echantillon_shops">
+								<h3>
+									{{ echatillon.slogan}}
+								</h3>
+								<p>
+									{{ echatillon.apropos }}
+								</p>
+							</div>
+
+						</div>
+
+					{% endif %}
+				{% endif %}
+
+			{% endfor %}
+		</div>
+	{% endif %}
 
 
 	{% if not app.user%}
@@ -78,9 +160,7 @@
 {% endblock %}
 
 {% block javascripts %}
-	<script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
-   integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
-   crossorigin=""></script>
+	<script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js" integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA==" crossorigin=""></script>
 	<script src="{{ asset('js/config-leaflet.js') }}"></script>
 	<script src="{{ asset('js/slick.min.js') }}"></script>
 	<script src=" {{ asset('js/nouislider.min.js') }}"></script>
@@ -93,3 +173,4 @@
 	<script src="{{ asset('js/shop.js') }}"></script>
 	<script src="{{ asset('js/main.js') }}"></script>
 {% endblock %}
+

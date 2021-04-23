@@ -28,7 +28,7 @@ class BoutiqueType extends AbstractType
                 'label' => 'Lien de votre boutique',
                 'attr' => [
                     'class' => 'form-control',
-                    'placeholder' => "http://www.monsiteweb.com"
+                    'placeholder' => "Votre adresse"
                 ]
             ])
             ->add('link', TextType::class, [
@@ -36,6 +36,20 @@ class BoutiqueType extends AbstractType
                 'attr' => [
                     'class' => 'form-control',
                     'placeholder' => "http://www.facebook.com"
+                ]
+            ])
+            ->add('slogan', TextType::class, [
+                'label' => 'Votre slogan',
+                'attr' => [
+                    'class' => 'form-control',
+                    'placeholder' => "Votre slogan"
+                ]
+            ])
+            ->add('externalLink', TextType::class, [
+                'label' => 'Lien externe ',
+                'attr' => [
+                    'class' => 'form-control',
+                    'placeholder' => "http://www.monSite.com"
                 ]
             ])
             ->add('mail', EmailType::class, [
