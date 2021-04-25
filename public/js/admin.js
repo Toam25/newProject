@@ -4,6 +4,35 @@ $(function () {
   var $category;
 
 
+  //add video 
+
+  $('.add_video').on('submit', function (e) {
+    e.preventDefault();
+
+    $.ajax({
+      url: "/api/v1/video",
+      type: 'POST',
+      contentType: false,
+      processData: false,
+      cache: false,
+      dataType: 'json',
+      data: new FormData(this),
+      beforeSend: () => {
+        toastr.info('Enregistrement en cours ;) ');
+        $('.btn-submit').prop('disabled', true)
+      },
+      success: (data) => {
+        toastr.success('Enregistrer avec success ;) ');
+        $('.btn-submit').prop('disabled', false)
+        $('.add_video')[0].reset();
+      },
+      error: () => {
+        toastr.error('Erreur d\'enregistrement ');
+        $('.btn-submit').prop('disabled', false)
+      }
+    });
+
+  });
   $('.save_blog').on('click', function (e) {
     e.preventDefault();
     let form = $('.save_blog').parent('div').parent('form')[0];

@@ -14,6 +14,7 @@ use App\Entity\ProfilJob;
 use App\Entity\User;
 use App\Entity\UserCondition;
 use App\Entity\UserVote;
+use App\Entity\Video;
 use App\Entity\Vote;
 use App\Entity\Votes;
 use App\Repository\ArticleRepository;
@@ -728,6 +729,56 @@ class APIController extends AbstractController
     public function getNotification(NotificationService $notificationService)
     {
         return new JsonResponse($notificationService->getMessageNotification(), Response::HTTP_OK);
+    }
+
+    /**
+     * @Route("/v1/video", name="add_video", methods={"POST"})
+     */
+
+    public function addVideo(Request $request, BoutiqueRepository $boutiqueRepository)
+    {
+        if ($this->getUser()) {
+            $boutique = $boutiqueRepository->findOneBy(['user' => $this->getUser()]);
+            $video = new Video();
+            $title = $request->request->get('title');
+            $link = $request->request->get('link');
+            $description = $request->request->get('description');
+
+            $video->setTitle($title)
+                ->setLink($link)
+                ->setDescription($description)
+                ->setBoutique($boutique);
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($video);
+            $em->flush();
+            return new JsonResponse(["status" => "Success"], Response::HTTP_OK);
+        }
+
+        return new JsonResponse(["status" => "Unauthorizerd"], Response::HTTP_UNAUTHORIZED);
+    }
+    /**
+     * @Route("/v1/video/{id}", name="video", methods={"POST"})
+     */
+    public function updateVideo(Request $request, BoutiqueRepository $boutiqueRepository, Video $video)
+    {
+        if ($video->getBoutique() == $boutiqueRepository->findOneBy(['user' => $this->getUser()])) {
+
+            $boutique = $boutiqueRepository->findOneBy(['user' => $this->getUser()]);
+            $title = $request->request->get('title');
+            $link = $request->request->get('link');
+            $description = $request->request->get('description');
+
+            $video->setTitle($title)
+                ->setLink($link)
+                ->setDescription($description)
+                ->setBoutique($boutique);
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($video);
+            $em->flush();
+            return new JsonResponse(["status" => "Success"], Response::HTTP_OK);
+        }
+
+        return new JsonResponse(["status" => "Unauthorizerd"], Response::HTTP_UNAUTHORIZED);
     }
 
     /**

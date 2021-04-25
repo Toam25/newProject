@@ -19,6 +19,7 @@ use App\Repository\MenuRepository;
 use App\Repository\NotificationRepository;
 use App\Repository\ReferenceRepository;
 use App\Repository\UserRepository;
+use App\Repository\VideoRepository;
 use App\Service\CategoryOptionService;
 use App\Service\CategoryService;
 use App\Service\InsertFileServices;
@@ -73,6 +74,52 @@ class AdminController extends AbstractController
             'peddingBlogs' => $blogRepository->findBy(['boutique' => $boutique, 'status' => 'PENDING']),
             'closedBlogs' => $blogRepository->findBy(['boutique' => $boutique, 'status' => 'CLOSED']),
             'validateBlogs' => $blogRepository->findBy(['boutique' => $boutique, 'validate' => true])
+        ]);
+    }
+    /**
+     * @Route("/admin/add/video", name="add_video")
+     */
+    public function add_video(BoutiqueRepository $boutiqueRepository)
+    {
+
+        // $allArticle = $articleRepository->findBy(['boutique'=>$boutiqueRepository->findOneBy(['user'=>$this->getUser()])] );
+
+        $boutique = $boutiqueRepository->findOneBy(['user' => $this->getUser()]);
+
+        return $this->render('admin/index.html.twig', [
+            'pages' => 'add_video',
+            'boutique' => $boutique,
+        ]);
+    }
+    /**
+     * @Route("/admin/edit/video/{id}", name="edit_video")
+     */
+    public function edit_video(BoutiqueRepository $boutiqueRepository)
+    {
+
+        // $allArticle = $articleRepository->findBy(['boutique'=>$boutiqueRepository->findOneBy(['user'=>$this->getUser()])] );
+
+        $boutique = $boutiqueRepository->findOneBy(['user' => $this->getUser()]);
+
+        return $this->render('admin/index.html.twig', [
+            'pages' => 'edit_video',
+            'boutique' => $boutique,
+        ]);
+    }
+    /**
+     * @Route("/admin/list/video", name="list_video")
+     */
+    public function video(BoutiqueRepository $boutiqueRepository, VideoRepository $videoRepository)
+    {
+
+        // $allArticle = $articleRepository->findBy(['boutique'=>$boutiqueRepository->findOneBy(['user'=>$this->getUser()])] );
+
+        $boutique = $boutiqueRepository->findOneBy(['user' => $this->getUser()]);
+        $videos = $videoRepository->findBy(['boutique' => $boutique]);
+        return $this->render('admin/index.html.twig', [
+            'pages' => 'list_video',
+            'boutique' => $boutique,
+            'videos' => $videos
         ]);
     }
     /**

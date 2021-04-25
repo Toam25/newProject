@@ -718,6 +718,11 @@ background: #e4087e;
     padding: 0;
     margin: 0;
 }
+.container_btn{
+    display: flex;
+    justify-content: end;
+    margin-top  : 10px;
+}
 #container_cart {
     background: white;
     padding: 5px 0 5px 11px;

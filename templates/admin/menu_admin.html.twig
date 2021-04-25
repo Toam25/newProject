@@ -131,7 +131,18 @@
           <a class="collapse-item" href="{{path('listBlog')}}">Liste</a>
           <a class="collapse-item" href="{{path('addBlog')}}">Ajout</a>
         </div>
-</li>    
+</li>
+<li class="nav-item">
+      <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#formation_video" aria-expanded="true" aria-controls="collapsePages">
+        <i class="fas fa-fw fa-folder"></i>
+        <span>Formation video</span>
+      </a>
+      <div id="formation_video" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
+        <div class="bg-white py-2 collapse-inner rounded">
+          <a class="collapse-item" href="{{path('list_video')}}">Liste</a>
+          <a class="collapse-item" href="{{path('add_video')}}">Ajout</a>
+        </div>
+</li>   
 <li class="nav-item">
       <a class="nav-link" href="{{ path('social_network_index')}}">
         <i class="fas fa-fw fa-tachometer-alt"></i>

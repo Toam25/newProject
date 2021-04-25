@@ -158,6 +158,11 @@ class Boutique
      */
     private $slogan;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Video::class, mappedBy="boutique")
+     */
+    private $videos;
+
     public function __construct()
     {
         $this->logo = "images_default/default_logo.png";
@@ -178,6 +183,7 @@ class Boutique
             'long' => -0.096,
             'lat' => 51.49
         ];
+        $this->videos = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -698,6 +704,36 @@ class Boutique
     public function setSlogan(?string $slogan): self
     {
         $this->slogan = $slogan;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Video[]
+     */
+    public function getVideos(): Collection
+    {
+        return $this->videos;
+    }
+
+    public function addVideo(Video $video): self
+    {
+        if (!$this->videos->contains($video)) {
+            $this->videos[] = $video;
+            $video->setBoutique($this);
+        }
+
+        return $this;
+    }
+
+    public function removeVideo(Video $video): self
+    {
+        if ($this->videos->removeElement($video)) {
+            // set the owning side to null (unless already changed)
+            if ($video->getBoutique() === $this) {
+                $video->setBoutique(null);
+            }
+        }
 
         return $this;
     }
