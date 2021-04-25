@@ -757,7 +757,7 @@ class APIController extends AbstractController
         return new JsonResponse(["status" => "Unauthorizerd"], Response::HTTP_UNAUTHORIZED);
     }
     /**
-     * @Route("/v1/video/{id}", name="video", methods={"POST"})
+     * @Route("/v1/video/{id}", name="video", methods={"UPDATE"})
      */
     public function updateVideo(Request $request, BoutiqueRepository $boutiqueRepository, Video $video)
     {

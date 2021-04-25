@@ -94,16 +94,17 @@ class AdminController extends AbstractController
     /**
      * @Route("/admin/edit/video/{id}", name="edit_video")
      */
-    public function edit_video(BoutiqueRepository $boutiqueRepository)
+    public function edit_video(int $id, BoutiqueRepository $boutiqueRepository, VideoRepository $videoRepository)
     {
 
         // $allArticle = $articleRepository->findBy(['boutique'=>$boutiqueRepository->findOneBy(['user'=>$this->getUser()])] );
 
         $boutique = $boutiqueRepository->findOneBy(['user' => $this->getUser()]);
-
+        $video = $videoRepository->findOneBy(['boutique' => $boutique, 'id' => $id]);
         return $this->render('admin/index.html.twig', [
             'pages' => 'edit_video',
             'boutique' => $boutique,
+            'video' => $video
         ]);
     }
     /**
