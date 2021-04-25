@@ -32,6 +32,35 @@ $(function () {
     });
   });
 
+  // add formation
+
+  $('.edit_formation').on('submit', function (e) {
+    e.preventDefault();
+
+    $.ajax({
+      url: "/api/v1/formation",
+      type: 'POST',
+      contentType: false,
+      processData: false,
+      cache: false,
+      dataType: 'json',
+      data: new FormData(this),
+      beforeSend: () => {
+        toastr.info('Enregistrement en cours ;) ');
+        $('.btn-submit').prop('disabled', true)
+      },
+      success: (data) => {
+        toastr.success('Enregistrer avec success ;) ');
+        $('.btn-submit').prop('disabled', false)
+        $('.add_formation')[0].reset();
+      },
+      error: () => {
+        toastr.error('Erreur d\'enregistrement ');
+        $('.btn-submit').prop('disabled', false)
+      }
+    });
+  });
+
 
   //
   //add video 

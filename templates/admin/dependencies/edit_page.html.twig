@@ -1,0 +1,23 @@
+<div
+	class="card shadow mb-4">
+	<!-- Card Header - Dropdown -->
+	<div class="card-header py-3">
+		<h6 class="m-0 font-weight-bold text-primary">Ajout formation</h6>
+	</div>
+	<!-- Card Body -->
+	<div class="card-body">
+		{{ form_start(formForm,{ 'attr' :{ 'class':'edit_formation'}})}}
+            {{ form_row(formForm.title)}}
+            {{ form_row(formForm.resume)}}
+            {{ form_row(formForm.price)}}
+             <label for="image">Couverture</label>
+            <input type="file" name="image" id ="image" class="form-control">
+            {{ form_row(formForm.description)}}
+			<input type="hidden" name="id" value="{{id}}">
+			<input type="hidden" name ="_method" value="UPDATE">
+			<div class="container_btn">
+					<button type="submit" class="btn btn-success btn-submit">Enregistrer</button>
+			</div>
+		{{ form_end(formForm)}}
+	</div>
+</div>

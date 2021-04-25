@@ -25,6 +25,7 @@ use App\Repository\HeaderRepository;
 use App\Repository\ImagesRepository;
 use App\Repository\MenuRepository;
 use App\Repository\NotificationRepository;
+use App\Repository\PageRepository;
 use App\Repository\ProfilJobRepository;
 use App\Repository\ReferenceRepository;
 use App\Repository\SliderRepository;
@@ -733,10 +734,48 @@ class APIController extends AbstractController
     }
 
     /**
+     * @Route("/v1/formation", name="update_formation", methods={"UPDATE"})
+     */
+
+    public function updateFormation(Request $request, BoutiqueRepository $boutiqueRepository, PageRepository $pageRepository, InsertFileServices $insertFileServices)
+    {
+        if ($this->getUser()) {
+            $boutique = $boutiqueRepository->findOneBy(['user' => $this->getUser()]);
+            $id = $request->request->get('id');
+            $page = $pageRepository->findOneBy(['id' => $id, 'boutique' => $boutique]);
+            if ($page) {
+
+
+                $pagedate = $request->request->get('page');
+                $title = $pagedate['title'];
+                $price = $pagedate['price'];
+                $resume = $pagedate['resume'];
+                $description = $pagedate['description'];
+                $file = $request->files->get('image');
+                if ($file) {
+                    $image = $insertFileServices->insertFile($file, ['jpg', 'jpeg', 'gif', 'webm', 'png']);
+                    $page->setImage($image);
+                }
+                $page->setTitle($title);
+                $page->setPrice($price);
+                $page->setResume($resume);
+                $page->setDescription($description);
+                $page->setBoutique($boutique);
+                $page->setUser($this->getUser());
+                $em = $this->getDoctrine()->getManager();
+                $em->persist($page);
+                $em->flush();
+                return new JsonResponse(["status" => "Success"], Response::HTTP_OK);
+            }
+        }
+
+        return new JsonResponse(["status" => "Unauthorizerd"], Response::HTTP_UNAUTHORIZED);
+    }
+    /**
      * @Route("/v1/formation", name="add_formation", methods={"POST"})
      */
 
-    public function addFormation(Request $request, BoutiqueRepository $boutiqueRepository, InsertFileServices $insertFileServices)
+    public function addFormation(Request $request, UserRepository $userRepository,  BoutiqueRepository $boutiqueRepository, InsertFileServices $insertFileServices)
     {
         if ($this->getUser()) {
             $boutique = $boutiqueRepository->findOneBy(['user' => $this->getUser()]);
@@ -761,6 +800,17 @@ class APIController extends AbstractController
             $em = $this->getDoctrine()->getManager();
             $em->persist($page);
             $em->flush();
+
+            $notification = new Notification();
+            $notification->setSubject('REQUEST_APPROVAL_PAGE');
+            $notification->setDescription($page->getId());
+            $notification->setFromUser($this->getUser()->getId());
+            $users = $userRepository->findAllWithRoleSuperAdmin("ROLE_SUPER_ADMIN");
+            foreach ($users as $user) {
+                $notification->addToUser($user);
+            }
+            $em->persist($notification);
+            $em->flush();
             return new JsonResponse(["status" => "Success"], Response::HTTP_OK);
         }
 
@@ -770,7 +820,7 @@ class APIController extends AbstractController
      * @Route("/v1/video", name="add_video", methods={"POST"})
      */
 
-    public function addVideo(Request $request, BoutiqueRepository $boutiqueRepository)
+    public function addVideo(Request $request, UserRepository $userRepository, BoutiqueRepository $boutiqueRepository)
     {
         if ($this->getUser()) {
             $boutique = $boutiqueRepository->findOneBy(['user' => $this->getUser()]);
@@ -785,6 +835,17 @@ class APIController extends AbstractController
                 ->setBoutique($boutique);
             $em = $this->getDoctrine()->getManager();
             $em->persist($video);
+            $em->flush();
+
+            $notification = new Notification();
+            $notification->setSubject('REQUEST_APPROVAL_VIDEO');
+            $notification->setDescription($video->getId());
+            $notification->setFromUser($this->getUser()->getId());
+            $users = $userRepository->findAllWithRoleSuperAdmin("ROLE_SUPER_ADMIN");
+            foreach ($users as $user) {
+                $notification->addToUser($user);
+            }
+            $em->persist($notification);
             $em->flush();
             return new JsonResponse(["status" => "Success"], Response::HTTP_OK);
         }

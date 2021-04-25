@@ -42,7 +42,8 @@ class PageController extends AbstractController
         return $this->render('admin/index.html.twig', [
             'pages' => 'edit_page',
             'boutique' => $boutique,
-            'formForm' => $pageForm->createView()
+            'formForm' => $pageForm->createView(),
+            'id' => $id
         ]);
     }
     /**
