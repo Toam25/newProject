@@ -701,6 +701,7 @@ background: #e4087e;
 
 #map{
     height : 400px;
+    overflow: hidden;
 }
 #container_long_lat > div > form {
     display: grid;
