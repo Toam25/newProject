@@ -206,6 +206,17 @@ class BoutiqueController extends AbstractController
         $nbr = sizeof($boutiques) != "" ? sizeof($boutiques)  : 0;
         return new JsonResponse(['nbr' => $nbr], Response::HTTP_OK);
     }
+
+    /**
+     * @Route("/myoffer/", name="my_offer", methods={"GET"})
+     */
+    public function myOffer(BoutiqueRepository $boutiqueRepository): response
+    {
+
+        return $this->render('boutique/offer.html.twig', [
+            'boutique' => $boutique = $boutiqueRepository->findOneBoutiqueByUserPerRole('ROLE_SUPER_ADMIN')
+        ]);
+    }
     /**
      * @Route("/vote/{id}/add" , name="addVote")
      */
