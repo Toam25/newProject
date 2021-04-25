@@ -116,6 +116,11 @@ class User implements UserInterface
      */
     private $profilJobs;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Page::class, mappedBy="user")
+     */
+    private $pages;
+
 
     public function __construct()
     {
@@ -130,6 +135,7 @@ class User implements UserInterface
         $this->blogs = new ArrayCollection();
         $this->notifications = new ArrayCollection();
         $this->profilJobs = new ArrayCollection();
+        $this->pages = new ArrayCollection();
  
     }
 
@@ -555,6 +561,36 @@ class User implements UserInterface
              // set the owning side to null (unless already changed)
              if ($profilJob->getUser() === $this) {
                  $profilJob->setUser(null);
+             }
+         }
+
+         return $this;
+     }
+
+     /**
+      * @return Collection|Page[]
+      */
+     public function getPages(): Collection
+     {
+         return $this->pages;
+     }
+
+     public function addPage(Page $page): self
+     {
+         if (!$this->pages->contains($page)) {
+             $this->pages[] = $page;
+             $page->setUser($this);
+         }
+
+         return $this;
+     }
+
+     public function removePage(Page $page): self
+     {
+         if ($this->pages->removeElement($page)) {
+             // set the owning side to null (unless already changed)
+             if ($page->getUser() === $this) {
+                 $page->setUser(null);
              }
          }
 

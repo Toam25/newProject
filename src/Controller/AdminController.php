@@ -76,6 +76,7 @@ class AdminController extends AbstractController
             'validateBlogs' => $blogRepository->findBy(['boutique' => $boutique, 'validate' => true])
         ]);
     }
+
     /**
      * @Route("/admin/add/video", name="add_video")
      */

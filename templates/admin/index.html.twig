@@ -140,6 +140,16 @@
             {% include 'admin/dependencies/list_video.html.twig' %}
         {% elseif pages == "edit_video"%}
             {% include 'admin/dependencies/edit_video.html.twig' %}
+        
+        {#page #}
+        {% elseif pages == "add_page"%}
+            {% include 'admin/dependencies/add_page.html.twig' %}
+
+        {% elseif pages == "list_page" %}
+            {% include 'admin/dependencies/list_page.html.twig' %}
+        {% elseif pages == "edit_video"%}
+            {% include 'admin/dependencies/edit_page.html.twig' %}
+     {#########################################################}
             
          {% elseif pages == "list_socialNetwork"%}
             {% include 'admin/dependencies/list_socialNetwork.html.twig' with { 'list_socialNetworks' : list_socialNetworks } only %}
@@ -148,7 +158,7 @@
             {% include 'admin/dependencies/vote.html.twig' %}
             {% include 'admin/dependencies/add_vote_modal.html.twig' %}
             {% include 'admin/dependencies/edit_vote_modal.html.twig' %}
-        {% else %}
+        {% elseif pages == 'home' %}
              {% include ("admin/dependencies/home.html.twig") %}
              {% include "admin/dependencies/add_header_modal.html.twig" %}
              {% include "admin/dependencies/view_header_modal.html.twig" %}

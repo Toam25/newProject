@@ -1,0 +1,35 @@
+<div
+	class="card shadow mb-4">
+	<!-- Card Header - Dropdown -->
+	<div class="card-header py-3">
+		<h6 class="m-0 font-weight-bold text-primary">Edition formation video</h6>
+	</div>
+	<!-- Card Body -->
+	<div class="card-body">
+		{% if video  is not same as (null) %}
+			<form action="" class="edit_video">
+				<div class="row">
+					<div class="col-md-6">
+						<label for="">Titre</label>
+						<input type="text" class="form-control" name="title" placeholder="Titre" value="{{video.title}}" required>
+					</div>
+					<div class="col-md-6">
+						<label for="">Lien</label>
+						<input type="text" class="form-control" name="link" placeholder="https://" value="{{ video.link}}" required>
+					</div>
+					<div class="col-md-12">
+						<label for="">Titre</label>
+						<textarea name="description" class="form-control" id="" rows="3" placeholder="Description" requires>{{video.description}}</textarea>
+					</div>
+				</div>
+				<input type="hidden" name="_method" value="UPDATE">
+				<div class="container_btn">
+                    <input type="hidden" class="id_video"value="{{video.id}}">
+					<button type="submit" class="btn btn-success btn-submit">Enregistrer</button>
+				</div>
+			</form>
+		{% else %}
+			Erreur
+		{% endif %}
+	</div>
+</div>

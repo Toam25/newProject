@@ -163,6 +163,11 @@ class Boutique
      */
     private $videos;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Page::class, mappedBy="boutique")
+     */
+    private $pages;
+
     public function __construct()
     {
         $this->logo = "images_default/default_logo.png";
@@ -184,6 +189,7 @@ class Boutique
             'lat' => 51.49
         ];
         $this->videos = new ArrayCollection();
+        $this->pages = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -732,6 +738,36 @@ class Boutique
             // set the owning side to null (unless already changed)
             if ($video->getBoutique() === $this) {
                 $video->setBoutique(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Page[]
+     */
+    public function getPages(): Collection
+    {
+        return $this->pages;
+    }
+
+    public function addPage(Page $page): self
+    {
+        if (!$this->pages->contains($page)) {
+            $this->pages[] = $page;
+            $page->setBoutique($this);
+        }
+
+        return $this;
+    }
+
+    public function removePage(Page $page): self
+    {
+        if ($this->pages->removeElement($page)) {
+            // set the owning side to null (unless already changed)
+            if ($page->getBoutique() === $this) {
+                $page->setBoutique(null);
             }
         }
 

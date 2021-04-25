@@ -10,6 +10,7 @@ use App\Entity\Header;
 use App\Entity\Images;
 use App\Entity\Menu;
 use App\Entity\Notification;
+use App\Entity\Page;
 use App\Entity\ProfilJob;
 use App\Entity\User;
 use App\Entity\UserCondition;
@@ -731,6 +732,40 @@ class APIController extends AbstractController
         return new JsonResponse($notificationService->getMessageNotification(), Response::HTTP_OK);
     }
 
+    /**
+     * @Route("/v1/formation", name="add_formation", methods={"POST"})
+     */
+
+    public function addFormation(Request $request, BoutiqueRepository $boutiqueRepository, InsertFileServices $insertFileServices)
+    {
+        if ($this->getUser()) {
+            $boutique = $boutiqueRepository->findOneBy(['user' => $this->getUser()]);
+            $pagedate = $request->request->get('page');
+
+            $page = new Page();
+            $title = $pagedate['title'];
+            $price = $pagedate['price'];
+            $resume = $pagedate['resume'];
+            $description = $pagedate['description'];
+            $file = $request->files->get('image');
+            if ($file) {
+                $image = $insertFileServices->insertFile($file, ['jpg', 'jpeg', 'gif', 'webm', 'png']);
+                $page->setImage($image);
+            }
+            $page->setTitle($title);
+            $page->setPrice($price);
+            $page->setResume($resume);
+            $page->setDescription($description);
+            $page->setBoutique($boutique);
+            $page->setUser($this->getUser());
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($page);
+            $em->flush();
+            return new JsonResponse(["status" => "Success"], Response::HTTP_OK);
+        }
+
+        return new JsonResponse(["status" => "Unauthorizerd"], Response::HTTP_UNAUTHORIZED);
+    }
     /**
      * @Route("/v1/video", name="add_video", methods={"POST"})
      */
