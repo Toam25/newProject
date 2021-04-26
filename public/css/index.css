@@ -300,7 +300,7 @@ nav {
   background-color: white;
   padding: 5px;
 }
-._container_echatillon,
+#_container_echatillon,
 ._boutiqueContaintEchantillon {
   min-width: 100%;
   overflow-x: auto;
@@ -308,9 +308,8 @@ nav {
   margin-top: 8px;
   overflow-y: hidden;
   margin-bottom: 7px;
-  /*display: flex;
+  display: flex;
   justify-content: center;
-  */
 }
 
 .remove {
