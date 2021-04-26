@@ -12,17 +12,13 @@
 {% block stylesheets %}
 	<link href="https://fonts.googleapis.com/css?family=Montserrat:400,500,700" rel="stylesheet">
 	<link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A==" crossorigin=""/>
-	<link
-	href="{{ asset('css/bootstrap3.3.css')}}" rel="stylesheet" type="text/css">
+	<link href="{{ asset('css/bootstrap5.0.css')}}" rel="stylesheet" type="text/css">
 	<!-- Slick -->
-
 
 
 	<!-- Font Awesome Icon -->
 	<link
-	rel="stylesheet" href="{{ asset('css/font-awesome.min.css') }}">
-
-	<!-- Custom stlylesheet -->
+	rel="stylesheet" href="{{ asset('css/font-awesome.min.css') }}"> <!-- Custom stlylesheet -->
 	<link type="text/css" rel="stylesheet" href="{{ asset('css/style.css') }}"/>
 	<link
 	type="text/css" rel="stylesheet" href="{{ asset('css/boutique.css') }}"/>
@@ -33,59 +29,134 @@
 	<link rel="icon" type="image/png" href="{{asset('images/'~boutique.logo)}}">
 {% endblock %}
 {% block body %}
-{% include "boutique/dependancies/_headershop.html.twig" %}
+	{% include "boutique/dependancies/_headershop.html.twig" %}
 
-    <div class="container">
-    {% if videos is defined %}
-      <div id="container_video">
-        {% if videos| length > 0  %}
-        {% for video in videos %}
-           <div class="col-md-12">
-            <div class="container_video">
-                 <h1>{{ video.title}}</h1>
-                 <p>{{ video.description}}</p>
-		     <iframe  width="100%" height="400px" class='list_video' src="{{ video.link}}" frameborder="0" scrolling="no"allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-            </div>
+	<div class="container">
+		{% if videos is defined %}
+			<div id="container_video">
+				{% if videos| length > 0  %}
+					{% for video in videos %}
+						<div class="col-md-12">
+							<div class="container_video">
+								<h1>{{ video.title}}</h1>
+								<p>{{ video.description}}</p>
+								<iframe width="100%" height="400px" class='list_video' src="{{ video.link}}" frameborder="0" scrolling="no" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+							</div>
+						</div>
+					{% endfor %}
+				{% else %}
+					<h1>Pas de formation video disponible</h1>
+				{% endif %}
+
+			</div>
+
+			{# formation #}
+		{% elseif formations is defined %}
+			<div class="row">
+				{% if formations| length > 0 %}
+					{% for formation in formations %}
+						<div class="col-md-3" style="margin-bottom: 13px;">
+							<div class="link_formation">
+								<div class="contanier_image_formation">
+									<img src="{{asset('images/'~formation.image)}}" alt="">
+								</div>
+								<div class="containt">
+									<h4>{{ formation.title}}</h4>
+									<div class="container_user">
+										<img src="{{asset('images/'~formation.user.avatar)}}" alt="">
+										<span>{{ formation.user.name }}</span>
+									</div>
+									<div
+										class="container_rate_view">
+										{# <span>Note</span> #}
+										<span class="view">Vues
+											{{ formation.view }}</span>
+									</div>
+									<div class="container_rate_view">
+										<span>{{formation.price | number_format(0, '', ' ')}}
+											<sup>€</sup>
+										</span>
+										<a class="see" href="{{ path('view_formation', {'id' : formation.id , 'slug' : slugify(formation.title) } )}}">Voir</a>
+									</div>
+								</div>
+							</div>
+						</div>
+					{% endfor %}
+				{% else %}
+					<h1>Pas de formation disponible</h1>
+				{% endif %}
+			</div>
+
+			{# #############" #}
+		{% elseif blogs is defined %}
+			
+				{% if blogs| length > 0 %}
+     
+      
+         <div class="row">
+            {% include "boutique/dependancies/_listblogs.html.twig" with {'blogs' : blogs} %}
          </div>
-        {% endfor %}
-        {% else %}
-           <h1>Pas de formation video disponible</h1>
-        {% endif %}
-         
-      </div>
-    {% elseif formations is defined %}
-             <div class="row"> 
-               {% if formations| length > 0 %}
-                {% for formation in formations %}
-                    <div class="col-md-3" style="margin-bottom: 13px;">
-                    <div class="link_formation">
-                        <div class="contanier_image_formation">
-                            <img src="{{asset('images/'~formation.image)}}" alt="">
-                        </div>
-                        <div class="containt">
-                            <h4>{{ formation.title}}</h4>
-                            <div class="container_user">
-                              <img src="{{asset('images/'~formation.user.avatar)}}" alt="">
-                              <span>{{ formation.user.name }}</span>
-                            </div>
-                            <div class="container_rate_view">
-                              {# <span>Note</span> #}
-                              <span class="view">Vues {{ formation.view }}</span>
-                            </div>
-                            <div class="container_rate_view">
-                              <span>{{formation.price | number_format(0, '', ' ')}} <sup>€</sup></span>
-                              <a class="see" href="{{ path('view_formation', {'id' : formation.id , 'slug' : slugify(formation.title) } )}}">Voir</a>
-                            </div>
-                        </div>
-                    </div>
-                    </div>
-                {% endfor %}
-                {% else %}
-                  <h1>Pas de formation disponible</h1>
-                {% endif %}
-             </div>
-    {% endif %}
- </div>
+         <div class="container_contributor">
+          <h4>Contribuez sur {{ boutique.name }}</h4>
+					{{ form_start(blogForm)}}
+					<div class="row">
+						<input type="hidden" class="status" name="status" val="">
+
+						<div class="col-md-6">
+							{{ form_row(blogForm.title) }}
+						</div>
+						<div class="col-md-6">
+							{{ form_row(blogForm.category) }}
+						</div>
+
+						<div class="col-md-12">
+							<label>Image</label>
+							<input type="file" name="image_blog" class="file form-control">
+						</div>
+
+						<div class="col-md-12">
+
+							{{ form_row(blogForm.resume) }}
+						</div>
+
+						<div class="col-md-12">
+
+							{{ form_row(blogForm.keywords) }}
+						</div>
+
+						<div class="col-md-12">
+
+							{{ form_row(blogForm.metaDescription) }}
+						</div>
+
+						<div class="col-md-12">
+
+							{{ form_row(blogForm.link) }}
+						</div>
+
+						<div class="col-md-12">
+
+							{{ form_row(blogForm.description) }}
+						</div>
+
+					</div>
+					<div
+						class="conbtnSubmit">
+						{#<button class="view_blog btn btn-primary">Apperçu/Enregister</button>#}
+						<button class="save_blog btn btn-success">Publier</button>
+					</div>
+
+					{{ form_end(blogForm) }}
+        </div>
+				{% else %}
+					<h1>Pas de formation disponible</h1>
+				{% endif %}
+	
+
+			{# ################## #}
+
+		{% endif %}
+	</div>
 
 	{% if not app.user%}
 		{% include 'boutique/dependancies/connexion.html.twig'%}

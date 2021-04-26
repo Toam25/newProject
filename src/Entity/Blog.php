@@ -107,16 +107,22 @@ class Blog
      * @ORM\Column(type="boolean")
      */
     private $validateInHomePage;
-   
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $type;
+
     public function __construct()
     {
-        $this->view=0;
+        $this->view = 0;
         $this->createdAt = new \DateTime();
-        $this->validate=false;
-        $this->shareNbr=0;
+        $this->validate = false;
+        $this->shareNbr = 0;
         $this->votes = new ArrayCollection();
-        $this->validate=false;
-        $this->validateInHomePage=false;
+        $this->validate = false;
+        $this->validateInHomePage = false;
+        $this->type = "shop";
     }
     public function getId(): ?int
     {
@@ -354,6 +360,18 @@ class Blog
     public function setValidateInHomePage(bool $validateInHomePage): self
     {
         $this->validateInHomePage = $validateInHomePage;
+
+        return $this;
+    }
+
+    public function getType(): ?string
+    {
+        return $this->type;
+    }
+
+    public function setType(string $type): self
+    {
+        $this->type = $type;
 
         return $this;
     }

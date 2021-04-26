@@ -144,28 +144,34 @@ class BoutiqueController extends AbstractController
     {
 
         // $allArticle = $articleRepository->findBy(['boutique'=>$boutiqueRepository->findOneBy(['user'=>$this->getUser()])] );
+
         $blog = $blogRepository->findOneBy(['id' => $id, "validate" => true]);
-        $votes = $votesRepository->findBy(['blog' => $blog]);
-        $astuce = $blogRepository->findBy(['boutique' => $blog->getBoutique(), "category" => "Astuces", "validate" => true], ["id" => "DESC"]);
-        $view = $blogRepository->findBy(['boutique' => $blog->getBoutique(), "validate" => true], ["view" => "DESC"]);
-        $share = $blogRepository->findBy(['boutique' => $blog->getBoutique(), "validate" => true], ["shareNbr" => "DESC"], 5);
-        $getNumberVote = $votesService->getNumberTotalVote($votes);
+        if ($blog) {
+
+
+            $votes = $votesRepository->findBy(['blog' => $blog]);
+            $astuce = $blogRepository->findBy(['boutique' => $blog->getBoutique(), "category" => "Astuces", "validate" => true], ["id" => "DESC"]);
+            $view = $blogRepository->findBy(['boutique' => $blog->getBoutique(), "validate" => true], ["view" => "DESC"]);
+            $share = $blogRepository->findBy(['boutique' => $blog->getBoutique(), "validate" => true], ["shareNbr" => "DESC"], 5);
+            $getNumberVote = $votesService->getNumberTotalVote($votes);
 
 
 
 
-        return $this->render('boutique/detailblog.html.twig', [
-            'blog' => $blog,
-            'views' => $view,
-            'shares' => $share,
-            'boutique' => $blog->getBoutique(),
-            'astuces' => $astuce,
-            'votes' => $votes,
-            'users' => $getNumberVote["user"],
-            'valuevote' => $getNumberVote["votes"],
-            'sondages' => $this->persisteSondageBlog($view),
-            'page' => 'blog'
-        ]);
+            return $this->render('boutique/detailblog.html.twig', [
+                'blog' => $blog,
+                'views' => $view,
+                'shares' => $share,
+                'boutique' => $blog->getBoutique(),
+                'astuces' => $astuce,
+                'votes' => $votes,
+                'users' => $getNumberVote["user"],
+                'valuevote' => $getNumberVote["votes"],
+                'sondages' => $this->persisteSondageBlog($view),
+                'page' => 'blog'
+            ]);
+        }
+        return new Response("Page temporairement indisponible<a href='/ '> Retour</a>", Response::HTTP_NOT_FOUND);
     }
 
     /**
@@ -260,7 +266,7 @@ class BoutiqueController extends AbstractController
     /**
      * @Route("/list/contrib/{id}-{slug}", name="list_contrib_shop", methods={"GET"})
      */
-    public function listContrib(Boutique $boutique): response
+    public function listContrib(Boutique $boutique, BlogRepository $blogRepository): response
     {
 
         $matches = [];
@@ -272,7 +278,8 @@ class BoutiqueController extends AbstractController
             'boutique' => $boutique,
             'page' => 'contrib',
             'shopLink' => sizeof($matches) > 2 ? $matches[2] : "",
-            'formBlob' => $form->createView()
+            'blogForm' => $form->createView(),
+            'blogs' => $blogRepository->findAll()
         ]);
     }
 

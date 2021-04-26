@@ -32,3 +32,16 @@
     box-shadow: 0 0 5px #0000001a;
     padding: 10px;
 }
+.container_contributor{
+    padding: 10px;
+    margin: 5px;
+    box-shadow: 0 8px 9px black;
+}
+.container_contributor > h4 {
+    text-align: center;
+}
+.conbtnSubmit{
+    margin-top: 5px;
+    display: flex;
+    justify-content: end;
+}
