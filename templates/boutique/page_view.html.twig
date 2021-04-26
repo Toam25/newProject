@@ -1,0 +1,54 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+	{% if boutique %}
+		{{ boutique.name }}
+	{% else %}
+		Pas de resultat :(
+	{% endif %}
+{% endblock %}
+
+{% block meta%}{% endblock %}
+{% block stylesheets %}
+	<link href="https://fonts.googleapis.com/css?family=Montserrat:400,500,700" rel="stylesheet">
+	<link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A==" crossorigin=""/>
+	<link
+	href="{{ asset('css/bootstrap3.3.css')}}" rel="stylesheet" type="text/css">
+	<!-- Slick -->
+
+
+
+	<!-- Font Awesome Icon -->
+	<link
+	rel="stylesheet" href="{{ asset('css/font-awesome.min.css') }}">
+
+	<!-- Custom stlylesheet -->
+	<link type="text/css" rel="stylesheet" href="{{ asset('css/style.css') }}"/>
+	<link
+	type="text/css" rel="stylesheet" href="{{ asset('css/boutique.css') }}"/>
+	{# link type="text/css" rel="stylesheet" href="{{ asset('css/index.css') }}" #}
+	<link type="text/css" rel="stylesheet" href="{{ asset('css/jssor.slider.css') }}"/>
+	<link type="text/css" rel="stylesheet" href="{{ asset('css/cart.css') }}"/>
+	<link type="text/css" rel="stylesheet" href="{{ asset('css/page.css') }}"/>
+	<link rel="icon" type="image/png" href="{{asset('images/'~boutique.logo)}}">
+{% endblock %}
+{% block body %}
+{% include "boutique/dependancies/_headershop.html.twig" %}
+
+    <div class="container">
+      <h1>{{page.title}}</h1>
+      {{ page.description| raw }}
+    </div>
+
+	{% if not app.user%}
+		{% include 'boutique/dependancies/connexion.html.twig'%}
+	{% endif %}
+
+	{% include 'boutique/dependancies/footer.html.twig' %}
+
+{% endblock %}
+
+{% block javascripts %}
+
+	<script src="{{ asset('js/connexion.js') }}"></script>
+{% endblock %}

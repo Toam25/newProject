@@ -1,81 +1,116 @@
-	<div class='image_header'>
-		{% include 'boutique/dependancies/bannierboutique.html.twig' %}
-	</div>
-	
-	{% if  boutique   %}
-		{% if boutique.showArticle is not same as (false)%}
-	  {# list article #}
-				{% include "boutique/dependancies/listArticle.html.twig" %}
-				<hr style="width: 71vw;"/>
-		 
+<div class='image_header'>
+	{% include 'boutique/dependancies/bannierboutique.html.twig' %}
+</div>
+
+{% if  boutique   %}
+	{% if boutique.showArticle is not same as (false)%}
+		{# list article #}
+		{% include "boutique/dependancies/listArticle.html.twig" %}
+		<hr style="width: 71vw;"/>
+
 		{# end list article #}
-			{# selection #}
-				{% if newArticles |length > 0%}
-					<div style="padding-top: 16px;margin: 15px 0;">
-						<div id="container_selection">
-							<h3 class="title_C" style="display:table-cell" text-align="center">Nos séléctions</h3>
-						</div>
-							{% include "boutique/dependancies/slide_shop.html.twig" with {'articles' : newArticles} %}	
-					</div>
-			
-					<hr style="width: 71vw;"/>
-				{% endif %}
-			{# end selection #}
-		{% endif %}
-			{# show blog #}
-				{% if boutique.showBlog is not same as (false)%}
-						{% include "boutique/dependancies/listBlog.html.twig" with {'articles' : newArticles} %}	
-						<hr style="width: 71vw;"/>
-				{% endif %}
-				
-			{# end show blog #}
-			{# social network #}
-			{% if boutique.socialNetworks|length > 0 %}
-				<div id="container_social_network">
-					<h3 class="title_C" style="display:table-cell">Réseau sociaux
-					</h3>
-					<div class="container_reference">
-						{% if boutique.shopReferences is defined  %}
-							{% for socialnetwork in boutique.socialNetworks %}
-
-								<div id="_reference">
-									<div class="_container_images">
-										<img src={{ asset('images/'~ socialnetwork.images)}} alt="{{ socialnetwork.description }}"/>
-									</div>
-									<p id="container_description_reference">{{  socialnetwork.description }}
-										<a href="{{ socialnetwork.link }}" style="color : #2878c1 !important" target="_blank">{{ socialnetwork.nameLink }}</a>
-									</p>
-								</div>
-							{% endfor %}
-						{% endif %}
-					</div>
+		{# selection #}
+			{% if newArticles |length > 0%}
+				<div style="padding-top: 16px;margin: 15px 0;"> <div id="container_selection">
+					<h3 class="title_C" style="display:table-cell" text-align="center">Nos séléctions</h3>
 				</div>
-				<hr style="width: 71vw;" />
-			{% endif %}
-			{# end social network #}
-		    {# reference #}
-				{% if boutique.shopReferences|length > 0 %}
-					<div id="container_reference">
-						<h3 class="title_C" style="display:table-cell">Nos Références
-						</h3>
-						<div class="container_reference">
-							{% if boutique.shopReferences is defined  %}
-								{% for reference in boutique.shopReferences %}
+				{% include "boutique/dependancies/slide_shop.html.twig" with {'articles' : newArticles} %}
+			</div>
 
-									<div id="_reference">
-										<div class="_container_images">
-											<img src={{ asset('images/'~reference.images)}} alt="{{ reference.description }}"/>
-										</div>
-										<p id="container_description_reference">{{  reference.description }}
-										</p>
-									</div>
-								{% endfor %}
-							{% endif %}
-						</div>
-					</div>
-				{% endif %}
-			{# end  reference #}
-		</div>
-	{% else %}
-		<p>La boutique n'existe pas</p>
+			<hr style="width: 71vw;"/>
+		{% endif %}
+		{# end selection #}
 	{% endif %}
+	{# show blog #}
+	{% if boutique.showBlog is not same as (false)%}
+		{% include "boutique/dependancies/listBlog.html.twig" with {'articles' : newArticles} %}
+		<hr style="width: 71vw;"/>
+	{% endif %}
+
+	{# end show blog #}
+	{# social network #}
+	{% if boutique.socialNetworks|length > 0 %}
+		<div id="container_social_network">
+			<h3 class="title_C" style="display:table-cell">Réseau sociaux
+			</h3>
+			<div class="container_reference">
+				{% if boutique.shopReferences is defined  %}
+					{% for socialnetwork in boutique.socialNetworks %}
+
+						<div id="_reference">
+							<div class="_container_images">
+								<img src={{ asset('images/'~ socialnetwork.images)}} alt="{{ socialnetwork.description }}"/>
+							</div>
+							<p id="container_description_reference">{{  socialnetwork.description }}
+								<a href="{{ socialnetwork.link }}" style="color : #2878c1 !important" target="_blank">{{ socialnetwork.nameLink }}</a>
+							</p>
+						</div>
+					{% endfor %}
+				{% endif %}
+			</div>
+		</div>
+		<hr style="width: 71vw;"/>
+	{% endif %}
+	{# end social network #}
+	{# espage page #}
+	<div id="container_reference">
+		<h3 class="title_C" style="display:table-cell">Espaces pages
+		</h3>
+		<div id="container_page">
+			<a class="pageview_pricipal bg" href="{{path('list_video_shop',{'id': boutique.id, 'slug' : slugify(boutique.name)})}}" target="_blank">
+				<img src="{{ asset('images/images_default/default_image.jpg')}}" alt="">
+				<div class="h4_page">
+					<h4 >Pages Videos</h4>
+				</div>
+			</a>
+			<div class="container_page1">
+				<a class="pageView bg " href="{{path('list_formation_shop',{'id': boutique.id, 'slug' : slugify(boutique.name)})}}" target="_blank">
+					<img src="{{ asset('images/images_default/default_image.jpg')}}" alt="">
+					<div class="h4_page">
+						<h4 >Pages formations</h4>
+					</div>
+				</a>
+				<div class="container_page2">
+					<a class="pageView bg" href="{{path('list_contrib_shop',{'id': boutique.id, 'slug' : slugify(boutique.name)})}}" target="_blank">
+						<img src="{{ asset('images/images_default/default_image.jpg')}}" alt="">
+						<div class="h4_page">
+							<h4 >Pages Contributeurs</h4>
+						</div>
+					</a>
+					<a class="pageView bg" href="{{path('list_other_shop',{'id': boutique.id, 'slug' : slugify(boutique.name)})}}" target="_blank">
+						<img src="{{ asset('images/images_default/default_image.jpg')}}" alt="">
+						<div class="h4_page">
+							<h4 >Autre</h4>
+						</div>
+					</a>
+				</div>
+
+			</div>
+
+		</div>
+	</div>
+	{# reference #}
+
+	{% if boutique.shopReferences|length > 0 %}
+		<div id="container_reference">
+			<h3 class="title_C" style="display:table-cell">Nos Références
+			</h3>
+			<div class="container_reference">
+				{% if boutique.shopReferences is defined  %}
+					{% for reference in boutique.shopReferences %}
+
+						<div id="_reference">
+							<div class="_container_images">
+								<img src={{ asset('images/'~reference.images)}} alt="{{ reference.description }}"/>
+							</div>
+							<p id="container_description_reference">{{  reference.description }}
+							</p>
+						</div>
+					{% endfor %}
+				{% endif %}
+			</div>
+		</div>
+	{% endif %}
+	{# end  reference #}
+</div>{% else %}
+<p>La boutique n'existe pas</p>{% endif %}

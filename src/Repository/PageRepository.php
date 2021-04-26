@@ -19,6 +19,20 @@ class PageRepository extends ServiceEntityRepository
         parent::__construct($registry, Page::class);
     }
 
+    public function findPageBy($boutique)
+    {
+
+        return $this->createQueryBuilder('p')
+            ->select('p', 'b', 'u')
+            ->leftJoin('p.boutique', 'b')
+            ->leftJoin('p.user', 'u')
+            ->andWhere('p.boutique = :boutique')
+            ->setParameter('boutique', $boutique->getId())
+            ->orderBy('p.id', 'DESC')
+            //->setMaxResults(10)
+            ->getQuery()
+            ->getResult();
+    }
     // /**
     //  * @return Page[] Returns an array of Page objects
     //  */

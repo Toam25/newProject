@@ -6,14 +6,19 @@ use App\Data\Search;
 use App\Entity\Article;
 use App\Entity\Blog;
 use App\Entity\Boutique;
+use App\Entity\Page;
+use App\Entity\Video;
 use App\Entity\Votes;
+use App\Form\BlogType;
 use App\Form\SearchType;
 use App\Repository\ArticleRepository;
 use App\Repository\BlogRepository;
 use App\Repository\BoutiqueRepository;
 use App\Repository\CartRepository;
 use App\Repository\HeaderRepository;
+use App\Repository\PageRepository;
 use App\Repository\UserRepository;
+use App\Repository\VideoRepository;
 use App\Repository\VoteRepository;
 use App\Repository\VotesRepository;
 use App\Service\Cart\CartService;
@@ -158,7 +163,8 @@ class BoutiqueController extends AbstractController
             'votes' => $votes,
             'users' => $getNumberVote["user"],
             'valuevote' => $getNumberVote["votes"],
-            'sondages' => $this->persisteSondageBlog($view)
+            'sondages' => $this->persisteSondageBlog($view),
+            'page' => 'blog'
         ]);
     }
 
@@ -217,6 +223,94 @@ class BoutiqueController extends AbstractController
             'boutique' => $boutique = $boutiqueRepository->findOneBoutiqueByUserPerRole('ROLE_SUPER_ADMIN')
         ]);
     }
+
+    /////////////////////
+
+    /**
+     * @Route("/list/video/{id}-{slug}", name="list_video_shop", methods={"GET"})
+     */
+    public function showVideoShop(Boutique $boutique, VideoRepository $videosRepository): response
+    {
+        $matches = [];
+        if ($boutique) {
+            preg_match('%(http[s]?:\/\/|www\/)([a-zA-Z0-9-_\.\/\?=&]+)%i', $boutique->getExternalLink(), $matches);
+        }
+        return $this->render('boutique/page.html.twig', [
+            'boutique' => $boutique,
+            'videos' => $videosRepository->findBy(['boutique' => $boutique]),
+            'shopLink' => sizeof($matches) > 2 ? $matches[2] : ""
+        ]);
+    }
+    /**
+     * @Route("/list/formations/{id}-{slug}", name="list_formation_shop", methods={"GET"})
+     */
+    public function listFormation(Boutique $boutique, PageRepository $pageRepository): response
+    {
+
+        $matches = [];
+        if ($boutique) {
+            preg_match('%(http[s]?:\/\/|www\/)([a-zA-Z0-9-_\.\/\?=&]+)%i', $boutique->getExternalLink(), $matches);
+        }
+        return $this->render('boutique/page.html.twig', [
+            'boutique' => $boutique,
+            'formations' => $pageRepository->findPageBy($boutique),
+            'shopLink' => sizeof($matches) > 2 ? $matches[2] : ""
+        ]);
+    }
+    /**
+     * @Route("/list/contrib/{id}-{slug}", name="list_contrib_shop", methods={"GET"})
+     */
+    public function listContrib(Boutique $boutique): response
+    {
+
+        $matches = [];
+        $form = $this->createForm(BlogType::class, new Blog);
+        if ($boutique) {
+            preg_match('%(http[s]?:\/\/|www\/)([a-zA-Z0-9-_\.\/\?=&]+)%i', $boutique->getExternalLink(), $matches);
+        }
+        return $this->render('boutique/page.html.twig', [
+            'boutique' => $boutique,
+            'page' => 'contrib',
+            'shopLink' => sizeof($matches) > 2 ? $matches[2] : "",
+            'formBlob' => $form->createView()
+        ]);
+    }
+
+    /**
+     * @Route("/view/formation/{id}-{slug}", name="view_formation_shop", methods={"GET"})
+     */
+    public function viewFormation(Page $page): response
+    {
+        $matches = [];
+        $boutique = $page->getBoutique();
+        if ($boutique) {
+            preg_match('%(http[s]?:\/\/|www\/)([a-zA-Z0-9-_\.\/\?=&]+)%i', $boutique->getExternalLink(), $matches);
+        }
+        if ($page) {
+            $page->setView($page->getView() + 1);
+            $em = $this->getDoctrine()->getManager();
+            $em->flush();
+            return $this->render('boutique/page_view.html.twig', [
+                'boutique' => $boutique,
+                'page' => $page,
+                'shopLink' => sizeof($matches) > 2 ? $matches[2] : ""
+            ]);
+        } else {
+            return new Response('', Response::HTTP_NOT_FOUND);
+        }
+    }
+    /**
+     * @Route("/list/other/{id}-{slug}", name="list_other_shop", methods={"GET"})
+     */
+    public function viewOther(BoutiqueRepository $boutiqueRepository): response
+    {
+
+        return $this->render('boutique/page.html.twig', [
+            'boutique' => $boutique = $boutiqueRepository->findOneBoutiqueByUserPerRole('ROLE_SUPER_ADMIN')
+        ]);
+    }
+
+    //////////////////////////////
     /**
      * @Route("/vote/{id}/add" , name="addVote")
      */
