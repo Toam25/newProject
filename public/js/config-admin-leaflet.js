@@ -45,10 +45,10 @@ $(function () {
 
         marker.addTo(map);
     }
-    /*$('#ville').on('blur', function (e) {
+    $('#ville').on('blur', function (e) {
         e.preventDefault();
         getLongLatByAddress($(this).val());
-    });*/
+    });
     $('#locate_me').on('click', function (e) {
         e.preventDefault();
         $('.locate_me_form').addClass('locate_me_ajax');
@@ -93,7 +93,8 @@ $(function () {
             }
         });
     }
-    /*function getLongLatByAddress(city) {
+
+    function getLongLatByAddress(city) {
         $.ajax({
             url: "https://nominatim.openstreetmap.org/search.php?q=" + city + "&polygon_geojson=1&format=jsonv2",
             type: 'GET',
@@ -101,16 +102,20 @@ $(function () {
             beforeSend: () => {
             },
             success: (data) => {
-                addMarker([data.lat, data.lon])
-                map.setView([data.lat, data.lon]);
-                $('#longitude').val(data.lon);
-                $('#latitude').val(data.lat);
-
+                data = data[0];
+                if (data) {
+                    addMarker([data.lat, data.lon])
+                    map.setView([data.lat, data.lon]);
+                    $('#longitude').val(data.lon);
+                    $('#latitude').val(data.lat);
+                }
+                else {
+                    toastr.error('Adresse introvalble');
+                }
             },
             error: () => {
                 toastr.error('Erreur de connexion au serveur');
-                $(this).prop('disabled', false);
             }
         });
-    }*/
+    }
 })
