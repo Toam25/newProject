@@ -47,6 +47,7 @@ $(function () {
     }
     $('#ville').on('blur', function (e) {
         e.preventDefault();
+        $('.locate_me_form').addClass('locate_me_ajax');
         getLongLatByAddress($(this).val());
     });
     $('#locate_me').on('click', function (e) {
@@ -112,8 +113,10 @@ $(function () {
                 else {
                     toastr.error('Adresse introvalble');
                 }
+                $('.locate_me_form').removeClass('locate_me_ajax');
             },
             error: () => {
+                $('.locate_me_form').removeClass('locate_me_ajax');
                 toastr.error('Erreur de connexion au serveur');
             }
         });
