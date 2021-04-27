@@ -113,7 +113,7 @@ class BoutiqueController extends AbstractController
         } else {
 
             $article = $articleRepository->findAllArticleByBoutique($boutique);
-            $blogs = $blogRepository->findAllBlogByBoutique($boutique);
+            $blogs = $blogRepository->findByNotValidateBlog($boutique);
         }
 
         if ($boutique) {
