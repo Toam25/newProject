@@ -22,8 +22,6 @@ class InsertFileServices extends AbstractController
                          $newFile
                     );
                     return $newFile;
-               } else {
-                    return new JsonResponse(['status' => 'error', "message" => "Fichier no valide"], Response::HTTP_NOT_ACCEPTABLE);
                }
           } else {
                $extension = $file->guessExtension();
@@ -34,5 +32,6 @@ class InsertFileServices extends AbstractController
                );
                return $newFile;
           }
+          return false;
      }
 }

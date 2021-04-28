@@ -121,6 +121,11 @@ class User implements UserInterface
      */
     private $pages;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Images::class, mappedBy="user")
+     */
+    private $images;
+
 
     public function __construct()
     {
@@ -136,6 +141,7 @@ class User implements UserInterface
         $this->notifications = new ArrayCollection();
         $this->profilJobs = new ArrayCollection();
         $this->pages = new ArrayCollection();
+        $this->images = new ArrayCollection();
  
     }
 
@@ -591,6 +597,36 @@ class User implements UserInterface
              // set the owning side to null (unless already changed)
              if ($page->getUser() === $this) {
                  $page->setUser(null);
+             }
+         }
+
+         return $this;
+     }
+
+     /**
+      * @return Collection|Images[]
+      */
+     public function getImages(): Collection
+     {
+         return $this->images;
+     }
+
+     public function addImage(Images $image): self
+     {
+         if (!$this->images->contains($image)) {
+             $this->images[] = $image;
+             $image->setUser($this);
+         }
+
+         return $this;
+     }
+
+     public function removeImage(Images $image): self
+     {
+         if ($this->images->removeElement($image)) {
+             // set the owning side to null (unless already changed)
+             if ($image->getUser() === $this) {
+                 $image->setUser(null);
              }
          }
 

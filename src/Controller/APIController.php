@@ -190,6 +190,80 @@ class APIController extends AbstractController
         }
         return new JsonResponse(['status' => 'error'], Response::HTTP_UNAUTHORIZED);
     }
+
+    /**
+     * @Route("/v1/add_image", name="get-image", methods={"GET"})
+     */
+
+    public function getImage(ImagesRepository $imagesRepository, BoutiqueRepository $boutiqueRepository)
+    {
+
+
+        if ($this->getUser()) {
+            $boutique = $boutiqueRepository->findOneBy(['user' => $this->getUser()]);
+            $images = $imagesRepository->findBy(['boutique' => $boutique]);
+
+            $allimages = [];
+
+            for ($i = 0; $i < sizeof($images); $i++) {
+                array_push($allimages, [
+                    'id' => $images[$i]->getId(),
+                    'name' => $images[$i]->getName()
+                ]);
+            }
+
+            return new JsonResponse(['images' => $allimages], Response::HTTP_OK);
+        }
+        return new JsonResponse(['status' => 'error'], Response::HTTP_UNAUTHORIZED);
+    }
+
+    /**
+     * @Route("/v1/add_image/{id}", name="delete-image", methods={"POST"})
+     */
+
+    public function deleteImage(Images $images, BoutiqueRepository $boutiqueRepository)
+    {
+
+
+        if ($this->getUser()) {
+            $boutique = $boutiqueRepository->findOneBy(['user' => $this->getUser()]);
+            if ($images->getBoutique() == $boutique or $images->getUser() == $this->getUser()) {
+                $em = $this->getDoctrine()->getManager();
+                $em->remove($images);
+                $em->flush();
+                unlink('images/' . $images->getName());
+                return new JsonResponse(['status' => 'success'], Response::HTTP_OK);
+            }
+        }
+        return new JsonResponse(['status' => 'error'], Response::HTTP_UNAUTHORIZED);
+    }
+    /**
+     * @Route("/v1/add_image", name="add-image", methods={"POST"})
+     */
+
+    public function addImage(Request $request, InsertFileServices $insertFileServices, BoutiqueRepository $boutiqueRepository)
+    {
+
+        $file = $request->files->get('my_image_file');
+        if ($file and $this->getUser()) {
+            $boutique = $boutiqueRepository->findOneBy(['user' => $this->getUser()]);
+
+            $myimage = $insertFileServices->insertFile($file, ['png', 'jpg', 'jpeg', 'webp', 'gif']);
+            if ($myimage !== false) {
+                $image = new Images();
+                $image->setName($myimage);
+                if ($boutique) {
+                    $image->setBoutique($boutique);
+                }
+                $image->setUser($this->getUser());
+                $em = $this->getDoctrine()->getManager();
+                $em->persist($image);
+                $em->flush();
+                return new JsonResponse(['id' => $image->getId(), 'image' => $myimage], Response::HTTP_OK);
+            }
+        }
+        return new JsonResponse(['status' => 'error'], Response::HTTP_UNAUTHORIZED);
+    }
     /**
      * @Route("/getOptions/{sous_category}", name="get_option")
      */
