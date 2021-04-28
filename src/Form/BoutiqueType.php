@@ -25,7 +25,7 @@ class BoutiqueType extends AbstractType
                 ]
             ])
             ->add('address', TextType::class, [
-                'label' => 'Lien de votre boutique',
+                'label' => 'Adresse',
                 'attr' => [
                     'class' => 'form-control',
                     'placeholder' => "Votre adresse"
