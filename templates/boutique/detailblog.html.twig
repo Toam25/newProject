@@ -165,9 +165,9 @@
                       {% set totaux = sondage.total/sondages.total*100 %}
                   {% endif %}
                   <a  href="{{ path('showBlog',{'id' : sondage.id,'slug' :sondage.slug})}}">
-                     ( {{ }}% ) {{ cutWorld(sondage.title,100)}} ({{sondage.total}})
+                     ( {{ totaux }}% ) {{ cutWorld(sondage.title,100)}} ({{sondage.total}})
                         <div class="container_percent">
-                           <div class="percent" style = "width: {{ sondage.total/sondages.total*100}}%"></div>
+                           <div class="percent" style = "width: {{ totaux }}%"></div>
                         </div>
                   </a>
                   <hr>
