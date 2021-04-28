@@ -1,21 +1,18 @@
 	<footer id="footer">
-		<div id="container_social_network">
-						<h3 class="title_C" style="display:table-cell">A PROPOS DE NOUS
-						</h3>
-						<p style="color : black !important">{{ boutique.apropos }}</p>
-		</div>
             <!-- top footer -->
             {# include "boutique/dependancies/newsletter.html.twig"  #}
 			<div class="section">
 				<!-- container -->
 				<div class="container">
 					<!-- row -->
-					
 					<div class="row">
 						<div class="col-md-4 col-xs-12">
 							<div class="footer">
-								{% if boutique %}
-								<h3 class="footer-title">{{ boutique.name }}</h3>
+							  {% if boutique %}
+								<h3 class="footer-title">{{boutique.name}}</h3>
+							 
+							
+								<p>{{ boutique.apropos }}</p>
 								<ul class="footer-links">
 									<li><i class="fa fa-map-marker"></i>Visitez notre  <a href="{{ boutique.address }}" target="_blank"style="color:#46b1e6">site web</a></li>
 									<li><a href="#"><i class="fa fa-phone"></i>{{ boutique.contact }}</a></li>
