@@ -76,6 +76,24 @@ class BlogRepository extends ServiceEntityRepository
         return $query->getQuery()->getResult();
     }
 
+    public function findByValidate(Boutique $boutique = null)
+    {
+        $query = $this->createQueryBuilder('bl')
+            ->select('bl', 'b', 'v')
+            ->leftJoin('bl.votes', 'v')
+            ->leftJoin('bl.boutique', 'b')
+            ->andwhere('bl.validate = :validate')
+            ->setParameters([
+                'validate' => true
+            ]);
+        if ($boutique != null) {
+            $query->andwhere('bl.boutique = :boutiqueid')
+                ->setParameter('boutiqueid', $boutique->getId());
+        }
+
+        return $query->getQuery()->getResult();
+    }
+
     public function findByBlogValidate(Boutique $boutique = null)
     {
         $query = $this->createQueryBuilder('bl')

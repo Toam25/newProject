@@ -16,59 +16,66 @@ class BlogType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('title',TextType::class,[
-                'label'=>'Titre',
-                'attr'=>[
-                    'class'=>"form-control"
+            ->add('title', TextType::class, [
+                'label' => 'Titre',
+                'attr' => [
+                    'class' => "form-control",
+                    'required' => true
                 ]
             ])
-            ->add('category', ChoiceType::class,[
-                'label'=>'Category',
-                'attr'=>[
-                    'class'=>'form-control'
+            ->add('category', ChoiceType::class, [
+                'label' => 'Category',
+                'attr' => [
+                    'class' => 'form-control',
+                    'required' => true
                 ],
-                'choices'=>[
-                    'Actualités'=>'Actualités',
-                    'Atouts'=>'Atouts',
-                    'Astuces'=>'Astuces',
-                    'Test'=>'Test',
-                    'Tutoriels'=>'Tutoriels'
+                'choices' => [
+                    'Actualités' => 'Actualités',
+                    'Atouts' => 'Atouts',
+                    'Astuces' => 'Astuces',
+                    'Test' => 'Test',
+                    'Tutoriels' => 'Tutoriels'
                 ]
             ])
-            ->add('resume',TextType::class,[
-                'label'=>'Résumé',
-                'attr'=>[
-                    'class'=>'form-control'
+            ->add('resume', TextType::class, [
+                'label' => 'Résumé',
+                'attr' => [
+                    'class' => 'form-control',
+                    'required' => true
                 ]
             ])
-            
-            ->add('keywords',TextType::class,[
-                'label'=>'Mots clé',
-                'attr'=>[
-                    'class'=>'form-control'
+
+            ->add('keywords', TextType::class, [
+                'label' => 'Mots clé',
+                'attr' => [
+                    'class' => 'form-control',
+                    'required' => true
                 ]
             ])
-            
-            ->add('metaDescription',TextareaType::class,[
-                'label'=>'Meta déscription',
-                'attr'=>[
-                    'class'=>'form-control'
+
+            ->add('metaDescription', TextareaType::class, [
+                'label' => 'Meta déscription',
+                'attr' => [
+                    'class' => 'form-control',
+                    'required' => true
                 ]
             ])
-            ->add('link',TextType::class,[
-                'label'=>'Lien',
-                'attr'=>[
-                    'class'=>'form-control'
+            ->add('link', TextType::class, [
+                'label' => 'Lien',
+                'attr' => [
+                    'class' => 'form-control',
+                    'required' => true
+
                 ]
             ])
-            ->add('description',CKEditorType::class,[
-                'label'=>'Déscription',
-                'attr'=>[
-                    'class'=>'form-control'
+            ->add('description', CKEditorType::class, [
+                'label' => 'Déscription',
+                'attr' => [
+                    'class' => 'form-control',
+                    'required' => true
                 ],
-                'input_sync'=> true
-            ])
-        ;
+                'input_sync' => true
+            ]);
     }
 
     public function configureOptions(OptionsResolver $resolver)
