@@ -66,7 +66,7 @@ padding-top: 7px;
     display: flex;
     justify-content: center;
     align-items: center;
-    z-index: 22;
+    z-index: 999999999;
     background: #938f8f80;
 }
 .all_image {
