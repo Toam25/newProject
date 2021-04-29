@@ -505,7 +505,6 @@ ul > ul > li label, ul>li>label{
 /*nav menu shop*/
 .submenu{
     display: none;
-    z-index: 99999;
 }
 nav a{
 	display: inline-block;
@@ -517,7 +516,8 @@ nav li:hover .submenu{
 	top: 100%;
 	left: 0px;
 	padding:0px;
-	z-index: 99;
+    z-index: 99999;;
+    
 }
 .show_list_category_menu{
     display: inline-block;
