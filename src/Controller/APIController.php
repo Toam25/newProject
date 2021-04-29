@@ -60,6 +60,20 @@ class APIController extends AbstractController
 {
 
     /**
+     * @Route("/v1/blog/delete/{id}", name=".delete_blog")
+     */
+
+    public function deleteBlog(Blog $blog)
+    {
+        if ($this->getUser() == $blog->getUser() or $this->container->get('security.authorization_checker')->isGranted('ROLE_SUPER_ADMIN')) {
+            $em = $this->getDoctrine()->getManager();
+            $em->remove($blog);
+            $em->flush();
+            return new JsonResponse(['status' => 'success'], Response::HTTP_OK);
+        }
+        return new JsonResponse(['status' => 'error'], Response::HTTP_UNAUTHORIZED);
+    }
+    /**
      * @Route("/{type}/update/{value}/{id}" , name="showBlogArticle", methods={"POST"})
      */
 

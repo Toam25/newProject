@@ -610,7 +610,19 @@ background: #e4087e;
         font-size: 13px;
     }
  }
+ 
+ .nbr_blog{
+    display: inline-block;
+    transition: 500ms;
+ }
+ .rotate_nbr{
+    transform: rotate(360deg);
+    font-size: 15px !important;
+    color: black;
+    font-weight: bold;
+ }
  /*blog admin*/
+
 
  .date_blog {
     background: #00000075;

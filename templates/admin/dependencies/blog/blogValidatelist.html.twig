@@ -16,6 +16,7 @@
                 {% if blog.validateInHomePage is same as (false)%}
                    <button class="btn btn-secondary  validate_blog" data-id= "{{blog.id}}" data-validate="APROUVED_IN_HOME_PAGE">Approuver dans l'accueil</button>
                 {% endif %}
+                  <button class="delete_blog btn btn-danger" data-id="{{ blog.id }}">Supprimer</button>
             </div>
         </div>
     </div>
