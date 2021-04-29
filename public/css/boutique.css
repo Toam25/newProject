@@ -504,7 +504,8 @@ ul > ul > li label, ul>li>label{
 }
 /*nav menu shop*/
 .submenu{
-	display: none;
+    display: none;
+    z-index: 99999;
 }
 nav a{
 	display: inline-block;
