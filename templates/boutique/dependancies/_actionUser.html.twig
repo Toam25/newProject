@@ -2,6 +2,37 @@
 	<div class=" clearfix">
 		<div
 			id="header-ctn" class="header-ctn">
+				
+				{% if app.user %}
+					<div style="">
+						<a href="">
+							<i class="fa fa-envelope"></i>
+							<span>Message</span>
+							<div class="qty qtymess">
+								0
+							</div>
+						</a>
+							
+					</div>
+					<div style="">
+						<a href="">
+							<i class="fa fa-bell"></i>
+							<span>Notification</span>
+							<div class="qty qtymess">
+								0
+							</div>
+						</a>
+							
+					</div>
+					<div style="">
+							<a href="">
+								<i class="fa fa-user"></i>
+								<span>Membres</span>
+							</a>
+							
+					</div>
+
+				{%  endif %}
 			{# messages #}
 			{# 
 				<div id="message">

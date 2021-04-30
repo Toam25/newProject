@@ -36,18 +36,37 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
         $this->_em->flush();
     }
 
-      public function findAllWithRoleSuperAdmin(String $role){
+    public function findAllWithRoleSuperAdmin(String $role)
+    {
         $query = $this->createQueryBuilder('u')
-                        ->where('u.roles LIKE :role')
-                        ->setParameter('role', '%'.$role.'%')
-                        ->getQuery()
-                        ->getResult()
-        
-        ;
+            ->where('u.roles LIKE :role')
+            ->setParameter('role', '%' . $role . '%')
+            ->getQuery()
+            ->getResult();
 
         return $query;
     }
 
+    public function findAllUser(string $q = null)
+    {
+        $qb = $this->createQueryBuilder('u')
+            ->select('u', 's')
+            ->leftJoin('u.boutiques', 's')
+            ->orderBy('u.id', 'ASC');
+        if ($q != null) {
+            $qb->Where('s.name LIKE :shopname')
+                ->orWhere('u.name LIKE :name')
+                ->orWhere('u.firstname LIKE :firstname')
+                ->setParameters([
+                    'shopname' => '%' . $q . '%',
+                    'name' => '%' . $q . '%',
+                    'firstname' => '%' . $q . '%'
+                ]);
+        }
+
+        return $qb->getQuery()
+            ->getResult();
+    }
     // /**
     //  * @return User[] Returns an array of User objects
     //  */
