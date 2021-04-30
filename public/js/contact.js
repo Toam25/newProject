@@ -16,10 +16,10 @@ $(function () {
                     html += listShop(element.image, element.id, element.name)
                 });
                 $('.js_member').html(html);
-                // $('body .container_loader_message').remove();
+                $('body .container_loader_message').remove();
             },
             error: () => {
-                // $('body .container_loader_message').remove();
+                $('body .container_loader_message').remove();
             }
         });
     });
@@ -39,8 +39,8 @@ $(function () {
                 data.forEach(element => {
                     html += listShop(element.image, element.id, element.name)
                 });
-                // $('.js_member').html(html);
-                //$('body .container_loader_message').remove();
+                $('.js_member').html(html);
+                $('body .container_loader_message').remove();
             },
             error: () => {
                 $('body .container_loader_message').remove();
