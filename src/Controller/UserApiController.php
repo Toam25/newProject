@@ -25,18 +25,12 @@ class UserApiController extends AbstractController
 
         for ($i = 0; $i < sizeof($users); $i++) {
             if (sizeof($users[$i]->getBoutiques()) > 0) {
-                $name = $users[$i]->getBoutiques()[0]->getName();
-                $image = $users[$i]->getBoutiques()[0]->getLogo();
-            } else {
-                $name = $users[$i]->getName() . " " . $users[$i]->getFirstname();
-                $image = $users[$i]->getAvatar();
+                array_push($data, [
+                    "name" => $users[$i]->getBoutiques()[0]->getName(),
+                    "id" => $users[$i]->getId(),
+                    "image" => $users[$i]->getBoutiques()[0]->getLogo()
+                ]);
             }
-
-            array_push($data, [
-                "name" => $name,
-                "id" => $users[$i]->getId(),
-                "image" => $image
-            ]);
         }
         return new JsonResponse($data);
     }
