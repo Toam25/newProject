@@ -113,7 +113,7 @@
 				{% if i < 5 %}
 					{% if i % 2 == 0  %}
 
-						<div class="__">
+						<a class="__" href="{{ path('shop',{'id': echatillon.id, 'type' : echatillon.type })}}">
 							<div class="datail_echantillon_shops">
 								<h2>{{ echatillon.name }}</h2>
 								<h3>
@@ -126,9 +126,9 @@
 							<div class="image_echatillon_shop">
 								<img src="{{asset('images/'~echatillon.logo)}}">
 							</div>
-						</div>
+						</a>
 					{% else %}
-						<div class="__2">
+						<a class="__2" href="{{ path('shop',{'id': echatillon.id, 'type' : echatillon.type })}}">
 							<div class="image_echatillon_shop">
 								<img src="{{asset('images/'~echatillon.logo)}}">
 							</div>
@@ -141,7 +141,7 @@
 								</p>
 							</div>
 
-						</div>
+						</a>
 
 					{% endif %}
 				{% endif %}
