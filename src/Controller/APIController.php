@@ -65,7 +65,7 @@ class APIController extends AbstractController
         $this->em = $em;
     }
     /**
-     * @Route("/v1/blog/delete/{id}", name=".delete_blog")
+     * @Route("/v1/blog/delete/{id}", name=".delete_blog", methods={"POST"})
      */
 
     public function deleteBlog(Blog $blog)
@@ -74,6 +74,23 @@ class APIController extends AbstractController
 
 
             $this->em->remove($blog);
+            $this->em->flush();
+            return new JsonResponse(['status' => 'success'], Response::HTTP_OK);
+        }
+        return new JsonResponse(['status' => 'error'], Response::HTTP_UNAUTHORIZED);
+    }
+
+    /**
+     * @Route("/v1/video/delete/{id}", name=".delete_video", methods={"POST"})
+     */
+
+    public function deleteVideo(Video $video, BoutiqueRepository $boutiqueRepository)
+    {
+        $boutique = $boutiqueRepository->findOneBy(['user' => $this->getUser()]);
+        if ($boutique == $video->getBoutique() or $this->container->get('security.authorization_checker')->isGranted('ROLE_SUPER_ADMIN')) {
+
+
+            $this->em->remove($video);
             $this->em->flush();
             return new JsonResponse(['status' => 'success'], Response::HTTP_OK);
         }

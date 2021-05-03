@@ -1,14 +1,17 @@
+
 <div class="row">
 {% for video in videos %}
-	<div id="id-{{video.id}}"class="col-md-4 col-sm-6 col-xs-6 col-lg-4 " style="margin-top: 3px;">
-     <a href="{{path('edit_video', {'id': video.id })}}" >
-		<div class="cart container_cart container_blog">
-			<h4 style="color: black !important;text-align: center;font-size: 15px;">{{video.title}}</h4>
-          <p style="font-size: 13px;color: black;">{{ video.description}}</p>
-		     <iframe class='list_video' src="{{video.link}}" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-		</div>
+	<div id="id-{{video.id}}"class="col-md-4 col-sm-6 col-xs-6 col-lg-4 container_my_video" style="margin-top: 3px;">
+     	<a href="{{path('edit_video', {'id': video.id })}}" >
+			<div class="cart container_cart container_blog">
+				<h4 style="color: black !important;text-align: center;font-size: 15px;">{{video.title}}</h4>
+			<p style="font-size: 13px;color: black;">{{ video.description}}</p>
+				<iframe class='list_video' src="{{video.link}}" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+			 <button class="btn btn-danger delete_video" data-id="{{ video.id }}" style="width : 100%">Supprimer</button>
+			</div>
+		</a>
 	</div>
-    </a>
+   
 {% endfor %}
 
 </div>
