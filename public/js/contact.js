@@ -51,12 +51,12 @@ $(function () {
     function listShop(image, id, name) {
         return `<div class="membre_in">
             <div class="imagep">
-                <img class="image_p" src="images/`+ image + `">
+                <img class="image_p" src="/images/`+ image + `">
             </div>
             <div class="imagec">
                 <div class="namemembre">
                     <input type="hidden" value="`+ id + `">
-                    <a href="../admin/index.php?in-action=profil&amp;id=16" target="blank">
+                    <a href="" target="blank">
                         <span style="font-weight: bold; ">`+ name + `</span><br></a>
                 </div>
                 <!--span class="addfriend btn btn-primary aspectButton">Ajouter</span-->
@@ -67,6 +67,36 @@ $(function () {
         </div>`
     }
 
+    $('.close_message').on('click', function (e) {
+        e.preventDefault();
+        $('#container-message').fadeOut();
+
+    });
+    $('#container_membre_in').on('click', '.message-in', function (e) {
+        e.preventDefault();
+        let id = $(this).attr('name');
+        $('#container-message').show();
+        $.ajax({
+            url: "/api/v1/message/" + id,
+            type: 'GET',
+            dataType: 'json',
+            timeout: 3000,
+            beforeSend: () => {
+                $('#message').html(loader);
+            },
+            success: (data) => {
+                let html = ``;
+                data.forEach(element => {
+                    html += listShop(element.image, element.id, element.name)
+                });
+                $('.js_member').html(html);
+                $('#message .container_loader_message').remove();
+            },
+            error: () => {
+                $('#message .container_loader_message').remove();
+            }
+        });
+    });
     $('.fermer_membre').on('click', function (e) {
         e.preventDefault()
         $('#membre_user').fadeOut();

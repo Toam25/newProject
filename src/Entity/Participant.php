@@ -2,13 +2,13 @@
 
 namespace App\Entity;
 
-use App\Repository\MessageRepository;
+use App\Repository\ParticipantRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity(repositoryClass=MessageRepository::class)
+ * @ORM\Entity(repositoryClass=ParticipantRepository::class)
  */
-class Message
+class Participant
 {
     /**
      * @ORM\Id
@@ -18,17 +18,12 @@ class Message
     private $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Conversation::class, inversedBy="message")
+     * @ORM\ManyToOne(targetEntity=Conversation::class, inversedBy="participants")
      */
     private $conversation;
 
     /**
-     * @ORM\Column(type="text")
-     */
-    private $content;
-
-    /**
-     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="messages")
+     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="participants")
      */
     private $user;
 
@@ -45,18 +40,6 @@ class Message
     public function setConversation(?Conversation $conversation): self
     {
         $this->conversation = $conversation;
-
-        return $this;
-    }
-
-    public function getContent(): ?string
-    {
-        return $this->content;
-    }
-
-    public function setContent(string $content): self
-    {
-        $this->content = $content;
 
         return $this;
     }

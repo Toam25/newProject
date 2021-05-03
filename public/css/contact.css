@@ -360,6 +360,9 @@ padding-top: 1px !important;
 .container-message-debloqued{
  display: flex;
 }
+#container-message{
+  display : none;
+}
 .file_image_uploid{
 padding-left: 5px;
 padding-right: 5px;

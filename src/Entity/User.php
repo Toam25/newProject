@@ -126,6 +126,16 @@ class User implements UserInterface
      */
     private $images;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Message::class, mappedBy="user")
+     */
+    private $messages;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Participant::class, mappedBy="user")
+     */
+    private $participants;
+
 
     public function __construct()
     {
@@ -142,6 +152,8 @@ class User implements UserInterface
         $this->profilJobs = new ArrayCollection();
         $this->pages = new ArrayCollection();
         $this->images = new ArrayCollection();
+        $this->messages = new ArrayCollection();
+        $this->participants = new ArrayCollection();
  
     }
 
@@ -627,6 +639,66 @@ class User implements UserInterface
              // set the owning side to null (unless already changed)
              if ($image->getUser() === $this) {
                  $image->setUser(null);
+             }
+         }
+
+         return $this;
+     }
+
+     /**
+      * @return Collection|Message[]
+      */
+     public function getMessages(): Collection
+     {
+         return $this->messages;
+     }
+
+     public function addMessage(Message $message): self
+     {
+         if (!$this->messages->contains($message)) {
+             $this->messages[] = $message;
+             $message->setUser($this);
+         }
+
+         return $this;
+     }
+
+     public function removeMessage(Message $message): self
+     {
+         if ($this->messages->removeElement($message)) {
+             // set the owning side to null (unless already changed)
+             if ($message->getUser() === $this) {
+                 $message->setUser(null);
+             }
+         }
+
+         return $this;
+     }
+
+     /**
+      * @return Collection|Participant[]
+      */
+     public function getParticipants(): Collection
+     {
+         return $this->participants;
+     }
+
+     public function addParticipant(Participant $participant): self
+     {
+         if (!$this->participants->contains($participant)) {
+             $this->participants[] = $participant;
+             $participant->setUser($this);
+         }
+
+         return $this;
+     }
+
+     public function removeParticipant(Participant $participant): self
+     {
+         if ($this->participants->removeElement($participant)) {
+             // set the owning side to null (unless already changed)
+             if ($participant->getUser() === $this) {
+                 $participant->setUser(null);
              }
          }
 

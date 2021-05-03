@@ -15,14 +15,14 @@
 
 
 {# message #}
-{# 
+
 <div id="container-message">
 	<div style="" class="head_message">
-		<button class="btn-control-message parametre">
-			<span class="glyphicon glyphicon-cog"></span>
-		</button>
-		<button class="btn-control-message fermer">
-			<span class="glyphicon glyphicon-remove"></span>
+		{# <button class="btn-control-message parametre">
+			<span class="fa fa-cogs"></span>
+		</button> #}
+		<button class="btn-control-message fermer close_message">
+			<span class="fa fa-remove"></span>
 		</button>
 		<div id="name_and_logo_boutique" style="background-color:#7b89f1">
 			<div id="name_and_logo_boutique">
@@ -49,7 +49,7 @@
 				</div>
 			</span>
 			<form id="formForMessageBoutique" enctype="multipart/form-data">
-				<input class="form-control" type="text" name="message"><input type="hidden" name="id_boutique" value="217">
+				<textarea class="form-control" type="text" name="message"></textarea><input type="hidden" name="id_boutique" value="217">
 
 				<label class="file_image_uploid">
 					<input name="image_for_article" type="file" style="display : none" class="input_preview_image_for_article">
@@ -61,4 +61,4 @@
 			</form>
 		</div>
 	</div>
-</div> #}
+</div>

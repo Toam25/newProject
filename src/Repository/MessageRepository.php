@@ -5,6 +5,7 @@ namespace App\Repository;
 use App\Entity\Message;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
+
 /**
  * @method Message|null find($id, $lockMode = null, $lockVersion = null)
  * @method Message|null findOneBy(array $criteria, array $orderBy = null)

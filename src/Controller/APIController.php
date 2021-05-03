@@ -58,7 +58,12 @@ use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
  */
 class APIController extends AbstractController
 {
+    private $em;
 
+    public function __construct(EntityManagerInterface $em)
+    {
+        $this->em = $em;
+    }
     /**
      * @Route("/v1/blog/delete/{id}", name=".delete_blog")
      */
@@ -66,9 +71,10 @@ class APIController extends AbstractController
     public function deleteBlog(Blog $blog)
     {
         if ($this->getUser() == $blog->getUser() or $this->container->get('security.authorization_checker')->isGranted('ROLE_SUPER_ADMIN')) {
-            $em = $this->getDoctrine()->getManager();
-            $em->remove($blog);
-            $em->flush();
+
+
+            $this->em->remove($blog);
+            $this->em->flush();
             return new JsonResponse(['status' => 'success'], Response::HTTP_OK);
         }
         return new JsonResponse(['status' => 'error'], Response::HTTP_UNAUTHORIZED);

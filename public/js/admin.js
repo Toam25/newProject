@@ -38,6 +38,9 @@ $(function () {
               toastr.success('Supprimé avec success ;) ');
               that.prop('disabled', false)
               that.parents('.validate_link_a').remove();
+              that.parents('.container_my_blog').remove();
+
+
               if (parseInt($('.nbr_blog').text()) - 1 > -1) {
                 $('.nbr_blog').addClass('rotate_nbr');
                 setTimeout(() => {
