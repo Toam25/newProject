@@ -4,6 +4,63 @@ $(function () {
   var $category;
 
 
+    // delete page 
+    $('body').on('click', '.delete_page', function (e) {
+      e.preventDefault();
+      let id = $(this).attr('data-id');
+      let that = $(this);
+      Lobibox.confirm({
+        msg: 'Voulez vous supprimer  ?',
+        buttons: {
+          yes: {
+            text: 'Acceptez',
+  
+          },
+          no: {
+            text: 'Annulez',
+  
+          },
+  
+        },
+  
+        callback: ($this, type) => {
+  
+          if (type === "yes") {
+  
+            $.ajax({
+              url: "/api/v1/page/delete/" + id,
+              type: 'POST',
+              dataType: 'json',
+              beforeSend: () => {
+                toastr.info('Suppression en cours ;) ');
+                that.prop('disabled', true)
+              },
+              success: (data) => {
+                toastr.success('Supprimé avec success ;) ');
+                that.prop('disabled', false)
+                that.parents('.container_my_page').remove();
+                if (parseInt($('.nbr_blog').text()) - 1 > -1) {
+                  $('.nbr_blog').addClass('rotate_nbr');
+                  setTimeout(() => {
+                    $('.nbr_blog').text(parseInt($('.nbr_blog').text()) - 1);
+                    $('.nbr_blog').removeClass('rotate_nbr');
+  
+                  }, 250)
+                }
+                that.parents('.validate_link_a').remove();
+              },
+              error: () => {
+                toastr.error('Erreur de suppression ');
+                that.prop('disabled', false)
+              }
+            });
+  
+          }
+        }
+  
+      });
+  
+    });
   // delete video 
   $('body').on('click', '.delete_video', function (e) {
     e.preventDefault();

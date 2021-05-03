@@ -1,6 +1,6 @@
 <div class="row">
 {% for page in pagesListes %}
-	<div id="id-{{page.id}}"class="col-md-4 col-sm-6 col-xs-6 col-lg-4 " style="margin-top: 3px;">
+	<div id="id-{{page.id}}"class="col-md-4 col-sm-6 col-xs-6 col-lg-4 container_my_page"  style="margin-top: 3px;">
      <a href="{{path('edit_formation', {'id': page.id })}}" >
 		<div class="cart container_cart container_blog">
 			<div class="cnt_image_date_bloc">
@@ -22,7 +22,10 @@
 			</div>
             <h1 class="title_blog">{{ cutWorld(page.title,50) }}</h1>
             <p class="_description_blog">{{ cutWorld(page.resume,100) }}
+          <button class="btn btn-danger delete_page" data-id= "{{ page.id }}" style="width : 100% ">Supprimer</button>
 		</div>
+        </a>
 	</div>
-    </a>
+
 {% endfor %}
+</div>
