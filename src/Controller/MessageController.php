@@ -2,9 +2,11 @@
 
 namespace App\Controller;
 
+use App\Entity\Conversation;
 use App\Entity\Message;
 use App\Form\MessageType;
 use App\Repository\MessageRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -12,20 +14,34 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * @Route("/message")
+ * @Route("/messages", name="message.")
  */
 class MessageController extends AbstractController
 {
-    // /**
-    //  * @Route("/{id}", name="message", methods={"GET"})
-    //  */
-    // public function index(MessageRepository $messageRepository): Response
-    // {   
+    private $entityManager;
+    private $messageRepository;
+    public function __construct(MessageRepository $messageRepository, EntityManagerInterface $entityManagerInterface)
+    {
+        $this->entityManager = $entityManagerInterface;
+        $this->messageRepository = $messageRepository;
+    }
+    /**
+     * @Route("/{id}", name="getMessage", methods={"GET"})
+     */
+    public function index(Request $request, Conversation $conversation): Response
+    {
 
-    //     return $this->render('message/index.html.twig', [
-    //         'messages' => $messageRepository->findAll(),
-    //     ]);
-    // }
+        $this->denyAccessUnlessGranted('view', $conversation);
+
+        //   $message = $conversation->getMessage();
+
+        $messages = $this->messageRepository->findMessageByConversationId(
+            $conversation->getId()
+        );
+
+        dd($messages);
+        return $this->render('base.html.twig', []);
+    }
 
     // /**
     //  * @Route("/new/{id}", name="message_new", methods={"GET","POST"})
