@@ -120,6 +120,9 @@
 			
 		</div>
 		<div>
+		     {% if blogs | length >0  %}
+			      <h4 align ="center">Articles en vogue</h4>
+			 {% endif %}
 			  {% include "boutique/slideblogindex.html.twig" %}
 		</div>
 		{% include "boutique/pubvideo.html.twig" %}
