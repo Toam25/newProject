@@ -33,7 +33,8 @@ class BlogType extends AbstractType
                     'Actualités' => 'Actualités',
                     'Atouts' => 'Atouts',
                     'Astuces' => 'Astuces',
-                    'Test' => 'Test',
+                    'Conseils' => 'Conseils',
+                    'Tests' => 'Tests',
                     'Tutoriels' => 'Tutoriels'
                 ]
             ])

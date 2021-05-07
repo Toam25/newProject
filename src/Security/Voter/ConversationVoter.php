@@ -23,12 +23,12 @@ class ConversationVoter extends Voter
     protected function voteOnAttribute($attribute, $subject, TokenInterface $token)
     {
 
-        $result = $this->conversationRepository->checkIfUserIsParticipant(
-            $subject->getId(),
-            $token->getUser()->getId()
-        );
+        // $result = $this->conversationRepository->checkIfUserIsParticipant(
+        //     $subject->getId(),
+        //     $token->getUser()->getId()
+        // // );
 
-        return !!$result;
+        // return !!$result;
         // if(is_null($result))
     }
 }
