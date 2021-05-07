@@ -119,7 +119,7 @@ nav {
   color: beige;
 }
 .containt_video {
-  overflow-y: scroll;
+  overflow-y: auto;
   margin-top: 0px;
   padding: 0px;
   height: 250px !important;
