@@ -24,7 +24,7 @@ class BlogType extends AbstractType
                 ]
             ])
             ->add('category', ChoiceType::class, [
-                'label' => 'Category',
+                'label' => 'Categorie',
                 'attr' => [
                     'class' => 'form-control',
                     'required' => true
