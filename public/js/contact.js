@@ -3,7 +3,7 @@ $(function () {
         e.preventDefault();
         $('#membre_user').show();
         $.ajax({
-            url: "/api/v1/user",
+            url: "/api/v1/user/",
             type: 'GET',
             dataType: 'json',
             timeout: 3000,
@@ -85,12 +85,15 @@ $(function () {
                 $('#message').html(loader);
             },
             success: (data) => {
-                let html = ``;
-                data.forEach(element => {
-                    html += listShop(element.image, element.id, element.name)
-                });
-                $('.js_member').html(html);
-                $('#message .container_loader_message').remove();
+
+                $('._image_').attr('src', '/images/' + data.image)
+                $('._message_name_boutique').html(data.name);
+                // let html = ``;
+                // data.forEach(element => {
+                //     html += listShop(element.image, element.id, element.name)
+                // });
+                // $('.js_member').html(html);
+                // $('#message .container_loader_message').remove();
             },
             error: () => {
                 $('#message .container_loader_message').remove();

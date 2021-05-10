@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Repository\BoutiqueRepository;
 use App\Repository\UserRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -17,7 +18,7 @@ class UserApiController extends AbstractController
      * @Route("/", name="user",methods={"GET"})
      */
 
-    public function getAllUser(UserRepository $userRepository, Request $request)
+    public function getAllUser(UserRepository $userRepository, BoutiqueRepository $boutiqueRepository, Request $request)
     {
 
         $users = $userRepository->findAllUser($request->query->get('q'));
@@ -25,10 +26,11 @@ class UserApiController extends AbstractController
 
         for ($i = 0; $i < sizeof($users); $i++) {
             if (sizeof($users[$i]->getBoutiques()) > 0) {
+
                 array_push($data, [
                     "name" => $users[$i]->getBoutiques()[0]->getName(),
-                    "id" => $users[$i]->getId(),
-                    "image" => $users[$i]->getBoutiques()[0]->getLogo()
+                    "id" => $users[$i]->getBoutiques()[0]->getId(),
+                    "image" => $users[$i]->getBoutiques()[0]->getLogo(),
                 ]);
             }
         }

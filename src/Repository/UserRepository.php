@@ -50,8 +50,9 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
     public function findAllUser(string $q = null)
     {
         $qb = $this->createQueryBuilder('u')
-            ->select('u', 's')
+            ->select('u', 's', 'h')
             ->leftJoin('u.boutiques', 's')
+            ->leftJoin('s.headers', 'h')
             ->orderBy('u.id', 'ASC');
         if ($q != null) {
             $qb->Where('s.name LIKE :shopname')
