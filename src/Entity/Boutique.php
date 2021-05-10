@@ -99,7 +99,7 @@ class Boutique
     private $esArticles;
 
     /**
-     * @ORM\Column(type="string", length=300, nullable=true)
+     * @ORM\Column(type="text", nullable=true)
      */
     private $user_condition;
 
