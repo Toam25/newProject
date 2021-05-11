@@ -743,6 +743,8 @@ nav li:hover .submenu{
     width: 50vw !important;
     z-index: 1;
     background: white;
+    padding: 5px;
+
 }
 .__{
     display: grid;
@@ -752,6 +754,8 @@ nav li:hover .submenu{
     border-top: none;
     z-index: 1;
     background: white;
+    padding: 5px;
+
 }
 .image_echatillon_shop > img {
     width: 100%;

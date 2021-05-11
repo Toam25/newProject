@@ -105,7 +105,7 @@
 		</div>
 
 		<div id="echatillon_shops">
-		
+
 			{% set i = 0 %}
 
 			{% for key in rangeEchantillon|keys %}
@@ -134,6 +134,7 @@
 								<img src="{{asset('images/'~shops[rangeEchantillon[key]].logo)}}">
 							</div>
 							<div class="datail_echantillon_shops">
+								<h2>{{ shops[rangeEchantillon[key]].name }}</h2>
 								<h3>
 									{{ shops[rangeEchantillon[key]].slogan}}
 								</h3>
