@@ -302,7 +302,11 @@ body {
     z-index: 2;
     background: white;
 }
-
+#echantillon_shop{
+    background: #131313;
+    padding: 30px 0;
+    margin-bottom: 23px;
+}
 .logo_image_boutique_header {
     width: 100% !important;
     height: 100% !important;

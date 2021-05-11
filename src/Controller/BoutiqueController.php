@@ -132,7 +132,8 @@ class BoutiqueController extends AbstractController
             'isHomeShop' => $isHomeShop,
             'blogs' => $blogs,
             'shops' => $boutiques,
-            'shopLink' => sizeof($matches) > 2 ? $matches[2] : ""
+            'shopLink' => sizeof($matches) > 2 ? $matches[2] : "",
+            'rangeEchantillon' => $this->uniqueRandomNumbersWithinRange(0, sizeof($boutiques) - 1, 4)
 
         ]);
     }
@@ -738,5 +739,12 @@ class BoutiqueController extends AbstractController
             'total' => $nbrTotalVote,
         ];
         return $newNbrTotalVote;
+    }
+
+    function uniqueRandomNumbersWithinRange($min, $max, $quantity)
+    {
+        $numbers = range($min, $max);
+        shuffle($numbers);
+        return array_slice($numbers, 0, $quantity);
     }
 }
