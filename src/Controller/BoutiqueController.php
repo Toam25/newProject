@@ -209,6 +209,18 @@ class BoutiqueController extends AbstractController
         ]);
     }
 
+
+    /**
+     * @Route("/infographie", name="infographie", methods={"GET"})
+     */
+    public function infogratphie()
+    {
+
+        return $this->render('infographie/index.html.twig', [
+            'infographie' => "infographie"
+        ]);
+    }
+
     /**
      * @Route("/galery_marchande/shop/nbr", name="shopsGaleryMarchandeNbr", methods={"GET"})
      */
