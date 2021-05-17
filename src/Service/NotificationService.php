@@ -50,7 +50,7 @@ class NotificationService extends AbstractController
                          'idNotification' => (int)$notification->getId(),
                          "idBlog" => (int)$notification->getDescription(),
                          'status' => 'APPROUVED_BLOG',
-                         'createdat' => $notification->getCreatedAt()->format("d/m/Y h:m:s"),
+                         'createdat' => $notification->getCreatedAt()->getTimesTamp(),
                          'isView' => in_array($this->getUser()->getId(), $notification->getView())
                     ]);
                } else if ($notification->getSubject() == "APPROUVED") {
@@ -59,7 +59,7 @@ class NotificationService extends AbstractController
                          "idBlog" => (int)$notification->getDescription(),
                          'idNotification' => (int)$notification->getId(),
                          'status' => 'APPROUVED_BLOG',
-                         'createdat' => $notification->getCreatedAt()->format("d/m/Y h:m:s"),
+                         'createdat' => $notification->getCreatedAt()->getTimesTamp(),
                          'isView' => in_array($this->getUser()->getId(), $notification->getView())
                     ]);
                } else if ($notification->getSubject() == "REQUEST_APPROVAL_BLOG") {
@@ -68,7 +68,7 @@ class NotificationService extends AbstractController
                          "idBlog" => (int)$notification->getDescription(),
                          'status' => 'REQUEST_APPROVAL_BLOG',
                          'idNotification' => (int)$notification->getId(),
-                         'createdat' => $notification->getCreatedAt()->format("d/m/Y h:m:s"),
+                         'createdat' => $notification->getCreatedAt()->getTimesTamp(),
                          'isView' => in_array($this->getUser()->getId(), $notification->getView())
                     ]);
                }

@@ -68,6 +68,21 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
         return $qb->getQuery()
             ->getResult();
     }
+
+    public function findOneByUser(int $userId)
+    {
+        $qb = $this->createQueryBuilder('u')
+            ->select('u', 's', 'h')
+            ->leftJoin('u.boutiques', 's')
+            ->leftJoin('s.headers', 'h')
+            ->orderBy('u.id', 'ASC')
+            ->andWhere('u.id = :userId ')
+            ->setParameters([
+                'userId' => $userId
+            ]);
+
+        return $qb->getQuery()->getOneOrNullResult();
+    }
     // /**
     //  * @return User[] Returns an array of User objects
     //  */

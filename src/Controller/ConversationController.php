@@ -9,6 +9,8 @@ use App\Form\MessageType;
 use App\Repository\ConversationRepository;
 use App\Repository\MessageRepository;
 use App\Repository\UserRepository;
+use App\Service\checkConversationService;
+use App\Service\CheckConversationService as ServiceCheckConversationService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -52,48 +54,9 @@ class ConversationController extends AbstractController
      * @Route("/", name="newConversations", methods={"POST"})
      */
 
-    public function newConversations(Request $request)
+    public function newConversations(Request $request, CheckConversationService  $checkConversationService)
     {
-        $otherUser = $request->get('otheUser', 0);
-        $otherUser = $this->userRepository->find($otherUser);
-
-        if (is_null($otherUser)) {
-            throw new \Exception("the user was not found ");
-        }
-        if ($otherUser->getId() === $this->getUser()->getId()) {
-            throw new \Exception("You can create conversation with yourself");
-        }
-
-        $conversation = $this->conversationRepository->findConversationsByParticipants(
-            $otherUser->getId(),
-            $this->getUser()->getId()
-        );
-
-        if (count($conversation)) {
-            throw new \Exception("Conversation existe");
-        }
-
-        $conversation = new Conversation();
-
-        $participant = new Participant();
-        $participant->setUser($this->getUser());
-        $participant->setConversation($conversation);
-
-        $otherParticipant = new Participant();
-        $otherParticipant->setUser($otherUser);
-        $otherParticipant->setConversation($conversation);
-
-        try {
-            $this->entityManager->persist($conversation);
-            $this->entityManager->persist($participant);
-            $this->entityManager->persist($otherParticipant);
-            $this->entityManager->flush();
-        } catch (\Exception $e) {
-            throw $e;
-        }
-        return $this->json([
-            'id' => $conversation->getId()
-        ], 200);
+        $checkConversationService->checkConversation($request->get('otheUser', 0));
     }
 
     /**
@@ -103,7 +66,20 @@ class ConversationController extends AbstractController
     public function getConversations()
     {
         $conversations = $this->conversationRepository->findConvesationsByUser($this->getUser()->getId());
+        $newConversations = [];
 
-        return $this->json($conversations);
+        foreach ($conversations as $conversation) {
+            //  $conversation['createdAt']->getTimestamp();
+            if ($conversation['createdAt'] != null) {
+
+
+                $conversation = array_merge($conversation, [
+                    "times" => $conversation['createdAt']->getTimesTamp()
+                ]);
+            }
+            array_push($newConversations, $conversation);
+        }
+
+        return $this->json($newConversations);
     }
 }

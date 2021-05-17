@@ -1,42 +1,32 @@
 <div class="usersPers">
 	<div class=" clearfix">
-		<div
-			id="header-ctn" class="header-ctn">
-				 <div style="" class="membre">
+		<div id="header-ctn" class="header-ctn">
+				 
+				{% if app.user %}
+					<div style="" class="membre">
 							<a href="">
 								<i class="fa fa-user"></i>
 								<span>Boutiques</span>
 							</a>
 							
 					</div>
-				{% if app.user %}
-					{# <div style="">
-						<a href="">
-							<i class="fa fa-envelope"></i>
-							<span>Message</span>
-							<div class="qty qtymess">
-								0
-							</div>
-						</a>
-							
-					</div> #}
-					<div style="">
+					<div style="" class="mynotification">
 						<a href="">
 							<i class="fa fa-bell"></i>
-							<span>Notification</span>
-							<div class="qty qtymess">
+							 <span>Notification</span>
+							{#<div class="qty qtymess">
 								0
-							</div>
+							</div> #}
 						</a>
 							
 					</div>
-					<div id="" style="">
+					<div id="" style="" class="_my_message_">
 							<a href="">
 								<i class="fa fa-envelope"></i>
 								<span>Message</span>
-								<div class="qty qtymess">
+								{#<div class="qty qtymess">
 									0
-								</div>
+								</div> #}
 							</a>
 							
 					</div>

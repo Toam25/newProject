@@ -638,6 +638,7 @@ nav li:hover .submenu{
 #map{
     height: 400px;
     z-index: 1;
+    overflow: hidden;
 }
 .datail_echantillon_shops h3, .datail_echantillon_shops h2 {
      font-size : 13px ;

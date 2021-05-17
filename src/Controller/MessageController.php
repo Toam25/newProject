@@ -2,10 +2,15 @@
 
 namespace App\Controller;
 
+use App\Entity\Boutique;
 use App\Entity\Conversation;
 use App\Entity\Message;
 use App\Form\MessageType;
+use App\Repository\BoutiqueRepository;
+use App\Repository\ConversationRepository;
 use App\Repository\MessageRepository;
+use App\Repository\UserRepository;
+use App\Service\CheckConversationService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -18,6 +23,7 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class MessageController extends AbstractController
 {
+    const ATTRIBUTES_TO_SERIALISE = ['id', 'content', 'createdAt', 'my', "times"];
     private $entityManager;
     private $messageRepository;
     public function __construct(MessageRepository $messageRepository, EntityManagerInterface $entityManagerInterface)
@@ -28,21 +34,67 @@ class MessageController extends AbstractController
     /**
      * @Route("/{id}", name="getMessage", methods={"GET"})
      */
-    public function index(Request $request, Conversation $conversation): Response
+    public function index(BoutiqueRepository $boutiqueRepository, UserRepository $userRepository, int $id, CheckConversationService $checkConversationService): Response
     {
 
-        $this->denyAccessUnlessGranted('view', $conversation);
+        //  $this->denyAccessUnlessGranted('view', $conversation);
 
         //   $message = $conversation->getMessage();
 
-        $messages = $this->messageRepository->findMessageByConversationId(
-            $conversation->getId()
-        );
+        $conversation = $checkConversationService->checkConversation($id);
+        $conversationId = $conversation['conversation_id'];
 
-        dd($messages);
-        return $this->render('base.html.twig', []);
+        if ($conversationId != -1) {
+
+            $messages = $this->messageRepository->findMessageByConversationId(
+                $conversationId
+            );
+
+            array_map(function ($message) {
+                $message->setMy(
+                    $message->getUser()->getId() === $this->getUser()->getId() ? true : false
+                );
+                $message->setTimes($message->getCreatedAt()->getTimesTamp());
+            }, $messages);
+
+
+            return $this->json([
+                'id' => $conversation['user_id'],
+                'name' => $conversation['user_name'],
+                'image' => $conversation['images'],
+                'id_conversation' => $conversationId,
+                'messages' => $messages
+            ], Response::HTTP_OK, [], ['attributes' => self::ATTRIBUTES_TO_SERIALISE]);
+        } else {
+            return $this->json(['status' => "KO"], Response::HTTP_UNAUTHORIZED);
+        }
     }
 
+    /**
+     * @Route("/{id}", name="newMessage", methods={"POST"})
+     */
+
+    public function newMessage(Request $request, Conversation $conversation)
+    {
+
+
+        $user = $this->getUser();
+        $content = $request->get('content', null);
+        $message = new Message();
+        $message->setContent($content);
+        $message->setUser($user);
+        $message->setMy(true);
+
+        $conversation->addMessage($message);
+        $conversation->setLastMessage($message);
+
+        $this->entityManager->persist($message);
+        $this->entityManager->persist($conversation);
+        $this->entityManager->flush();
+
+
+        return $this->json($message, Response::HTTP_CREATED, [], ['attributes' => self::ATTRIBUTES_TO_SERIALISE]);
+    }
     // /**
     //  * @Route("/new/{id}", name="message_new", methods={"GET","POST"})
     //  */
@@ -106,4 +158,25 @@ class MessageController extends AbstractController
 
     //     return $this->redirectToRoute('message_index');
     // }
+
+    /**
+     * @Route("/last/{id}", name="getLastMessage", methods={"GET"})
+     */
+    public function getLastMessage($id, ConversationRepository $conversationRepository)
+    {
+
+        $conversation = $conversationRepository->findConvesationsByUserAndMe($this->getUser()->getId(), $id);
+        $newConversations = [];
+
+        //  $conversation['createdAt']->getTimestamp();
+        if ($conversation['createdAt'] != null) {
+
+            $conversation = array_merge($conversation, [
+                "times" => $conversation['createdAt']->getTimesTamp()
+            ]);
+            array_push($newConversations, $conversation);
+        }
+
+        return $this->json($newConversations);
+    }
 }

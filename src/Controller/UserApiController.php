@@ -29,7 +29,7 @@ class UserApiController extends AbstractController
 
                 array_push($data, [
                     "name" => $users[$i]->getBoutiques()[0]->getName(),
-                    "id" => $users[$i]->getBoutiques()[0]->getId(),
+                    "id" => $users[$i]->getId(),
                     "image" => $users[$i]->getBoutiques()[0]->getLogo(),
                 ]);
             }

@@ -37,6 +37,15 @@ class Message
      */
     private $createdAt;
 
+
+    private $times;
+
+    private $my;
+
+    public function __construct()
+    {
+        $this->createdAt = new \DateTime();
+    }
     public function getId(): ?int
     {
         return $this->id;
@@ -86,6 +95,38 @@ class Message
     public function setCreatedAt(\DateTimeInterface $createdAt): self
     {
         $this->createdAt = $createdAt;
+
+        return $this;
+    }
+
+    public function getMy()
+    {
+        return $this->my;
+    }
+
+    public function setMy($my)
+    {
+        $this->my = $my;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of times
+     */
+    public function getTimes()
+    {
+        return $this->times;
+    }
+
+    /**
+     * Set the value of times
+     *
+     * @return  self
+     */
+    public function setTimes($times)
+    {
+        $this->times = $times;
 
         return $this;
     }

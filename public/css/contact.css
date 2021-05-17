@@ -11,17 +11,21 @@
 }
 .container_loader_message{
   position: absolute;
-width: 100%;
-height: 100%;
-display: flex;
-justify-content: center;
-align-items: center;
-background: transparent;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: transparent;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  left: 0;
 }
 .container_loader_message img{
-    max-width: 58%;
-  max-height: 100%;
-  border-radius: 51%;
+  width: 100px;
+  max-height: 100px;
+  border-radius: 50%;
 }
 .nav_index_ {
   background: #303350;
@@ -110,7 +114,7 @@ right: -16px;
   position: fixed;
   bottom: 6px;
   left: 6px;
-  z-index: 5;
+  z-index: 9999;
   background:
   white;
   box-shadow: 0px 0px 2px rgba(0,0,0,0.6);
@@ -265,7 +269,7 @@ width: 50%;
   height: 45px;
  }
  #message {
-  max-height: 226px;
+  max-height: 178px;;
   overflow-y: auto;
   margin-top: 5px;
   color: black !important;
@@ -397,9 +401,9 @@ margin-bottom: 0px !important;
    height: 350px;
   width: 266px;
   position: fixed;
-  bottom: 0px;
+  bottom: 6px;
   right: 6px;
-  z-index: 6;
+  z-index: 9999;
   background: white;
   box-shadow: 0px 0px 2px rgba(0,0,0,0.6);
  }
@@ -408,6 +412,95 @@ margin: 9px;
 padding: 5px;
 border-radius: 13px 13px 0PX 13px;
 position:relative;
+}
+.my_message_and_nofication{
+    position: fixed;
+    z-index: 9999;
+    max-width: 500px;
+    height: 100vh;
+    top: 0;
+    min-width: 300px;
+    right: 0;
+    transform: translate(500px);
+    transition: 500ms ease-in-out;
+    display: grid;
+    grid-template-rows: 49px  1fr;
+    box-shadow: 10px 0px 40px black;
+}
+
+._container_my_conversation{
+  display: grid;
+  grid-template-columns: 85px 1fr;
+  border-bottom: 1px solid #00000026;
+  background: white;
+  max-width: 367px;
+  padding: 5px;
+  justify-items: center;
+}
+.content_date{
+  font-size: 10px;
+  color: black;
+  text-align: right;
+}
+.container_description_message > h4{
+  font-size: 13px;
+  margin: 0;
+}
+.conten_message{
+  font-size: 12px;
+  margin: 0;
+}
+._contaier_my_conversation_img{
+  width: 60px;
+  height: 60px;
+  padding: 10px;
+  border-radius: 50%;
+  overflow: hidden;
+  border: 23px black;
+}
+._contaier_my_conversation_img > img {
+   width: 100%;
+   height: 100%;
+}
+.view_my_notification_and_message{
+  transform: translate(0px) !important;
+}
+.empty_message {
+  color: #b7b1b1;
+}
+.my_conversation {
+  background: #fff;
+  overflow-x: hidden;
+  overflow-y: auto;
+  scrollbar-width: thin;
+  margin-top: 2px;
+}
+.container_description_message {
+  width: 100%;
+}
+.notview {
+  background: #e6e6e6;
+}
+.my_message_and_nofication>div:first-child{
+  background: #202340;
+  padding: 10px 5px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9;
+}
+
+.my_message_and_nofication>div>button{
+  position: absolute;
+  left: 0;
+  background: none;
+  border: none;
+  color: white;
+  font-size: 20px;
+}
+.my_message_and_nofication>div>h4{
+  color: white;
+  margin: 0;
 }
 .action {
 position: absolute;

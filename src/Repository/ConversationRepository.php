@@ -48,19 +48,38 @@ class ConversationRepository extends ServiceEntityRepository
     public function findConvesationsByUser(int $userId)
     {
         $qb = $this->createQueryBuilder('c');
-        $qb->select('otherUser.name', 'c.id as conversationId', 'lm.content', 'lm.createdAt')
+        $qb->select('otherUser.name', 'otherUser.firstname', 'otherUser.id', 'b.name as shop_name', 'b.logo as shop_logo', 'otherUser.avatar', 'c.id as conversationId', 'lm.content', 'lm.createdAt')
             ->innerJoin('c.participants', 'p', Join::WITH, $qb->expr()->neq('p.user', ':user'))
             ->innerJoin('c.participants', 'me', Join::WITH, $qb->expr()->eq('me.user', ':user'))
             ->leftJoin('c.lastMessage', 'lm')
             ->innerJoin('me.user', 'meUser')
             ->innerJoin('p.user', 'otherUser')
+            ->leftJoin('otherUser.boutiques', 'b')
             ->where('meUser.id = :user')
             ->setParameter('user', $userId)
             ->orderBy('lm.createdAt', 'DESC');
         return $qb->getQuery()
             ->getResult();
     }
-
+    public function findConvesationsByUserAndMe(int $userId, int $otheruserId)
+    {
+        $qb = $this->createQueryBuilder('c');
+        $qb->select('otherUser.name', 'otherUser.firstname', 'otherUser.id', 'b.name as shop_name', 'b.logo as shop_logo', 'otherUser.avatar', 'c.id as conversationId', 'lm.content', 'lm.createdAt')
+            ->innerJoin('c.participants', 'p', Join::WITH, $qb->expr()->neq('p.user', ':user'))
+            ->innerJoin('c.participants', 'me', Join::WITH, $qb->expr()->eq('me.user', ':user'))
+            ->leftJoin('c.lastMessage', 'lm')
+            ->innerJoin('me.user', 'meUser')
+            ->innerJoin('p.user', 'otherUser')
+            ->leftJoin('otherUser.boutiques', 'b')
+            ->where('meUser.id = :user')
+            ->andWhere('otherUser.id = :otherUser')
+            ->setParameters([
+                'user' => $userId,
+                'otherUser' => $otheruserId
+            ])
+            ->orderBy('lm.createdAt', 'DESC');
+        return $qb->getQuery()->getOneOrNullResult();
+    }
     public function checkIfUserIsParticipant(int $conversationId, int $userId)
     {
         $qb = $this->createQueryBuilder('c');

@@ -49,16 +49,27 @@
 				</div>
 			</span>
 			<form id="formForMessageBoutique" enctype="multipart/form-data">
-				<textarea class="form-control" type="text" name="message"></textarea><input type="hidden" name="id_boutique" value="217">
+				<textarea class="" type="text" name="content" style="margin-bottom: 8px;width: 100%;border: none;border-radius: 5px;" rows="2" required></textarea>
+				<input type="hidden" name="id_boutique" value="217">
+				<input id= "conversation_id" type="hidden" name="conversation_id" value="">
 
 				<label class="file_image_uploid">
 					<input name="image_for_article" type="file" style="display : none" class="input_preview_image_for_article">
-					<span class=" glyphicon glyphicon-picture"></span>
+					<span class="fa fa-image"></span>
 				</label>
 				<button type="submit" name="EnvoyeMessage" class="envoyeMessage_in send_message font_b">
-					<span class="glyphicon glyphicon-send"></span>
+					<span class="fa fa-paper-plane"></span>
 				</button>
 			</form>
 		</div>
 	</div>
 </div>
+{# my_message #}
+	<div class="my_message_and_nofication">
+	  <div class="js_close_my_message_notification close_notification_or_message">
+	  		<button><i  class="fa fa-times"></i></button>
+	  <h4 class="_h4_type_"></h4></div>
+	  <div class="my_conversation js_my_conversation">
+	  		
+	  </div>
+	</div>

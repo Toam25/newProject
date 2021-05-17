@@ -4,6 +4,7 @@ namespace App\Security\Voter;
 
 use App\Entity\Conversation;
 use App\Repository\ConversationRepository;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Authorization\Voter\Voter;
 
@@ -23,12 +24,10 @@ class ConversationVoter extends Voter
     protected function voteOnAttribute($attribute, $subject, TokenInterface $token)
     {
 
-        // $result = $this->conversationRepository->checkIfUserIsParticipant(
-        //     $subject->getId(),
-        //     $token->getUser()->getId()
-        // // );
-
-        // return !!$result;
-        // if(is_null($result))
+        $result = $this->conversationRepository->checkIfUserIsParticipant(
+            $subject->getId(),
+            $token->getUser()->getId()
+        );
+        return !!$result;
     }
 }
