@@ -15,13 +15,11 @@ $(function () {
                 let html = ``;
                 data.forEach(element => {
                     date = element.createdAt ? formatDate(element.times) : "";
+
+                    images = element.shop_logo ? element.shop_logo : element.avatar;
+                    name = element.shop_name ? element.shop_name : element.name + " " + element.firstname
                     if (element.content != null) {
-
                         content = element.content
-                        images = element.shop_logo ? element.shop_logo : element.avatar;
-                        name = element.shop_name ? element.shop_name : element.name + " " + element.firstname
-
-
 
                     } else {
                         content = "<div class='empty_message'>Message vide</div>"
