@@ -13,18 +13,20 @@ $(function () {
             dataType: 'json',
             success: (data) => {
                 let html = ``;
-                data.forEach(element => {
-                    date = element.createdAt ? formatDate(element.times) : "";
+                if (data.length > 0) {
 
-                    images = element.shop_logo ? element.shop_logo : element.avatar;
-                    name = element.shop_name ? element.shop_name : element.name + " " + element.firstname
-                    if (element.content != null) {
-                        content = element.content
+                    data.forEach(element => {
+                        date = element.createdAt ? formatDate(element.times) : "";
 
-                    } else {
-                        content = "<div class='empty_message'>Message vide</div>"
-                    }
-                    html += `<div class="_container_my_conversation  message-in" name="` + element.id + `" >
+                        images = element.shop_logo ? element.shop_logo : element.avatar;
+                        name = element.shop_name ? element.shop_name : element.name + " " + element.firstname
+                        if (element.content != null) {
+                            content = element.content
+
+                        } else {
+                            content = "<div class='empty_message'>Message vide</div>"
+                        }
+                        html += `<div class="_container_my_conversation  message-in" name="` + element.id + `" >
                     <div class="_contaier_my_conversation_img">
                         <img src="/images/`+ images + `" alt="` + name + `">
                     </div>
@@ -35,7 +37,11 @@ $(function () {
                     </div>
                 </div>`;
 
-                });
+                    });
+                }
+                else {
+                    html = "<h4>Votre message est vide</h4>"
+                }
                 $('.js_my_conversation').html(html);
                 $('body .container_loader_message').remove();
             },
