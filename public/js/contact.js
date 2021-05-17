@@ -162,7 +162,9 @@ $(function () {
                         </div>`+ mymessage;
                 });;
                 id_other_user = data.id;
-                $('#conversation_id').val(data.id);
+                $('#conversation_id').val(data.id_conversation);
+                $('.me_me').val(data.id);
+
                 $("#message").html(mymessage);
                 // let html = ``;
                 // data.forEach(element => {
@@ -189,7 +191,6 @@ $(function () {
     $('#formForMessageBoutique').on("submit", function (e) {
         e.preventDefault();
 
-        $(this)[0].reset();
         let id = $('#conversation_id').val();
         $.ajax({
             url: "/messages/" + id,
@@ -201,6 +202,7 @@ $(function () {
             dataType: 'json',
             beforeSend: () => {
                 // $('#message').html(loader);
+                $(this)[0].reset();
             },
             success: (data) => {
                 getLastmessage();
@@ -465,22 +467,21 @@ $(function () {
             type: 'GET',
             dataType: 'json',
             beforeSend: () => {
-                $('#message').html(loader);
             },
             success: (message) => {
 
                 my = (message.my) ? "my" : "your";
-                mymessage = `<div class="contaitboutique ` + my + ` ">` + message.content + `
-                              fdf
-                             <div class="time" >
-                              `+ getStringDatePerTimestamp(message.times) + `
-                              </div>
-                          <button class="font_b delete_message" name="`+ message.id + `">
-                               <span class="glyphicon glyphicon-trash"></span>
-                        </button>
-                        </div>`+ mymessage;
 
-                $("#message").append(mymessage);
+
+                $("#message").append(`<div class="contaitboutique ` + my + ` ">` + message.content + `
+                fdf
+               <div class="time" >
+                `+ getStringDatePerTimestamp(message.times) + `
+                </div>
+            <button class="font_b delete_message" name="`+ message.id + `">
+                 <span class="glyphicon glyphicon-trash"></span>
+          </button>
+          </div>`);
                 // let html = ``;
                 // data.forEach(element => {
                 //     html += listShop(element.image, element.id, element.name)

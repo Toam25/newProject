@@ -166,17 +166,10 @@ class MessageController extends AbstractController
     {
 
         $conversation = $conversationRepository->findConvesationsByUserAndMe($this->getUser()->getId(), $id);
-        $newConversations = [];
 
-        //  $conversation['createdAt']->getTimestamp();
-        if ($conversation['createdAt'] != null) {
-
-            $conversation = array_merge($conversation, [
-                "times" => $conversation['createdAt']->getTimesTamp()
-            ]);
-            array_push($newConversations, $conversation);
-        }
-
-        return $this->json($newConversations);
+        $conversation = array_merge($conversation, [
+            "times" => $conversation['createdAt']->getTimesTamp()
+        ]);
+        return $this->json($conversation);
     }
 }
