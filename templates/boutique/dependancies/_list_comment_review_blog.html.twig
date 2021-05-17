@@ -22,7 +22,7 @@
 					</div>
 					
 					{% if app.user is not same as(null) and 'ROLE_SUPER_ADMIN' in app.user.roles or vote.user is same as(app.user) %}
-						<button class="js-delete-vote delete-vote btn btn-danger" data-id="{{vote.id}}">Supprimez</button>
+						<button class="js-delete-vote delete-vote btn btn-danger" data-id="{{vote.id}}">Supprimer</button>
 					{% endif %}
 
 				</li>
