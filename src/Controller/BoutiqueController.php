@@ -504,7 +504,7 @@ class BoutiqueController extends AbstractController
         if ($request->isXmlHttpRequest()) {
 
             return $this->render(
-                'boutique/dependancies/_listBlogs.html.twig',
+                'boutique/dependancies/_listblogs.html.twig',
                 [
                     'blogs' => $search->getResultSearchForBlog($request),
                 ]
