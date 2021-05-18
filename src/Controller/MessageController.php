@@ -11,6 +11,7 @@ use App\Repository\ConversationRepository;
 use App\Repository\MessageRepository;
 use App\Repository\UserRepository;
 use App\Service\CheckConversationService;
+use App\Service\InsertFileServices;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -34,54 +35,63 @@ class MessageController extends AbstractController
     /**
      * @Route("/{id}", name="getMessage", methods={"GET"})
      */
-    public function index(BoutiqueRepository $boutiqueRepository, UserRepository $userRepository, int $id, CheckConversationService $checkConversationService): Response
+    public function index(int $id, CheckConversationService $checkConversationService): Response
     {
 
         //  $this->denyAccessUnlessGranted('view', $conversation);
 
         //   $message = $conversation->getMessage();
+        if ($this->getUser()) {
 
-        $conversation = $checkConversationService->checkConversation($id);
-        $conversationId = $conversation['conversation_id'];
 
-        if ($conversationId != -1) {
+            $conversation = $checkConversationService->checkConversation($id);
+            $conversationId = $conversation['conversation_id'];
 
-            $messages = $this->messageRepository->findMessageByConversationId(
-                $conversationId
-            );
+            if (intval($conversation) !== -1) {
 
-            array_map(function ($message) {
-                $message->setMy(
-                    $message->getUser()->getId() === $this->getUser()->getId() ? true : false
+                $messages = $this->messageRepository->findMessageByConversationId(
+                    $conversationId
                 );
-                $message->setTimes($message->getCreatedAt()->getTimesTamp());
-            }, $messages);
+
+                array_map(function ($message) {
+                    $message->setMy(
+                        $message->getUser()->getId() === $this->getUser()->getId() ? true : false
+                    );
+                    $message->setTimes($message->getCreatedAt()->getTimesTamp());
+                }, $messages);
 
 
-            return $this->json([
-                'id' => $conversation['user_id'],
-                'name' => $conversation['user_name'],
-                'image' => $conversation['images'],
-                'id_conversation' => $conversationId,
-                'messages' => $messages
-            ], Response::HTTP_OK, [], ['attributes' => self::ATTRIBUTES_TO_SERIALISE]);
-        } else {
-            return $this->json(['status' => "KO"], Response::HTTP_UNAUTHORIZED);
+                return $this->json([
+                    'id' => $conversation['user_id'],
+                    'name' => $conversation['user_name'],
+                    'image' => $conversation['images'],
+                    'id_conversation' => $conversationId,
+                    'link' => $conversation['link'],
+                    'messages' => $messages
+                ], Response::HTTP_OK, [], ['attributes' => self::ATTRIBUTES_TO_SERIALISE]);
+            }
         }
+        return $this->json(['status' => "KO"], Response::HTTP_UNAUTHORIZED);
     }
 
     /**
      * @Route("/{id}", name="newMessage", methods={"POST"})
      */
 
-    public function newMessage(Request $request, Conversation $conversation)
+    public function newMessage(Request $request, Conversation $conversation, InsertFileServices $insertFileServices)
     {
 
 
         $user = $this->getUser();
+        $content_img = "";
+        if ($request->files->get('image_content')) {
+            $files = $insertFileServices->insertFile($request->files->get('image_content'));
+            $content_img = "<div class='container_image_message'><img src='images/" . $files . "' alt='image_message'/></div>";
+        }
+
         $content = $request->get('content', null);
         $message = new Message();
-        $message->setContent($content);
+        $message->setContent($content_img . $content);
         $message->setUser($user);
         $message->setMy(true);
 
@@ -92,8 +102,9 @@ class MessageController extends AbstractController
         $this->entityManager->persist($conversation);
         $this->entityManager->flush();
 
-
         return $this->json($message, Response::HTTP_CREATED, [], ['attributes' => self::ATTRIBUTES_TO_SERIALISE]);
+
+        // return $this->json(['status' => "ko"], Response::HTTP_NOT_ACCEPTABLE, []);
     }
     // /**
     //  * @Route("/new/{id}", name="message_new", methods={"GET","POST"})

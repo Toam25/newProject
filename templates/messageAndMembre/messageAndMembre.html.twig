@@ -18,17 +18,19 @@
 
 <div id="container-message">
 	<div style="" class="head_message">
-		{# <button class="btn-control-message parametre">
-			<span class="fa fa-cogs"></span>
-		</button> #}
-		<button class="btn-control-message fermer close_message">
-			<span class="fa fa-remove"></span>
-		</button>
 		<div id="name_and_logo_boutique" style="background-color:#7b89f1">
 			<div id="name_and_logo_boutique">
-				<a id="all" href="index.php?in-action=profil&amp;id=217" class="getCategorie">
-					<img class="_image_" src="{{asset('images/'~boutique.logo)}}"><span class="_message_name_boutique">{{ boutique.name }}</span>
+				<a id="all" class="link_shop_or_user" href="#" class="getCategorie">
+					<img class="_image_" src="{{asset('images/'~boutique.logo)}}" alt=""><span class="_message_name_boutique">{{ boutique.name }}</span>
 				</a>
+			</div>
+			<div class="btn_delete_bloqued">
+				<button class="btn-control-message parametre">
+					<span class="fa fa-cogs"></span>
+				</button>
+				<button class="btn-control-message fermer close_message">
+					<span class="fa fa-remove"></span>
+				</button>
 			</div>
 		</div>
 		<div class="parametre_message_in">
@@ -43,7 +45,7 @@
 		<div id="message"></div>
 		<div class="action  " style="background-color:#7b89f1">
 			<span class="container_preview_image_for_article">
-				<img id="preview_image_for_article">
+				<img id="preview_image_for_article" class="preview_img">
 				<div class="delete_image_preview_article">
 					<span class="btn btn-danger glyphicon glyphicon-trash"></span>
 				</div>
@@ -53,10 +55,10 @@
 				<input type="hidden" class="me_me"name="id" value="">
 				<input id= "conversation_id" type="hidden" name="conversation_id" value="">
 
-				<label class="file_image_uploid">
-					<input name="image_for_article" type="file" style="display : none" class="input_preview_image_for_article">
+				<label class="file_image_uploid" for="image_content">
 					<span class="fa fa-image"></span>
 				</label>
+				<input id="image_content" name="image_content" type="file" style="display : none" class="file input_preview_image_for_article">
 				<button type="submit" name="EnvoyeMessage" class="envoyeMessage_in send_message font_b">
 					<span class="fa fa-paper-plane"></span>
 				</button>

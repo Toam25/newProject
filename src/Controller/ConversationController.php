@@ -65,21 +65,26 @@ class ConversationController extends AbstractController
 
     public function getConversations()
     {
-        $conversations = $this->conversationRepository->findConvesationsByUser($this->getUser()->getId());
-        $newConversations = [];
+        if ($this->getUser() != null) {
 
-        foreach ($conversations as $conversation) {
-            //  $conversation['createdAt']->getTimestamp();
-            if ($conversation['createdAt'] != null) {
+            $conversations = $this->conversationRepository->findConvesationsByUser($this->getUser()->getId());
+            $newConversations = [];
+
+            foreach ($conversations as $conversation) {
+                //  $conversation['createdAt']->getTimestamp();
+                if ($conversation['createdAt'] != null) {
 
 
-                $conversation = array_merge($conversation, [
-                    "times" => $conversation['createdAt']->getTimesTamp()
-                ]);
+                    $conversation = array_merge($conversation, [
+                        "times" => $conversation['createdAt']->getTimesTamp()
+                    ]);
+                }
+                array_push($newConversations, $conversation);
             }
-            array_push($newConversations, $conversation);
+
+            return $this->json($newConversations);
         }
 
-        return $this->json($newConversations);
+        return $this->json(['status' => 'ko', 'message' => "vous êtes deconnecter, connecter à nouveau"], Response::HTTP_UNAUTHORIZED);
     }
 }

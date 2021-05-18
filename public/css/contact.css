@@ -150,8 +150,6 @@ display: inline-block;
 right: 40PX;
 }
 .btn-control-message{
-  position: absolute;
-  top: 9px;
   background: transparent;
   border: none;
   color: aliceblue;
@@ -227,10 +225,13 @@ width: 50%;
 
 }
 #name_and_logo_boutique {
-  height: 45px;
   padding-top: 1px;
   padding-left: 1px;
   background: rgba(0,0,0,0.03);
+  background-color: rgba(0, 0, 0, 0.03);
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: center;
 }
 #all{
   display: inline-block;
@@ -388,8 +389,8 @@ margin-bottom: 0px !important;
   border: 1px solid
   rgba(0,0,0,0.3);
   border-radius: 100%;
-  width: 19px;
-  height: 19px;
+  width: 23px;
+  height: 23px;
   padding: 0;
   background:white;
   display: none;
@@ -428,6 +429,21 @@ position:relative;
     box-shadow: 10px 0px 40px black;
 }
 
+._container_my_conversation.message-in:hover {
+  background: #0b7f90b2;
+}
+.container_image_message {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  align-items: center;
+  height: 100px;
+}
+.container_image_message>img{
+  max-width: 100%;
+  height: 100%;
+}
 ._container_my_conversation{
   display: grid;
   grid-template-columns: 85px 1fr;
@@ -436,6 +452,8 @@ position:relative;
   max-width: 367px;
   padding: 5px;
   justify-items: center;
+  cursor: pointer;
+  transition: 500ms ease-in-out;
 }
 .content_date{
   font-size: 10px;
@@ -482,7 +500,7 @@ position:relative;
   background: #e6e6e6;
 }
 .my_message_and_nofication>div:first-child{
-  background: #202340;
+  background: #05c6e5;
   padding: 10px 5px;
   display: flex;
   justify-content: center;

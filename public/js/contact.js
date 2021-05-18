@@ -2,6 +2,11 @@ $(function () {
 
     //get conversion
     var id_other_user = null;
+
+    $('.parametre').on('click', function (e) {
+        e.preventDefault();
+        $('.parametre_message_in').toggle();
+    });
     $('._my_message_').on('click', function (e) {
         e.preventDefault();
         $('._h4_type_').html('Mon Messages');
@@ -45,7 +50,8 @@ $(function () {
                 $('.js_my_conversation').html(html);
                 $('body .container_loader_message').remove();
             },
-            error: () => {
+            error: (data) => {
+                toastr.error("Vous êtes deconnecter, connecter à nouveau")
                 $('body .container_loader_message').remove();
             }
         });
@@ -149,6 +155,7 @@ $(function () {
                 $('._message_name_boutique').html(data.name);
                 let mymessage = ``;
 
+
                 data.messages.forEach(message => {
                     my = (message.my) ? "my" : "your";
                     mymessage = `<div class="contaitboutique ` + my + ` ">` + message.content + `
@@ -157,15 +164,19 @@ $(function () {
                               `+ getStringDatePerTimestamp(message.times) + `
                               </div>
                           <button class="font_b delete_message" name="`+ message.id + `">
-                               <span class="glyphicon glyphicon-trash"></span>
+                               <span class="fa fa-trash"></span>
                         </button>
                         </div>`+ mymessage;
                 });;
                 id_other_user = data.id;
+                $('.block_message').attr('name', id_other_user);
+                $('.block_message').attr('name', id_other_user);
+                $('.link_shop_or_user').attr('href', data.link);
                 $('#conversation_id').val(data.id_conversation);
                 $('.me_me').val(data.id);
 
                 $("#message").html(mymessage);
+                scrollToButton();
                 // let html = ``;
                 // data.forEach(element => {
                 //     html += listShop(element.image, element.id, element.name)
@@ -178,6 +189,18 @@ $(function () {
             }
         });
     });
+
+    //preview image 
+
+    $('body').on('change', '.file', function (event) {
+        var reader = new FileReader();
+        reader.onload = function () {
+            var preview_image = document.getElementsByClassName('preview_img')[0];
+            preview_image.src = reader.result;
+        }
+        reader.readAsDataURL(event.target.files[0]);
+    });
+
     $('.fermer_membre').on('click', function (e) {
         e.preventDefault()
         $('#membre_user').fadeOut();
@@ -203,8 +226,10 @@ $(function () {
             beforeSend: () => {
                 // $('#message').html(loader);
                 $(this)[0].reset();
+                $('.preview_img').attr('src', '');
             },
             success: (data) => {
+
                 getLastmessage();
                 // $('._image_').attr('src', '/images/' + data.image)
                 // $('._message_name_boutique').html(data.name);
@@ -474,12 +499,11 @@ $(function () {
 
 
                 $("#message").append(`<div class="contaitboutique ` + my + ` ">` + message.content + `
-                fdf
                <div class="time" >
                 `+ getStringDatePerTimestamp(message.times) + `
                 </div>
             <button class="font_b delete_message" name="`+ message.id + `">
-                 <span class="glyphicon glyphicon-trash"></span>
+                 <span class="fa fa-trash"></span>
           </button>
           </div>`);
                 // let html = ``;
@@ -488,11 +512,16 @@ $(function () {
                 // });
                 // $('.js_member').html(html);
                 // $('#message .container_loader_message').remove();
+                scrollToButton();
             },
             error: () => {
                 $('#message .container_loader_message').remove();
             }
         })
+    }
+
+    let scrollToButton = () => {
+        $('#message').animate({ scrollTop: $('#message')[0].scrollHeight })
     }
 
 })

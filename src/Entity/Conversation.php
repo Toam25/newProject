@@ -30,7 +30,7 @@ class Conversation
     private $lastMessage;
 
     /**
-     * @ORM\OneToMany(targetEntity=Message::class, mappedBy="conversation")
+     * @ORM\OneToMany(targetEntity=Message::class, mappedBy="conversation", cascade={"persist"})
      */
     private $message;
 

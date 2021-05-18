@@ -31,6 +31,8 @@ class CheckConversationService extends AbstractController
 
         $otherUser = $this->userRepository->findOneByUser($otherUser);
 
+
+
         if (is_null($otherUser)) {
 
             return -1;
@@ -52,12 +54,12 @@ class CheckConversationService extends AbstractController
 
         if (count($conversation)) {
 
-
             return [
                 'conversation_id' => $conversation[0]->getId(),
                 'user_id' => $otherUser->getId(),
                 'user_name' => ($otherUser->getBoutiques()[0] != null) ? $otherUser->getBoutiques()[0]->getName() : $otherUser->getName() . " " . $otherUser->getFirstName(),
-                'images' => ($otherUser->getBoutiques()[0] != null) ? $otherUser->getBoutiques()[0]->getLogo() : $otherUser->getAvatar()
+                'images' => ($otherUser->getBoutiques()[0] != null) ? $otherUser->getBoutiques()[0]->getLogo() : $otherUser->getAvatar(),
+                'link' => ($otherUser->getBoutiques()[0] != null) ? "/shop/" . $otherUser->getBoutiques()[0]->getType() . "/" . $otherUser->getBoutiques()[0]->getId() : "/profil/" . $otherUser->getId() . "-" . $otherUser->getName() . "-" . $otherUser->getFirstName()
             ];
             return $this->json($this->conversationRepository->findConvesationsByUser($this->getUser()->getId()), 200);
             throw new \Exception("Conversation existe");
@@ -85,7 +87,9 @@ class CheckConversationService extends AbstractController
         return  [
             'conversation_id' => $conversation->getId(),
             'user_id' => $otherUser->getId(),
-            'user_name' => ($otherUser->getBoutiques()->getName() != null) ? $otherUser->getBoutiques()->getName() : $otherUser->getName()
+            'user_name' => ($otherUser->getBoutiques()[0]->getName() != null) ? $otherUser->getBoutiques()[0]->getName() : $otherUser->getName(),
+            'images' => ($otherUser->getBoutiques()[0] != null) ? $otherUser->getBoutiques()[0]->getLogo() : $otherUser->getAvatar(),
+            'link' => ($otherUser->getBoutiques()[0] != null) ? "/shop/" . $otherUser->getBoutiques()[0]->getType() . "/" . $otherUser->getBoutiques()[0]->getId() : "/profil/" . $otherUser->getId() . "-" . $otherUser->getName() . "-" . $otherUser->getFirstName()
 
         ];
     }
