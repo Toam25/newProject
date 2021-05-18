@@ -54,14 +54,14 @@
 						{% set   wallpaper = "url("~asset('images/'~shop.headers[0].name)~")"  %}
 					{% endif %}
 				<li class="container_wallpaper_shop splide__slide" style="background: {{wallpaper}}">
-						<div class="container_detail_shop row">
-						   <div class="col-md-6">
+						<div class="container_detail_shop">
+						   <div>
 						   		<div  class="container_detail_shop_logo" style="background: url('images/{{shop.logo}}'">
 								</div>
 								<h4 style="background: white;padding: 5px 10px;">{{ shop.name }}</h4>
 						   </div>
 
-						   <div class="col-md-6">
+						   <div>
 						   		<div>	
 									<p>{{ shop.slogan }}</p>
 								</div>
@@ -204,7 +204,7 @@
 		new Splide( '.splide',{
 			type   : 'loop',
 			pagination : false,
-			// autoplay: true,
+			autoplay: true,
 			interval : 3000,
 			pauseOnHover: true
 		} ).mount();
