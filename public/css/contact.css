@@ -306,9 +306,7 @@ font-size: 12PX;
   font-size: 14PX;
   font-weight: bold;
 }
-.font_b {
 
-}
 .delete_message{
 color: red;
 }
@@ -531,16 +529,12 @@ border-top: 1px solid rgba(0,0,0,0.4);
 input[name="messageForBoutique"]{
  margin-bottom: 4px;
 }
-input[name="EnvoyeMessage"]{
 
-}
 #formForMessageBoutique{
 margin-bottom: 0px;
 text-align: right;
 }
-.container-membre{
 
-}
 #container_membre_in {
   overflow-y: auto;
   height: 307px;

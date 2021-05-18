@@ -44,11 +44,12 @@
 		{% include "boutique/dependancies/articleInShop.html.twig" %}
 	{% else %}
 		<div id="echantillon_shop">
-			<div
-				class="section">
+			<div style="bacground: url('images/{{shops[0].headers[0].name}}">
+											     
+			</div>
+			{# <div class="section">
 				<!-- container -->
-				<div
-					class="container">
+				<div class="container">
 					<!-- row -->
 					<div
 						class="row">
@@ -61,7 +62,8 @@
 									<div id="tab2" class="tab-pane fade in active">
 										<div
 											class="products-slick" data-nav="#slick-nav-2">
-											<!-- product -->
+											<!-- shop slide -->
+											 
 											{% for shop in shops %}
 												{% include "boutique/dependancies/list_shops_slide_galery_marchande.html.twig" %}
 											{% endfor %}
@@ -78,7 +80,7 @@
 					</div>
 					<!-- /row -->
 				</div>
-				<!-- /container -->
+				<!-- /container --> #}
 			</div>
 		</div>
 		<div class="bol1">
