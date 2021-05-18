@@ -26,21 +26,19 @@ $(function () {
                         images = element.shop_logo ? element.shop_logo : element.avatar;
                         name = element.shop_name ? element.shop_name : element.name + " " + element.firstname
                         if (element.content != null) {
-                            content = element.content
+                            html += `<div class="_container_my_conversation  message-in" name="` + element.id + `" >
+                                    <div class="_contaier_my_conversation_img">
+                                        <img src="/images/`+ images + `" alt="` + name + `">
+                                    </div>
+                                    <div class="container_description_message">
+                                        <h4 class="_name_message">`+ name + `</h4>
+                                        <p class="conten_message">`+ element.content + `</p>
+                                        <div class="content_date" >` + date + `</div>
+                                    </div>
+                                </div>`;
 
-                        } else {
-                            content = "<div class='empty_message'>Message vide</div>"
                         }
-                        html += `<div class="_container_my_conversation  message-in" name="` + element.id + `" >
-                    <div class="_contaier_my_conversation_img">
-                        <img src="/images/`+ images + `" alt="` + name + `">
-                    </div>
-                    <div class="container_description_message">
-                        <h4 class="_name_message">`+ name + `</h4>
-                        <p class="conten_message">`+ content + `</p>
-                        <div class="content_date" >` + date + `</div>
-                    </div>
-                </div>`;
+
 
                     });
                 }
