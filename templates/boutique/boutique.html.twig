@@ -63,7 +63,7 @@
 
 						   <div>
 						   		<div>	
-									<p>{{ shop.slogan }}</p>
+									<p>{{ shop.apropos }}</p>
 								</div>
 								<div>
 									<a class="link_sshop" href="{{path('shop',{'id' : shop.id, 'type' : shop.type})}}">Nous Visiter ? </a>
@@ -205,7 +205,7 @@
 			type   : 'loop',
 			pagination : false,
 			autoplay: true,
-			interval : 3000,
+			interval : 5000,
 			pauseOnHover: true
 		} ).mount();
 	</script>

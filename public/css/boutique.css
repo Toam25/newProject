@@ -23,7 +23,7 @@ body {
     height: 362px;
     background-size: cover !important;
     display: flex;
-    justify-content: right;
+    justify-content: center;
     overflow: hidden;
 }
 .container_detail_shop_logo {
@@ -43,7 +43,7 @@ body {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    box-shadow: 5px 7px 12px #534f4f;
+    box-shadow: 0px 0px 8px #534f4f;
 }
 .link_sshop{
     background: #05c6e5;
