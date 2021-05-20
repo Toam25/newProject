@@ -69,7 +69,7 @@
        </div>
        <div class="col-md-4">
          <div class="astuce_blog" >
-            <h1>Astuce recente</h1>
+            <h1>Astuce récente</h1>
             {% for astuce in astuces %}
             <div class="contaier_astuce">
                 <div class="container_image_astuce">
@@ -97,7 +97,7 @@
               
          </div>
          <div class="astuce_blog">
-            <h1>Aricle les plus partagé</h1>
+            <h1>Article les plus partagé</h1>
             {% for share in shares %}
                   <a href="{{ path('showBlog',{'id': share.id, 'slug': share.link})}}" class="view_on_title">
                         <p>{{ cutWorld(share.title,40)}}</p><span class="fa fa-arrow-circle-right"></span>
@@ -156,7 +156,7 @@
             </div>
          </div> -->
          <div class="astuce_blog">
-            <h1>Sontage du moment</h1>
+            <h1>Sondage du moment</h1>
              <hr>
              {% for sondage in sondages.blogs %}
                   {% if sondages.total is same as (0) %}
