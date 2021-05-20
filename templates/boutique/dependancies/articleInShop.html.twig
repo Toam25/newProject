@@ -64,8 +64,12 @@
 				</div>
 			</a>
 			<div class="container_page1">
+			   		 {% set image_formtion = "images_default/default_image.jpg" %}
+				{% if blogs|length > 0%} 
+			        {% set image_formtion = blogs[0].image %}
+				{% endif %}
 				<a class="pageView bg " href="{{path('list_formation_shop',{'id': boutique.id, 'slug' : slugify(boutique.name)})}}" target="_blank">
-					<img src="{{ asset('images/images_default/default_image.jpg')}}" alt="">
+					<img src="{{ asset('images/'~image_formtion)}}" alt="">
 					<div class="h4_page">
 						<h4 >Pages formations</h4>
 					</div>
