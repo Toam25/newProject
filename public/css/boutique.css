@@ -95,7 +95,7 @@ body {
     display: grid;
     grid-template-columns: 1fr 1fr;
     grid-gap: 5px;
-    margin-bottom: 5px;
+    margin: 27px 0PX;
 
 }
 ._category {
@@ -256,6 +256,7 @@ body {
 .boutique_container{
     display: grid;
     grid-template-columns: 200px 1fr;
+    margin: 26px 0px;
 }
 .old-prix {
     font-size: 12px;
