@@ -522,4 +522,36 @@ $(function () {
         $('#message').animate({ scrollTop: $('#message')[0].scrollHeight })
     }
 
+    $('#container_message').on('click', '.notview', function (e) {
+
+        let id = parseInt($(this).attr('id').split('-')['1'])
+        $(this).removeClass('notview');
+        let nbrNotification = parseInt($('.nbr_notification').text()) - 1;
+        let newNbrNotification = nbrNotification === 0 ? "" : nbrNotification;
+        $('.nbr_notification').text(newNbrNotification);
+        $.ajax({
+            url: "/api/v1/view/" + id,
+            type: 'POST',
+            dataType: 'json',
+            success: (data) => {
+
+            },
+            complete: () => {
+
+            }
+        });
+
+    })
+
+    $('.message_footer').on('click', function (e) {
+
+        e.preventDefault();
+        $('.head_message').css({
+            'height': '350px',
+            'width': '266px',
+            'display': 'block'
+        });
+
+    });
+
 })
