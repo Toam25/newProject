@@ -160,9 +160,6 @@
     "ocramius/proxy-manager": {
         "version": "2.2.3"
     },
-    "paypal/rest-api-sdk-php": {
-        "version": "1.14.0"
-    },
     "php": {
         "version": "7.3"
     },
@@ -593,6 +590,9 @@
     },
     "twig/extra-bundle": {
         "version": "v3.0.3"
+    },
+    "twig/string-extra": {
+        "version": "v3.3.1"
     },
     "twig/twig": {
         "version": "v2.12.5"
