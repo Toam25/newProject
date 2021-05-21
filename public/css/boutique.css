@@ -98,6 +98,9 @@ body {
     margin: 27px 0PX;
 
 }
+.leaflet-popup.marker.leaflet-zoom-animated:hover {
+    z-index: 100;
+}
 .h4_page > h4{
 background: white;
 padding: 5px 10px;
