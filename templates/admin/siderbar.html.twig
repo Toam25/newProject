@@ -36,7 +36,7 @@
       </li>
     {% else %}
       <li class="nav-item">
-        <a class="nav-link" href="{{ path('shop',{'type' : boutique.type, 'id' : boutique.id})}}" target="_blank">
+        <a class="nav-link" href="{{ path('shop',{'type' : boutique.type, 'id' : boutique.id, 'slug': boutique.name|slug('-')|lower})}}" target="_blank">
           <i class="fas fa-fw fa-tachometer-alt"></i>
           <span>Mon Site</span></a>
       </li>
