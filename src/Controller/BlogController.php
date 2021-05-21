@@ -138,7 +138,7 @@ class BlogController extends AbstractController
         }
     }
     /**
-     * @Route("/preview/blog/{id}", name="previewBlog")
+     * @Route("/preview/blog/{id}-{slug}", name="previewBlog")
      */
     public function previewBlog(BoutiqueRepository $boutiqueRepository, Blog $blog)
     {
