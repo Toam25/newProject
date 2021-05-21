@@ -104,7 +104,7 @@ class BlogController extends AbstractController
         return $this->render('admin/index.html.twig', [
             'pages' => 'blogValidatelist',
             'boutique' => $boutique,
-            'blogs' => $blogRepository->findByNotValidateBlog()
+            'blogs' => $blogRepository->findAll()
 
         ]);
     }
