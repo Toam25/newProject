@@ -9,7 +9,7 @@
         <div class="validate_action_button">
             <p class="validate_resume_blog">{{ blog.resume}}</p>
             <div class="validate_button">
-                <a class="btn btn-primary" href="{{ path('previewBlog',{'id': boutique.id,'slug' : blog.link })}}" target="_blank">Voir</a>
+                <a class="btn btn-primary" href="{{ path('previewBlog',{'id': blog.id})}}" target="_blank">Voir</a>
                {% if blog.validate is same as (false)%}
                  <button class="btn btn-success validate_blog" data-id= "{{blog.id}}" data-validate="APPROUVED">Approuver</button>
                 {% endif %}
