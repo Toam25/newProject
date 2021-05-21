@@ -97,7 +97,7 @@
               
          </div>
          <div class="astuce_blog">
-            <h1>Article les plus partagé</h1>
+            <h1>Article le plus partagé</h1>
             {% for share in shares %}
                   <a href="{{ path('showBlog',{'id': share.id, 'slug': share.link})}}" class="view_on_title">
                         <p>{{ cutWorld(share.title,40)}}</p><span class="fa fa-arrow-circle-right"></span>
