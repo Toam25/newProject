@@ -119,7 +119,6 @@ class BoutiqueController extends AbstractController
         if ($boutique) {
             preg_match('%(http[s]?:\/\/|www\/)([a-zA-Z0-9-_\.\/\?=&]+)%i', $boutique->getExternalLink(), $matches);
         }
-
         return $this->render('boutique/boutique.html.twig', [
             'controller_name' => 'BoutiqueController',
             'boutique' => $boutique,
@@ -322,12 +321,25 @@ class BoutiqueController extends AbstractController
     /**
      * @Route("/list/other/{id}-{slug}", name="list_other_shop", methods={"GET"})
      */
-    public function viewOther(BoutiqueRepository $boutiqueRepository): response
+    public function viewOther(Page $page): response
     {
-
-        return $this->render('boutique/page.html.twig', [
-            'boutique' => $boutique = $boutiqueRepository->findOneBoutiqueByUserPerRole('ROLE_SUPER_ADMIN')
-        ]);
+        $matches = [];
+        $boutique = $page->getBoutique();
+        if ($boutique) {
+            preg_match('%(http[s]?:\/\/|www\/)([a-zA-Z0-9-_\.\/\?=&]+)%i', $boutique->getExternalLink(), $matches);
+        }
+        if ($page) {
+            $page->setView($page->getView() + 1);
+            $em = $this->getDoctrine()->getManager();
+            $em->flush();
+            return $this->render('boutique/page_view.html.twig', [
+                'boutique' => $boutique,
+                'page' => $page,
+                'shopLink' => sizeof($matches) > 2 ? $matches[2] : ""
+            ]);
+        } else {
+            return new Response('', Response::HTTP_NOT_FOUND);
+        }
     }
 
     //////////////////////////////

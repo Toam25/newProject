@@ -79,9 +79,10 @@ class BlogRepository extends ServiceEntityRepository
     public function findByValidate(Boutique $boutique = null)
     {
         $query = $this->createQueryBuilder('bl')
-            ->select('bl', 'b', 'v')
+            ->select('bl', 'b', 'v', 'vi')
             ->leftJoin('bl.votes', 'v')
             ->leftJoin('bl.boutique', 'b')
+            ->leftJoin('b.videos', 'vi')
             ->andwhere('bl.validate = :validate')
             ->orderBy('bl.id', 'DESC')
             ->setParameters([

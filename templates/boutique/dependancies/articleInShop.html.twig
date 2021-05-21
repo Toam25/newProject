@@ -56,13 +56,23 @@
 	<div id="container_reference">
 		<h3 class="title_C" style="display:table-cell">Espaces pages
 		</h3>
+
 		<div id="container_page">
-			<a class="pageview_pricipal bg" href="{{path('list_video_shop',{'id': boutique.id, 'slug' : slugify(boutique.name)})}}" target="_blank">
-				<img src="{{ asset('images/images_default/default_image.jpg')}}" alt="">
-				<div class="h4_page">
-					<h4 >Pages Videos</h4>
+			<div class="pageview_pricipal bg" href="{{path('list_video_shop',{'id': boutique.id, 'slug' : slugify(boutique.name)})}}" target="_blank">
+				
+				{% if blogs|length > 0 and  blogs[0].boutique.videos | length > 0  %}
+					<iframe width="100%" height="100%"  src="{{blogs[0].boutique.videos[0].link}}?showinfo=0&amp;controls=0&amp;autohide=1&amp;modestbranding=1&amp;rel=0" frameborder="0" allowfullscreen>
+				 		 Pages Videos
+					</iframe>
+				{% else %}
+					<img src="{{ asset('images/images_default/default_image.jpg')}}" alt="">
+				{% endif %}
+				<a href="{{path('list_video_shop',{'id': boutique.id, 'slug' : slugify(boutique.name)})}}" style="display: block;position: absolute;width: 100%;height: 100%;top: 0;">
+						<div class="h4_page">
+						<h4 >Pages Videos</h4>
 				</div>
-			</a>
+				</a>
+			</div>
 			<div class="container_page1">
 			   		 {% set image_formtion = "images_default/default_image.jpg" %}
 				{% if blogs|length > 0%} 

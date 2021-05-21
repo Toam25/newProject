@@ -98,6 +98,11 @@ body {
     margin: 27px 0PX;
 
 }
+.h4_page > h4{
+background: white;
+padding: 5px 10px;
+box-shadow: 0px 0px 1px #0000001c;
+}
 ._category {
     color: #a0a0b9;
     font-size: 13px;
