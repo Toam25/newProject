@@ -140,7 +140,7 @@ class BoutiqueController extends AbstractController
     }
 
     /**
-     * @Route("/{shop}/blog/{id}-{slug}", name="showBlog")
+     * @Route("/show/blog/{id}-{slug}", name="showBlog")
      */
     public function showBlog($id, BlogRepository $blogRepository, VotesService $votesService, VotesRepository $votesRepository)
     {
