@@ -1,6 +1,6 @@
 <div class="product">
 		<div class="cart container_cart">
-			<a href="{{path('showBlog',{'id' : blog.id,'slug' :blog.link })}}" class="cnt_image_date_bloc" target="_blank">
+			<a href="{{path('showBlog',{'id' : blog.id,'slug' :blog.title|slug('-')|lower })}}" class="cnt_image_date_bloc" target="_blank">
 				<div class="container_image_blog">
 					<img 
 					 {% if blog.image is not same as (null )%}

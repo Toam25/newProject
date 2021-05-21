@@ -1,6 +1,6 @@
 <div class="col-md-4 col-xs-6">
     <div class="product">
-        <a href="{{path('detail',{'id' : article.id,'slug' : slugify(article.name )})}}">
+        <a href="{{path('detail',{'id' : article.id,'slug' : article.name|slug('-')|lower})}}">
             <div class="product-img">
                 <img src="{{asset('images/'~article.images[0].name)}}" alt="">
                 {#<div id="_action_for_cart" class="product-btns">
