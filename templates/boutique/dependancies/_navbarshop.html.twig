@@ -35,21 +35,21 @@
 					  </a>
 					<ul class="submenu">
 						<li>
-							<a href="{{ path('shop',{'type':'Habillement','id':-1})}}"
+							<a href="{{ path('shop',{'type':'Habillement'})}}"
 								{% if menu is same as ("Habillement") %}
 									class = "menu_selected"
 								{% endif %}
 							>Habillement</a>
 						</li>
 						<li>
-							<a href="{{ path('shop',{'type':'beaute_bien_etre','id': -1})}}"
-							 {% if menu is same as ("beaute_et_bien_etre") %}
+							<a href="{{ path('shop',{'type':'beaute-et-bien-etre'})}}"
+							 {% if menu is same as ("beaute-et-bien-etre") %}
 									class = "menu_selected"
 							 {% endif %}
 							>Beauté Bien-être</a>
 						</li>
 						<li>
-							<a href="{{ path('shop',{'type':'accessoires','id':-1})}}"
+							<a href="{{ path('shop',{'type':'accessoires'})}}"
 							  {% if menu is same as ("accessoires") %}
 									class = "menu_selected"
 							 {% endif %}
@@ -62,21 +62,21 @@
 					</ul>
 				</li>
 				<li class="mode">
-					<a href="{{ path('shop',{'type':'high-tech','id':-1})}}"
+					<a href="{{ path('shop',{'type':'high-tech'})}}"
 					  {% if menu is same as ("High-tech") %}
 									class = "menu_selected"
 					 {% endif %}
 					>High-tech</a>
 				</li>
 				<li class="mode">
-					<a href="{{ path('shop',{'type':'Maison','id':-1})}}" 
+					<a href="{{ path('shop',{'type':'Maison'})}}" 
 					 {% if menu is same as ("Maison") %}
 									class = "menu_selected"
 					{% endif %}
 					>Maison</a>
 				</li>
 				<li class="mode">
-					<a href="{{ path('shop',{'type':'Services','id':-1})}}"
+					<a href="{{ path('shop',{'type':'Services'})}}"
 					 {% if menu is same as ("Services") %}
 									class = "menu_selected"
 					{% endif %}

@@ -38,10 +38,12 @@ class BoutiqueController extends AbstractController
 {
 
     private $typeOptionMenuService;
+    private $utilsService;
 
     public function __construct(UtilsService $utilsService, TypeOptionMenuService $typeOptionMenuService)
     {
         $this->typeOptionMenuService = $typeOptionMenuService;
+        $this->utilsService = $utilsService;
     }
     /**
      * @Route("/", name="index")
@@ -68,7 +70,7 @@ class BoutiqueController extends AbstractController
         ]);
     }
     /**
-     * @Route("/shop/{type}/{id}", name="shop", defaults = {"id"=null})
+     * @Route("/shop/{type}/{id}-{slug}", name="shop", defaults = {"id"=null,"slug": "slug"})
      */
 
     public function boutique($type = "", $id, Request $request, BlogRepository $blogRepository, BoutiqueRepository $boutiqueRepository, SearchService $searchService, ArticleRepository $articleRepository)
@@ -557,7 +559,7 @@ class BoutiqueController extends AbstractController
                 $firstShop = $shop->getId();
             }
             array_push($allShopId, $shop->getId());
-            $shopSli = '<a class="text-center" href="/shop/' . $shop->getType() . '/' . $shop->getId() . '" id="' . $key . '"> 
+            $shopSli = '<a class="text-center" href="/shop/' . $shop->getType() . '/' . $shop->getId() . '-' . $this->utilsService->getSlug($shop->getName()) . '"> 
             <div class="_container_image_shop">
                  <img class="logo_image_boutique_header" src="/images/' . $shop->getLogo() . '" alt="' . $shop->getName() . '">';
             if ($shop->isActiveNow()) {
@@ -652,9 +654,9 @@ class BoutiqueController extends AbstractController
     function changePlace($myarray, $begin)
     {
         $newarray = [];
-        $size = count($myarray);
+        $size = sizeof($myarray);
 
-        if ($size > 0) {
+        if ($size > 1) {
             for ($i = 0; $i < $size; $i++) {
 
                 $newarray[$i] = $myarray[$begin++];
@@ -663,6 +665,8 @@ class BoutiqueController extends AbstractController
                     $begin = 0;
                 }
             }
+        } else {
+            $newarray = $myarray;
         }
 
         return $newarray;
