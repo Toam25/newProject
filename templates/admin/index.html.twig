@@ -54,7 +54,11 @@
           {% include ("admin/dependencies/home.html.twig") %}
         {% endif %}
          #}  
-
+        {% for message in app.flashes('success') %}
+               <div class="alert alert-success">
+                   {{ message }}
+               </div>
+        {% endfor %}
         {% if pages == 'new' %}
             {% include "admin/dependencies/new_article.html.twig" %}
 

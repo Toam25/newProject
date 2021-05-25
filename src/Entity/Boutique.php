@@ -173,6 +173,11 @@ class Boutique
      */
     private $images;
 
+    /**
+     * @ORM\Column(type="datetime",  nullable=true)
+     */
+    private $offerCreatedAt;
+
     public function __construct()
     {
         $this->logo = "images_default/default_logo.png";
@@ -808,5 +813,27 @@ class Boutique
         }
 
         return $this;
+    }
+
+    public function getOfferCreatedAt(): ?\DateTimeInterface
+    {
+        return $this->offerCreatedAt;
+    }
+
+    public function setOfferCreatedAt(\DateTimeInterface $offerCreatedAt): self
+    {
+        $this->offerCreatedAt = $offerCreatedAt;
+
+        return $this;
+    }
+
+    public function getDetailOffer()
+    {
+        $now = new \DateTime();
+        $expired = date_add($this->getOfferCreatedAt(), date_interval_create_from_date_string('30 days'));
+        return [
+            'offer' => $this->getOffer(),
+            'day' => $now->diff($expired)->d
+        ];
     }
 }
