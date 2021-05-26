@@ -230,13 +230,7 @@
           <div class="row no-gutters align-items-center">
             <div class="col mr-2">
               <span class="text-xs font-weight-bold text-success text-uppercase mb-1">Votre offre  est 
-               {% if  boutique.offer is same as ("") %}
-                    Gratuit
-               {% else %}
-                    {{boutique.offer}}
-               {% endif %}
-               
-  
+                 {{ boutique.getDetailOffer()}}
               </span>
             &nbsp<a href="{{path('my_offer')}}" target="_blank">Changer d'offre ?</a>
             </div>

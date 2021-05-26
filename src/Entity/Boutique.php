@@ -830,10 +830,21 @@ class Boutique
     public function getDetailOffer()
     {
         $now = new \DateTime();
-        $expired = date_add($this->getOfferCreatedAt(), date_interval_create_from_date_string('30 days'));
-        return [
-            'offer' => $this->getOffer(),
-            'day' => $now->diff($expired)->d
-        ];
+        $expiredDate = $this->getOfferCreatedAt();
+        $day = 0;
+        if ($expiredDate != null) {
+            $expired = date_add($this->getOfferCreatedAt(), date_interval_create_from_date_string('30 days'));
+            $day = $now->diff($expired)->d;
+        }
+
+
+        $offer = $this->getOffer();
+
+        if ($offer != "" and $day > 0) {
+            $offer = $offer;
+        } else {
+            $offer = "Gratuit";
+        }
+        return $offer;
     }
 }

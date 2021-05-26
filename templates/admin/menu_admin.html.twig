@@ -132,6 +132,9 @@
           <a class="collapse-item" href="{{path('addBlog')}}">Ajout</a>
         </div>
 </li>
+
+{% if boutique.getDetailOffer is not same as ('Gratuit') %}
+
 <li class="nav-item">
       <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#formation_video" aria-expanded="true" aria-controls="collapsePages">
         <i class="fas fa-fw fa-folder"></i>
@@ -154,6 +157,7 @@
           <a class="collapse-item" href="{{path('add_formation')}}">Ajout</a>
         </div>
 </li> 
+{% endif %}
 <li class="nav-item">
       <a class="nav-link" href="{{ path('social_network_index')}}">
         <i class="fas fa-fw fa-tachometer-alt"></i>

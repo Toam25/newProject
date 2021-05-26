@@ -141,7 +141,17 @@ class APIController extends AbstractController
 
         $blogData = $request->request->get('blog');
 
+
         if ($boutique) {
+
+            if ($boutique->getDetailOffer() == "Gratuit") {
+                $blogs = $boutique->getBlogs();
+                $sizeBlogs = sizeof($blogs);
+                if ($sizeBlogs > 2) {
+                    return $this->json(['status' => 'ko', 'message' => "Votre offre ne permet pas d'ajout plus de deux blog"], Response::HTTP_UNAUTHORIZED);
+                }
+            }
+
             $blog = new Blog();
             $blog->setTitle($blogData['title'])
                 ->setStatus($request->request->get('status'))
@@ -175,7 +185,7 @@ class APIController extends AbstractController
 
             return new JsonResponse(['status' => "success", 'id' => $blog->getId()]);
         } else {
-            return new JsonResponse(['status' => "error"], Response::HTTP_UNAUTHORIZED);
+            return new JsonResponse(['status' => "ko", "message" => "Boutique inconue"], Response::HTTP_UNAUTHORIZED);
         }
     }
     /**
@@ -547,7 +557,14 @@ class APIController extends AbstractController
 
         if ($this->getUser()) {
 
-
+            $boutique = $boutiqueRepository->findOneBy(['user' => $this->getUser()]);
+            if ($boutique->getDetailOffer() == "Gratuit") {
+                $articles = $boutique->getArticle();
+                $sizeBlogs = sizeof($articles);
+                if ($sizeBlogs > 10) {
+                    return $this->json(['status' => 'ko', 'message' => "Votre offre ne permet pas d'ajout plus de 10 articles"], Response::HTTP_UNAUTHORIZED);
+                }
+            }
             $article = new Article();
             $article->setCategory($request->request->get('categorie'));
             $article->setName($request->request->get('name'));
@@ -563,7 +580,7 @@ class APIController extends AbstractController
             $article->setReferency($request->request->get('referency'));
             $article->setSousCategory($request->request->get('sous_category'));
             $article->setSlide($request->request->get('slider'));
-            $article->setBoutique($boutiqueRepository->findOneBy(['user' => $this->getUser()]));
+            $article->setBoutique($boutique);
             $article->setSlide(0);
 
             $images = $request->files->get('images');

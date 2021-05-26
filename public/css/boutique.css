@@ -17,6 +17,26 @@ body {
     object-fit: cover;
 
 }
+
+.Vip{
+    height: 20px;
+    width: 20px;
+    background: #ffe300;
+    position: absolute;
+    top: 0;
+    border-radius: 50%;
+}
+
+.Premium {
+    height: 20px;
+    width: 20px;
+    background:#ff6c00;
+    position: absolute;
+    top: 0;
+    border-radius: 50%;
+}
+
+
 .container_wallpaper_shop{ 
     background-attachment: scroll !important;
     background-size: auto !important;

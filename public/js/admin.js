@@ -300,6 +300,7 @@ $(function () {
     e.preventDefault();
     let form = $('.save_blog').parent('div').parent('form')[0];
     $('.status').val('CLOSED');
+    $(this).prop('disabled', true);
     $.ajax({
       url: "/api/v1/saveblog",
       type: 'POST',
@@ -312,10 +313,14 @@ $(function () {
         toastr.info('Enregistrement en cours ;) ');
       },
       success: (data) => {
-        toastr.success('Enregistrer avec success ;) ')
+        toastr.success('Enregistrer avec success ;) ');
+        $(this).prop('disabled', false);
+
       },
-      error: () => {
-        toastr.error('Erreur d\'enregistrement ');
+      error: (data) => {
+        toastr.error(data.responseJSON.message);
+        $(this).prop('disabled', false);
+
       }
     });
 
@@ -1029,10 +1034,10 @@ $(function () {
       $('.list_option').html("");
      containt_parameter(categorie_menu);
      return false ;
- });
- 
+  });
+   
    $('#onglets').tabs();
- */
+  */
   $('.attibute_article_in').on('change', function () {
     let sous_category = $(this).parent('form').children("input[name='categorie_sante']").val();
     let category = $(this).attr('id');
@@ -1294,8 +1299,8 @@ $(function () {
         $('.btn-submit').prop('disabled', false)
 
       },
-      error: () => {
-        toastr.error('Une error à été survenue');
+      error: (data) => {
+        toastr.error(data.responseJSON.message);
         $('.btn-submit').children('.loader_ajax').remove();
         $('.btn-submit').prop('disabled', false)
       },

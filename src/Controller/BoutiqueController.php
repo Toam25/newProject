@@ -121,6 +121,12 @@ class BoutiqueController extends AbstractController
         if ($boutique) {
             preg_match('%(http[s]?:\/\/|www\/)([a-zA-Z0-9-_\.\/\?=&]+)%i', $boutique->getExternalLink(), $matches);
         }
+
+        $shopLink = "";
+
+        if ($boutique->getDetailOffer() != "Gratuit") {
+            $shopLink = sizeof($matches) > 2 ? $matches[2] : "";
+        }
         return $this->render('boutique/boutique.html.twig', [
             'controller_name' => 'BoutiqueController',
             'boutique' => $boutique,
@@ -133,7 +139,7 @@ class BoutiqueController extends AbstractController
             'isHomeShop' => $isHomeShop,
             'blogs' => $blogs,
             'shops' => $boutiques,
-            'shopLink' => sizeof($matches) > 2 ? $matches[2] : "",
+            'shopLink' => $shopLink,
             'rangeEchantillon' => $this->uniqueRandomNumbersWithinRange(0, sizeof($boutiques) - 1, 4)
 
         ]);
@@ -563,8 +569,9 @@ class BoutiqueController extends AbstractController
             <div class="_container_image_shop">
                  <img class="logo_image_boutique_header" src="/images/' . $shop->getLogo() . '" alt="' . $shop->getName() . '">';
             if ($shop->isActiveNow()) {
-                $shopSli .= '<div class="onLigne"></div>';
+                $shopSli .= '<div class="onLigne"></div><div class="' . $shop->getDetailOffer() . '"></div>';
             }
+
 
             $shopSli .= '</div>
          <br> 

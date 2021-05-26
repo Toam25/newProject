@@ -2,7 +2,8 @@
 	<div class=" clearfix">
 		<div id="header-ctn" class="header-ctn">
 				 
-				{% if app.user %}
+				{% if app.user %} 
+				
 					<div style="" class="membre">
 							<a href="">
 								<i class="fa fa-user"></i>
@@ -10,6 +11,7 @@
 							</a>
 							
 					</div>
+					   {% if app.user.boutique is defined and app.user.boutiques[0].getDetailOffer() is not same as('Gratuit') %}
 					<div style="" class="mynotification">
 						<a href="">
 							<i class="fa fa-bell"></i>
@@ -30,6 +32,7 @@
 							</a>
 							
 					</div>
+				   {% endif %}
 
 				{%  endif %}
 			{# messages #}

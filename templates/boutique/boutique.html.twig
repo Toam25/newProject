@@ -40,6 +40,11 @@
 {% block body %}
 
 	{% include 'boutique/dependancies/headershop.html.twig' %}
+{% if boutique.getDetailOffer is same as ('Gratuit') %}
+<div class="alert alert-danger">
+		    Site mode gratuit 
+</div>
+{% endif %}
 
 	{% if isHomeShop is same as (false) %}
 		{% include "boutique/dependancies/articleInShop.html.twig" %}
