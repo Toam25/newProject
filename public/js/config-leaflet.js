@@ -50,40 +50,42 @@ $(function () {
     class LeafletMarker {
         constructor(point, text, map) {
             this.text = text;
-            this.popup = L.popup({
-                autoClose: false,
-                closeOnEscapeKey: false,
-                closeOnClick: false,
-                closeButton: false,
-                className: 'marker',
-                maxWidth: 400,
+            this.popup = L.marker(point).addTo(map).bindPopup(text).openPopup();
 
-            })
-                .setLatLng(point)
-                .setContent(text)
-                .openOn(map)
+            // this.popup = L.popup({
+            //     autoClose: false,
+            //     closeOnEscapeKey: false,
+            //     closeOnClick: false,
+            //     closeButton: false,
+            //     className: 'marker',
+            //     maxWidth: 400,
+
+            // })
+            //     .setLatLng(point)
+            //     .setContent(text)
+            //     .openOn(map)
         }
-        setActive() {
-            this.popup.getElement().classList.add('is-active');
-        }
-        unsetActive() {
-            this.popup.getElement().classList.remove('is-active');
-        }
-        addEventListener(event, cb) {
-            this.popup.addEventListener('add', () => {
-                this.popup.getElement().addEventListener(event, cb)
-            })
-        }
-        setContent(text) {
-            this.popup.setContent(text);
-            this.popup.getElement().classList.add('is-expanded')
-            this.popup.update();
-        }
-        resetContent() {
-            this.popup.setContent(this.text);
-            this.popup.getElement().classList.remove('is-expanded')
-            this.popup.update();
-        }
+        // setActive() {
+        //     this.popup.getElement().classList.add('is-active');
+        // }
+        // unsetActive() {
+        //     this.popup.getElement().classList.remove('is-active');
+        // }
+        // addEventListener(event, cb) {
+        //     this.popup.addEventListener('add', () => {
+        //         this.popup.getElement().addEventListener(event, cb)
+        //     })
+        // }
+        // setContent(text) {
+        //     this.popup.setContent(text);
+        //     this.popup.getElement().classList.add('is-expanded')
+        //     this.popup.update();
+        // }
+        // resetContent() {
+        //     this.popup.setContent(this.text);
+        //     this.popup.getElement().classList.remove('is-expanded')
+        //     this.popup.update();
+        // }
     }
 
     const initMap = async function () {
