@@ -5,7 +5,7 @@ namespace App\Service;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 
-class AutorisationServices extends AbstractController
+class AutorisationService extends AbstractController
 {
 
     public function getAccess($offer)
