@@ -9,6 +9,11 @@
   border-radius: 100%;
 
 }
+
+.fermer_membre {
+  position: absolute;
+  top: 7px;
+}
 .container_loader_message{
   position: absolute;
   width: 100%;
