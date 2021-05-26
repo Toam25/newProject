@@ -44,6 +44,11 @@ body {
     background-position: center !important;
     background-size: cover !important;
     margin-bottom: 9px;
+    margin-bottom: 9px;
+    background: #64646459;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 .container_detail_shop {
     height: 100%;
