@@ -22,12 +22,17 @@
 	<!-- nouislider -->
 	<link
 	type="text/css" rel="stylesheet" href="{{asset('css/nouislider.min.css') }}"/>
-	<link type="text/css" rel="stylesheet" href="{{asset('css/splide.min.css') }}"/>
+	{# <link type="text/css" rel="stylesheet" href="{{asset('css/splide.min.css') }}"/> #}
 
 	<!-- Font Awesome Icon -->
 	<link
 	rel="stylesheet" href="{{ asset('css/font-awesome.min.css') }}">
 
+	{# owl carousel css  #}
+
+	<link rel="stylesheet" href="{{asset('owl/css/owl.carousel.min.css')}}">
+	<link rel="stylesheet" href="{{asset('owl/css/owl.theme.default.min.css')}}">
+    {#  #}
 	<!-- Custom stlylesheet -->
 	<link type="text/css" rel="stylesheet" href="{{ asset('css/style.css') }}"/>
 	<link
@@ -40,80 +45,81 @@
 {% block body %}
 
 	{% include 'boutique/dependancies/headershop.html.twig' %}
-{% if boutique.getDetailOffer is same as ('Gratuit') %}
+{# {% if boutique.getDetailOffer is same as ('Gratuit') %}
 <div class="alert alert-danger">
 		    Site mode gratuit 
 </div>
-{% endif %}
+{% endif %} #}
 
 	{% if isHomeShop is same as (false) %}
 		{% include "boutique/dependancies/articleInShop.html.twig" %}
 	{% else %}
-		<div id="echantillon_shop">
-		<div class="splide">
-		<div class="splide__track">
-			<ul class="splide__list">
-				{% for shop in shops %}										
-					{% set wallpaper =  "#05c6e5" %}
-					{% if shop.headers[0].name is defined %}
-						{% set   wallpaper = "url("~asset('images/'~shop.headers[0].name)~")"  %}
-					{% endif %}
-				<li class="container_wallpaper_shop splide__slide" style="background: {{wallpaper}}">
-						<div class="container_detail_shop">
-						   
-						   		<div  class="container_detail_shop_logo" style="background: url('images/{{shop.logo}}'">
-								</div>
-								<h4 style="background: white;padding: 5px 10px;">{{ shop.name }}</h4>
-						   
-									<p style="max-width: 80%;display: inline-block;">{{ shop.apropos }}</p>
-								
-								<div>
-									<a class="link_sshop" href="{{path('shop',{'id' : shop.id, 'type' : shop.type})}}">Nous Visiter ? </a>
-									&nbsp<a style="cursor: pointer;text-decoration: none !important;" href="{{shop.link}}">Sur notre site</a>
-								</div>
-						</div>				     
-				</li>
-				{% endfor %}
-			</ul>
-		</div>
-	</div>
-		    
-			{# <div class="section">
-				<!-- container -->
-				<div class="container">
-					<!-- row -->
-					<div
-						class="row">
-						<!-- Products tab & slick -->
-						<div class="col-md-12">
-							<div class="row">
-								<div
-									class="products-tabs">
-									<!-- tab -->
-									<div id="tab2" class="tab-pane fade in active">
-										<div
-											class="products-slick" data-nav="#slick-nav-2">
-											<!-- shop slide -->
-											 
-											{% for shop in shops %}
-												{% include "boutique/dependancies/list_shops_slide_galery_marchande.html.twig" %}
-											{% endfor %}
+<div id="echantillon_shop" style="background: #000000c4;">
 
-											<!-- /product -->
-										</div>
-										<div id="slick-nav-2" class="products-slick-nav"></div>
-									</div>
-									<!-- /tab -->
+	<div class="container-fluid" style="background: #000000c4;padding-top: 28px;position: relative;overflow: hidden;">
+		{% set wallpaper =  "#05c6e5" %}
+		{% if shop.headers[0].name is defined %}
+			{% set   wallpaper = "url("~asset('images/'~shop.headers[0].name)~") center center / cover no-repeat rgb(17,17,17);"  %}
+		{% endif %}
+		<div class="blurred-bg" style="background: {{wallpaper}}"></div>
+		<div class="row">
+
+			<div class="col-md-9">
+				<div class="owl-carousel owl-theme">
+					{% for shop in shops %}
+						<a class="container_wallpaper_shop splide__slide" href="{{ path('shop',{'id': shop.id, 'type' : shop.type })}}">
+							<div class="container_detail_shop js-blurred-target">
+								<div class="container_detail_shop_logo">
+									<img src="{{asset('images/'~ shop.logo )}}" alt="">
+								</div>
+								<div style="text-overflow: ellipsis;overflow: hidden;">
+									<h4 style="font-size: 13px;color: white;">{{ shop.name }}</h4>
+									<p style="font-size: 11px;color: #f7f7f7;">{{ shop.slogan }}</p>
 								</div>
 							</div>
-						</div>
-						<!-- /Products tab & slick -->
-					</div>
-					<!-- /row -->
+						</a>
+					{% endfor %}
 				</div>
-				<!-- /container --> #}
+			</div>
+			<div class="col-md-3">
+				<div style="height: 295px;">
+					{% set hide = true %}
+					{% for shop in shops %}
+
+						<div class="popular-caption
+														{% if hide %}
+															 is-active
+														{% endif %}
+														">
+							<h2 style="color: white;padding: 5px 10px;">{{ shop.name }}</h2>
+							<p style="color: #a6a6a6;font-size: 12px;">{{ shop.apropos }}</p>
+						</div>
+						{% set hide  = false %}
+					{% endfor %}
+				</div>
 			</div>
 		</div>
+	</div>
+
+	
+<div style="display: flex;justify-content: space-between; flex-wrap: wrap;">
+	{% for key in rangeEchantillon|keys %}
+		<a class="" href="{{ path('shop',{'id': shops[rangeEchantillon[key]].id, 'type' : shops[rangeEchantillon[key]].type })}}" style="display: grid;grid-template-columns: 78px auto;height: 110px;">
+			<div class="">
+						<img src="{{asset('images/'~shops[rangeEchantillon[key]].logo)}}" style="width: 100%;height: 100%;object-fit: cover;">
+			</div>
+			<div class="" style="display: flex;justify-content: center;align-items: center;flex-direction: column;padding: 8px;">
+						<h2 style="font-size: 13px;color: #297fd7;">{{ shops[rangeEchantillon[key]].name }}</h2>
+						<p style="color: #5d616d;font-size: 11px;">
+							{{ shops[rangeEchantillon[key]].slogan}}
+						</p>
+			</div>		
+		</a>
+
+	{% endfor %}
+</div>
+</div>
+
 		<div class="bol1">
 		</div>
 		<h3 style="text-align: center;background: white;margin: 0;">TROUVER UNE BOUTIQUE</h3>
@@ -198,7 +204,74 @@
 	<script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js" integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA==" crossorigin=""></script>
 	<script src="{{ asset('js/config-leaflet.js') }}"></script>
 	<script src="{{ asset('js/slick.min.js') }}"></script>
-	<script src="{{ asset('js/splide.js') }}"></script>
+	<script src="{{ asset('owl/js/owl.carousel.min.js') }}"></script>
+	<script>
+	      $(document).ready(function () {
+			   
+			   function sliderInit(event) {
+					var item = event.item.index, count = event.item.count, prev, next;
+					prev = item-1;
+					next = item+1;
+					imgsrc = $('.js-blurred-target').eq(prev).find('img').attr('src');
+
+					
+					$('.blurred-bg').css({'background':'#111 url('+imgsrc+') center  center / cover no-repeat'});
+					// $('.popular-caption:first').addClass('is-active').fadeIn(300);
+				};
+
+				function sliderNextPrev(event) {
+					var item = event.item.index, count = event.item.count, prev, next;
+					prev = item-1;
+					next = item+1;
+					imgsrc = $('.js-blurred-target').eq(prev).find('img').attr('src');
+					$('.blurred-bg').css({'background':'#111 url('+imgsrc+') center  center / cover no-repeat'});
+					var currentPlay = $('.popular-caption.is-active'),
+						nextPlay = currentPlay.next('.popular-caption').length ? currentPlay.next('.popular-caption') : $('.popular-caption:first');
+					currentPlay.removeClass('is-active').fadeOut(300);
+					nextPlay.addClass('is-active').fadeIn(300);
+				};
+				$('.owl-carousel').owlCarousel({
+					loop: true,
+					rewind : true,
+					lazyLoad : true,
+					navText : ['<span class="fa fa-arrow-left"></span>','<span class="fa fa-arrow-right"></span>'],
+					slideBy : 2,
+					nav :true,
+					autoplay :true,
+					autoplayTimeout : 6000,
+					responsive : {0 : {margin : 14, items: 2},470 : {margin : 14, items : 3}, 730 : {margin: 14, items : 4 }, 1220 : {margin : 30, items : 4}},
+					onInitialized : sliderInit,
+					onChanged : sliderNextPrev
+				});
+
+				$('.carou-in').owlCarousel({
+					loop:true,
+					rewind:true,
+					nav:true,
+					lazyLoad:true,
+					navText:['<span class="far fa-arrow-left"></span>','<span class="far fa-arrow-right"></span>'],
+					slideBy:2,
+					dots:false,
+					autoplay:false,
+					autoplayTimeout:12000,
+					responsive: {0: {margin:14, items:2}, 470: {margin:14, items:3}, 760: {margin:14, items:4}, 950: {margin:14, items:6}, 1220: {margin:27, items:6}}
+				});
+				$('.carou-in-three').owlCarousel({
+					loop:true,
+					rewind:true,
+					nav:true,
+					lazyLoad:true,
+					navText:['<span class="far fa-arrow-left"></span>','<span class="far fa-arrow-right"></span>'],
+					slideBy:2,
+					dots:false,
+					autoplay:false,
+					autoplayTimeout:12000,
+					responsive: {0: {margin:14, items:1}, 470: {margin:14, items:2}, 760: {margin:14, items:3}, 1220: {margin:30, items:3}}
+				});
+				
+		  })
+	</script>
+	<!--script src="{{ asset('js/splide.js') }}"></script>
 	<script>
 		new Splide( '.splide',{
 			type   : 'loop',
@@ -206,9 +279,10 @@
 			autoplay: true,
 			interval : 5000,
 			pauseOnHover: true,
+			perPage : 4,
 			easing : 'cubic-bezier(0.45, 0.25, 0.60, 0.95)'
 		} ).mount();
-	</script>
+	</script-->
 
 	<script src=" {{ asset('js/nouislider.min.js') }}"></script>
 	<script src="{{ asset('js/jquery.zoom.min.js') }}"></script>
