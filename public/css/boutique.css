@@ -36,6 +36,9 @@ body {
     border-radius: 50%;
 }
 
+.leaflet-pane.leaflet-popup-pane {
+    z-index: 9999 !important;
+}
 
 .container_wallpaper_shop{ 
     height: 320px;
@@ -43,7 +46,6 @@ body {
 .container_detail_shop_logo {
     background-position: center !important;
     background-size: cover !important;
-    margin-bottom: 9px;
     margin-bottom: 9px;
     background: #64646459;
     display: flex;
