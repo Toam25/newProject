@@ -83,7 +83,7 @@
 			</div>
 			<div class="col-md-3">
 				<div style="height: 295px;">
-					{% set hide = true %}
+					{# {% set hide = true %}
 					{% for shop in shops %}
 
 						<div class="popular-caption
@@ -95,7 +95,17 @@
 							<p style="color: #a6a6a6;font-size: 12px;">{{ shop.apropos }}</p>
 						</div>
 						{% set hide  = false %}
-					{% endfor %}
+					{% endfor %} #}
+				
+
+						<div class="popular-caption is-active">
+							<h2 style="color: white;padding: 5px 10px;">Meilleure Galerie VIP</h2>
+							<p style="color: #a6a6a6;font-size: 12px;">Les boutiques les mieux notée par les membres <br>les Premiums mise en avant chaque jour <br>Les meilleurs blofs de la semaines <br>Produit en promottion</p>
+						</div>
+						<div class="popular-caption">
+							<h2 style="color: white;padding: 5px 10px;">Les Premiums mise en avant chaque jour</h2>
+							<p style="color: #a6a6a6;font-size: 12px;">Les boutiques les mieux notée par les membres <br>les Premiums mise en avant chaque jour <br>Les meilleurs blofs de la semaines <br>Produit en promottion</p>
+						</div>
 				</div>
 			</div>
 		</div>

@@ -103,20 +103,20 @@ $(function () {
 
                 markers.push(L.marker([item.dataset.lat, item.dataset.log]));
 
-                item.addEventListener('mouseover', function () {
+                // item.addEventListener('mouseover', function () {
 
 
-                    if (hoverMarker !== null) {
-                        hoverMarker.unsetActive();
-                    }
-                    marker.setActive();
-                    hoverMarker = marker;
-                })
-                item.addEventListener('mouseleave', function () {
-                    if (hoverMarker !== null) {
-                        hoverMarker.unsetActive();
-                    }
-                })
+                //     if (hoverMarker !== null) {
+                //         hoverMarker.unsetActive();
+                //     }
+                //     marker.setActive();
+                //     hoverMarker = marker;
+                // })
+                // item.addEventListener('mouseleave', function () {
+                //     if (hoverMarker !== null) {
+                //         hoverMarker.unsetActive();
+                //     }
+                // })
                 // marker.addEventListener('click', function () {
                 //     if (activeMarker !== null) {
                 //         activeMarker.resetContent();
