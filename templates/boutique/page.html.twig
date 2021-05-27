@@ -20,6 +20,8 @@
 	<link
 	rel="stylesheet" href="{{ asset('css/font-awesome.min.css') }}"> <!-- Custom stlylesheet -->
 	<link type="text/css" rel="stylesheet" href="{{ asset('css/style.css') }}"/>
+	<link href="{{ asset('css/ck_image.css') }}" rel="stylesheet" type="text/css">
+
 	<link
 	type="text/css" rel="stylesheet" href="{{ asset('css/boutique.css') }}"/>
 	{# link type="text/css" rel="stylesheet" href="{{ asset('css/index.css') }}" #}
@@ -89,69 +91,45 @@
 
 			{# #############" #}
 		{% elseif blogs is defined %}
-			
-				{% if blogs| length > 0 %}
-     
-      
-         <div class="row">
-            {% include "boutique/dependancies/_listblogs.html.twig" with {'blogs' : blogs} %}
-         </div>
-         <div class="container_contributor">
-          <h4>Contribuez sur {{ boutique.name }}</h4>
-					{{ form_start(blogForm)}}
-					<div class="row">
-						<input type="hidden" class="status" name="status" val="">
 
-						<div class="col-md-6">
-							{{ form_row(blogForm.title) }}
-						</div>
-						<div class="col-md-6">
-							{{ form_row(blogForm.category) }}
-						</div>
+			{% if blogs| length > 0 %}
 
-						<div class="col-md-12">
-							<label>Image</label>
-							<input type="file" name="image_blog" class="file form-control">
-						</div>
 
-						<div class="col-md-12">
+				<div class="row">
+					{% include "boutique/dependancies/_listblogs.html.twig" with {'blogs' : blogs} %}
+				</div>
+				{% if app.user %}
+					<div class="container_contributor">
+					<h4>Contribuez sur
+					{{ boutique.name }}</h4>
+						{{ form_start(formForm,{ 'attr' :{ 'class':'add_formation'}})}}
+						{{ form_row(formForm.title)}}
+						{{ form_row(formForm.resume)}}
+						{{ form_row(formForm.price)}}
+						<label for="image">Couverture</label>
+						<input type="file" name="image" id="image" class="form-control">
+						{{ form_row(formForm.description)}}
 
-							{{ form_row(blogForm.resume) }}
-						</div>
-
-						<div class="col-md-12">
-
-							{{ form_row(blogForm.keywords) }}
-						</div>
-
-						<div class="col-md-12">
-
-							{{ form_row(blogForm.metaDescription) }}
-						</div>
-
-						<div class="col-md-12">
-
-							{{ form_row(blogForm.link) }}
-						</div>
-
-						<div class="col-md-12">
-
-							{{ form_row(blogForm.description) }}
-						</div>
-
-					</div>
-					<div
+						<div
 						class="conbtnSubmit">
 						{#<button class="view_blog btn btn-primary">Apperçu/Enregister</button>#}
 						<button class="save_blog btn btn-success">Publier</button>
-					</div>
+						</div>
+						{{ form_end(formForm)}}
 
-					{{ form_end(blogForm) }}
-        </div>
+					</div>
 				{% else %}
-					<h1>Pas de formation disponible</h1>
+					<div class="alert alert-success" style="margin: 10px 0;display: flex;justify-content: center;">
+						<a href="" class=" _connexion">Connecter pour contribuer sur
+							{{ boutique.name }}
+						</a>
+					</div>
 				{% endif %}
-	
+
+			{% else %}
+				<h1>Pas de formation disponible</h1>
+			{% endif %}
+
 
 			{# ################## #}
 
@@ -167,6 +145,7 @@
 {% endblock %}
 
 {% block javascripts %}
-
+	<script src="{{ asset('js/ck_image.js') }}"></script>
 	<script src="{{ asset('js/connexion.js') }}"></script>
 {% endblock %}
+

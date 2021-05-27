@@ -143,7 +143,7 @@
         {% elseif pages == "blogValidatelist"%}
             {% include 'admin/dependencies/blog/blogValidatelist.html.twig' %}
         
-        {% if boutique.getDetailOffer is not same as('Gratuit') %}
+        {# {% if boutique.getDetailOffer is not same as('Gratuit') %} #}
                 {#video #}
                 {% elseif pages == "add_video"%}
                     {% include 'admin/dependencies/add_video.html.twig' %}
@@ -161,7 +161,7 @@
                     {% include 'admin/dependencies/list_page.html.twig' %}
                 {% elseif pages == "edit_page"%}
                     {% include 'admin/dependencies/edit_page.html.twig' %}
-        {% endif %}
+        {# {% endif %} #}
      {#########################################################}
             
          {% elseif pages == "list_socialNetwork"%}

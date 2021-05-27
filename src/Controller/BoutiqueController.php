@@ -10,6 +10,7 @@ use App\Entity\Page;
 use App\Entity\Video;
 use App\Entity\Votes;
 use App\Form\BlogType;
+use App\Form\PageType;
 use App\Form\SearchType;
 use App\Repository\ArticleRepository;
 use App\Repository\BlogRepository;
@@ -81,6 +82,7 @@ class BoutiqueController extends AbstractController
         $matches = [];
         $first = intval($request->cookies->get($type));
         $boutiques = [];
+        $slideShops = [];
 
         if ($type != "") {
 
@@ -106,6 +108,7 @@ class BoutiqueController extends AbstractController
             $isHomeShop = true;
             $type = "g_marchande";
             $boutiques = $boutiqueRepository->findAllBoutiqueWithOutUserRoleSuperAdmin("ROLE_ADMIN");
+            $slideShops = $boutiques;
         }
 
 
@@ -127,6 +130,7 @@ class BoutiqueController extends AbstractController
         if ($boutique->getDetailOffer() != "Gratuit") {
             $shopLink = sizeof($matches) > 2 ? $matches[2] : "";
         }
+
         return $this->render('boutique/boutique.html.twig', [
             'controller_name' => 'BoutiqueController',
             'boutique' => $boutique,
@@ -139,6 +143,7 @@ class BoutiqueController extends AbstractController
             'isHomeShop' => $isHomeShop,
             'blogs' => $blogs,
             'shops' => $boutiques,
+            'slideShop' => $slideShops,
             'shopLink' => $shopLink,
             'rangeEchantillon' => $this->uniqueRandomNumbersWithinRange(0, sizeof($boutiques) - 1, 4)
 
@@ -258,13 +263,18 @@ class BoutiqueController extends AbstractController
     public function showVideoShop(Boutique $boutique, VideoRepository $videosRepository): response
     {
         $matches = [];
+        $shopLink = "";
         if ($boutique) {
             preg_match('%(http[s]?:\/\/|www\/)([a-zA-Z0-9-_\.\/\?=&]+)%i', $boutique->getExternalLink(), $matches);
+        }
+
+        if ($boutique->getDetailOffer() != "Gratuit") {
+            $shopLink = sizeof($matches) > 2 ? $matches[2] : "";
         }
         return $this->render('boutique/page.html.twig', [
             'boutique' => $boutique,
             'videos' => $videosRepository->findBy(['boutique' => $boutique]),
-            'shopLink' => sizeof($matches) > 2 ? $matches[2] : ""
+            'shopLink' => $shopLink
         ]);
     }
     /**
@@ -274,13 +284,19 @@ class BoutiqueController extends AbstractController
     {
 
         $matches = [];
+        $shopLink = "";
+
         if ($boutique) {
             preg_match('%(http[s]?:\/\/|www\/)([a-zA-Z0-9-_\.\/\?=&]+)%i', $boutique->getExternalLink(), $matches);
+        }
+
+        if ($boutique->getDetailOffer() != "Gratuit") {
+            $shopLink = sizeof($matches) > 2 ? $matches[2] : "";
         }
         return $this->render('boutique/page.html.twig', [
             'boutique' => $boutique,
             'formations' => $pageRepository->findPageBy($boutique),
-            'shopLink' => sizeof($matches) > 2 ? $matches[2] : ""
+            'shopLink' => $shopLink,
         ]);
     }
     /**
@@ -290,7 +306,7 @@ class BoutiqueController extends AbstractController
     {
 
         $matches = [];
-        $form = $this->createForm(BlogType::class, new Blog);
+        $form = $this->createForm(PageType::class, new Page);
         if ($boutique) {
             preg_match('%(http[s]?:\/\/|www\/)([a-zA-Z0-9-_\.\/\?=&]+)%i', $boutique->getExternalLink(), $matches);
         }
@@ -298,7 +314,7 @@ class BoutiqueController extends AbstractController
             'boutique' => $boutique,
             'page' => 'contrib',
             'shopLink' => sizeof($matches) > 2 ? $matches[2] : "",
-            'blogForm' => $form->createView(),
+            'formForm' => $form->createView(),
             'blogs' => $blogRepository->findAll()
         ]);
     }
@@ -310,8 +326,13 @@ class BoutiqueController extends AbstractController
     {
         $matches = [];
         $boutique = $page->getBoutique();
+        $shopLink = "";
         if ($boutique) {
             preg_match('%(http[s]?:\/\/|www\/)([a-zA-Z0-9-_\.\/\?=&]+)%i', $boutique->getExternalLink(), $matches);
+        }
+
+        if ($boutique->getDetailOffer() != "Gratuit") {
+            $shopLink = sizeof($matches) > 2 ? $matches[2] : "";
         }
         if ($page) {
             $page->setView($page->getView() + 1);
@@ -320,7 +341,7 @@ class BoutiqueController extends AbstractController
             return $this->render('boutique/page_view.html.twig', [
                 'boutique' => $boutique,
                 'page' => $page,
-                'shopLink' => sizeof($matches) > 2 ? $matches[2] : ""
+                'shopLink' => $shopLink
             ]);
         } else {
             return new Response('', Response::HTTP_NOT_FOUND);
@@ -333,8 +354,12 @@ class BoutiqueController extends AbstractController
     {
         $matches = [];
         $boutique = $page->getBoutique();
+        $shopLink = "";
         if ($boutique) {
             preg_match('%(http[s]?:\/\/|www\/)([a-zA-Z0-9-_\.\/\?=&]+)%i', $boutique->getExternalLink(), $matches);
+        }
+        if ($boutique->getDetailOffer() != "Gratuit") {
+            $shopLink = sizeof($matches) > 2 ? $matches[2] : "";
         }
         if ($page) {
             $page->setView($page->getView() + 1);
@@ -343,7 +368,7 @@ class BoutiqueController extends AbstractController
             return $this->render('boutique/page_view.html.twig', [
                 'boutique' => $boutique,
                 'page' => $page,
-                'shopLink' => sizeof($matches) > 2 ? $matches[2] : ""
+                'shopLink' => $shopLink
             ]);
         } else {
             return new Response('', Response::HTTP_NOT_FOUND);

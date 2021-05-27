@@ -927,7 +927,8 @@ class APIController extends AbstractController
 
             $page = new Page();
             $title = $pagedate['title'];
-            $price = $pagedate['price'];
+            $price = $pagedate['price'] ? $pagedate['price'] : "";
+            $category = $pagedate['category'] ? $pagedate['category'] : "formation";
             $resume = $pagedate['resume'];
             $description = $pagedate['description'];
             $file = $request->files->get('image');
@@ -940,6 +941,7 @@ class APIController extends AbstractController
             $page->setResume($resume);
             $page->setDescription($description);
             $page->setBoutique($boutique);
+            $page->setCategory($category);
             $page->setUser($this->getUser());
             $em = $this->getDoctrine()->getManager();
             $em->persist($page);

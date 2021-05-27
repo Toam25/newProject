@@ -847,4 +847,9 @@ class Boutique
         }
         return $offer;
     }
+
+    public function getNbrArticle()
+    {
+        return sizeof($this->getArticle());
+    }
 }

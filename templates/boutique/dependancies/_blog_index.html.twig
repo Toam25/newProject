@@ -22,7 +22,7 @@
             <p class="_description_blog">{{ cutWorld(blog.resume,100) }}
 			<div class="detail">
 				<div class="product-rating">
-					{{ my_vote_twig(blog.votes) }}
+					{{blog.votes|length|number_format(1,'.',' ') }} {{ my_vote_twig(blog.votes) }}
                     <div> 
                       <span class="fa fa-comment" style="font-size: 20px;"></span>  {{blog.votes|length }} commentaires
                     </div>

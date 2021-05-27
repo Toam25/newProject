@@ -4,7 +4,7 @@ $(function () {
         $('body .cke_bottom').append('<span class="ck_editor_liste_image"style="height: 100%;background: #f8f8f8;border: 1px solid #d1d1d1;/*! border-bottom: 0; */border-left: 0;padding: 1px 0 0 5px;border-radius: 5px 5px 0 0;">Votre galery</span>');
 
 
-    }, 3000)
+    }, 6000)
 
 
     let window = `
