@@ -57,7 +57,7 @@ body {
     /* background: #ececec61; */
     width: 100%;
     display: grid;
-    grid-template-rows: 315px auto;
+    grid-template-rows: 340px auto;
 }
 .owl-nav{
     position: absolute;
