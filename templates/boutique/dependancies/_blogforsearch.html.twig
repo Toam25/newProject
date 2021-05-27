@@ -1,7 +1,7 @@
 <div class="col-md-4 col-sm-4 col-xs-6 col-lg-3">
     <div class="product">
-            <div class="cart container_cart">
-                <a href="{{path('showBlog',{'id' : blog.id,'slug' :blog.title|slug('-')|lower })}}" class="cnt_image_date_bloc" target="_blank">
+            <a class="cart container_cart"  href="{{path('showBlog',{'id' : blog.id,'slug' :blog.title|slug('-')|lower })}}">
+                <div class="cnt_image_date_bloc" target="_blank">
                     <div class="container_image_blog">
                         <img 
                         {% if blog.image is not same as (null )%}
@@ -17,7 +17,7 @@
                         <p>{{ blog.createdAt|date('d') }}</p>
                     
                     </div>
-                </a>
+                </div>
                 <h1 class="title_blog">{{ cutWorld(blog.title,50) }}</h1>
                 <p class="_category">#{{blog.category}}</p>
                 <p class="_description_blog">{{ cutWorld(blog.resume,100) }}
@@ -27,6 +27,6 @@
                     </div>
                 </div>
                 <p> Publier par <a> {{blog.boutique.name }}</a> </p>
-            </div>
+            </a>
     </div>
 </div>
