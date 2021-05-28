@@ -59,6 +59,47 @@ body {
     display: grid;
     grid-template-rows: 340px auto;
 }
+
+button.owl-dot {
+    background: 0 0;
+    color: inherit;
+    border: none;
+    padding: 0 !important;
+    font: inherit;
+}
+.owl-dot span {
+    width: 10px;
+    height: 10px;
+    margin: 5px 7px;
+    background: #D6D6D6;
+    display: block;
+    transition: opacity .2s ease;
+    border-radius: 30px;
+}
+.active span{
+    background: white;
+}
+.owl-dots-custom {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    right: 0;
+}
+.leaflet-popup, .leaflet-zoom-animated{
+    bottom: -27px !important;
+}
+.leaflet-popup-content-wrapper, .leaflet-popup-tip {
+    background: transparent !important;
+    color: #0800ffb3 !important;;
+    box-shadow: none !important;;
+    font-size: 14px !important;;
+    font-weight: 900 ;
+}
 .owl-nav{
     position: absolute;
     right: -295px;

@@ -82,7 +82,7 @@
 				</div>
 			</div>
 			<div class="col-md-3">
-				<div style="height: 295px;">
+				<div style="height: 295px; position:relative">
 					{# {% set hide = true %}
 					{% for shop in shops %}
 
@@ -113,6 +113,12 @@
 						<div class="popular-caption">
 							<h2 style="color: white;padding: 5px 10px;">Produit en promotion</h2>
 							<p style="color: #a6a6a6;font-size: 12px;">Les boutiques les mieux notée par les membres <br>les Premiums mise en avant chaque jour <br>Les meilleurs blofs de la semaines <br>Produit en promotion</p>
+						</div> 
+						<div class="owl-dots-custom">
+						  <button role="button" class="owl-dot custom-dot active"><span></span></button>
+						  <button role="button" class="owl-dot custom-dot"><span></span></button>
+						  <button role="button" class="owl-dot custom-dot"><span></span></button>
+						  <button role="button" class="owl-dot custom-dot"><span></span></button>
 						</div>
 				</div>
 			</div>
@@ -244,7 +250,13 @@
 					imgsrc = $('.js-blurred-target').eq(prev).find('img').attr('src');
 					$('.blurred-bg').css({'background':'#111 url('+imgsrc+') center  center / cover no-repeat'});
 					var currentPlay = $('.popular-caption.is-active'),
-						nextPlay = currentPlay.next('.popular-caption').length ? currentPlay.next('.popular-caption') : $('.popular-caption:first');
+					
+					nextPlay = currentPlay.next('.popular-caption').length ? currentPlay.next('.popular-caption') : $('.popular-caption:first');
+					let activeDots = $('.custom-dot.active');
+					let nextActivateDots = activeDots.next('.custom-dot').length ? activeDots.next('.custom-dot') : $('.custom-dot:first');
+					activeDots.removeClass('active');
+					nextActivateDots.addClass('active');
+
 					currentPlay.removeClass('is-active').hide(300);
 					nextPlay.addClass('is-active').show(300);
 				};
@@ -255,6 +267,7 @@
 					navText : ['<span class="fa fa-arrow-left"></span>','<span class="fa fa-arrow-right"></span>'],
 					slideBy : 2,
 					nav :true,
+					dots:false,
 					autoplay :true,
 					autoplayTimeout : 6000,
 					responsive : {0 : {margin : 14, items: 2},470 : {margin : 14, items : 3}, 730 : {margin: 14, items : 4 }, 1220 : {margin : 30, items : 4}},

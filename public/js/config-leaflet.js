@@ -98,10 +98,11 @@ $(function () {
         Array.from(document.querySelectorAll('.js_market')).forEach(item => {
 
             if (item.dataset.lat !== "") {
+
                 let marker = map.addMarker(item.dataset.lat, item.dataset.log, item.dataset.name);
 
 
-                markers.push(L.marker([item.dataset.lat, item.dataset.log]));
+                // markers.push(L.marker([item.dataset.lat, item.dataset.log]));
 
                 // item.addEventListener('mouseover', function () {
 
