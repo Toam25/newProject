@@ -141,6 +141,13 @@ button.owl-dot {
         margin-top : 15px;
         text-align : center
     }
+    .owl-dots-custom{
+        position : static;
+        width: 100%;
+        display: block;
+        margin-top : 15px;
+        text-align : center
+    }
 }
 
 .pageView1 {
