@@ -104,7 +104,15 @@
 						</div>
 						<div class="popular-caption">
 							<h2 style="color: white;padding: 5px 10px;">Les Premiums mise en avant chaque jour</h2>
-							<p style="color: #a6a6a6;font-size: 12px;">Les boutiques les mieux notée par les membres <br>les Premiums mise en avant chaque jour <br>Les meilleurs blofs de la semaines <br>Produit en promottion</p>
+							<p style="color: #a6a6a6;font-size: 12px;">Les boutiques les mieux notée par les membres <br>les Premiums mise en avant chaque jour <br>Les meilleurs blocs de la semaines <br>Produit en promottion</p>
+						</div>
+						<div class="popular-caption">
+							<h2 style="color: white;padding: 5px 10px;">Les meilleurs blocs de la semaines</h2>
+							<p style="color: #a6a6a6;font-size: 12px;">Les boutiques les mieux notée par les membres <br>les Premiums mise en avant chaque jour <br>Les meilleurs blocs de la semaines <br>Produit en promottion</p>
+						</div>
+						<div class="popular-caption">
+							<h2 style="color: white;padding: 5px 10px;">Produit en promotion</h2>
+							<p style="color: #a6a6a6;font-size: 12px;">Les boutiques les mieux notée par les membres <br>les Premiums mise en avant chaque jour <br>Les meilleurs blofs de la semaines <br>Produit en promotion</p>
 						</div>
 				</div>
 			</div>
@@ -237,8 +245,8 @@
 					$('.blurred-bg').css({'background':'#111 url('+imgsrc+') center  center / cover no-repeat'});
 					var currentPlay = $('.popular-caption.is-active'),
 						nextPlay = currentPlay.next('.popular-caption').length ? currentPlay.next('.popular-caption') : $('.popular-caption:first');
-					currentPlay.removeClass('is-active').fadeOut(300);
-					nextPlay.addClass('is-active').fadeIn(300);
+					currentPlay.removeClass('is-active').hide(300);
+					nextPlay.addClass('is-active').show(300);
 				};
 				$('.owl-carousel').owlCarousel({
 					loop: true,
