@@ -52,18 +52,18 @@ $(function () {
             this.text = text;
             this.popup = L.marker(point).addTo(map).bindPopup(text).openPopup();
 
-            // this.popup = L.popup({
-            //     autoClose: false,
-            //     closeOnEscapeKey: false,
-            //     closeOnClick: false,
-            //     closeButton: false,
-            //     className: 'marker',
-            //     maxWidth: 400,
+            this.popup = L.popup({
+                autoClose: false,
+                closeOnEscapeKey: false,
+                closeOnClick: false,
+                closeButton: false,
+                className: 'marker',
+                maxWidth: 400,
 
-            // })
-            //     .setLatLng(point)
-            //     .setContent(text)
-            //     .openOn(map)
+            })
+                .setLatLng(point)
+                .setContent(text)
+                .openOn(map)
         }
         // setActive() {
         //     this.popup.getElement().classList.add('is-active');
@@ -99,10 +99,10 @@ $(function () {
 
             if (item.dataset.lat !== "") {
 
+
                 let marker = map.addMarker(item.dataset.lat, item.dataset.log, item.dataset.name);
 
-
-                // markers.push(L.marker([item.dataset.lat, item.dataset.log]));
+                markers.push(L.marker([item.dataset.lat, item.dataset.log]));
 
                 // item.addEventListener('mouseover', function () {
 

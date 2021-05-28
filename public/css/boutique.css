@@ -17,7 +17,9 @@ body {
     object-fit: cover;
 
 }
-
+.leaflet-popup.marker.leaflet-zoom-animated {
+    margin-bottom: 52px !important;
+}
 .Vip{
     height: 20px;
     width: 20px;
