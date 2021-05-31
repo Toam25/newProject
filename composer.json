@@ -6,6 +6,9 @@
         "ext-ctype": "*",
         "ext-iconv": "*",
         "friendsofsymfony/ckeditor-bundle": "^2.3",
+        "helios-ag/fm-elfinder-bundle": "^10.1",
+        "nyholm/psr7": "^1.4",
+        "paypal/rest-api-sdk-php": "^1.14",
         "sensio/framework-extra-bundle": "^5.1",
         "symfony/apache-pack": "^1.0",
         "symfony/asset": "4.4.*",
@@ -27,11 +30,12 @@
         "symfony/twig-pack": "*",
         "symfony/validator": "4.4.*",
         "symfony/web-link": "4.4.*",
-        "symfony/yaml": "4.4.*"
+        "symfony/yaml": "4.4.*",
+        "twig/string-extra": "^3.3"
     },
     "require-dev": {
         "symfony/debug-pack": "*",
-        "symfony/maker-bundle": "^1.0",
+        "symfony/maker-bundle": "^1.30",
         "symfony/profiler-pack": "*",
         "symfony/test-pack": "*"
     },
@@ -62,7 +66,8 @@
     "scripts": {
         "auto-scripts": {
             "cache:clear": "symfony-cmd",
-            "assets:install %PUBLIC_DIR%": "symfony-cmd"
+            "assets:install %PUBLIC_DIR%": "symfony-cmd",
+            "elfinder:install": "symfony-cmd"
         },
         "post-install-cmd": [
             "@auto-scripts"

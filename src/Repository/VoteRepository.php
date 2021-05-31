@@ -5,7 +5,7 @@ namespace App\Repository;
 use App\Entity\Boutique;
 use App\Entity\Vote;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
-use Doctrine\Common\Persistence\ManagerRegistry;
+use Doctrine\Persistence\ManagerRegistry;
 
 /**
  * @method Vote|null find($id, $lockMode = null, $lockVersion = null)

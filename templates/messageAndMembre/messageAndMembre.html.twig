@@ -1,0 +1,77 @@
+<div id="membre_user">
+	<div class="container_membre_all">
+		<button class="btn-control-message fermer_membre">
+			<span class="fa fa-remove"></span>
+		</button>
+		<div class="container-membre">
+			<div id="headeraddfriends" style="background-color:#7b89f1">
+				<p>Membres</p><input id="liste_membre" class="search-in js-search-shop form-control" type="search" name="recheche" placeholder="Chercher une boutique ?"></div>
+			<div id="container_membre_in" class="js_member">
+				
+			</div>
+		</div>
+	</div>
+</div>
+
+
+{# message #}
+
+<div id="container-message">
+	<div style="" class="head_message">
+		<div id="name_and_logo_boutique" style="background-color:#7b89f1">
+			<div id="name_and_logo_boutique">
+				<a id="all" class="link_shop_or_user" href="#" class="getCategorie">
+					<img class="_image_" src="{{asset('images/'~boutique.logo)}}" alt=""><span class="_message_name_boutique">{{ boutique.name }}</span>
+				</a>
+			</div>
+			<div class="btn_delete_bloqued">
+				<button class="btn-control-message parametre">
+					<span class="fa fa-cogs"></span>
+				</button>
+				<button class="btn-control-message fermer close_message">
+					<span class="fa fa-remove"></span>
+				</button>
+			</div>
+		</div>
+		<div class="parametre_message_in">
+			<button type="button" class="font_b block_message" name="6">
+				<span class="glyphicon glyphicon-ban-circle"></span>
+				Bloquer</button><br>
+			<button type="button" class="font_b delete_all_message" name="6">
+				<span class="glyphicon glyphicon-trash"></span>
+				Supprimer</button>
+		</div>
+
+		<div id="message"></div>
+		<div class="action  " style="background-color:#7b89f1">
+			<span class="container_preview_image_for_article">
+				<img id="preview_image_for_article" class="preview_img">
+				<div class="delete_image_preview_article">
+					<span class="btn btn-danger glyphicon glyphicon-trash"></span>
+				</div>
+			</span>
+			<form id="formForMessageBoutique" enctype="multipart/form-data">
+				<textarea class="" type="text" name="content" style="margin-bottom: 8px;width: 100%;border: none;border-radius: 5px;" rows="2" required></textarea>
+				<input type="hidden" class="me_me"name="id" value="">
+				<input id= "conversation_id" type="hidden" name="conversation_id" value="">
+
+				<label class="file_image_uploid" for="image_content">
+					<span class="fa fa-image"></span>
+				</label>
+				<input id="image_content" name="image_content" type="file" style="display : none" class="file input_preview_image_for_article">
+				<button type="submit" name="EnvoyeMessage" class="envoyeMessage_in send_message font_b">
+					<span class="fa fa-paper-plane"></span>
+				</button>
+			</form>
+		</div>
+	</div>
+</div>
+{# my_message #}
+	<div class="my_message_and_nofication">
+	  <div class="js_close_my_message_notification close_notification_or_message">
+	  		<button><i  class="fa fa-times"></i></button>
+	  <h4 class="_h4_type_"></h4></div>
+	  <div class="my_conversation js_my_conversation">
+	  		
+	  </div>
+	</div>

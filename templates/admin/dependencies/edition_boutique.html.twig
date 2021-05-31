@@ -7,7 +7,13 @@
     
     <div class="col-md-6">{{ form_row(form.name)}}</div>
     <div class="col-md-6"> {{ form_row(form.address)}}</div>
+    <div class="col-md-6"> {{ form_row(form.slogan)}}</div>
     <div class="col-md-6">{{ form_row(form.link)}}</div>
+     {% set disabled = true %}
+     {% if boutique.getDetailOffer is not same as ("Gratuit") %}
+        {% set disabled = false %}
+     {% endif %}
+    <div class="col-md-6">{{ form_row(form.externalLink,{'disabled': disabled })}}</div>
     <div class="col-md-6">{{ form_row(form.mail)}}</div>
     <div class="col-md-6">{{ form_row(form.contact)}}</div>
     <div class="col-md-6">{{ form_row(form.image)}}</div>

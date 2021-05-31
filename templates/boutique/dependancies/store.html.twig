@@ -1,7 +1,8 @@
 <!-- STORE -->
-<div id="store" class="col-md-9">
+<div id="store" class="col-md-10">
     <!-- store top filter -->
-    <div class="store-filter clearfix">
+    
+    {#<div class="store-filter clearfix">
         <div class="store-sort">
             <label>
                 Sort By:
@@ -24,19 +25,31 @@
             <li><a href="#"><i class="fa fa-th-list"></i></a></li>
         </ul>
     </div>
+    #}
     <!-- /store top filter -->
 
     <!-- store products -->
     <div class="row">
+     {% if type is same as ('shop') %}
+          {% for shop in shops %}
+                {% include "boutique/dependancies/_shopforsearch.html.twig"%}
+          {% endfor %}
+
+     {% elseif type is same as ('blog')%}
+         {% for blog in blogs %}
+            {% include "boutique/dependancies/_blogforsearch.html.twig"%}
+       {% endfor %}
+     {% else %}
        {% for article in articles %}
-            {% include "boutique/dependancies/_cartforboutique.html.twig"%}
-       {%endfor %}
+            {% include "boutique/dependancies/_cartforsearch.html.twig"%}
+       {% endfor %}
+    {% endif %}
         <!-- /product -->
     </div>
     <!-- /store products -->
 
     <!-- store bottom filter -->
-    <div class="store-filter clearfix">
+    {#<div class="store-filter clearfix">
         <span class="store-qty">Showing 20-100 products</span>
         <ul class="store-pagination">
             <li class="active">1</li>
@@ -46,5 +59,6 @@
             <li><a href="#"><i class="fa fa-angle-right"></i></a></li>
         </ul>
     </div>
+    #}
     <!-- /store bottom filter -->
 </div>

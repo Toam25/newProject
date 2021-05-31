@@ -5,6 +5,7 @@ namespace App\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use PhpParser\Node\Expr\FuncCall;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
@@ -90,6 +91,52 @@ class User implements UserInterface
      */
     private $userVotes;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Blog", mappedBy="user")
+     */
+    private $blogs;
+
+    /**
+     * @ORM\Column(type="datetime", nullable=true)
+     */
+    private $lastActivityAt;
+
+    /**
+     * @ORM\ManyToMany(targetEntity="App\Entity\Notification", mappedBy="toUser")
+     */
+    private $notifications;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $confimation;
+
+    /**
+     * @ORM\OneToMany(targetEntity=ProfilJob::class, mappedBy="user")
+     */
+    private $profilJobs;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Page::class, mappedBy="user")
+     */
+    private $pages;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Images::class, mappedBy="user")
+     */
+    private $images;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Message::class, mappedBy="user")
+     */
+    private $messages;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Participant::class, mappedBy="user")
+     */
+    private $participants;
+
+
     public function __construct()
     {
         $this->boutiques = new ArrayCollection();
@@ -100,6 +147,13 @@ class User implements UserInterface
         $this->categories = new ArrayCollection();
         $this->userVotes = new ArrayCollection();
         $this->birthday = new \DateTime();
+        $this->blogs = new ArrayCollection();
+        $this->notifications = new ArrayCollection();
+        $this->profilJobs = new ArrayCollection();
+        $this->pages = new ArrayCollection();
+        $this->images = new ArrayCollection();
+        $this->messages = new ArrayCollection();
+        $this->participants = new ArrayCollection();
  
     }
 
@@ -407,4 +461,248 @@ class User implements UserInterface
 
         return $this;
     }
+
+    /**
+     * @return Collection|Blog[]
+     */
+    public function getBlogs(): Collection
+    {
+        return $this->blogs;
+    }
+
+    public function addBlog(Blog $blog): self
+    {
+        if (!$this->blogs->contains($blog)) {
+            $this->blogs[] = $blog;
+            $blog->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeBlog(Blog $blog): self
+    {
+        if ($this->blogs->contains($blog)) {
+            $this->blogs->removeElement($blog);
+            // set the owning side to null (unless already changed)
+            if ($blog->getUser() === $this) {
+                $blog->setUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function getLastActivityAt(): ?\DateTimeInterface
+    {
+        return $this->lastActivityAt;
+    }
+
+    public function setLastActivityAt(?\DateTimeInterface $lastActivityAt): self
+    {
+        $this->lastActivityAt = $lastActivityAt;
+
+        return $this;
+    }
+
+    /**
+     * @return Bool whether the user is active or not
+     */
+
+     public function isActiveNow(){
+         $delay = new \DateTime("2 minutes ago");
+
+         return ($this->getLastActivityAt()>$delay);
+     }
+
+     /**
+      * @return Collection|Notification[]
+      */
+     public function getNotifications(): Collection
+     {
+         return $this->notifications;
+     }
+
+     public function addNotification(Notification $notification): self
+     {
+         if (!$this->notifications->contains($notification)) {
+             $this->notifications[] = $notification;
+             $notification->addToUser($this);
+         }
+
+         return $this;
+     }
+
+     public function removeNotification(Notification $notification): self
+     {
+         if ($this->notifications->contains($notification)) {
+             $this->notifications->removeElement($notification);
+             $notification->removeToUser($this);
+         }
+
+         return $this;
+     }
+
+     public function getConfimation(): ?string
+     {
+         return $this->confimation;
+     }
+
+     public function setConfimation(?string $confimation): self
+     {
+         $this->confimation = $confimation;
+
+         return $this;
+     }
+
+     /**
+      * @return Collection|ProfilJob[]
+      */
+     public function getProfilJobs(): Collection
+     {
+         return $this->profilJobs;
+     }
+
+     public function addProfilJob(ProfilJob $profilJob): self
+     {
+         if (!$this->profilJobs->contains($profilJob)) {
+             $this->profilJobs[] = $profilJob;
+             $profilJob->setUser($this);
+         }
+
+         return $this;
+     }
+
+     public function removeProfilJob(ProfilJob $profilJob): self
+     {
+         if ($this->profilJobs->removeElement($profilJob)) {
+             // set the owning side to null (unless already changed)
+             if ($profilJob->getUser() === $this) {
+                 $profilJob->setUser(null);
+             }
+         }
+
+         return $this;
+     }
+
+     /**
+      * @return Collection|Page[]
+      */
+     public function getPages(): Collection
+     {
+         return $this->pages;
+     }
+
+     public function addPage(Page $page): self
+     {
+         if (!$this->pages->contains($page)) {
+             $this->pages[] = $page;
+             $page->setUser($this);
+         }
+
+         return $this;
+     }
+
+     public function removePage(Page $page): self
+     {
+         if ($this->pages->removeElement($page)) {
+             // set the owning side to null (unless already changed)
+             if ($page->getUser() === $this) {
+                 $page->setUser(null);
+             }
+         }
+
+         return $this;
+     }
+
+     /**
+      * @return Collection|Images[]
+      */
+     public function getImages(): Collection
+     {
+         return $this->images;
+     }
+
+     public function addImage(Images $image): self
+     {
+         if (!$this->images->contains($image)) {
+             $this->images[] = $image;
+             $image->setUser($this);
+         }
+
+         return $this;
+     }
+
+     public function removeImage(Images $image): self
+     {
+         if ($this->images->removeElement($image)) {
+             // set the owning side to null (unless already changed)
+             if ($image->getUser() === $this) {
+                 $image->setUser(null);
+             }
+         }
+
+         return $this;
+     }
+
+     /**
+      * @return Collection|Message[]
+      */
+     public function getMessages(): Collection
+     {
+         return $this->messages;
+     }
+
+     public function addMessage(Message $message): self
+     {
+         if (!$this->messages->contains($message)) {
+             $this->messages[] = $message;
+             $message->setUser($this);
+         }
+
+         return $this;
+     }
+
+     public function removeMessage(Message $message): self
+     {
+         if ($this->messages->removeElement($message)) {
+             // set the owning side to null (unless already changed)
+             if ($message->getUser() === $this) {
+                 $message->setUser(null);
+             }
+         }
+
+         return $this;
+     }
+
+     /**
+      * @return Collection|Participant[]
+      */
+     public function getParticipants(): Collection
+     {
+         return $this->participants;
+     }
+
+     public function addParticipant(Participant $participant): self
+     {
+         if (!$this->participants->contains($participant)) {
+             $this->participants[] = $participant;
+             $participant->setUser($this);
+         }
+
+         return $this;
+     }
+
+     public function removeParticipant(Participant $participant): self
+     {
+         if ($this->participants->removeElement($participant)) {
+             // set the owning side to null (unless already changed)
+             if ($participant->getUser() === $this) {
+                 $participant->setUser(null);
+             }
+         }
+
+         return $this;
+     }
+
 }

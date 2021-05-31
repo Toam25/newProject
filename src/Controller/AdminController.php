@@ -12,14 +12,18 @@ use App\Form\BoutiqueType;
 use App\Form\ReferenceType;
 use App\Form\UserType;
 use App\Repository\ArticleRepository;
+use App\Repository\BlogRepository;
 use App\Repository\BoutiqueRepository;
 use App\Repository\HeaderRepository;
 use App\Repository\MenuRepository;
+use App\Repository\NotificationRepository;
 use App\Repository\ReferenceRepository;
 use App\Repository\UserRepository;
+use App\Repository\VideoRepository;
 use App\Service\CategoryOptionService;
 use App\Service\CategoryService;
 use App\Service\InsertFileServices;
+use App\Service\NotificationService;
 use App\Service\TypeOptionMenuService;
 use App\Service\UtilsService;
 use Doctrine\ORM\EntityManagerInterface;
@@ -32,29 +36,32 @@ use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Symfony\Flex\Unpack\Result;
 
 class AdminController extends AbstractController
-{   
+{
     private $typeOptionMenuService;
     private $utilsService;
-    public function __construct(UtilsService $utilsService, TypeOptionMenuService $typeOptionMenuService )
+    public function __construct(UtilsService $utilsService, TypeOptionMenuService $typeOptionMenuService)
     {
-        $this->typeOptionMenuService=$typeOptionMenuService;
-        $this->utilsService=$utilsService;
+        $this->typeOptionMenuService = $typeOptionMenuService;
+        $this->utilsService = $utilsService;
     }
     /**
      * @Route("/teste/slug/{slug}", name="teste_slug")
      */
 
-    public function testeSlug(string $slug, UtilsService $utilsService){
+    public function testeSlug(string $slug, NotificationService $notificationService,  UtilsService $utilsService)
+    {
 
+        dd($notificationService->getMessageNotification());
         return new Response($utilsService->getSlug($slug));
     }
     /**
      * @Route("/admin", name="home")
      */
-    public function index(BoutiqueRepository $boutiqueRepository, HeaderRepository $headerRepository)
+    public function index(BoutiqueRepository $boutiqueRepository, HeaderRepository $headerRepository, BlogRepository $blogRepository)
     {
 
         // $allArticle = $articleRepository->findBy(['boutique'=>$boutiqueRepository->findOneBy(['user'=>$this->getUser()])] );
+
         $boutique = $boutiqueRepository->findOneBy(['user' => $this->getUser()]);
         $header = $headerRepository->findOneBy(['boutique' => $boutique]);
         $img_header = ($header) ? $header->getName() : 'images_default/default_image.jpg';
@@ -63,24 +70,75 @@ class AdminController extends AbstractController
             'pages' => 'home',
             'img_header' => $img_header,
             'id' => $id,
-            'boutique' => $boutique
+            'boutique' => $boutique,
+            'peddingBlogs' => $blogRepository->findBy(['boutique' => $boutique, 'status' => 'PENDING']),
+            'closedBlogs' => $blogRepository->findBy(['boutique' => $boutique, 'status' => 'CLOSED']),
+            'validateBlogs' => $blogRepository->findBy(['boutique' => $boutique, 'validate' => true])
+        ]);
+    }
+
+    /**
+     * @Route("/admin/add/video", name="add_video")
+     */
+    public function add_video(BoutiqueRepository $boutiqueRepository)
+    {
+
+        // $allArticle = $articleRepository->findBy(['boutique'=>$boutiqueRepository->findOneBy(['user'=>$this->getUser()])] );
+
+        $boutique = $boutiqueRepository->findOneBy(['user' => $this->getUser()]);
+
+        return $this->render('admin/index.html.twig', [
+            'pages' => 'add_video',
+            'boutique' => $boutique,
+        ]);
+    }
+    /**
+     * @Route("/admin/edit/video/{id}", name="edit_video")
+     */
+    public function edit_video(int $id, BoutiqueRepository $boutiqueRepository, VideoRepository $videoRepository)
+    {
+
+        // $allArticle = $articleRepository->findBy(['boutique'=>$boutiqueRepository->findOneBy(['user'=>$this->getUser()])] );
+
+        $boutique = $boutiqueRepository->findOneBy(['user' => $this->getUser()]);
+        $video = $videoRepository->findOneBy(['boutique' => $boutique, 'id' => $id]);
+        return $this->render('admin/index.html.twig', [
+            'pages' => 'edit_video',
+            'boutique' => $boutique,
+            'video' => $video
+        ]);
+    }
+    /**
+     * @Route("/admin/list/video", name="list_video")
+     */
+    public function video(BoutiqueRepository $boutiqueRepository, VideoRepository $videoRepository)
+    {
+
+        // $allArticle = $articleRepository->findBy(['boutique'=>$boutiqueRepository->findOneBy(['user'=>$this->getUser()])] );
+
+        $boutique = $boutiqueRepository->findOneBy(['user' => $this->getUser()]);
+        $videos = $videoRepository->findBy(['boutique' => $boutique]);
+        return $this->render('admin/index.html.twig', [
+            'pages' => 'list_video',
+            'boutique' => $boutique,
+            'videos' => $videos
         ]);
     }
     /**
      * @Route("/admin/article_list/{category}/{sous_category}", name="article_list")
      */
-    public function addArticleInShop($category,$sous_category,CategoryOptionService $categoryOptionService, Request $request,CategoryService $categoryService, BoutiqueRepository $boutiqueRepository, InsertFileServices $insertFileServices, ArticleRepository $articleRepository)
+    public function addArticleInShop($category, $sous_category, CategoryOptionService $categoryOptionService, Request $request, CategoryService $categoryService, BoutiqueRepository $boutiqueRepository, InsertFileServices $insertFileServices, ArticleRepository $articleRepository)
     {
-        
-      
+
+
         // $allArticle = $articleRepository->findBy(['boutique'=>$boutiqueRepository->findOneBy(['user'=>$this->getUser()])] );
         $boutique = $boutiqueRepository->findOneBy(['user' => $this->getUser()]);
         $article = new Article();
         $form = $this->createForm(ArticleType::class, $article);
         $form->handleRequest($request);
         ////
-         
-      /*  if ($form->isSubmitted()) {
+
+        /*  if ($form->isSubmitted()) {
             $allImages = [];
             $entityManager = $this->getDoctrine()->getManager();
             $images = $form->get('images')->getData();
@@ -112,14 +170,14 @@ class AdminController extends AbstractController
         */
 
         ///
-     
+
         return $this->render('admin/index.html.twig', [
             'pages' => 'articleinshop',
             'articles' => $articleRepository->findBy(['boutique' => $boutique, 'category' => $sous_category]),
             'boutique' => $boutique,
-            'add_button' => $categoryService->getAddButton($this->typeOptionMenuService->getTypeOptionMenu($boutique->getType(),$category),"btn btn-success ajout_article_ev"),
+            'add_button' => $categoryService->getAddButton($this->typeOptionMenuService->getTypeOptionMenu($boutique->getType(), $category), "btn btn-success ajout_article_ev"),
             'form' => $form->createView(),
-            'category' =>$sous_category
+            'category' => $sous_category
         ]);
     }
     /**
@@ -196,13 +254,13 @@ class AdminController extends AbstractController
     /**
      * @Route("/superadmin/inscription", name="admin_registration")
      */
-    public function registration(Request $request,BoutiqueRepository $boutiqueRepository, UserRepository $userRepository, EntityManagerInterface $manager, UserPasswordEncoderInterface $encoder)
+    public function registration(Request $request, BoutiqueRepository $boutiqueRepository, UserRepository $userRepository, EntityManagerInterface $manager, UserPasswordEncoderInterface $encoder)
     {
         $user = new User();
         $boutique = new Boutique();
 
 
-        
+
         $form = $this->createForm(UserType::class, $user);
         $form->handleRequest($request);
 
@@ -292,15 +350,34 @@ class AdminController extends AbstractController
         return $this->render('admin/index.html.twig', [
             'pages' => 'list_boutique',
             'boutiques' => $boutiques,
-            'boutique'=>$boutique
+            'boutique' => $boutique
         ]);
     }
+    /**
+     * @Route("admin/shop/longLat", name="setLongLat", methods={"POST"})
+     */
+    public function setLongLat(BoutiqueRepository $boutiqueRepository, Request $request)
+    {
 
-    public function buttonAddProduct(array $categories,string $class){
-         $button = "";
-         foreach ($categories as $key => $category) {
-            $button .= '<button id="'.$this->utilsService::getSlug($category).'"class="'. $class .'">'.$category.'</button>';
-         }
+        // $allArticle = $articleRepository->findBy(['boutique'=>$boutiqueRepository->findOneBy(['user'=>$this->getUser()])] );
+        $boutique = $boutiqueRepository->findOneBy(['user' => $this->getUser()]);
+
+        $em = $this->getDoctrine()->getManager();
+        $boutique->setLongLat([
+            "long" => $request->request->get('long'),
+            "lat" => $request->request->get('lat'),
+        ]);
+        $em->persist($boutique);
+        $em->flush();
+
+        return new JsonResponse(['status' => 'success'], Response::HTTP_OK);
+    }
+    public function buttonAddProduct(array $categories, string $class)
+    {
+        $button = "";
+        foreach ($categories as $key => $category) {
+            $button .= '<button id="' . $this->utilsService::getSlug($category) . '"class="' . $class . '">' . $category . '</button>';
+        }
         return $button;
     }
     static function button_add_boutique(string $categorie, $class)
@@ -459,7 +536,7 @@ class AdminController extends AbstractController
 
             default:
                 $button = "";
-            break;
+                break;
         }
 
 

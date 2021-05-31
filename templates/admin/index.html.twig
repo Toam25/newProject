@@ -5,6 +5,12 @@
 <link href="{{ asset('css/bootstrap4.5.css')}}" rel="stylesheet" type="text/css">
     <link href="{{ asset('vendor/fontawesome-free/css/all.min.css') }}" rel="stylesheet" type="text/css">
     <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+    {% if pages is same as('home') %}
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
+   integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
+   crossorigin=""/>
+    {% endif %}
+    
     <link rel="stylesheet" type="text/css"href=" {{ asset('vendor/datatables/dataTables.bootstrap4.min.css') }}" >
     <link href="{{ asset('toastr/toastr.css') }}" rel="stylesheet" type="text/css">
     <link href="{{ asset('css/jqueryUI.css') }}" rel="stylesheet" type="text/css">
@@ -12,6 +18,8 @@
     <link href="{{ asset('css/lobibox.css') }}" rel="stylesheet" type="text/css">
     <link href="{{ asset('css/parametre_option.css') }}" rel="stylesheet" type="text/css">
     <link href="{{ asset('css/contact.css') }}" rel="stylesheet" type="text/css">
+    <link href="{{ asset('css/notificationandmessage.css') }}" rel="stylesheet" type="text/css">
+    <link href="{{ asset('css/ck_image.css') }}" rel="stylesheet" type="text/css">
     <link rel="icon" type="image/png" href="{{asset('images/'~boutique.logo)}}">
   
 {% endblock %}
@@ -46,7 +54,17 @@
           {% include ("admin/dependencies/home.html.twig") %}
         {% endif %}
          #}  
+        {% for message in app.flashes('success') %}
+               <div class="alert alert-success">
+                   {{ message }}
+               </div>
+        {% endfor %}
 
+        {% if boutique.getDetailoffer() is same as ('Gratuit')%}
+          <div class="alert alert-danger">
+             Votre offre est Gratuit ...
+          </div>
+        {% endif %}
         {% if pages == 'new' %}
             {% include "admin/dependencies/new_article.html.twig" %}
 
@@ -104,12 +122,48 @@
          {% elseif pages == "detail_article"%}
             {% include 'admin/dependencies/detail_article.html.twig' %}
 
-          {% elseif pages == "articleinshop"%}
+        {% elseif pages == "articleinshop"%}
             {% include 'admin/dependencies/articleinshop.html.twig' %}
             {% include 'admin/dependencies/add_article_modal.html.twig' %}
+
+        {# add Blog #}
+          {% elseif pages == "blogAdd"%}
+            {% include 'admin/dependencies/blogAdd.html.twig' %}
+        {# list Blog#}
+        {% elseif pages == "bloglist"%}
+            {% include 'admin/dependencies/listBlog.html.twig' %}
+        
+        {# edit Blog#}
+        {% elseif pages == "blogEdit"%}
+            {% include 'admin/dependencies/editBlog.html.twig' %}
+        {# preview Blog#}
+        {% elseif pages == "blogpreview"%}
+            {% include 'admin/dependencies/blogpreview.html.twig' %}
+        {# validate list Blog#}
+        {% elseif pages == "blogValidatelist"%}
+            {% include 'admin/dependencies/blog/blogValidatelist.html.twig' %}
+        
+        {# {% if boutique.getDetailOffer is not same as('Gratuit') %} #}
+                {#video #}
+                {% elseif pages == "add_video"%}
+                    {% include 'admin/dependencies/add_video.html.twig' %}
+
+                {% elseif pages == "list_video"%}
+                    {% include 'admin/dependencies/list_video.html.twig' %}
+                {% elseif pages == "edit_video"%}
+                    {% include 'admin/dependencies/edit_video.html.twig' %}
+                
+                {#page #}
+                {% elseif pages == "add_page"%}
+                    {% include 'admin/dependencies/add_page.html.twig' %}
+
+                {% elseif pages == "list_page" %}
+                    {% include 'admin/dependencies/list_page.html.twig' %}
+                {% elseif pages == "edit_page"%}
+                    {% include 'admin/dependencies/edit_page.html.twig' %}
+        {# {% endif %} #}
+     {#########################################################}
             
-
-
          {% elseif pages == "list_socialNetwork"%}
             {% include 'admin/dependencies/list_socialNetwork.html.twig' with { 'list_socialNetworks' : list_socialNetworks } only %}
          
@@ -117,7 +171,7 @@
             {% include 'admin/dependencies/vote.html.twig' %}
             {% include 'admin/dependencies/add_vote_modal.html.twig' %}
             {% include 'admin/dependencies/edit_vote_modal.html.twig' %}
-        {% else %}
+        {% elseif pages == 'home' %}
              {% include ("admin/dependencies/home.html.twig") %}
              {% include "admin/dependencies/add_header_modal.html.twig" %}
              {% include "admin/dependencies/view_header_modal.html.twig" %}
@@ -148,6 +202,15 @@
 
 {% block javascripts %}
 <script src=" {{asset('vendor/jquery-easing/jquery.easing.min.js ')}}"></script>
+{#<script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
+   integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
+   crossorigin=""></script>#}
+{% if pages is same as ('home') %}
+    <script src="{{ asset('js/leaflet.js') }}"></script>
+    <script src="{{ asset('js/config-admin-leaflet.js') }}"></script>
+{% endif %}
+
+
 <script src=" {{asset('js/sb-admin-2.js') }}"></script>
 
 <script src="{{asset('vendor/datatables/jquery.dataTables.min.js') }}"></script>
@@ -158,5 +221,8 @@
 	<script src="{{ asset('js/lobibox.js') }}"> </script>
 
 <script src="{{asset('toastr/toastr.min.js') }} "></script>
+<script src="{{asset('toastr/toastr-config.js') }} "></script>
 <script src="{{ asset('js/admin.js') }}"></script>
-  {% endblock %}
+<script src="{{ asset('js/ck_image.js') }}"></script>
+<script src="{{ asset('js/notificationandmessage.js') }}"></script>
+{% endblock %}

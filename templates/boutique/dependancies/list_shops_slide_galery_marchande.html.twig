@@ -1,0 +1,21 @@
+<div class="container_product " 
+    {% set wallpaper = "/images/images_default/default_logo.png" %}
+   {% if shop.headers[0].name is defined %}
+       {% set wallpaper = asset('images/'~shop.headers[0].name) %}
+   {% endif %}
+    style="background-image : url({{ wallpaper }})"
+>
+		<div class="logo-img">
+			<img src="{{asset('images/'~shop.logo)}}" alt="">
+		</div>
+
+	<div class="shop-body">
+		<h3 class="shop_name_g">
+			{{ shop.name }}
+		</h3>
+
+		<h4 class="slogan">
+            {{ shop.slogan                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       }}
+		</h4>
+	</div>
+</div>

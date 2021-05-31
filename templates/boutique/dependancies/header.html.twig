@@ -14,7 +14,7 @@
     <!-- MAIN HEADER -->
      <div id='list_shop'>
      </div>
-    <div id="header" style="display: flex;justify-content: space-between;">
+    <div id="header" style="display: grid;justify-content: space-between; align-items: center;grid-template-columns: 2fr 4fr 1fr;">
         <!-- container -->
         
             <!-- row -->
@@ -31,15 +31,8 @@
                 <!-- /LOGO -->
 
                 <!-- SEARCH BAR -->
-               
-                    {#
-                    <div class="header-search">
-                        <form method="Get" action="{{path('list_product')}}">
-                            <input class="input" name="q" placeholder="Recherche dans {{ boutique.name}}">
-                            <button class="search-btn">Search</button>
-                        </form>
-                    </div>
-                    #}
+
+                {% include "boutique/dependancies/headersearch.html.twig" %}             
                
                 <!-- /SEARCH BAR -->
 

@@ -1,0 +1,16 @@
+body {
+    background: #0b99a8;
+display: flex;
+justify-content: center;
+align-items: center;
+}
+body div {
+    display: flex;flex-direction: column;justify-content: center;align-items: center;
+}
+body div h1 {
+    color: white;
+    font-weight: bold
+}
+a:hover{
+    color: #1b3779 !important;
+}

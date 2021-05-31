@@ -79,9 +79,10 @@ class AppCustomAuthenticator extends AbstractFormLoginAuthenticator implements P
             // fail authentication with a custom error
             throw new CustomUserMessageAuthenticationException('Mail introuvable');
         }
-
+        else if($user->getConfimation()!=null){
+            throw new CustomUserMessageAuthenticationException('Confirmé votre adresse mail');
+        }
         
-    
         return $user;
     }
 

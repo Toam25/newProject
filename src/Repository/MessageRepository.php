@@ -4,7 +4,7 @@ namespace App\Repository;
 
 use App\Entity\Message;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
-use Doctrine\Common\Persistence\ManagerRegistry;
+use Doctrine\Persistence\ManagerRegistry;
 
 /**
  * @method Message|null find($id, $lockMode = null, $lockVersion = null)
@@ -19,6 +19,14 @@ class MessageRepository extends ServiceEntityRepository
         parent::__construct($registry, Message::class);
     }
 
+    public function findMessageByConversationId(int $conversationId)
+    {
+        $qb =  $this->createQueryBuilder('m');
+        $qb->where('m.conversation = :conversationId')
+            ->setParameter('conversationId', $conversationId)
+            ->orderBy('m.id', 'DESC');
+        return $qb->getQuery()->getResult();
+    }
     // /**
     //  * @return Message[] Returns an array of Message objects
     //  */

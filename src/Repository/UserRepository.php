@@ -4,7 +4,7 @@ namespace App\Repository;
 
 use App\Entity\User;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
-use Doctrine\Common\Persistence\ManagerRegistry;
+use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\Security\Core\Exception\UnsupportedUserException;
 use Symfony\Component\Security\Core\User\PasswordUpgraderInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -36,6 +36,53 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
         $this->_em->flush();
     }
 
+    public function findAllWithRoleSuperAdmin(String $role)
+    {
+        $query = $this->createQueryBuilder('u')
+            ->where('u.roles LIKE :role')
+            ->setParameter('role', '%' . $role . '%')
+            ->getQuery()
+            ->getResult();
+
+        return $query;
+    }
+
+    public function findAllUser(string $q = null)
+    {
+        $qb = $this->createQueryBuilder('u')
+            ->select('u', 's', 'h')
+            ->leftJoin('u.boutiques', 's')
+            ->leftJoin('s.headers', 'h')
+            ->orderBy('u.id', 'ASC');
+        if ($q != null) {
+            $qb->Where('s.name LIKE :shopname')
+                ->orWhere('u.name LIKE :name')
+                ->orWhere('u.firstname LIKE :firstname')
+                ->setParameters([
+                    'shopname' => '%' . $q . '%',
+                    'name' => '%' . $q . '%',
+                    'firstname' => '%' . $q . '%'
+                ]);
+        }
+
+        return $qb->getQuery()
+            ->getResult();
+    }
+
+    public function findOneByUser(int $userId)
+    {
+        $qb = $this->createQueryBuilder('u')
+            ->select('u', 's', 'h')
+            ->leftJoin('u.boutiques', 's')
+            ->leftJoin('s.headers', 'h')
+            ->orderBy('u.id', 'ASC')
+            ->andWhere('u.id = :userId ')
+            ->setParameters([
+                'userId' => $userId
+            ]);
+
+        return $qb->getQuery()->getOneOrNullResult();
+    }
     // /**
     //  * @return User[] Returns an array of User objects
     //  */

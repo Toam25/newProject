@@ -672,6 +672,22 @@ class TypeOptionMenuService extends AbstractController
          ]
       ];
    }
+
+   public function getCategoryBlog(){
+       return [
+               "blog" => [
+                   "category"=>"blog",
+                        "sous_category"=>[
+                           "blog"=>[
+                              "name"=>"Blog",
+                              "options"=>[
+                                    'Actualités','Atouts','Astuces','Test','Tutoriels'
+                              ]
+                           ]
+                   ]
+               ]
+       ];
+   }
    public function  getCategoryHighTech()
    {
       return  [

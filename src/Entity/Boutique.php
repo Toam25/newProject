@@ -99,7 +99,7 @@ class Boutique
     private $esArticles;
 
     /**
-     * @ORM\Column(type="string", length=300, nullable=true)
+     * @ORM\Column(type="text", nullable=true)
      */
     private $user_condition;
 
@@ -113,6 +113,71 @@ class Boutique
      */
     private $resume;
 
+    /**
+     * @ORM\Column(type="boolean", nullable=true)
+     */
+    private $showArticle;
+
+    /**
+     * @ORM\Column(type="boolean", nullable=true)
+     */
+    private $showBlog;
+
+    /**
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    private $nbrOfVisitor;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Blog", mappedBy="boutique")
+     */
+    private $blogs;
+
+    /**
+     * @ORM\Column(type="datetime", nullable=true)
+     */
+    private $lastActivityAt;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $externalLink;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $offer;
+
+    /**
+     * @ORM\Column(type="array", nullable=true)
+     */
+    private $longLat = [];
+
+    /**
+     * @ORM\Column(type="text", nullable=true)
+     */
+    private $slogan;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Video::class, mappedBy="boutique")
+     */
+    private $videos;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Page::class, mappedBy="boutique")
+     */
+    private $pages;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Images::class, mappedBy="boutique")
+     */
+    private $images;
+
+    /**
+     * @ORM\Column(type="datetime",  nullable=true)
+     */
+    private $offerCreatedAt;
+
     public function __construct()
     {
         $this->logo = "images_default/default_logo.png";
@@ -123,7 +188,19 @@ class Boutique
         $this->shopReferences = new ArrayCollection();
         $this->menus = new ArrayCollection();
         $this->esArticles = new ArrayCollection();
-        $this->vote= new ArrayCollection();
+        $this->vote = new ArrayCollection();
+        $this->showArticle = true;
+        $this->showBlog = false;
+        $this->nbrOfVisitor = 0;
+        $this->blogs = new ArrayCollection();
+        $this->offer = "FREE";
+        $this->longLat = [
+            'long' => -0.096,
+            'lat' => 51.49
+        ];
+        $this->videos = new ArrayCollection();
+        $this->pages = new ArrayCollection();
+        $this->images = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -509,5 +586,270 @@ class Boutique
         $this->resume = $resume;
 
         return $this;
+    }
+
+    public function getShowArticle(): ?bool
+    {
+        return $this->showArticle;
+    }
+
+    public function setShowArticle(?bool $showArticle): self
+    {
+        $this->showArticle = $showArticle;
+
+        return $this;
+    }
+
+    public function getShowBlog(): ?bool
+    {
+        return $this->showBlog;
+    }
+
+    public function setShowBlog(?bool $showBlog): self
+    {
+        $this->showBlog = $showBlog;
+
+        return $this;
+    }
+
+    public function getNbrOfVisitor(): ?int
+    {
+        return $this->nbrOfVisitor;
+    }
+
+    public function setNbrOfVisitor(?int $nbrOfVisitor): self
+    {
+        $this->nbrOfVisitor = $nbrOfVisitor;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Blog[]
+     */
+    public function getBlogs(): Collection
+    {
+        return $this->blogs;
+    }
+
+    public function addBlog(Blog $blog): self
+    {
+        if (!$this->blogs->contains($blog)) {
+            $this->blogs[] = $blog;
+            $blog->setBoutique($this);
+        }
+
+        return $this;
+    }
+
+    public function removeBlog(Blog $blog): self
+    {
+        if ($this->blogs->contains($blog)) {
+            $this->blogs->removeElement($blog);
+            // set the owning side to null (unless already changed)
+            if ($blog->getBoutique() === $this) {
+                $blog->setBoutique(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function getLastActivityAt(): ?\DateTimeInterface
+    {
+        return $this->lastActivityAt;
+    }
+
+    public function setLastActivityAt(?\DateTimeInterface $lastActivityAt): self
+    {
+        $this->lastActivityAt = $lastActivityAt;
+
+        return $this;
+    }
+    /**
+     * @return Bool whether the user is active or not
+     */
+
+    public function isActiveNow()
+    {
+        $delay = new \DateTime("2 minutes ago");
+
+        return ($this->getLastActivityAt() > $delay);
+    }
+
+    public function getExternalLink(): ?string
+    {
+        return $this->externalLink;
+    }
+
+    public function setExternalLink(string $externalLink): self
+    {
+        $this->externalLink = $externalLink;
+
+        return $this;
+    }
+
+    public function getOffer(): ?string
+    {
+        return $this->offer;
+    }
+
+    public function setOffer(string $offer): self
+    {
+        $this->offer = $offer;
+
+        return $this;
+    }
+
+    public function getLongLat(): ?array
+    {
+        return $this->longLat;
+    }
+
+    public function setLongLat(array $longLat): self
+    {
+        $this->longLat = $longLat;
+
+        return $this;
+    }
+
+    public function getSlogan(): ?string
+    {
+        return $this->slogan;
+    }
+
+    public function setSlogan(?string $slogan): self
+    {
+        $this->slogan = $slogan;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Video[]
+     */
+    public function getVideos(): Collection
+    {
+        return $this->videos;
+    }
+
+    public function addVideo(Video $video): self
+    {
+        if (!$this->videos->contains($video)) {
+            $this->videos[] = $video;
+            $video->setBoutique($this);
+        }
+
+        return $this;
+    }
+
+    public function removeVideo(Video $video): self
+    {
+        if ($this->videos->removeElement($video)) {
+            // set the owning side to null (unless already changed)
+            if ($video->getBoutique() === $this) {
+                $video->setBoutique(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Page[]
+     */
+    public function getPages(): Collection
+    {
+        return $this->pages;
+    }
+
+    public function addPage(Page $page): self
+    {
+        if (!$this->pages->contains($page)) {
+            $this->pages[] = $page;
+            $page->setBoutique($this);
+        }
+
+        return $this;
+    }
+
+    public function removePage(Page $page): self
+    {
+        if ($this->pages->removeElement($page)) {
+            // set the owning side to null (unless already changed)
+            if ($page->getBoutique() === $this) {
+                $page->setBoutique(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Images[]
+     */
+    public function getImages(): Collection
+    {
+        return $this->images;
+    }
+
+    public function addImage(Images $image): self
+    {
+        if (!$this->images->contains($image)) {
+            $this->images[] = $image;
+            $image->setBoutique($this);
+        }
+
+        return $this;
+    }
+
+    public function removeImage(Images $image): self
+    {
+        if ($this->images->removeElement($image)) {
+            // set the owning side to null (unless already changed)
+            if ($image->getBoutique() === $this) {
+                $image->setBoutique(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function getOfferCreatedAt(): ?\DateTimeInterface
+    {
+        return $this->offerCreatedAt;
+    }
+
+    public function setOfferCreatedAt(\DateTimeInterface $offerCreatedAt): self
+    {
+        $this->offerCreatedAt = $offerCreatedAt;
+
+        return $this;
+    }
+
+    public function getDetailOffer()
+    {
+        $now = new \DateTime();
+        $expiredDate = $this->getOfferCreatedAt();
+        $day = 0;
+        if ($expiredDate != null) {
+            $expired = date_add($this->getOfferCreatedAt(), date_interval_create_from_date_string('30 days'));
+            $day = $now->diff($expired)->d;
+        }
+
+
+        $offer = $this->getOffer();
+
+        if ($offer != "" and $day > 0) {
+            $offer = $offer;
+        } else {
+            $offer = "Gratuit";
+        }
+        return $offer;
+    }
+
+    public function getNbrArticle()
+    {
+        return sizeof($this->getArticle());
     }
 }

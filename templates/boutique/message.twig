@@ -1,0 +1,40 @@
+<div style="" class="head_message">
+                 <button class="btn-control-message parametre">
+                    <span class="glyphicon glyphicon-cog"></span>
+                 </button>
+                 <button class="btn-control-message fermer">
+                   <span class="glyphicon glyphicon-remove"></span>
+                 </button>
+                 <div id="name_and_logo_boutique" style="background-color:rgb(116, 90, 241)">
+                           <div id="name_and_logo_boutique">
+                              <a id="all" href="index.php?in-action=profil&amp;id=1" class="getCategorie">
+                                 <img class="_image_" src="{{asset('images/'~boutique.logo)}}">
+                                 {{ boutique.name }}
+                              </a>
+                           </div>
+                </div>
+                <div class="parametre_message_in">
+                      <button type="button" class="font_b block_message" name="1"><span class="glyphicon glyphicon-ban-circle"></span>   Bloquer</button><br>
+                      <button type="button" class="font_b delete_all_message" name="1"><span class="glyphicon glyphicon-trash"></span>   Supprimer</button>
+                </div>
+
+         <div id="message">
+          
+    </div>
+    <div class="action  " style="background-color:rgb(116, 90, 241)">
+       <span class="container_preview_image_for_article">
+               <img id="preview_image_for_article">
+           <div class="delete_image_preview_article">
+               <span class="btn btn-danger glyphicon glyphicon-trash"></span>
+           </div>
+       </span>
+     <form id="formForMessageBoutique" enctype="multipart/form-data"> <input class="form-control" type="text" name="message"><input type="hidden" name="id_boutique" value="1">
+            
+            <label class="file_image_uploid">
+              <input name="image_for_article" type="file" style="display : none" class="input_preview_image_for_article">
+              <span class=" glyphicon glyphicon-picture"></span>
+            </label>
+            <button type="submit" name="EnvoyeMessage" class="envoyeMessage_in send_message font_b"><span class="glyphicon glyphicon-send"></span></button>
+     </form>
+    </div>
+</div>

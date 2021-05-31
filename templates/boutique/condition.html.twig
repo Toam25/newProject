@@ -1,7 +1,7 @@
 {% extends "base.html.twig" %}
 
 {% block title %}
-	{{ 'Inother-boutique' }}
+	{{ {{ boutique.name }}  }}
 {% endblock %}
 
 {% block stylesheets %}
@@ -19,7 +19,9 @@
     <link rel="stylesheet" href="{{ asset('css/font-awesome.min.css') }}">
 
     <!-- Custom stlylesheet -->
+    
     <link type="text/css" rel="stylesheet" href="{{ asset('css/style.css') }}"/>
+    <link type="text/css" rel="stylesheet" href="{{ asset('css/boutique.css') }}"/>
     <link type="text/css" rel="stylesheet" href="{{ asset('css/index.css') }}"/>
 {% endblock %}
 
@@ -30,13 +32,13 @@
 <div style="display:flex; flex-direction:column;align-items: center;">
 
 <h1>{{ boutique.name }} </h1>
-<p>  {{ boutique.usercondition | raw }} </p>
+<div class="container" style="overflow:hidden">  {{ boutique.usercondition|raw }} </div>
 
 </div>
 	{% if not app.user%}
 		{% include 'boutique/dependancies/connexion.html.twig'%}
 	{% endif %}
-	{% include "boutique/dependancies/footer.html.twig" %}
+	{% include "boutique/dependancies/_footer.html.twig" %}
 {% endblock %}
 {% block javascripts %}
 	<script src="{{asset('js/jquery.js')}}"></script>

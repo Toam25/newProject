@@ -20,9 +20,10 @@
       <div class="image_profil">
          <img src="{{ asset('images/'~ user.avatar) }}" id="profil_preview_image"class="preview_image" alt="{{user.name }}">
       </div>
+
       {% if app.user.id is defined and user.id is  same as(app.user.id) %}
+      
        <div class="info-user">
-       
          <h4>Information Général</h4>
           <form class="profil_user_name" action="{{ path('apiprofil_update_user',{'id' : app.user.id})  }}">
             <label> Nom : </label>
@@ -49,6 +50,27 @@
             <button  type="submit" class="btn btn-success btn-submit2">Enregistrer</button>
         </form>
          </div>
+         <div class="info-user">
+            <h4>Profil Emploi</h4>
+                <iframe  class="iframe"
+                {% if profilJob.cv is defined %} 
+                    src="{{asset('pdf/'~profilJob.cv)}}"
+                {% endif %}
+                     frameborder="0" width="100%" >
+                </iframe>
+                    <button class="delete_cv btn-submit4" 
+                        {% if profilJob.cv is not  defined %} 
+                           style = "display:none"
+                       {% endif %}
+                      >Supprimez</button>           
+                Changer votre Cv ?
+            <form class="profil_cv" action="{{ path('apiprofil_cv',{'id' : app.user.id})  }}">
+                <input name="cv" type = "file" class="form-control">
+                <button  type="submit" class="btn btn-success btn-submit3">Enregistrer</button>
+            </form>
+
+         </div>
+
       {% else %} 
            <p>{{ user.firstname }} {{ user.name }}</p>
       {% endif %}

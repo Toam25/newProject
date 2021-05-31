@@ -1,0 +1,67 @@
+<a href="{{ path('previewBlog',{id: blog.id}) }}" target="_blank">Visualisé le blog</a>
+{{ form_start(blogForm,{'action': path('apieditBlog',{'id':id_blog} ), 'attr' : {'class' : 'edit_vote'}})}}
+<div class="row">
+    <input type="hidden" class="status" name="status" val="">
+    
+	<div class="col-md-6">
+		{{ form_row(blogForm.title) }}
+	</div>
+	<div class="col-md-6">
+		{{ form_row(blogForm.category) }}
+	</div>
+    {#<div class="col-md-12">
+       <div class="row">
+        <div class="col-md-6">
+            <label>Image séléctionné</label>
+            <div class="container_preview_image_blog">
+            <img 
+                id="preview_image"
+                {% if blog.image is not same as (null )%}
+                            src="{{ asset('images/'~ blog.image)}}"
+                {% else %}
+                    src="/images/images_default/default_logo.png"
+                {% endif %} 
+                alt="{{blog.title}}">
+            </div>
+        </div>
+        <div class="col-md-6">
+            <label>Image de couverture</label>
+            <input type="file" name="image_blog" class="file form-control">
+        </div>
+       </div>
+	</div>#}
+    <div class="col-md-12">
+            <label>Image</label>
+            <input type="file" name="image_blog" class="file form-control">
+    </div>
+	<div class="col-md-12">
+		{{ form_row(blogForm.resume) }}
+	</div>
+
+	<div class="col-md-12">
+
+		{{ form_row(blogForm.keywords) }}
+	</div>
+
+	<div class="col-md-12">
+
+		{{ form_row(blogForm.metaDescription) }}
+	</div>
+
+	<div class="col-md-12">
+
+		{{ form_row(blogForm.link) }}
+	</div>
+
+	<div class="col-md-12">
+
+		{{ form_row(blogForm.description) }}
+	</div>
+
+</div>
+<div class="conbtnSubmit">
+	{#<button class="edit_view_blog btn btn-primary">Apperçu/Enregistrer</button>#}
+	<button class="edit_save_blog btn btn-success">Publier</button>
+</div>
+
+{{ form_end(blogForm) }}

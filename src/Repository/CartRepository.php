@@ -6,7 +6,7 @@ use App\Entity\Article;
 use App\Entity\Cart;
 use App\Entity\User;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
-use Doctrine\Common\Persistence\ManagerRegistry;
+use Doctrine\Persistence\ManagerRegistry;
 
 /**
  * @method Cart|null find($id, $lockMode = null, $lockVersion = null)

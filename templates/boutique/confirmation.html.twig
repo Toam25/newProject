@@ -1,0 +1,40 @@
+{% extends "base.html.twig" %}
+
+{% block title %}
+	{{ boutique.name }}
+{% endblock %}
+
+
+{% block meta%}
+    <meta name="description" content="{{ boutique.apropos}}">
+{% endblock %}
+
+{% block stylesheets %}
+	 <link href="https://fonts.googleapis.com/css?family=Montserrat:400,500,700" rel="stylesheet">
+   
+    <link href="{{ asset('css/bootstrap5.0.css')}}" rel="stylesheet" type="text/css">
+    <!-- Slick -->
+    <link type="text/css" rel="stylesheet" href="{{asset('css/confirmation.css') }}"/>
+{% endblock %}
+
+
+{% block body %}
+     
+     <div > 
+        {% if status is same as("success")%}
+          <h1>
+             Compte activé avec success
+          </h1>
+        {% else %}
+          <h1>
+            Code d'activation n'exites pas
+          </h1>
+        {% endif %}
+        <a href="{{path('index')}}">Retour a l'accueil</a> Ou <a href="{{path('shop')}}">Aller dans la galerie marchande</a>
+     </div>
+	
+{% endblock %}
+ 
+{% block javascripts %}
+	
+{% endblock %}

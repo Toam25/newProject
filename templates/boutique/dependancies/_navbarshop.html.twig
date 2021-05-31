@@ -14,33 +14,42 @@
 
 			<ul class="nav navbar-nav" id="menulistshop" style="margin-top: 3px;">
 				<li class="mode">
-					<a href="{{ path('index')}}">ACCUEIL</a>
+					<a href="{{ path('index')}}">Accueil</a>
+				</li>
+				<li class="mode">
+					<a 
+					 href="{{ path('shop')}}"
+					  {%
+					 if menu is same as ("g_marchande") %}
+						class = "menu_selected"
+					{% endif %}
+					>Galerie Marchande</a>
 				</li>
 				<li class='mode js-category'>
 					<a href="#" {%
-					 if menu is same as ("habillement") or menu is same as ("beaute_et_bien_etre") or menu is same as ("accessoires") %}
+					 if menu is same as ("Habillement") or menu is same as ("beaute_et_bien_etre") or menu is same as ("accessoires") %}
 						class = "menu_selected"
 					{% endif %}
 					>
-					 MODE
+					 Mode
 					  </a>
 					<ul class="submenu">
 						<li>
-							<a href="{{ path('shop',{'type':'habillement','id':-1})}}"
-								{% if menu is same as ("habillement") %}
+							<a href="{{ path('shop',{'type':'Habillement'})}}"
+								{% if menu is same as ("Habillement") %}
 									class = "menu_selected"
 								{% endif %}
 							>Habillement</a>
 						</li>
 						<li>
-							<a href="{{ path('shop',{'type':'beaute_bien_etre','id': -1})}}"
-							 {% if menu is same as ("beaute_et_bien_etre") %}
+							<a href="{{ path('shop',{'type':'beaute-et-bien-etre'})}}"
+							 {% if menu is same as ("beaute-et-bien-etre") %}
 									class = "menu_selected"
 							 {% endif %}
 							>Beauté Bien-être</a>
 						</li>
 						<li>
-							<a href="{{ path('shop',{'type':'accessoires','id':-1})}}"
+							<a href="{{ path('shop',{'type':'accessoires'})}}"
 							  {% if menu is same as ("accessoires") %}
 									class = "menu_selected"
 							 {% endif %}
@@ -53,42 +62,31 @@
 					</ul>
 				</li>
 				<li class="mode">
-					<a href="{{ path('shop',{'type':'high-tech','id':-1})}}"
-					  {% if menu is same as ("high-tech") %}
+					<a href="{{ path('shop',{'type':'high-tech'})}}"
+					  {% if menu is same as ("High-tech") %}
 									class = "menu_selected"
 					 {% endif %}
-					>HIGH-TECH</a>
+					>High-tech</a>
 				</li>
 				<li class="mode">
-					<a href="{{ path('shop',{'type':'Maison','id':-1})}}" 
+					<a href="{{ path('shop',{'type':'Maison'})}}" 
 					 {% if menu is same as ("Maison") %}
 									class = "menu_selected"
 					{% endif %}
-					>MAISON</a>
+					>Maison</a>
 				</li>
 				<li class="mode">
-					<a href="{{ path('shop',{'type':'services','id':-1})}}"
-					 {% if menu is same as ("services") %}
+					<a href="{{ path('shop',{'type':'Services'})}}"
+					 {% if menu is same as ("Services") %}
 									class = "menu_selected"
 					{% endif %}
-					>SERVICES</a>
+					>Services</a>
 				</li>
 
 				<li class='ConnecterMembre'></li>
 				
 			</ul>
-			{#
-				<ul>
-				<div class="col-md-5 col-sm-5 col-xs-12">
-						<div class="header-search">
-							<form method="Get" action="{{path('list_product')}}">
-								<input class="input" name="q" placeholder="Recherche dans {{ boutique.name}}">
-								<button class="search-btn">Search</button>
-							</form>
-						</div>
-					</div>
-				</ul>
-			#}
+				
 		</div>
 	 </div>
 		<!-- /.navbar-collapse -->

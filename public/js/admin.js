@@ -1,169 +1,650 @@
 $(function () {
+
+
   var $category;
 
-  //edit ess article 
-  $('.modify_es_article').on('submit', function(e){
-      e.preventDefault();
-      let id = $('.id_ess_article').val();
-      $.ajax({
-        url : "/superadmin/es/article/edit/es_artilce/"+id ,
-        type: 'POST',
-        data: new FormData(this),
-        contentType: false,
-        processData: false,
-        cache: false,
-        dataType: 'json',
-        beforeSend: () => {
-          $('.btn-submit2').append('<span class="loader_ajax" style="height: 20px;width: 20px;display: inline-block;"><img src="/images/images_default/ajax-loader.gif" style="height: 100%;width: 100%;"></span>');
-          $('.btn-submit2').prop('disabled', true)
-          toastr.info('Enregistrement en cours...');
+
+  // delete page 
+  $('body').on('click', '.delete_page', function (e) {
+    e.preventDefault();
+    let id = $(this).attr('data-id');
+    let that = $(this);
+    Lobibox.confirm({
+      msg: 'Voulez vous supprimer  ?',
+      buttons: {
+        yes: {
+          text: 'Acceptez',
+
         },
-        success: (data) => {
-          toastr.success('Enregistrer avec success');
-          let input =$('.liste_article_in').children('div').children('div').children('input[value="'+id+'"]');
-          input.parent('div').children('img').attr('src','/images/'+data.image);
-          $('#preview_es_images_article').attr('src','/images/'+data.image);
-          input.parent('div').children('.name_article').text(data.type);
-          $('.btn-submit2').children('.loader_ajax').remove();
-          $('.btn-submit2').prop('disabled', false)
-          
+        no: {
+          text: 'Annulez',
+
         },
-        error: () => {
-          toastr.error('Une error à été survenue');
-          $('.btn-submit2').children('.loader_ajax').remove();
-          $('.btn-submit2').prop('disabled', false)
-        },
-        complete: function () {
-  
+
+      },
+
+      callback: ($this, type) => {
+
+        if (type === "yes") {
+
+          $.ajax({
+            url: "/api/v1/page/delete/" + id,
+            type: 'POST',
+            dataType: 'json',
+            beforeSend: () => {
+              toastr.info('Suppression en cours ;) ');
+              that.prop('disabled', true)
+            },
+            success: (data) => {
+              toastr.success('Supprimé avec success ;) ');
+              that.prop('disabled', false)
+              that.parents('.container_my_page').remove();
+              if (parseInt($('.nbr_blog').text()) - 1 > -1) {
+                $('.nbr_blog').addClass('rotate_nbr');
+                setTimeout(() => {
+                  $('.nbr_blog').text(parseInt($('.nbr_blog').text()) - 1);
+                  $('.nbr_blog').removeClass('rotate_nbr');
+
+                }, 250)
+              }
+              that.parents('.validate_link_a').remove();
+            },
+            error: () => {
+              toastr.error('Erreur de suppression ');
+              that.prop('disabled', false)
+            }
+          });
+
         }
-      });
+      }
+
+    });
+
+  });
+  // delete video 
+  $('body').on('click', '.delete_video', function (e) {
+    e.preventDefault();
+    let id = $(this).attr('data-id');
+    let that = $(this);
+    Lobibox.confirm({
+      msg: 'Voulez vous supprimer  ?',
+      buttons: {
+        yes: {
+          text: 'Acceptez',
+
+        },
+        no: {
+          text: 'Annulez',
+
+        },
+
+      },
+
+      callback: ($this, type) => {
+
+        if (type === "yes") {
+
+          $.ajax({
+            url: "/api/v1/video/delete/" + id,
+            type: 'POST',
+            dataType: 'json',
+            beforeSend: () => {
+              toastr.info('Suppression en cours ;) ');
+              that.prop('disabled', true)
+            },
+            success: (data) => {
+              toastr.success('Supprimé avec success ;) ');
+              that.prop('disabled', false)
+              that.parents('.container_my_video').remove();
+              if (parseInt($('.nbr_blog').text()) - 1 > -1) {
+                $('.nbr_blog').addClass('rotate_nbr');
+                setTimeout(() => {
+                  $('.nbr_blog').text(parseInt($('.nbr_blog').text()) - 1);
+                  $('.nbr_blog').removeClass('rotate_nbr');
+
+                }, 250)
+              }
+              that.parents('.validate_link_a').remove();
+            },
+            error: () => {
+              toastr.error('Erreur de suppression ');
+              that.prop('disabled', false)
+            }
+          });
+
+        }
+      }
+
+    });
+
+  });
+  // delete blog 
+  $('body').on('click', '.delete_blog', function (e) {
+    e.preventDefault();
+    let id = $(this).attr('data-id');
+    let that = $(this);
+    Lobibox.confirm({
+      msg: 'Voulez vous supprimer  ?',
+      buttons: {
+        yes: {
+          text: 'Acceptez',
+
+        },
+        no: {
+          text: 'Annulez',
+
+        },
+
+      },
+
+      callback: ($this, type) => {
+
+        if (type === "yes") {
+
+          $.ajax({
+            url: "/api/v1/blog/delete/" + id,
+            type: 'POST',
+            dataType: 'json',
+            beforeSend: () => {
+              toastr.info('Suppression en cours ;) ');
+              that.prop('disabled', true)
+            },
+            success: (data) => {
+              toastr.success('Supprimé avec success ;) ');
+              that.prop('disabled', false)
+              that.parents('.validate_link_a').remove();
+              that.parents('.container_my_blog').remove();
+
+
+              if (parseInt($('.nbr_blog').text()) - 1 > -1) {
+                $('.nbr_blog').addClass('rotate_nbr');
+                setTimeout(() => {
+                  $('.nbr_blog').text(parseInt($('.nbr_blog').text()) - 1);
+                  $('.nbr_blog').removeClass('rotate_nbr');
+
+                }, 250)
+              }
+              that.parents('.validate_link_a').remove();
+            },
+            error: () => {
+              toastr.error('Erreur de suppression ');
+              that.prop('disabled', false)
+            }
+          });
+
+        }
+      }
+
+    });
+
+  });
+  // add formation
+
+  $('.add_formation').on('submit', function (e) {
+    e.preventDefault();
+
+    $.ajax({
+      url: "/api/v1/formation",
+      type: 'POST',
+      contentType: false,
+      processData: false,
+      cache: false,
+      dataType: 'json',
+      data: new FormData(this),
+      beforeSend: () => {
+        toastr.info('Enregistrement en cours ;) ');
+        $('.btn-submit').prop('disabled', true)
+      },
+      success: (data) => {
+        toastr.success('Enregistrer avec success ;) ');
+        $('.btn-submit').prop('disabled', false)
+        $('.add_formation')[0].reset();
+      },
+      error: () => {
+        toastr.error('Erreur d\'enregistrement ');
+        $('.btn-submit').prop('disabled', false)
+      }
+    });
+  });
+
+  // add formation
+
+  $('.edit_formation').on('submit', function (e) {
+    e.preventDefault();
+
+    $.ajax({
+      url: "/api/v1/formation",
+      type: 'POST',
+      contentType: false,
+      processData: false,
+      cache: false,
+      dataType: 'json',
+      data: new FormData(this),
+      beforeSend: () => {
+        toastr.info('Enregistrement en cours ;) ');
+        $('.btn-submit').prop('disabled', true)
+      },
+      success: (data) => {
+        toastr.success('Enregistrer avec success ;) ');
+        $('.btn-submit').prop('disabled', false)
+        $('.add_formation')[0].reset();
+      },
+      error: () => {
+        toastr.error('Erreur d\'enregistrement ');
+        $('.btn-submit').prop('disabled', false)
+      }
+    });
+  });
+
+
+  //
+  //add video 
+
+  $('.add_video').on('submit', function (e) {
+    e.preventDefault();
+
+    $.ajax({
+      url: "/api/v1/video",
+      type: 'POST',
+      contentType: false,
+      processData: false,
+      cache: false,
+      dataType: 'json',
+      data: new FormData(this),
+      beforeSend: () => {
+        toastr.info('Enregistrement en cours ;) ');
+        $('.btn-submit').prop('disabled', true)
+      },
+      success: (data) => {
+        toastr.success('Enregistrer avec success ;) ');
+        $('.btn-submit').prop('disabled', false)
+        $('.add_video')[0].reset();
+      },
+      error: () => {
+        toastr.error('Erreur d\'enregistrement ');
+        $('.btn-submit').prop('disabled', false)
+      }
+    });
+
+  });
+
+  // edit video 
+  $('.edit_video').on('submit', function (e) {
+    e.preventDefault();
+    let id = $('.id_video').val();
+    $.ajax({
+      url: "/api/v1/video/" + id,
+      type: 'POST',
+      contentType: false,
+      processData: false,
+      cache: false,
+      dataType: 'json',
+      data: new FormData(this),
+      beforeSend: () => {
+        toastr.info('Enregistrement en cours ;) ');
+        $('.btn-submit').prop('disabled', true)
+      },
+      success: (data) => {
+        toastr.success('Enregistrer avec success ;) ');
+        $('.btn-submit').prop('disabled', false);
+      },
+      error: () => {
+        toastr.error('Erreur d\'enregistrement ');
+        $('.btn-submit').prop('disabled', false)
+      }
+    });
+
+  });
+  /////////////
+  $('.save_blog').on('click', function (e) {
+    e.preventDefault();
+    let form = $('.save_blog').parent('div').parent('form')[0];
+    $('.status').val('CLOSED');
+    $(this).prop('disabled', true);
+    $.ajax({
+      url: "/api/v1/saveblog",
+      type: 'POST',
+      contentType: false,
+      processData: false,
+      cache: false,
+      dataType: 'json',
+      data: new FormData(form),
+      beforeSend: () => {
+        toastr.info('Enregistrement en cours ;) ');
+      },
+      success: (data) => {
+        toastr.success('Enregistrer avec success ;) ');
+        $(this).prop('disabled', false);
+
+      },
+      error: (data) => {
+        toastr.error(data.responseJSON.message);
+        $(this).prop('disabled', false);
+
+      }
+    });
+
+  });
+
+  $('.view_blog').on('click', function (e) {
+    e.preventDefault();
+    let form = $('.save_blog').parent('div').parent('form')[0];
+    $('.status').val('PENDING');
+    $.ajax({
+      url: "/api/v1/saveblog",
+      type: 'POST',
+      contentType: false,
+      processData: false,
+      cache: false,
+      dataType: 'json',
+      data: new FormData(form),
+      beforeSend: () => {
+        toastr.info('Enregistrement en cours ;) ');
+      },
+      success: (data) => {
+        toastr.success('Enregistrer avec success ;) ')
+      },
+      error: () => {
+        toastr.error('Erreur d\'enregistrement ');
+      }
+    });
+
+  });
+
+  /**Edit Blog */
+
+  $('.edit_vote').on('submit', function (e) {
+    e.preventDefault();
+    let form = $(this);
+    $.ajax({
+      url: form.attr('action'),
+      type: 'POST',
+      contentType: false,
+      processData: false,
+      cache: false,
+      dataType: 'json',
+      data: new FormData(this),
+      beforeSend: () => {
+        toastr.info('Enregistrement en cours ;) ');
+      },
+      success: (data) => {
+        toastr.success('Blog publié avec success ;) ')
+      },
+      error: () => {
+        toastr.error('Erreur d\'enregistrement ');
+      }
+    });
+
+  });
+
+  //////////////////////////
+  ///Aprouver un blog 
+
+  $('.locate_me_form').on('submit', function (e) {
+    e.preventDefault();
+    $.ajax({
+      url: "/admin/shop/longLat",
+      type: 'POST',
+      data: {
+        long: $('#longitude').val(),
+        lat: $('#latitude').val(),
+      },
+      dataType: 'json',
+      beforeSend: () => {
+        toastr.info('Enregitrement  en cours ;) ');
+        $(this).prop('disabled', true);
+      },
+      success: (data) => {
+        toastr.success('Enregistrer avec success ;) ');
+        $(this).prop('disabled', false);
+      },
+      error: () => {
+        toastr.error('Erreur d\'enregistrement');
+        $(this).prop('disabled', false);
+      }
+    });
+  });
+  $('body').on('click', '.validate_blog', function (e) {
+    e.preventDefault();
+    let id = $(this).data('id')
+    let nbr_blog = parseInt($('.nbr_blog').text());
+    let parent = $(this).parent('div').parent('.validate_action_button').parent('.validate_link_a');
+    let type = $(this).data('validate');
+
+
+    $.ajax({
+      url: "/superadmin/validate/blog/" + type + "-" + id,
+      type: 'POST',
+      dataType: 'json',
+      beforeSend: () => {
+        toastr.info('Approbation en cours ;) ');
+        $(this).prop('disabled', true);
+      },
+      success: (data) => {
+        toastr.success('Approuver avec success ;) ');
+
+        if (nbr_blog > 1) {
+          $('.nbr_blog').text(nbr_blog - 1);
+        }
+        $(this).remove();
+        /*parent.css('transform','translate(3000px)');
+        setInterval(()=>{
+          parent.remove();
+        },1000)
+        */
+      },
+      error: () => {
+        toastr.error('Erreur d\'approbation ');
+        $(this).prop('disabled', false);
+      }
+    });
+  });
+  ///////
+  $('input[name="articleShow"]').on('change', function (e) {
+
+    e.preventDefault();
+    let value = $(this).val();
+    let id = $('.boutique-id').val();
+    // $(this).prop('disabled',true);
+    $.ajax({
+      url: "/api/articleShow/update/" + value + "/" + id,
+      type: 'POST',
+      dataType: 'json',
+      beforeSend: () => {
+        toastr.info('Enregistrement en cours ;) ');
+      },
+      success: (data) => {
+        toastr.success('Enregistrer avec success ;) ')
+      },
+      error: () => {
+        toastr.error('Erreur d\'enregistrement ');
+      }
+    });
+  });
+
+  $('input[name="blogShow"]').on('change', function (e) {
+
+    e.preventDefault();
+    let value = $(this).val();
+    let id = $('.boutique-id').val();
+    $.ajax({
+      url: "/api/blogShow/update/" + value + "/" + id,
+      type: 'POST',
+      dataType: 'json',
+      beforeSend: () => {
+        toastr.info('Enregistrement en cours ;) ');
+      },
+      success: (data) => {
+        toastr.success('Enregistrer avec success ;) ');
+      },
+      error: () => {
+        toastr.error('Erreur d\'enregistrement ');
+      }
+    });
+  });
+  //edit ess article 
+  $('.modify_es_article').on('submit', function (e) {
+    e.preventDefault();
+    let id = $('.id_ess_article').val();
+    $.ajax({
+      url: "/superadmin/es/article/edit/es_artilce/" + id,
+      type: 'POST',
+      data: new FormData(this),
+      contentType: false,
+      processData: false,
+      cache: false,
+      dataType: 'json',
+      beforeSend: () => {
+        $('.btn-submit2').append('<span class="loader_ajax" style="height: 20px;width: 20px;display: inline-block;"><img src="/images/images_default/ajax-loader.gif" style="height: 100%;width: 100%;"></span>');
+        $('.btn-submit2').prop('disabled', true)
+        toastr.info('Enregistrement en cours...');
+      },
+      success: (data) => {
+        toastr.success('Enregistrer avec success');
+        let input = $('.liste_article_in').children('div').children('div').children('input[value="' + id + '"]');
+        input.parent('div').children('img').attr('src', '/images/' + data.image);
+        $('#preview_es_images_article').attr('src', '/images/' + data.image);
+        input.parent('div').children('.name_article').text(data.type);
+        $('.btn-submit2').children('.loader_ajax').remove();
+        $('.btn-submit2').prop('disabled', false)
+
+      },
+      error: () => {
+        toastr.error('Une error à été survenue');
+        $('.btn-submit2').children('.loader_ajax').remove();
+        $('.btn-submit2').prop('disabled', false)
+      },
+      complete: function () {
+
+      }
+    });
 
   });
   //detail es article 
-  $('body').on('click','.btn_detail_article',function(){
+  $('body').on('click', '.btn_detail_article', function () {
     let src = $(this).parent('div').parent('.list_produit').children('img').attr('src');
     let id = $(this).parent('div').parent('.list_produit').children('input').val();
     $('.id_ess_article').val(id);
-    $('#preview_es_images_article').attr('src',src);
+    $('#preview_es_images_article').attr('src', src);
     $('#view_es_article').modal('show');
     $.ajax({
-      url : "/superadmin/es/article/get/option/"+id,
+      url: "/superadmin/es/article/get/option/" + id,
       type: 'POST',
       dataType: 'json',
-      beforeSend : ()=>{
-        $('.loader_ajax_').css('transform','scale(1)');
+      beforeSend: () => {
+        $('.loader_ajax_').css('transform', 'scale(1)');
       },
-      success : (data)=>{
-        
-        $option=list_type_other(data.listoption,data.type);
+      success: (data) => {
+
+        $option = list_type_other(data.listoption, data.type);
         $('.view_es_type').html($option);
-        $('.loader_ajax_').css('transform','scale(0)');
+        $('.loader_ajax_').css('transform', 'scale(0)');
       },
-      error : ()=>{
-        $('.loader_ajax_').css('transform','scale(0)');
+      error: () => {
+        $('.loader_ajax_').css('transform', 'scale(0)');
       }
+    });
   });
-  });
-  
+
   //delete ess article 
-  $('body').on('click','.bnt_delete_article',function(e){
+  $('body').on('click', '.bnt_delete_article', function (e) {
     e.preventDefault();
-    let parents= $(this).parents('.list_produit');
+    let parents = $(this).parents('.list_produit');
     let id = parents.children('input').val();
 
     Lobibox.confirm({
-     msg: 'Voulez vous supprimer  ?',
-     buttons : {
-        yes : {
-           text : 'Acceptez',
-
-       },
-       no : {
-           text : 'Annulez',
-
-       },
-      
-     },
-
-     callback : ($this,type)=>{
-
-     if(type==="yes"){
-
-       $.ajax({
-         url : "/superadmin/es/article/"+id,
-         type: 'POST',
-         dataType: 'json',
-         beforeSend : ()=>{
-           toastr.info('En cours de suppression...')
-         },
-         success : (data)=>{
-            
-            parents.parent('div').remove()
-            toastr.success('Suppression reussite')
-         },
-         error : ()=>{
-               toastr.error('Il y a un erreur !!!');
-         }
-     });
-
-    }  
-   } 
-
-  }); 
-    
-});
-  //delete header 
-  $('.del_header').on('click',function(e){
-     e.preventDefault();
-     Lobibox.confirm({
-      msg: 'Voulez vous supprimer?',
-      buttons : {
-         yes : {
-            text : 'Acceptez',
+      msg: 'Voulez vous supprimer  ?',
+      buttons: {
+        yes: {
+          text: 'Acceptez',
 
         },
-        no : {
-            text : 'Annulez',
+        no: {
+          text: 'Annulez',
 
         },
-       
+
       },
 
-      callback : ($this,type)=>{
+      callback: ($this, type) => {
 
-      if(type==="yes"){
+        if (type === "yes") {
 
-        $.ajax({
-          url : "/api/delete/header_images",
-          type: 'POST',
-          dataType: 'json',
-          beforeSend : ()=>{
-            toastr.info('En cours de suppression...')
-          },
-          success : (data)=>{
-             $('#header_index').children('img').attr('src',data.images);
-             toastr.success('Suppression reussite')
-          },
-          error : ()=>{
-                toastr.error('Ajouter une image avant !!!');
-          }
-      });
+          $.ajax({
+            url: "/superadmin/es/article/" + id,
+            type: 'POST',
+            dataType: 'json',
+            beforeSend: () => {
+              toastr.info('En cours de suppression...')
+            },
+            success: (data) => {
 
-     }  
-    } 
+              parents.parent('div').remove()
+              toastr.success('Suppression reussite')
+            },
+            error: () => {
+              toastr.error('Il y a un erreur !!!');
+            }
+          });
 
-   }); 
-     
-});
+        }
+      }
+
+    });
+
+  });
+  //delete header 
+  $('.del_header').on('click', function (e) {
+    e.preventDefault();
+    Lobibox.confirm({
+      msg: 'Voulez vous supprimer?',
+      buttons: {
+        yes: {
+          text: 'Acceptez',
+
+        },
+        no: {
+          text: 'Annulez',
+
+        },
+
+      },
+
+      callback: ($this, type) => {
+
+        if (type === "yes") {
+
+          $.ajax({
+            url: "/api/delete/header_images",
+            type: 'POST',
+            dataType: 'json',
+            beforeSend: () => {
+              toastr.info('En cours de suppression...')
+            },
+            success: (data) => {
+              $('#header_index').children('img').attr('src', data.images);
+              toastr.success('Suppression reussite')
+            },
+            error: () => {
+              toastr.error('Ajouter une image avant !!!');
+            }
+          });
+
+        }
+      }
+
+    });
+
+  });
   //edition vote
 
-  $('._edit_vote').on('submit',function(e){
+  $('._edit_vote').on('submit', function (e) {
     e.preventDefault();
     let id = $('.id-vote').val();
-    let parent=   $('.container_all_image_vote').children('div').children('.container_image_for_body').children('img[name="'+id+'"]');
-       
+    let parent = $('.container_all_image_vote').children('div').children('.container_image_for_body').children('img[name="' + id + '"]');
+
     $.ajax({
-      url : "/admin/vote/edit/"+id ,
+      url: "/admin/vote/edit/" + id,
       type: 'POST',
       data: new FormData(this),
       contentType: false,
@@ -180,7 +661,7 @@ $(function () {
         $('.btn-submit2').children('.loader_ajax').remove();
         $('.btn-submit2').prop('disabled', false)
         parent.parent('div').children('input').val(data.description);
-        parent.attr('src',data.image);
+        parent.attr('src', data.image);
       },
       error: () => {
         toastr.error('Une error à été survenue');
@@ -193,7 +674,7 @@ $(function () {
     });
   });
   //edition shop
-  $('.shop_edit').on('submit',function(e){
+  $('.shop_edit').on('submit', function (e) {
     e.preventDefault();
     url = "/admin/boutique";
     $.ajax({
@@ -224,382 +705,382 @@ $(function () {
     });
   })
   // delete shop
-  $('body').on('click','.js-delate-shop',function(e){
+  $('body').on('click', '.js-delate-shop', function (e) {
     e.preventDefault();
     Lobibox.confirm({
-      msg: 'Voulez vous supprimer cette Video ?',
-      buttons : {
-         yes : {
-            text : 'Acceptez',
+      msg: 'Voulez vous supprimer cette boutique ?',
+      buttons: {
+        yes: {
+          text: 'Acceptez',
 
         },
-        no : {
-            text : 'Annulez',
+        no: {
+          text: 'Annulez',
 
         },
-       
+
       },
 
-      callback : ($this,type)=>{
+      callback: ($this, type) => {
 
-      if(type==="yes"){
-         
-        
-        url ='/api/delete/boutique/'+$(this).data('id');
-        $(this).parents('.js-container-shop').remove()
-        $.ajax({
-          url,
-         type :'POST',
-         data :{
-          },
-          dataType : 'json',
-         beforeSend : function(){
-  
-         },
-         success : function(data){
-          toastr.success('Supprimer avec success');
-  
-         },
-         error : function(){
-           toastr.error('Il y a un erreur');
-  
-         }
-       });
-     }  
-    } 
+        if (type === "yes") {
 
-   }); 
-    
+
+          url = '/api/delete/boutique/' + $(this).data('id');
+          $(this).parents('.js-container-shop').remove()
+          $.ajax({
+            url,
+            type: 'POST',
+            data: {
+            },
+            dataType: 'json',
+            beforeSend: function () {
+
+            },
+            success: function (data) {
+              toastr.success('Supprimer avec success');
+
+            },
+            error: function () {
+              toastr.error('Il y a un erreur');
+
+            }
+          });
+        }
+      }
+
+    });
+
   });
-    //detail article
+  //detail article
 
-  $('body').on('click','.article_delete',function(e){
+  $('body').on('click', '.article_delete', function (e) {
     e.preventDefault();
-      url ='/admin/article/delete/'+$(this).data('id');
-      Lobibox.confirm({
-        msg: 'Voulez vous supprimer?',
-        buttons : {
-           yes : {
-              text : 'Acceptez',
-  
-          },
-          no : {
-              text : 'Annulez',
-  
-          },
-         
+    url = '/admin/article/delete/' + $(this).data('id');
+    Lobibox.confirm({
+      msg: 'Voulez vous supprimer?',
+      buttons: {
+        yes: {
+          text: 'Acceptez',
+
         },
-  
-        callback : ($this,type)=>{
-  
-        if(type==="yes"){
-  
+        no: {
+          text: 'Annulez',
+
+        },
+
+      },
+
+      callback: ($this, type) => {
+
+        if (type === "yes") {
+
           $(this).parents('.list_produit').parent('div').remove()
           $.ajax({
             url,
-           type :'POST',
-           data :{
+            type: 'POST',
+            data: {
             },
-            dataType : 'json',
-           beforeSend : function(){
-            toastr.info('Suppression en cours...');
-           },
-           success : function(data){
-            toastr.success('Supprimer avec success');
-    
-           },
-           error : function(){
-             toastr.error('Il y a un erreur');
-    
-           }
-         });
-  
-       }  
-      } 
-  
-     }); 
-      
+            dataType: 'json',
+            beforeSend: function () {
+              toastr.info('Suppression en cours...');
+            },
+            success: function (data) {
+              toastr.success('Supprimer avec success');
+
+            },
+            error: function () {
+              toastr.error('Il y a un erreur');
+
+            }
+          });
+
+        }
+      }
+
+    });
+
 
   });
-   //update image 
-   $('.form_view_update_image').on("submit",function(e){
+  //update image 
+  $('.form_view_update_image').on("submit", function (e) {
     e.preventDefault();
-      $.ajax({
-        url :'/api/update/images',
-       type :'POST',
-       data : new FormData(this),
-       contentType: false,
-       processData : false,
-       cache : false,
-       dataType : 'json',
-       beforeSend : function(){
-         $('#view_article').modal('show');
-         $('.loader_ajax_').css('transform','scale(1)');
-       },
-       success : function(data){
-        
-        toastr.success('Enregistrer avec success');
-        $('.loader_ajax_').css('transform','scale(0)');
+    $.ajax({
+      url: '/api/update/images',
+      type: 'POST',
+      data: new FormData(this),
+      contentType: false,
+      processData: false,
+      cache: false,
+      dataType: 'json',
+      beforeSend: function () {
+        $('#view_article').modal('show');
+        $('.loader_ajax_').css('transform', 'scale(1)');
+      },
+      success: function (data) {
 
-       },
-       error : function(){
-         toastr.error('Il y a un erreur');
-         $('.loader_ajax_').css('transform','scale(0)');
-       }
-     })
+        toastr.success('Enregistrer avec success');
+        $('.loader_ajax_').css('transform', 'scale(0)');
+
+      },
+      error: function () {
+        toastr.error('Il y a un erreur');
+        $('.loader_ajax_').css('transform', 'scale(0)');
+      }
+    })
   });
   //update artilce 
-  $('.form_article_in_shop_update').on("submit",function(e){
+  $('.form_article_in_shop_update').on("submit", function (e) {
     e.preventDefault();
-      $.ajax({
-        url :'/api/update/article',
-       type :'POST',
-       data : new FormData(this),
-       contentType: false,
-       processData : false,
-       cache : false,
-       dataType : 'json',
-       beforeSend : function(){
-         $('#view_article').modal('show');
-         $('.loader_ajax_').css('transform','scale(1)');
-       },
-       success : function(data){
+    $.ajax({
+      url: '/api/update/article',
+      type: 'POST',
+      data: new FormData(this),
+      contentType: false,
+      processData: false,
+      cache: false,
+      dataType: 'json',
+      beforeSend: function () {
+        $('#view_article').modal('show');
+        $('.loader_ajax_').css('transform', 'scale(1)');
+      },
+      success: function (data) {
         toastr.success('Enregistrer avecd success');
-        $('.loader_ajax_').css('transform','scale(0)');
-        $('input[value="'+data.id+'"]').parent('.list_produit').children('p').text(tronquer($('#view_name').val(),11,false));
+        $('.loader_ajax_').css('transform', 'scale(0)');
+        $('input[value="' + data.id + '"]').parent('.list_produit').children('p').text(tronquer($('#view_name').val(), 11, false));
         $('#view_article').modal('hide');
-        
-       },
-       error : function(){
-         toastr.error('Il y a un erreur');
-         $('.loader_ajax_').css('transform','scale(0)');
-       }
-     })
+
+      },
+      error: function () {
+        toastr.error('Il y a un erreur');
+        $('.loader_ajax_').css('transform', 'scale(0)');
+      }
+    })
   });
 
   //detail article
 
-  $('body').on('click','.article_edit',function(e){
+  $('body').on('click', '.article_edit', function (e) {
     e.preventDefault();
-      url ='/api/get/article/'+$(this).data('id');
-      $.ajax({
-        url,
-       type :'POST',
-       data :{
-        },
-        dataType : 'json',
-       beforeSend : function(){
+    url = '/api/get/article/' + $(this).data('id');
+    $.ajax({
+      url,
+      type: 'POST',
+      data: {
+      },
+      dataType: 'json',
+      beforeSend: function () {
 
-        $('.loader_ajax_').css('transform','scale(1)');
+        $('.loader_ajax_').css('transform', 'scale(1)');
 
-         $('#view_article').modal('show');
-       },
-       success : function(data){
-          $('view_slide').prop('checked', false);
-          $('.id-article').val(data.id);
-          $('._view_category').val(data.category);
-          $('#preview_image').attr('src','/images/'+data.images['name']);
-          $('#view_id-image').val(data.images['id']);
-          $('#view_name').val(data.name);
-          $('#view_prix').val(data.price);
-          $('#view_prix_g').val(data.global_price);
-          $('#view_stock').val(data.quantity);
-          $('#slide'+data.slider).prop('checked', true);
-          $('._view_simple_article_sous_category').val(data.sous_category)
-          $('#view_sous_category').html(list_option(data.list_menu,data.sous_category));
-          $('#view_type').html(list_type(data.list_menu,data.sous_category,data.type));
-        
-          $('#view_simple_article_type').html(list_type_other(data.list_menu[0],data.type))
-          $('#view_referency').val(data.referency)
-          $('#view_promo').children('option[value="'+data.promo+'"]').prop('selected',true);
-          $('#view_promo_price').val(data.promo_price);
-          $('#view_detail').val(data.description);
-          $('.loader_ajax_').css('transform','scale(0)');
-       },
-       error : function(){
-         toastr.error('Il y a un erreur');
-         $('.loader_ajax_').css('transform','scale(0)');
-       }
-     })
+        $('#view_article').modal('show');
+      },
+      success: function (data) {
+        $('view_slide').prop('checked', false);
+        $('.id-article').val(data.id);
+        $('._view_category').val(data.category);
+        $('#preview_image').attr('src', '/images/' + data.images['name']);
+        $('#view_id-image').val(data.images['id']);
+        $('#view_name').val(data.name);
+        $('#view_prix').val(data.price);
+        $('#view_prix_g').val(data.global_price);
+        $('#view_stock').val(data.quantity);
+        $('#slide' + data.slider).prop('checked', true);
+        $('._view_simple_article_sous_category').val(data.sous_category)
+        $('#view_sous_category').html(list_option(data.list_menu, data.sous_category));
+        $('#view_type').html(list_type(data.list_menu, data.sous_category, data.type));
+
+        $('#view_simple_article_type').html(list_type_other(data.list_menu[0], data.type))
+        $('#view_referency').val(data.referency)
+        $('#view_promo').children('option[value="' + data.promo + '"]').prop('selected', true);
+        $('#view_promo_price').val(data.promo_price);
+        $('#view_detail').val(data.description);
+        $('.loader_ajax_').css('transform', 'scale(0)');
+      },
+      error: function () {
+        toastr.error('Il y a un erreur');
+        $('.loader_ajax_').css('transform', 'scale(0)');
+      }
+    })
   })
 
 
-  function list_type(arrays, value, type){
-    let option="";
-    let selected ="";
-    let classe="";
-     for (const array of arrays) {
-       if(array.type===value){
-           for (const arrayoption of array.option) {
-     
-            if(arrayoption===type){
-              selected="selected";
-              classe="selected_option";
-              }
-              else{
-                selected ="";
-                classe="";
-              }
-              option+= `<option class="view_sous_categorie  `+classe+`" data-name="`+arrayoption+`" value="`+arrayoption+`" `+selected+`>
-              `+arrayoption+`
+  function list_type(arrays, value, type) {
+    let option = "";
+    let selected = "";
+    let classe = "";
+    for (const array of arrays) {
+      if (array.type === value) {
+        for (const arrayoption of array.option) {
+
+          if (arrayoption === type) {
+            selected = "selected";
+            classe = "selected_option";
+          }
+          else {
+            selected = "";
+            classe = "";
+          }
+          option += `<option class="view_sous_categorie  ` + classe + `" data-name="` + arrayoption + `" value="` + arrayoption + `" ` + selected + `>
+              `+ arrayoption + `
               </option>`;
-           }
+        }
 
-       }
-     }
+      }
+    }
 
     return option
-}
-function list_type_other(arrays, value){
-  let option="";
-  let selected ="";
-  let classe="";
-  
-         for (const arrayoption of arrays.option) {
-   
-          if(arrayoption===value){
-            selected="selected";
-            classe="selected_option";
-            }
-            else{
-              selected ="";
-              classe="";
-            }
-            option+= `<option class="view_sous_categorie  `+classe+`" data-name="`+arrayoption+`" value="`+arrayoption+`" `+selected+`>
-            `+arrayoption+`
+  }
+  function list_type_other(arrays, value) {
+    let option = "";
+    let selected = "";
+    let classe = "";
+
+    for (const arrayoption of arrays.option) {
+
+      if (arrayoption === value) {
+        selected = "selected";
+        classe = "selected_option";
+      }
+      else {
+        selected = "";
+        classe = "";
+      }
+      option += `<option class="view_sous_categorie  ` + classe + `" data-name="` + arrayoption + `" value="` + arrayoption + `" ` + selected + `>
+            `+ arrayoption + `
             </option>`;
-         }
-
-  return option
-}
-  function list_option(arrays, value){
-    let option="";
-    let selected ="";
-    let classe="";
-    let type ="";
-     for (const array of arrays) {
-            type = array.type ;
-       if(array.type===value){
-           selected="selected";
-           classe="selected_option";
-       }
-       else{
-         selected ="";
-         classe="";
-       }
-       option+= `<option class="view_sous_categorie  `+classe+`" data-name="`+type+`" value="`+type+`" `+selected+`>
-       `+type+`
-       </option>`;
-     }
+    }
 
     return option
-}
+  }
+  function list_option(arrays, value) {
+    let option = "";
+    let selected = "";
+    let classe = "";
+    let type = "";
+    for (const array of arrays) {
+      type = array.type;
+      if (array.type === value) {
+        selected = "selected";
+        classe = "selected_option";
+      }
+      else {
+        selected = "";
+        classe = "";
+      }
+      option += `<option class="view_sous_categorie  ` + classe + `" data-name="` + type + `" value="` + type + `" ` + selected + `>
+       `+ type + `
+       </option>`;
+    }
+
+    return option
+  }
   //tab paramtre option
 
-  $('.list_option').on('click','.delete_option',function(e){
+  $('.list_option').on('click', '.delete_option', function (e) {
     e.preventDefault();
 
-       var id=$(this).attr('value');
-       Lobibox.confirm({
-        msg: 'Voulez vous supprimer  ?',
-        buttons : {
-           yes : {
-              text : 'Acceptez',
-   
-          },
-          no : {
-              text : 'Annulez',
-   
-          },
-         
+    var id = $(this).attr('value');
+    Lobibox.confirm({
+      msg: 'Voulez vous supprimer  ?',
+      buttons: {
+        yes: {
+          text: 'Acceptez',
+
         },
-   
-        callback : ($this,type)=>{
-   
-        if(type==="yes"){
-          
+        no: {
+          text: 'Annulez',
+
+        },
+
+      },
+
+      callback: ($this, type) => {
+
+        if (type === "yes") {
+
           $.ajax({
-            url :'/api/delete/option/'+id,
-           type :'POST',
-           data :{
+            url: '/api/delete/option/' + id,
+            type: 'POST',
+            data: {
             },
-            dataType : 'json',
-           beforeSend : ()=>{
-             $(this).parent('.option_menu').addClass('scale0');
-           },
-           success : (data)=>{
-             toastr.success('Supprimer avec success');
-             $(this).parent('.option_menu').remove();
-           },
-           error : ()=>{
-             toastr.error('Il y a un erreur');
-             $(this).parent('.option_menu').removeClass('scale1');
-           }
-         })
-   
-       }  
-      } 
-   
-     }); 
-  
-});
+            dataType: 'json',
+            beforeSend: () => {
+              $(this).parent('.option_menu').addClass('scale0');
+            },
+            success: (data) => {
+              toastr.success('Supprimer avec success');
+              $(this).parent('.option_menu').remove();
+            },
+            error: () => {
+              toastr.error('Il y a un erreur');
+              $(this).parent('.option_menu').removeClass('scale1');
+            }
+          })
 
- /* $('body').on('click','.tab_men',function(e){
-             
-    categorie_menu=$(this).attr('name');
-     $('.add_option').children('input[name="categorie_sante"]').val(categorie_menu);
-     $('.items-menu-selected').removeClass('items-menu-selected');
-     $(`button[name="`+categorie_menu+`"]`).parent('.items-menu ').addClass('items-menu-selected');
-     $('.list_option').html("");
-    containt_parameter(categorie_menu);
-    return false ;
-});
+        }
+      }
 
-  $('#onglets').tabs();
-*/
-  $('.attibute_article_in').on('change',function(){
-    let sous_category= $(this).parent('form').children("input[name='categorie_sante']").val();
+    });
+
+  });
+
+  /* $('body').on('click','.tab_men',function(e){
+              
+     categorie_menu=$(this).attr('name');
+      $('.add_option').children('input[name="categorie_sante"]').val(categorie_menu);
+      $('.items-menu-selected').removeClass('items-menu-selected');
+      $(`button[name="`+categorie_menu+`"]`).parent('.items-menu ').addClass('items-menu-selected');
+      $('.list_option').html("");
+     containt_parameter(categorie_menu);
+     return false ;
+  });
+   
+   $('#onglets').tabs();
+  */
+  $('.attibute_article_in').on('change', function () {
+    let sous_category = $(this).parent('form').children("input[name='categorie_sante']").val();
     let category = $(this).attr('id');
-    
+
 
 
     let attr_categorie_menu = $(this).val();
 
-    $('.add_option_'+sous_category).attr('data-value',attr_categorie_menu);
+    $('.add_option_' + sous_category).attr('data-value', attr_categorie_menu);
 
     $('fieldset').children('.loader_li').remove();
     $.ajax({
-     url :'/api/get/listOption',
-     type: 'POST',
-     data : {
-       categorie_sante_in : attr_categorie_menu,
-     },
-     dataType : 'json',
-     beforeSend : function(){ 
-      $('.btn-submit'+category).prop('disabled', true)
-       $('#container_'+category).children('.loader_li').remove();
-      $('#listOption'+category).after('<img class="loader_li" style="height: 14px" src="/images/images_default/ajax-loader.gif"/>');
-  },
-     success : function(data){
-       let content="";
-       data.forEach(element => {
-         content = `
-        <div class="option_menu">`+element.name+`<button class="delete_option" value="`+element.id+`">
+      url: '/api/get/listOption',
+      type: 'POST',
+      data: {
+        categorie_sante_in: attr_categorie_menu,
+      },
+      dataType: 'json',
+      beforeSend: function () {
+        $('.btn-submit' + category).prop('disabled', true)
+        $('#container_' + category).children('.loader_li').remove();
+        $('#listOption' + category).after('<img class="loader_li" style="height: 14px" src="/images/images_default/ajax-loader.gif"/>');
+      },
+      success: function (data) {
+        let content = "";
+        data.forEach(element => {
+          content = `
+        <div class="option_menu">`+ element.name + `<button class="delete_option" value="` + element.id + `">
         <span class="fa fa-trash"></span></button></div>
         ` + content;
-       });
-       $('#list-option-'+category).html(content);
-     },
-     complete : function(){
-      $('.btn-submit'+category).prop('disabled', false)
-      $('#container_'+category).children('.loader_li').remove();
-     },
-     error : ()=>{
-      $('.btn-submit'+category).prop('disabled', false)
-     }
+        });
+        $('#list-option-' + category).html(content);
+      },
+      complete: function () {
+        $('.btn-submit' + category).prop('disabled', false)
+        $('#container_' + category).children('.loader_li').remove();
+      },
+      error: () => {
+        $('.btn-submit' + category).prop('disabled', false)
+      }
     })
   });
-  
+
   $('.modifi_menu_in').on('click', function (e) {
     e.preventDefault();
     var categorie_menu = $(this).attr('name');
@@ -607,83 +1088,83 @@ function list_type_other(arrays, value){
     var listOption = [];
     var cible = '.attibute_article_in';
 
-    $('#container_button_add_'+category).children('.items-menu-selected').removeClass('items-menu-selected');
+    $('#container_button_add_' + category).children('.items-menu-selected').removeClass('items-menu-selected');
     $(this).parent('div').addClass('items-menu-selected');
 
     $('.name_menu').attr("placeholder", $(this).parents('.items-menu').children('.name_menu_sante').text());
     $('.add_option').children('input[name="categorie_sante"]').val(categorie_menu);
 
     $.ajax({
-      url : "/api/get/listOption",
+      url: "/api/get/listOption",
       type: 'POST',
       data: {
-        categorie_sante_in: $(this).data('value') ,
+        categorie_sante_in: $(this).data('value'),
       },
       dataType: 'json',
       beforeSend: function () {
-        $('#container_'+category).children('.loader_li').remove();
-        $('#listOption'+category).after('<img class="loader_li" style="height: 14px" src="/images/images_default/ajax-loader.gif"/>');
+        $('#container_' + category).children('.loader_li').remove();
+        $('#listOption' + category).after('<img class="loader_li" style="height: 14px" src="/images/images_default/ajax-loader.gif"/>');
       },
       success: function (data) {
-        let content="";
-       data.forEach(element => {
-         content = `
-        <div class="option_menu">`+element.name+`<button class="delete_option" value="`+element.id+`">
+        let content = "";
+        data.forEach(element => {
+          content = `
+        <div class="option_menu">`+ element.name + `<button class="delete_option" value="` + element.id + `">
         <span class="fa fa-trash"></span></button></div>
         ` + content;
-       });
-       $('#list-option-'+category).html(content);
+        });
+        $('#list-option-' + category).html(content);
       },
       complete: function () {
-        $('#container_'+category).children('.loader_li').remove();
+        $('#container_' + category).children('.loader_li').remove();
       }
     });
 
     //containt_parameter(categorie_menu);
 
   });
-  $('.add_option').on('submit',function(e){
+  $('.add_option').on('submit', function (e) {
     e.preventDefault();
-     var  form=$(this);
-     let category = $(this).children('select').attr('id');
-     let sous_category = $(this).children('input[name="categorie_sante"]').val();
-     $.ajax({
-          url :'/api/add/listOption',
-          type: 'POST',
-          data : new FormData(this),
-          contentType: false,
-          processData : false,
-          cache : false,
-          dataType : 'json',
-          beforeSend : ()=>{
-              $('#container_'+sous_category).children('.loader_li').remove();
-               $('#listOption-'+sous_category).append('<img class="loader_li" style="height: 14px" src="/images/images_default/ajax-loader.gif"/>');
-              $('.btn-submit'+sous_category).prop('disabled', true)
-          },
-          success : (data)=>{
+    var form = $(this);
+    let category = $(this).children('select').attr('id');
+    let sous_category = $(this).children('input[name="categorie_sante"]').val();
+    $.ajax({
+      url: '/api/add/listOption',
+      type: 'POST',
+      data: new FormData(this),
+      contentType: false,
+      processData: false,
+      cache: false,
+      dataType: 'json',
+      beforeSend: () => {
+        $('#container_' + sous_category).children('.loader_li').remove();
+        $('#listOption-' + sous_category).append('<img class="loader_li" style="height: 14px" src="/images/images_default/ajax-loader.gif"/>');
+        $('.btn-submit' + sous_category).prop('disabled', true)
+      },
+      success: (data) => {
 
-            toastr.success('Enregistrer avec success');
-              let content = `
-              <div class="option_menu">`+data.results.name+`<button class="delete_option" value="`+data.results.id+`">
+        toastr.success('Enregistrer avec success');
+        let content = `
+              <div class="option_menu">`+ data.results.name + `<button class="delete_option" value="` + data.results.id + `">
               <span class="fa fa-trash"></span></button></div>
               `;
-              $('#list-option-'+sous_category).append(content);
+        $('#list-option-' + sous_category).append(content);
 
-              //$('.list_option').prepend(data.content);
-             // $(this)[0].reset();
-              $('.btn-submit'+sous_category).prop('disabled', false)
+        //$('.list_option').prepend(data.content);
+        // $(this)[0].reset();
+        $('.btn-submit' + sous_category).prop('disabled', false)
 
-          
-          },
-          complete : ()=>{
-            $('#listOption-'+sous_category).children('.loader_li').remove();
-          },
-          error: () => {
-            toastr.error('Une error à été survenue');
-            $('#listOption-'+sous_category).children('.loader_li').remove();
-            $('.btn-submit'+sous_category).prop('disabled', false)
-          },
-     });
+
+      },
+      complete: () => {
+        $('#listOption-' + sous_category).children('.loader_li').remove();
+      },
+      error: () => {
+        toastr.error('Une error à été survenue');
+        $('#listOption-' + sous_category).children('.loader_li').remove();
+        $('.btn-submit' + sous_category).prop('disabled', false)
+      },
+    });
   });
   //add category 
   $('body').on('click', '.add_category', function (e) {
@@ -796,7 +1277,7 @@ function list_type_other(arrays, value){
       },
       success: (data) => {
         toastr.success('Article bien enregstrer');
-       // $('#ajout_article').modal('hide');
+        // $('#ajout_article').modal('hide');
         $('.all_article').append(`
               <div class="container_article col-xs-6 col-sm-3 col-md-2 col-lg-2">
                       <div class="list_produit">
@@ -804,7 +1285,7 @@ function list_type_other(arrays, value){
                           <input type="hidden" name="id_image" value="`+ data.id + `">
                   
                             <img class="image_produit" src="/images/`+ data.images[0] + `" alt="` + data.name + `">
-                          <p class="name_article">`+ tronquer(data.name,11,false) + `</p>
+                          <p class="name_article">`+ tronquer(data.name, 11, false) + `</p>
                             <span class="remove_article glyphicon glyphicon-remove"></span> 
                             <div>
                          <button class="btn btn-warning article_edit" data-id="`+ data.id + `">Détail</button>
@@ -818,8 +1299,8 @@ function list_type_other(arrays, value){
         $('.btn-submit').prop('disabled', false)
 
       },
-      error: () => {
-        toastr.error('Une error à été survenue');
+      error: (data) => {
+        toastr.error(data.responseJSON.message);
         $('.btn-submit').children('.loader_ajax').remove();
         $('.btn-submit').prop('disabled', false)
       },
@@ -846,44 +1327,44 @@ function list_type_other(arrays, value){
     $('#ajout_article').modal('show');
 
     $.ajax({
-      url: '/api/get/sous_category/type/'+category,
+      url: '/api/get/sous_category/type/' + category,
       type: 'GET',
       data: {},
       dataType: 'json',
       beforeSend: () => {
-        $('.loader_ajax_').css('transform','scale(1)');
+        $('.loader_ajax_').css('transform', 'scale(1)');
       },
       success: (data) => {
-          let results=data.results;
-          let sous_category ="";
-          let type ="";
-          let selected = "";
+        let results = data.results;
+        let sous_category = "";
+        let type = "";
+        let selected = "";
 
-         
-          if(results.length!=0){
+
+        if (results.length != 0) {
           for (let index = 0; index < results.length; index++) {
-            selected=(index==0) ? "selected" : "";
-           sous_category+=
-            `<option class="sous_categorie_menu_on_type" data-name="`+results[index].type+`" value="`+results[index].type+`" `+selected+`>
-            `+results[index].type+`
+            selected = (index == 0) ? "selected" : "";
+            sous_category +=
+              `<option class="sous_categorie_menu_on_type" data-name="` + results[index].type + `" value="` + results[index].type + `" ` + selected + `>
+            `+ results[index].type + `
             </option>`;
           }
-         
-            for (let indexo= 0; indexo < results[0].option.length; indexo++) {
-              selected=(indexo==0) ? "selected" : "";
-              type+=
-               `<option class="sous_categorie_menu_on_type" data-name="`+results[0].option[indexo]+`" value="`+results[0].option[indexo]+`" `+selected+`>
-               `+results[0].option[indexo]+`
+
+          for (let indexo = 0; indexo < results[0].option.length; indexo++) {
+            selected = (indexo == 0) ? "selected" : "";
+            type +=
+              `<option class="sous_categorie_menu_on_type" data-name="` + results[0].option[indexo] + `" value="` + results[0].option[indexo] + `" ` + selected + `>
+               `+ results[0].option[indexo] + `
                </option>`
-           
+
           }
         }
-          $('#sous_category').html(sous_category);
-          $('.type').html(type);
-          $('.loader_ajax_').css('transform','scale(0)');
+        $('#sous_category').html(sous_category);
+        $('.type').html(type);
+        $('.loader_ajax_').css('transform', 'scale(0)');
       },
       error: () => {
-        $('.loader_ajax_').css('transform','scale(0)');
+        $('.loader_ajax_').css('transform', 'scale(0)');
         toastr.error('Un error à été survenue');
       },
       complete: function () {
@@ -893,58 +1374,58 @@ function list_type_other(arrays, value){
 
 
   });
- 
+
   // get Type 
 
-  $('.sous_category, .view_sous_category').on('change',function(e){
-             
-    var sous_categorie= $(this).val();
+  $('.sous_category, .view_sous_category').on('change', function (e) {
+
+    var sous_categorie = $(this).val();
 
     $('#type').parent('div').children('img').remove();
     $.ajax({
-     url : '/api/get/list/type/'+sous_categorie,
-     type :'POST',
-     dataType : 'json',
-     data :{
-          
+      url: '/api/get/list/type/' + sous_categorie,
+      type: 'POST',
+      dataType: 'json',
+      data: {
+
       },
-     beforeSend : function(){
-            
-       $('.valeur_type').after('<img style="height: 14px" src="/images/images_default/ajax-loader.gif "/>');
-     },
-     success : function(datas){
-      
-      var selected;
-      var option=" ";
-      data=datas.results;
-      for(var $i=0; $i<data.length;$i++){
-        if($i==0){
-            selected="selected";
+      beforeSend: function () {
+
+        $('.valeur_type').after('<img style="height: 14px" src="/images/images_default/ajax-loader.gif "/>');
+      },
+      success: function (datas) {
+
+        var selected;
+        var option = " ";
+        data = datas.results;
+        for (var $i = 0; $i < data.length; $i++) {
+          if ($i == 0) {
+            selected = "selected";
+          }
+          else {
+            selected = " ";
+          }
+          option += `<option data_name="` + data[$i] + `" value="` + data[$i] + `" ` + selected + ` >` + data[$i] +
+            `</option>`;
         }
-        else{
-          selected=" ";
-        }
-        option+=`<option data_name="`+data[$i]+`" value="`+data[$i]+`" `+selected+` >`+data[$i]+
-                  `</option>`;
+        $('#type').html(option);
+        $('#view_type').html(option);
+      },
+
+      complete: function () {
+        $('.valeur_type').parent('div').children('img').remove();
+      },
+
+      error: function () {
+        $('.valeur_type').parent('div').children('img').remove();
+
       }
-      $('#type').html(option);
-      $('#view_type').html(option);
-     },
-
-     complete : function(){
-      $('.valeur_type').parent('div').children('img').remove();
-     },
-
-     error :function(){
-      $('.valeur_type').parent('div').children('img').remove();
-
-     }
 
     });
 
-});
+  });
 
-///
+  ///
   $('.close').on('click', function (e) {
     e.preventDefault();
 
@@ -959,7 +1440,7 @@ function list_type_other(arrays, value){
     e.preventDefault();
     if ($(this).val() === "Promo") {
       $('.inter-promo').css('display', 'block');
- 
+
 
     }
 
@@ -977,51 +1458,51 @@ function list_type_other(arrays, value){
     var id = parseInt($(this).attr('data-idreference'));
     Lobibox.confirm({
       msg: 'Voulez vous supprimer cette Video ?',
-      buttons : {
-         yes : {
-            text : 'Acceptez',
+      buttons: {
+        yes: {
+          text: 'Acceptez',
 
         },
-        no : {
-            text : 'Annulez',
+        no: {
+          text: 'Annulez',
 
         },
-       
+
       },
 
-      callback : ($this,type)=>{
+      callback: ($this, type) => {
 
-      if(type==="yes"){
-        $.ajax({
-          url: '/admin/reference/' + id,
-          type: 'DELETE',
-          data: {},
-          dataType: 'json',
-          beforeSend: () => {
-            $(this).append('<span class="loader_ajax" style="height: 20px;width: 20px;display: inline-block;"><img src="/images/images_default/ajax-loader.gif" style="height: 100%;width: 100%;"></span>');
-            $(this).prop('disabled', true)
-          },
-          success: (data) => {
-            toastr.success('Supprimer avec avec success')
-            ;
-            $(this).parents('.slide_animation ').css('transform', 'scale(0)');
-            setTimeout(() => {
-              $(this).parents('.slide_animation ').remove();
-            }, 500);
-          },
-          error: () => {
-            toastr.error('Une error à été survenue');
-            $(this).children('.loader_ajax').remove();
-            $(this).prop('disabled', false)
-          },
-          complete: function () {
-    
-          }
-        });
-     }  
-    } 
+        if (type === "yes") {
+          $.ajax({
+            url: '/admin/reference/' + id,
+            type: 'DELETE',
+            data: {},
+            dataType: 'json',
+            beforeSend: () => {
+              $(this).append('<span class="loader_ajax" style="height: 20px;width: 20px;display: inline-block;"><img src="/images/images_default/ajax-loader.gif" style="height: 100%;width: 100%;"></span>');
+              $(this).prop('disabled', true)
+            },
+            success: (data) => {
+              toastr.success('Supprimer avec avec success')
+                ;
+              $(this).parents('.slide_animation ').css('transform', 'scale(0)');
+              setTimeout(() => {
+                $(this).parents('.slide_animation ').remove();
+              }, 500);
+            },
+            error: () => {
+              toastr.error('Une error à été survenue');
+              $(this).children('.loader_ajax').remove();
+              $(this).prop('disabled', false)
+            },
+            complete: function () {
 
-   });
+            }
+          });
+        }
+      }
+
+    });
   });
   // delete social network
 
@@ -1137,12 +1618,12 @@ function list_type_other(arrays, value){
   })
   $('.description').on('keyup', function (e) {
     let description = $('.description').val();
-   // let namelink = $('.a_link_social_network').html($('.namelink').val());
+    // let namelink = $('.a_link_social_network').html($('.namelink').val());
     $('.des').html(description);
   })
   $('.link').on('keyup', function (e) {
-     let link = $('.link').val();
-     $('.a_link_social_network').prop('href',link);
+    let link = $('.link').val();
+    $('.a_link_social_network').prop('href', link);
   })
   $('.social_network').on('submit', function (e) {
     e.preventDefault(e);
@@ -1224,7 +1705,7 @@ function list_type_other(arrays, value){
       error: function () {
         toastr.error('Une error à été survenue');
         $('.btn-submit').children('.loader_ajax').remove();
-          $('.btn-submit').prop('disabled', false);
+        $('.btn-submit').prop('disabled', false);
       },
       complete: function () {
 
@@ -1236,7 +1717,7 @@ function list_type_other(arrays, value){
   $('body').on('click', '.image_for_body', function (e) {
     e.preventDefault();
     let src = $(this).attr('src');
-     $('.id-vote').val($(this).attr('name'));
+    $('.id-vote').val($(this).attr('name'));
     let description = $(this).parent('div').children('input').val();
     $('.text_area_edit').val(description);
     $('._preview_image').prop('src', src);
@@ -1251,52 +1732,52 @@ function list_type_other(arrays, value){
 
     Lobibox.confirm({
       msg: 'Voulez vous supprimer  ?',
-      buttons : {
-         yes : {
-            text : 'Acceptez',
- 
-        },
-        no : {
-            text : 'Annulez',
- 
-        },
-       
-      },
- 
-      callback : ($this,type)=>{
- 
-      if(type==="yes"){
- 
-         
-    $.ajax({
-      url: '/admin/vote/delete/' + id,
-      type: 'DELETE',
-      data: {},
-      dataType: 'json',
-      beforeSend: () => {
-        $(this).prop('disabled', true)
-      },
-      success: (data) => {
-        toastr.success('Supprimer avec avec success');
-        ;
-        $(this).parents('.image_vote ').css('transform', 'scale(0)');
-        setTimeout(() => {
-          $(this).parents('.image_vote ').remove();
-        }, 500);
-      },
-      error: () => {
-        toastr.error('Une error à été survenue');
-        $(this).prop('disabled', false)
-      },
-      complete: function () {
+      buttons: {
+        yes: {
+          text: 'Acceptez',
 
+        },
+        no: {
+          text: 'Annulez',
+
+        },
+
+      },
+
+      callback: ($this, type) => {
+
+        if (type === "yes") {
+
+
+          $.ajax({
+            url: '/admin/vote/delete/' + id,
+            type: 'DELETE',
+            data: {},
+            dataType: 'json',
+            beforeSend: () => {
+              $(this).prop('disabled', true)
+            },
+            success: (data) => {
+              toastr.success('Supprimer avec avec success');
+              ;
+              $(this).parents('.image_vote ').css('transform', 'scale(0)');
+              setTimeout(() => {
+                $(this).parents('.image_vote ').remove();
+              }, 500);
+            },
+            error: () => {
+              toastr.error('Une error à été survenue');
+              $(this).prop('disabled', false)
+            },
+            complete: function () {
+
+            }
+          });
+
+        }
       }
+
     });
- 
-     }  
-    } 
- 
-   });
 
   });
   //delate header
@@ -1350,16 +1831,16 @@ function list_type_other(arrays, value){
         $('.btn-submit').append('<span class="loader_ajax" style="height: 20px;width: 20px;display: inline-block;"><img src="/images/images_default/ajax-loader.gif" style="height: 100%;width: 100%;"></span>');
         $('.btn-submit').prop('disabled', true)
       },
-      success: (data)=>{
+      success: (data) => {
         toastr.success('Enregistrer avec success');
         $('#header_index').children('img').attr('src', 'images/' + data.images);
-        $(".del_header").attr('data-id',data.id);
+        $(".del_header").attr('data-id', data.id);
         $(this)[0].reset();
         $(this).children('div').children('button').children('.loader_ajax').remove();
         $('.btn-submit').prop('disabled', false);
         $('#add_header').modal('hide');
       },
-      error:  ()=>{
+      error: () => {
         toastr.error('Une erreur à été survenue');
         $(this).children('div').children('button').children('.loader_ajax').remove();
         $('.btn-submit').prop('disabled', false);
@@ -1399,7 +1880,7 @@ function list_type_other(arrays, value){
       success: function (data) {
         form[0].reset();
         toastr.success('Enregistrer avec success');
-        $('#preview_image').attr('src',"")
+        $('#preview_image').attr('src', "")
         $('.liste_article_in').prepend(`
             <div class="container_article col-xs-6 col-sm-3 col-md-2 col-lg-2">
             <div class="list_produit">
@@ -1425,7 +1906,7 @@ function list_type_other(arrays, value){
   $('#add_user_admin').on('submit', function (e) {
     e.preventDefault();
     var url = $('this').attr('action');
-  
+
     $.ajax({
       url: url,
       type: 'POST',
@@ -1450,7 +1931,7 @@ function list_type_other(arrays, value){
           $("form[name='user']")[0].reset();
         }
         if (data.status == 'ko') {
-           toastr.error(data.msg);
+          toastr.error(data.msg);
         }
         $('.btn-submit').children('.loader_ajax').remove();
         $('.btn-submit').prop('disabled', false)
@@ -1462,12 +1943,12 @@ function list_type_other(arrays, value){
     });
 
   });
-  
+
   // add nnew ess article
   $('.ajout_ess_article_ev').on('click', function () {
     activeAddArticle();
     $("#ajout_article").modal('show');
-    
+
     $('.file').prop('required', true);
     $('.type_article_in').attr('value', $(this).attr('id'));
     $('.form_article').addClass('add_ess_article');
@@ -1475,21 +1956,21 @@ function list_type_other(arrays, value){
     $('.btn-submit').append('<span class="loader_ajax" style="height: 20px;width: 20px;display: inline-block;"><img src="/images/images_default/ajax-loader.gif" style="height: 100%;width: 100%;"></span>')
     $('.btn-submit').prop('disabled', true);
     $.ajax({
-      url : '/api/getOptions/'+$(this).attr('id'),
-      type : "GET",
-      dataType : 'json',
-      success : (data)=>{
-         $('#es_article_type').html(getMyOption(data['option']));
-         $('.btn-submit').children('.loader_ajax').remove();
-         $('.btn-submit').prop('disabled', false)
+      url: '/api/getOptions/' + $(this).attr('id'),
+      type: "GET",
+      dataType: 'json',
+      success: (data) => {
+        $('#es_article_type').html(getMyOption(data['option']));
+        $('.btn-submit').children('.loader_ajax').remove();
+        $('.btn-submit').prop('disabled', false)
       },
-      error : ()=>{
+      error: () => {
         $('.btn-submit').children('.loader_ajax').remove();
         $('.btn-submit').prop('disabled', false)
       }
 
     })
-   // $('#es_article_type').html(typeArticle($(this).attr('id')));
+    // $('#es_article_type').html(typeArticle($(this).attr('id')));
   });
 
 
@@ -1519,7 +2000,7 @@ function list_type_other(arrays, value){
       },
       {
         name: "Lingeries-femme",
-        value: ['Slips','Dentelle côté', 'Tanga', 'Boxer', 'Accessoires', 'Bas', 'Jarretières', 'Bodys', 'Bustiers', 'corsets', 'Caracos', 'Combinaisons', 'Jupons', 'Culottes', 'Shorties', 'Strings', 'Ensembles de Lingeries', 'Lingeries Sculptantes', 'Nuisettes', 'Deshabillés', 'Vêtements Thérmiques', 'Soutiens Gorges']
+        value: ['Slips', 'Dentelle côté', 'Tanga', 'Boxer', 'Accessoires', 'Bas', 'Jarretières', 'Bodys', 'Bustiers', 'corsets', 'Caracos', 'Combinaisons', 'Jupons', 'Culottes', 'Shorties', 'Strings', 'Ensembles de Lingeries', 'Lingeries Sculptantes', 'Nuisettes', 'Deshabillés', 'Vêtements Thérmiques', 'Soutiens Gorges']
       },
       {
         name: "Vetements_enfant",
@@ -1733,7 +2214,7 @@ function list_type_other(arrays, value){
       },
       {
         name: "Outillages",
-        value: ['Accessoires','Outils à main', 'Outils divers', 'Outils multifonctions', 'Outils éléctriques', 'Accessoires', 'Electricité', 'Pièces détachées']
+        value: ['Accessoires', 'Outils à main', 'Outils divers', 'Outils multifonctions', 'Outils éléctriques', 'Accessoires', 'Electricité', 'Pièces détachées']
       },
       {
         name: "outillages_pro",
@@ -1744,37 +2225,37 @@ function list_type_other(arrays, value){
         value: ['Outils de jardin']
       }
     ];
-    if(types.find((items) => (items.name === name))!= undefined){
-       var type = types.find((items) => (items.name === name)).value;
+    if (types.find((items) => (items.name === name)) != undefined) {
+      var type = types.find((items) => (items.name === name)).value;
 
 
-    for (var i = 0; i < type.length; i++) {
-      if (item != null) {
-        if ( type[i]===item) {
-          classe = "class=' selected_option' selected";
+      for (var i = 0; i < type.length; i++) {
+        if (item != null) {
+          if (type[i] === item) {
+            classe = "class=' selected_option' selected";
+          }
+          else {
+            classe = "";
+          }
         }
-        else{
-          classe ="";
-        }
+        options = '<option value="' + type[i] + '" ' + classe + '>' + type[i] + '</option>' + options;
+
       }
-      options = '<option value="' + type[i] + '" ' + classe + '>' + type[i] + '</option>' + options;
-
     }
-  }
 
     return options;
   }
-  
-  function getMyOption(type,item=null){
-    let classe ="";
-    let options="";
+
+  function getMyOption(type, item = null) {
+    let classe = "";
+    let options = "";
     for (var i = 0; i < type.length; i++) {
       if (item != null) {
-        if ( type[i]===item) {
+        if (type[i] === item) {
           classe = "class=' selected_option' selected";
         }
-        else{
-          classe ="";
+        else {
+          classe = "";
         }
       }
       options = '<option value="' + type[i] + '" ' + classe + '>' + type[i] + '</option>' + options;
@@ -1834,30 +2315,30 @@ function list_type_other(arrays, value){
       listOption = ['Motorisation', 'portails et volets', 'Accessoires', 'Interphone video', 'Alerme-Détecteur', 'Caméra de surveillance', 'Sécurité  incendie'];
     }
     //outilage
-    if (categorie_menu == "Outillages Pro"){
-      cible ="Professionnel",
-      listOption = ['Outils à main', 'Outils divers', 'Outils multifonctions', 'Outils éléctriques', 'Accessoires', 'Electricité', 'Pièces détachées']
+    if (categorie_menu == "Outillages Pro") {
+      cible = "Professionnel",
+        listOption = ['Outils à main', 'Outils divers', 'Outils multifonctions', 'Outils éléctriques', 'Accessoires', 'Electricité', 'Pièces détachées']
     }
-    if (categorie_menu == "Outillages"){
+    if (categorie_menu == "Outillages") {
       cible = "Bricolage",
-      listOption = ['Accessoires','Outillage à main', 'Outillage éléctroportatif', 'Machines equipements', 'Eléctricité', 'Quincallerie']
+        listOption = ['Accessoires', 'Outillage à main', 'Outillage éléctroportatif', 'Machines equipements', 'Eléctricité', 'Quincallerie']
     }
-    if (categorie_menu == "Outils de jardin"){
+    if (categorie_menu == "Outils de jardin") {
       cible = "Jardinage",
-      listOption = ['Outils de jardin']
+        listOption = ['Outils de jardin']
     }
- 
-  
+
+
     var options = attribute_article_in(listOption);
 
-    
+
     $(cible).html(options);
 
     var attr_categorie_menu = listOption[0];
     $('fieldset').children('.loader_li').remove();
 
     $.ajax({
-      url : "/api/get/listOption",
+      url: "/api/get/listOption",
       type: 'POST',
       data: {
         categorie_sante_in: attr_categorie_menu,
@@ -1868,14 +2349,14 @@ function list_type_other(arrays, value){
         $('.labelListOption').after('<img class="loader_li" style="height: 14px" src="/images/images_default/ajax-loader.gif"/>');
       },
       success: function (data) {
-        let content="";
-       data.forEach(element => {
-         content = `
-        <div class="option_menu">`+element.name+`<button class="delete_option" value="`+element.id+`">
+        let content = "";
+        data.forEach(element => {
+          content = `
+        <div class="option_menu">`+ element.name + `<button class="delete_option" value="` + element.id + `">
         <span class="fa fa-trash"></span></button></div>
         ` + content;
-       });
-       $('.list_option').html(content);
+        });
+        $('.list_option').html(content);
       },
       complete: function () {
         $('fieldset').children('.loader_li').remove();

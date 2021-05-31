@@ -1,0 +1,15 @@
+<div class="col-md-4 col-sm-4 col-xs-6 col-lg-3">
+    {% set imgHeader ="images_default/default_image.jpg" %}   
+   {% for header in shop.headers %}
+        {% set imgHeader = header.name %}
+   {% endfor %}
+    <div style="background-image: url({{asset('images/'~imgHeader)}});" class="container_shop_search">
+        <div class="container_log_shop">
+                 <img src="{{asset('images/'~shop.logo)}}">
+                 {% if shop.isActiveNow %}
+                    <div class="is_active"></div>
+                 {% endif %}
+        </div>
+        <p>{{ shop.name }}</p>
+    </div>
+</div>

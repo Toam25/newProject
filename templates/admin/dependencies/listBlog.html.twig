@@ -1,0 +1,33 @@
+{# <select class="form-control">
+	<option value="ALL">Tous les blogs</option>
+	<option value="PENDING">En cours</option>
+	<option value="CLOSED">En attante de validation</option>
+	<option value="VALIDATE">Validé</option>
+</select> #}
+<p>Nombre blog : <span class="nbr_blog">{{ blogs|length }}</span></p>
+<div class="row">
+	{% for blog in blogs %}
+		<div id="id-{{blog.id}}" class="container_my_blog col-md-4 col-sm-6 col-xs-6 col-lg-4 " style="margin-top: 3px;">
+			<a href="{{path('editBlog', {'id': blog.id })}}">
+				<div class="cart container_cart container_blog">
+					<div class="cnt_image_date_bloc">
+						<div class="container_image_blog">
+							<img {% if blog.image is not same as (null )%} src="{{ asset('images/'~blog.image)}}" {% else %} src="/images/images_default/default_logo.png" {% endif %} alt="{{blog.title}}">
+						</div>
+						<div class="date_blog">
+							<p>{{ blog.createdAt|date('y') }}</p>
+							<p>
+								{{ setMonth(blog.createdAt|date('m')) }}</p>
+							<p>{{ blog.createdAt|date('d') }}</p>
+
+						</div>
+					</div>
+					<h1 class="title_blog">{{ cutWorld(blog.title,50) }}</h1>
+					<p class="_category">#{{blog.category}}</p>
+					<p class="_description_blog">{{ cutWorld(blog.resume,100) }}</p>
+					<button class="btn btn-danger delete_blog" data-id={{ blog.id }} style="width: 100%;">Supprimer</button>
+				</div>
+			</a>
+		</div>
+	{% endfor %}
+</div>

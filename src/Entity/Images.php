@@ -30,6 +30,16 @@ class Images
      * @ORM\ManyToOne(targetEntity="App\Entity\Article", inversedBy="images")
      */
     private $article;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=Boutique::class, inversedBy="images")
+     */
+    private $boutique;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="images")
+     */
+    private $user;
     
     public function __construct()
     {
@@ -72,6 +82,30 @@ class Images
     public function setArticle(?Article $article): self
     {
         $this->article = $article;
+
+        return $this;
+    }
+
+    public function getBoutique(): ?Boutique
+    {
+        return $this->boutique;
+    }
+
+    public function setBoutique(?Boutique $boutique): self
+    {
+        $this->boutique = $boutique;
+
+        return $this;
+    }
+
+    public function getUser(): ?User
+    {
+        return $this->user;
+    }
+
+    public function setUser(?User $user): self
+    {
+        $this->user = $user;
 
         return $this;
     }

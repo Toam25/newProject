@@ -18,7 +18,7 @@
     top: 0;
     z-index: 3;
 }
-.profil_user_name, .profil_password{
+.profil_user_name, .profil_password, .profil_cv{
     display: flex;
     flex-direction: column;
     align-items: unset;
@@ -33,8 +33,9 @@
     padding: 10px;
     width: 50%;
     min-width: 250px;
+    position: relative;
 }
-.profil_user_name button, .profil_password button {
+.profil_user_name button, .profil_password button, .profil_cv button {
     margin : 5px 0;
 }
 .image_profil img{
@@ -42,6 +43,17 @@
     height: 100%;
     border-radius: 50%;
     object-fit: cover;
+}
+.delete_cv{
+    position: absolute;
+    top: 50%;
+    z-index: 999;
+    right: 0;
+    color: white;
+    border: none;
+    background: #9d2b2b;
+    padding: 6px;
+    border-radius: 10px 0 0 10px;
 }
 .image_profil > button{
     position: absolute;
@@ -54,4 +66,13 @@ width: 34px;
 bottom: 11px;
 right: 14px;
 height: 34px;
+}
+.iframe{
+    margin: 5px;
+    border: 1px solid rgba(0,0,0,0.3);
+    min-height: 50vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
 }

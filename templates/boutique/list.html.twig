@@ -7,7 +7,7 @@
 {% block stylesheets %}
     <link href="https://fonts.googleapis.com/css?family=Montserrat:400,500,700" rel="stylesheet">
    
-    <link href="{{ asset('css/bootstrap3.3.css')}}" rel="stylesheet" type="text/css">
+    <link href="{{ asset('css/bootstrap5.0.css')}}" rel="stylesheet" type="text/css">
     <!-- Slick -->
     <link type="text/css" rel="stylesheet" href="{{asset('css/slick.css') }}"/>
     <link type="text/css" rel="stylesheet" href="{{asset('css/slick-theme.css') }}"/>
@@ -19,11 +19,12 @@
     <link rel="stylesheet" href="{{ asset('css/font-awesome.min.css') }}">
 
     <!-- Custom stlylesheet -->
+    <link type="text/css" rel="stylesheet" href="{{ asset('css/boutique.css') }}"/>
     <link type="text/css" rel="stylesheet" href="{{ asset('css/style.css') }}"/>
-    <link type="text/css" rel="stylesheet" href="{{ asset('css/index.css') }}"/>
+    <link type="text/css" rel="stylesheet" href="{{ asset('css/store.css') }}"/>
 {% endblock %}
 {% block body %}
-      
+      {% include "boutique/dependancies/header.html.twig" %}
         <!-- SECTION -->
 		<div class="section">
 			<!-- container -->
@@ -31,7 +32,10 @@
 				<!-- row -->
 				<div class="row">
 					
-                    {% include "boutique/dependancies/section_product.html.twig" %}
+                    {#{% include "boutique/dependancies/section_product.html.twig" %}#}
+                <div id="aside" class="col-md-2">
+                   {#} {{ filtreCategory | raw }}#}
+                </div>
                     {% include "boutique/dependancies/store.html.twig" %}
 					
 					<!-- /STORE -->
@@ -41,7 +45,11 @@
 			<!-- /container -->
 		</div>
 		<!-- /SECTION -->
-        
+{% if not app.user%}
+		{% include 'boutique/dependancies/connexion.html.twig'%}
+{% endif %}
+
+{% include 'boutique/dependancies/footer.html.twig' %}      
 {% endblock %}
 
 {% block javascripts %}

@@ -11,7 +11,7 @@
 {% block meta%}{% endblock %}
 {% block stylesheets %}
 	<link href="https://fonts.googleapis.com/css?family=Montserrat:400,500,700" rel="stylesheet">
-
+	<link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A==" crossorigin=""/>
 	<link
 	href="{{ asset('css/bootstrap3.3.css')}}" rel="stylesheet" type="text/css">
 	<!-- Slick -->
@@ -22,11 +22,17 @@
 	<!-- nouislider -->
 	<link
 	type="text/css" rel="stylesheet" href="{{asset('css/nouislider.min.css') }}"/>
+	{# <link type="text/css" rel="stylesheet" href="{{asset('css/splide.min.css') }}"/> #}
 
 	<!-- Font Awesome Icon -->
 	<link
 	rel="stylesheet" href="{{ asset('css/font-awesome.min.css') }}">
 
+	{# owl carousel css  #}
+
+	<link rel="stylesheet" href="{{asset('owl/css/owl.carousel.min.css')}}">
+	<link rel="stylesheet" href="{{asset('owl/css/owl.theme.default.min.css')}}">
+    {#  #}
 	<!-- Custom stlylesheet -->
 	<link type="text/css" rel="stylesheet" href="{{ asset('css/style.css') }}"/>
 	<link
@@ -39,133 +45,276 @@
 {% block body %}
 
 	{% include 'boutique/dependancies/headershop.html.twig' %}
+{# {% if boutique.getDetailOffer is same as ('Gratuit') %}
+<div class="alert alert-danger">
+		    Site mode gratuit 
+</div>
+{% endif %} #}
 
-	<div class='image_header'>
-		{% include 'boutique/dependancies/bannierboutique.html.twig' %}
+	{% if isHomeShop is same as (false) %}
+		{% include "boutique/dependancies/articleInShop.html.twig" %}
+	{% else %}
+<div id="echantillon_shop" style="background: #000000c4;">
+
+	<div class="container-fluid" style="background: #000000c4;padding-top: 28px;position: relative;overflow: hidden;">
+		{% set wallpaper =  "#05c6e5" %}
+		{% if shop.headers[0].name is defined %}
+			{% set   wallpaper = "url("~asset('images/'~shop.headers[0].name)~") center center / cover no-repeat rgb(17,17,17);"  %}
+		{% endif %}
+		<div class="blurred-bg" style="background: {{wallpaper}}"></div>
+		<div class="row">
+
+			<div class="col-md-9">
+				<div class="owl-carousel owl-theme">
+					{% for shop in slideShop %}
+						<a class="container_wallpaper_shop splide__slide" href="{{ path('shop',{'id': shop.id, 'type' : shop.type })}}">
+							<div class="container_detail_shop js-blurred-target">
+								<div class="container_detail_shop_logo">
+									<img src="{{asset('images/'~ shop.logo )}}" alt="">
+								</div>
+								<div style="text-overflow: ellipsis;overflow: hidden;">
+									<h4 style="font-size: 13px;color: white;">{{ shop.name }}</h4>
+									<p style="font-size: 11px;color: #f7f7f7;">{{ shop.slogan }}</p>
+								</div>
+							</div>
+						</a>
+					{% endfor %}
+				</div>
+			</div>
+			<div class="col-md-3">
+				<div style="height: 295px; position:relative">
+					{# {% set hide = true %}
+					{% for shop in shops %}
+
+						<div class="popular-caption
+														{% if hide %}
+															 is-active
+														{% endif %}
+														">
+							<h2 style="color: white;padding: 5px 10px;">{{ shop.name }}</h2>
+							<p style="color: #a6a6a6;font-size: 12px;">{{ shop.apropos }}</p>
+						</div>
+						{% set hide  = false %}
+					{% endfor %} #}
+						<div class="owl-dots-custom">
+						  <button role="button" id="dot1"  class="owl-dot custom-dot active"><span></span></button>
+						  <button role="button" id="dot2" class="owl-dot custom-dot"><span></span></button>
+						  <button role="button" id="dot3" class="owl-dot custom-dot"><span></span></button>
+						  <button role="button" id="dot4" class="owl-dot custom-dot"><span></span></button>
+						</div>
+
+						<div class="popular-caption is-active">
+							<h2 style="color: white;padding: 5px 10px;">Meilleure Galerie VIP</h2>
+							<p style="color: #a6a6a6;font-size: 12px;">Les boutiques les mieux notée par les membres <br>les Premiums mise en avant chaque jour <br>Les meilleurs blofs de la semaines <br>Produit en promottion</p>
+						</div>
+						<div class="popular-caption">
+							<h2 style="color: white;padding: 5px 10px;">Les Premiums mise en avant chaque jour</h2>
+							<p style="color: #a6a6a6;font-size: 12px;">Les boutiques les mieux notée par les membres <br>les Premiums mise en avant chaque jour <br>Les meilleurs blocs de la semaines <br>Produit en promottion</p>
+						</div>
+						<div class="popular-caption">
+							<h2 style="color: white;padding: 5px 10px;">Les meilleurs blocs de la semaines</h2>
+							<p style="color: #a6a6a6;font-size: 12px;">Les boutiques les mieux notée par les membres <br>les Premiums mise en avant chaque jour <br>Les meilleurs blocs de la semaines <br>Produit en promottion</p>
+						</div>
+						<div class="popular-caption">
+							<h2 style="color: white;padding: 5px 10px;">Produit en promotion</h2>
+							<p style="color: #a6a6a6;font-size: 12px;">Les boutiques les mieux notée par les membres <br>les Premiums mise en avant chaque jour <br>Les meilleurs blofs de la semaines <br>Produit en promotion</p>
+						</div> 
+
+				</div>
+			</div>
+		</div>
 	</div>
 
-	{% if  boutique   %}
-		<div>
-			<div class="container-fluid">
-				<div class="boutique_container">
-				   
-					<div class="menu_v ">
-					    <div class="title_c_and_menu">
-						<h3 class="title_C" style="display:table-cell">Filtres
-						</h3>
-						 <span class="close_menu js-hide-menu">Fermer</span>
-						</div>
-						<input class="shop_type" type="hidden" name="shop_type" value="{{ type }}">
-						{% if boutique %}
-							<form action="" class="aside" style="margin-top: 13px;">
-								<input type="hidden" name="shop_id" value="{{ boutique.id }}">
-								{{ filtreCategory | raw }}
-								{# {{ categorie(boutique) }} #}
-							</form>
-						{% endif %}
-
-					</div>
-
-					<div class="article_boutique">
-						<div class="">
-						    <div  style="display: flex;justify-content: center;">
-							 <button class="shop_menu js-show-menu">Menu</button>
-							<h3 class="title_C" style="display:table-cell">Nos articles</h3>
-							</div>
-							<div class="container_list_article">
-								<div class="row js_list_article">
-									{% if articles %}
-										{% include "boutique/dependancies/_list.html.twig" with {'articles': articles} only %}
-									{% else %}
-										Pas de resultat
-									{% endif %}
-								</div>
-							</div>
-						</div>
-					</div>
-
-					{#<div class="col-md-2 col-sm-12 col-xs-12 col-lg-2">
-					
-											<h3 class="title_C" style="display:table-cell">Video</h3>
-											<div class="pub_video_pub">
-												<iframe width="100%" height="333px" src="https://www.youtube.com/embed/-YN612DOzno" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-											</div>
-					
-										</div>#}
-				</div>
-				{# 
-				
-							#}
+	
+<div style="display: flex;justify-content: space-between; flex-wrap: wrap;">
+	{% for key in rangeEchantillon|keys %}
+		<a class="" href="{{ path('shop',{'id': shops[rangeEchantillon[key]].id, 'type' : shops[rangeEchantillon[key]].type })}}" style="display: grid;grid-template-columns: 78px auto;height: 110px;">
+			<div class="" style="display: flex;justify-content: center;align-items: center;background: #64646459;padding: 5px;">
+						<img src="{{asset('images/'~shops[rangeEchantillon[key]].logo)}}" style="width: 100%;max-height: 100%;">
 			</div>
-			<hr style="width: 71vw;"/>
-				{% if newArticles |length > 0%}
-				  <div style="padding-top: 16px;margin: 15px 0;">
-					<div id="container_selection">
-						<h3 class="title_C" style="display:table-cell" text-align="center">Nos séléctions</h3>
-					</div>
-						{% include "boutique/dependancies/slide_shop.html.twig" with {'articles' : newArticles} %}	
-				 </div>
-			<hr style="width: 71vw;"/>
+			<div class="" style="display: flex;justify-content: center;align-items: center;flex-direction: column;padding: 8px;">
+						<h2 style="font-size: 13px;color: #297fd7;">{{ shops[rangeEchantillon[key]].name }}</h2>
+						<p style="color: #5d616d;font-size: 11px;">
+							{{ shops[rangeEchantillon[key]].slogan}}
+						</p>
+			</div>		
+		</a>
+
+	{% endfor %}
+</div>
+</div>
+
+		<div class="bol1">
+		</div>
+		<h3 style="text-align: center;background: white;margin: 0;">TROUVER UNE BOUTIQUE</h3>
+		<div id="container_map">
+			<div id="search_shop">
+
+				<input type="text" id="search_in_map" class="form-control" placeholder="Recherche boutique" name="q">
+				<p>
+					<span>
+						<span id="nbr_result">
+							{{ shops| length }}
+						</span>
+						RESULTAT(S)</span>
+					<button id="geolocate_me">Me geolocalise</button>
+				</p>
+
+				<div id="container_list_shop">
+					{% include "boutique/dependancies/list_shop_galery_marchande.html.twig" %}
+				</div>
+			</div>
+			<div id="map"></div>
+		</div>
+
+		<div id="echatillon_shops">
+
+			{% set i = 0 %}
+
+			{% for key in rangeEchantillon|keys %}
+			   
+				{% set i = i + 1 %}
+				{% if i < 5 %}
+					{% if i % 2 == 0  %}
+
+						<a class="__" href="{{ path('shop',{'id': shops[rangeEchantillon[key]].id, 'type' : shops[rangeEchantillon[key]].type })}}">
+							<div class="datail_echantillon_shops">
+								<h2>{{ shops[rangeEchantillon[key]].name }}</h2>
+								<h3>
+									{{ shops[rangeEchantillon[key]].slogan}}
+								</h3>
+								<p>
+									{{ shops[rangeEchantillon[key]].apropos }}
+								</p>
+							</div>
+							<div class="image_echatillon_shop">
+								<img src="{{asset('images/'~shops[rangeEchantillon[key]].logo)}}">
+							</div>
+						</a>
+					{% else %}
+						<a class="__2" href="{{ path('shop',{'id': shops[rangeEchantillon[key]].id, 'type' : shops[rangeEchantillon[key]].type })}}">
+							<div class="image_echatillon_shop">
+								<img src="{{asset('images/'~shops[rangeEchantillon[key]].logo)}}">
+							</div>
+							<div class="datail_echantillon_shops">
+								<h2>{{ shops[rangeEchantillon[key]].name }}</h2>
+								<h3>
+									{{ shops[rangeEchantillon[key]].slogan}}
+								</h3>
+								<p>
+									{{ shops[rangeEchantillon[key]].apropos }}
+								</p>
+							</div>
+
+						</a>
+
+					{% endif %}
 				{% endif %}
 
-			
-			
-			{% if boutique.socialNetworks|length > 0 %}
-			<div id="container_social_network">
-				<h3 class="title_C" style="display:table-cell">Réseau sociaux
-				</h3>
-				<div class="container_reference">
-					{% if boutique.shopReferences is defined  %}
-						{% for socialnetwork in boutique.socialNetworks %}
-
-							<div id="_reference">
-								<div class="_container_images">
-									<img src={{ asset('images/'~ socialnetwork.images)}} alt="{{ socialnetwork.description }}"/>
-								</div>
-								<p id="container_description_reference">{{  socialnetwork.description }}
-									<a href="{{ socialnetwork.link }}" style="color : #2878c1 !important" target="_blank">{{ socialnetwork.nameLink }}</a>
-								</p>
-							</div>
-						{% endfor %}
-					{% endif %}
-				</div>
-			</div>
-			<hr style="width: 71vw;" />
-			{% endif %}
-		
-			{% if boutique.shopReferences|length > 0 %}
-			<div id="container_reference">
-				<h3 class="title_C" style="display:table-cell">Nos Références
-				</h3>
-				<div class="container_reference">
-					{% if boutique.shopReferences is defined  %}
-						{% for reference in boutique.shopReferences %}
-
-							<div id="_reference">
-								<div class="_container_images">
-									<img src={{ asset('images/'~reference.images)}} alt="{{ reference.description }}"/>
-								</div>
-								<p id="container_description_reference">{{  reference.description }}
-								</p>
-							</div>
-						{% endfor %}
-					{% endif %}
-				</div>
-			</div>
-			{% endif %}
+			{% endfor %}
 		</div>
-	{% else %}
-		<p>La boutique n'existe pas</p>
 	{% endif %}
+
+
 	{% if not app.user%}
 		{% include 'boutique/dependancies/connexion.html.twig'%}
 	{% endif %}
+
 	{% include 'boutique/dependancies/footer.html.twig' %}
 
 {% endblock %}
 
 {% block javascripts %}
+	<script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js" integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA==" crossorigin=""></script>
+	<script src="{{ asset('js/config-leaflet.js') }}"></script>
 	<script src="{{ asset('js/slick.min.js') }}"></script>
+	<script src="{{ asset('owl/js/owl.carousel.min.js') }}"></script>
+	<script>
+	      $(document).ready(function () {
+			   
+			   function sliderInit(event) {
+					var item = event.item.index, count = event.item.count, prev, next;
+					prev = item-1;
+					next = item+1;
+					imgsrc = $('.js-blurred-target').eq(prev).find('img').attr('src');
+
+					
+					$('.blurred-bg').css({'background':'#111 url('+imgsrc+') center  center / cover no-repeat'});
+					// $('.popular-caption:first').addClass('is-active').fadeIn(300);
+				};
+
+				function sliderNextPrev(event) {
+					var item = event.item.index, count = event.item.count, prev, next;
+					prev = item-1;
+					next = item+1;
+					imgsrc = $('.js-blurred-target').eq(prev).find('img').attr('src');
+					$('.blurred-bg').css({'background':'#111 url('+imgsrc+') center  center / cover no-repeat'});
+					var currentPlay = $('.popular-caption.is-active'),
+					
+					nextPlay = currentPlay.next('.popular-caption').length ? currentPlay.next('.popular-caption') : $('.popular-caption:first');
+					let activeDots = $('.custom-dot.active');
+					let nextActivateDots = activeDots.next('.custom-dot').length ? activeDots.next('.custom-dot') : $('.custom-dot:first');
+					activeDots.removeClass('active');
+					nextActivateDots.addClass('active');
+
+					currentPlay.removeClass('is-active').hide();
+					nextPlay.addClass('is-active').show();
+				};
+				$('.owl-carousel').owlCarousel({
+					loop: true,
+					rewind : true,
+					lazyLoad : true,
+					navText : ['<span class="fa fa-arrow-left"></span>','<span class="fa fa-arrow-right"></span>'],
+					slideBy : 2,
+					nav :true,
+					dots:false,
+					autoplay :true,
+					autoplayTimeout : 6000,
+					responsive : {0 : {margin : 14, items: 2},470 : {margin : 14, items : 3}, 730 : {margin: 14, items : 4 }, 1220 : {margin : 30, items : 4}},
+					onInitialized : sliderInit,
+					onChanged : sliderNextPrev
+				});
+
+				$('.carou-in').owlCarousel({
+					loop:true,
+					rewind:true,
+					nav:true,
+					lazyLoad:true,
+					navText:['<span class="far fa-arrow-left"></span>','<span class="far fa-arrow-right"></span>'],
+					slideBy:2,
+					dots:false,
+					autoplay:false,
+					autoplayTimeout:12000,
+					responsive: {0: {margin:14, items:2}, 470: {margin:14, items:3}, 760: {margin:14, items:4}, 950: {margin:14, items:6}, 1220: {margin:27, items:6}}
+				});
+				$('.carou-in-three').owlCarousel({
+					loop:true,
+					rewind:true,
+					nav:true,
+					lazyLoad:true,
+					navText:['<span class="far fa-arrow-left"></span>','<span class="far fa-arrow-right"></span>'],
+					slideBy:2,
+					dots:false,
+					autoplay:false,
+					autoplayTimeout:12000,
+					responsive: {0: {margin:14, items:1}, 470: {margin:14, items:2}, 760: {margin:14, items:3}, 1220: {margin:30, items:3}}
+				});
+				
+		  })
+	</script>
+	<!--script src="{{ asset('js/splide.js') }}"></script>
+	<script>
+		new Splide( '.splide',{
+			type   : 'loop',
+			pagination : false,
+			autoplay: true,
+			interval : 5000,
+			pauseOnHover: true,
+			perPage : 4,
+			easing : 'cubic-bezier(0.45, 0.25, 0.60, 0.95)'
+		} ).mount();
+	</script-->
+
 	<script src=" {{ asset('js/nouislider.min.js') }}"></script>
 	<script src="{{ asset('js/jquery.zoom.min.js') }}"></script>
 	<script src="{{ asset('js/index.js') }}"></script>
@@ -176,3 +325,4 @@
 	<script src="{{ asset('js/shop.js') }}"></script>
 	<script src="{{ asset('js/main.js') }}"></script>
 {% endblock %}
+

@@ -1,17 +1,21 @@
 	<footer id="footer">
+		<div id="container_social_network">
+						<h3 class="title_C" style="display:table-cell; margin-bottom: 20px;">A PROPOS DE NOUS
+						</h3>
+						<p style="color : black !important ;width: 64vw;">{{ boutique.apropos }}</p>
+		</div>
             <!-- top footer -->
             {# include "boutique/dependancies/newsletter.html.twig"  #}
 			<div class="section">
 				<!-- container -->
 				<div class="container">
 					<!-- row -->
+					
 					<div class="row">
 						<div class="col-md-4 col-xs-12">
 							<div class="footer">
-								<h3 class="footer-title">Apropos de nous</h3>
-							  {% if boutique %}
-							
-								<p>{{ boutique.apropos }}</p>
+								{% if boutique %}
+								<h3 class="footer-title">{{ boutique.name }}</h3>
 								<ul class="footer-links">
 									<li><i class="fa fa-map-marker"></i>Visitez notre  <a href="{{ boutique.address }}" target="_blank"style="color:#46b1e6">site web</a></li>
 									<li><a href="#"><i class="fa fa-phone"></i>{{ boutique.contact }}</a></li>
@@ -27,24 +31,34 @@
 								   {% if boutique.id is defined %}
 									<li><a href="{{ path('condition', {'id': boutique.id })}}" target="blank" class="condition_genral_d'utilisation">Condition générale {{ boutique.name}}</a></li>
 									{% endif %}
+									{% if boutique.link is defined %}
+										<li>Suivez nous sur notre page <a href="{{boutique.link}}" target="_blank" style="color:#46b1e6">facebook</a></li>
+									{% endif %}
 								</ul>
 							</div>
 						</div>
 
 						<div class="col-md-4 col-xs-12">
 							<div class="footer">
-								<h3 class="footer-title">Utiles</h3>
-								<ul class="footer-links">
-									<li> Siège :  </li>
-									<li> Service en ligne  </li>
-									{% if boutique.link is defined %}
-										<li>Suivez nous sur notre page <a href="{{boutique.link}}" target="_blank" style="color:#46b1e6">facebook</a></li>
-									{% endif %}
+							    
+								 <h3 class="footer-title">Nous contacté</h3>
+								{#<ul class="footer-links">
+									<form>
+									  <label for="name">Nom</label>
+									  <input type="text" name ="name" required class="form-control">
+									  <label for="adresse_mail">Mail</label>
+									  <input id="adresse_mail" class="form-control" name="mail" type="mail" required>
+									  <label for="private_mail">Description</label>
+									  <textarea name="private_mail" id="private_mail" class="form-control" required></textarea>
+									<div style="display: flex;  justify-content: end;margin: 5px;">
+									  <button class="send_mail btn btn-primary">Envoyer</button>
+									</div>
+									</form>
 									{#
 									<li><a href="{{ path('show_cart',{'type':'panier'})}}">View Cart</a></li>
 									<li><a href="{{ path('show_cart',{'type':'wish'})}}">Wishlist</a></li>
-									#}
-								</ul>
+									
+								</ul> #}
 							</div>
 						</div>
 					</div>

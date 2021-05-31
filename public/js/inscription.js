@@ -14,11 +14,14 @@ $(function () {
         cache: false,
         processData: false,
         beforeSend: function () {
-          $(".ajax").css("display", "inline-block");
+          $("#bouton_inscr").text("....");
+          $("#bouton_inscr").prop('disabled',true);
           toastr.info('Inscription en cours ...');
         },
-        error : ()=> {
-          toastr.error("Adresse mail existe déjà");
+        error : (response, error)=> {
+          $("#bouton_inscr").text("Enregistrer");
+          $("#bouton_inscr").prop('disabled',false);
+          toastr.error(eval(response.responseText));
           $("#id_email").next(".error-message").fadeIn().html('Adresse mail existe déjà');
           $("#id_email").css("border-color", "red");
           $(".ajax").css("display", "none");
@@ -27,12 +30,11 @@ $(function () {
         },
         success: function (data) {
 
-            $(".enregistrer")
-              .fadeIn()
-              .html("Le systeme vous dirigera vers Inother :)");
-            $(".ajax").css("display", "none");
-            toastr.success('"Inscription reussite, merci de vous connecter avec votre numéro téléphone et mots de passe" ...');
-            document.location = "index.php";
+          $(".ajax").css("display", "none");
+          toastr.success(' Inscription reussite...');
+          $('.message').text('Inscription reussie, veillez confirmez votre address e-mail');
+          $('#container_message').css({'transform':'translate(0)','z-index':1,'border-radius': '0%','height': '100%','width': '100%'})
+          $('.container_btn').css('transform','scale(1)')
           
         }
       });

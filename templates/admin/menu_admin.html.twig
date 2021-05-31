@@ -122,6 +122,43 @@
    {{ menu_super_admin(type ,"ADMIN")}} 
 {#{% endif %}#}
 <li class="nav-item">
+      <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#images_et_son" aria-expanded="true" aria-controls="collapsePages">
+        <i class="fas fa-fw fa-folder"></i>
+        <span>Blog</span>
+      </a>
+      <div id="images_et_son" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
+        <div class="bg-white py-2 collapse-inner rounded">
+          <a class="collapse-item" href="{{path('listBlog')}}">Liste</a>
+          <a class="collapse-item" href="{{path('addBlog')}}">Ajout</a>
+        </div>
+</li>
+
+{% if boutique.getDetailOffer is not same as ('Gratuit') %}
+
+<li class="nav-item">
+      <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#formation_video" aria-expanded="true" aria-controls="collapsePages">
+        <i class="fas fa-fw fa-folder"></i>
+        <span>Video</span>
+      </a>
+      <div id="formation_video" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
+        <div class="bg-white py-2 collapse-inner rounded">
+          <a class="collapse-item" href="{{path('list_video')}}">Liste</a>
+          <a class="collapse-item" href="{{path('add_video')}}">Ajout</a>
+        </div>
+</li>   
+<li class="nav-item">
+      <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#formation" aria-expanded="true" aria-controls="collapsePages">
+        <i class="fas fa-fw fa-folder"></i>
+        <span>Formation </span>
+      </a>
+      <div id="formation" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
+        <div class="bg-white py-2 collapse-inner rounded">
+          <a class="collapse-item" href="{{path('list_formation')}}">Liste</a>
+          <a class="collapse-item" href="{{path('add_formation')}}">Ajout</a>
+        </div>
+</li> 
+{% endif %}
+<li class="nav-item">
       <a class="nav-link" href="{{ path('social_network_index')}}">
         <i class="fas fa-fw fa-tachometer-alt"></i>
         <span>Lien sur les réseaux sociaux</span></a>

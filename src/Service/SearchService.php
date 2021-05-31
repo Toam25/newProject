@@ -4,16 +4,23 @@ namespace App\Service;
 
 use App\Data\Search;
 use App\Repository\ArticleRepository;
+use App\Repository\BlogRepository;
+use App\Repository\BoutiqueRepository;
 use Symfony\Component\HttpFoundation\Request;
 
 class SearchService
 {
 
     private $articleRepository;
+    private $blogRepository;
+    private $boutiqueRepository;
 
-    public function __construct(ArticleRepository $articleRepository)
+    public function __construct(ArticleRepository $articleRepository,BoutiqueRepository $boutiqueRepository, BlogRepository $blogRepository)
     {
         $this->articleRepository = $articleRepository;
+        $this->blogRepository= $blogRepository;
+        $this->boutiqueRepository=$boutiqueRepository;
+
     }
     public function getResultSearch(Request $request)
     {
@@ -50,5 +57,45 @@ class SearchService
         }
 
         return $this->articleRepository->getArticleWithVoteBy($data);
+    }
+    public function getResultSearchForBlog(Request $request)
+    {
+        
+        $data = new Search();
+        $q = $request->get('q');
+        $category = $request->get('blog');
+        $boutique_id = $request->get('shop_id');
+        
+        
+        if (!empty($q)) {
+            $data->q = $q;
+        }
+        if (!empty($category)) {
+            $data->category = $category;
+        }
+       
+        if (!empty($boutique_id)) {
+            $data->boutique_id = intval($boutique_id);
+        }
+        
+        return $this->blogRepository->getAllBlogWithDataBy($data);
+    }
+    public function getResultSearchForShops(Request $request)
+    {
+        
+        $data = new Search();
+        $q = $request->get('q');
+        $category = $request->get('type');
+        
+        
+        if (!empty($q)) {
+            $data->q = $q;
+        }
+        if (!empty($category)) {
+            $data->category = $category;
+        }
+    
+        
+        return $this->boutiqueRepository->getAllShopsBy($data);
     }
 }

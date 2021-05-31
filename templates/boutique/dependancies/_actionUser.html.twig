@@ -1,7 +1,40 @@
 <div class="usersPers">
 	<div class=" clearfix">
-		<div
-			id="header-ctn" class="header-ctn">
+		<div id="header-ctn" class="header-ctn">
+				 
+				{% if app.user %} 
+				
+					<div style="" class="membre">
+							<a href="">
+								<i class="fa fa-user"></i>
+								<span>Boutiques</span>
+							</a>
+							
+					</div>
+					   {% if app.user.boutique is defined and app.user.boutiques[0].getDetailOffer() is not same as('Gratuit') %}
+					<div style="" class="mynotification">
+						<a href="">
+							<i class="fa fa-bell"></i>
+							 <span>Notification</span>
+							{#<div class="qty qtymess">
+								0
+							</div> #}
+						</a>
+							
+					</div>
+					<div id="" style="" class="_my_message_">
+							<a href="">
+								<i class="fa fa-envelope"></i>
+								<span>Message</span>
+								{#<div class="qty qtymess">
+									0
+								</div> #}
+							</a>
+							
+					</div>
+				   {% endif %}
+
+				{%  endif %}
 			{# messages #}
 			{# 
 				<div id="message">
@@ -115,7 +148,7 @@
 					</a>
 					<ul class="dropdown-menu dropdown-menu-right dropdown-default" aria-labelledby="userDropdown">
 						<li>
-							<a class="dropdown-item" href="{{path('profil',{'id': app.user.id,'slug' : slugify(app.user.name) ~"-"~slugify(app.user.firstname)~".html" })}}">
+							<a class="dropdown-item" href="{{path('profil',{'id': app.user.id,'slug' : slugify(app.user.name) ~"-"~slugify(app.user.firstname) })}}">
 								<i class="fa fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
 								Mon profil</a>
 						</li>

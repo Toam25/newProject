@@ -2,9 +2,10 @@
 
 namespace App\Repository;
 
+use App\Data\Search;
 use App\Entity\Boutique;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
-use Doctrine\Common\Persistence\ManagerRegistry;
+use Doctrine\Persistence\ManagerRegistry;
 
 /**
  * @method Boutique|null find($id, $lockMode = null, $lockVersion = null)
@@ -18,38 +19,74 @@ class BoutiqueRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Boutique::class);
     }
-    public function findOneByWithHeaderReference(string $type,int $id){
+    public function findOneByWithHeaderReference(string $type, int $id)
+    {
         return $this->createQueryBuilder('b')
-                    ->select('b','h','r')
-                    ->leftJoin('b.headers', 'h')
-                    ->leftJoin('b.shopReferences', 'r')
-                    ->where('b.type = :type')
-                    ->andWhere('b.id = :id')
-                    ->setParameters([
-                        'type'=>$type,
-                        'id'=>$id
-                    ])
-                    ->getQuery()
-                    ->getOneOrNullResult()
-        ;
+            ->select('b', 'h', 'r')
+            ->leftJoin('b.headers', 'h')
+            ->leftJoin('b.shopReferences', 'r')
+            ->where('b.type = :type')
+            ->andWhere('b.id = :id')
+            ->setParameters([
+                'type' => $type,
+                'id' => $id
+            ])
+            ->getQuery()
+            ->getOneOrNullResult();
     }
-    public function findOneBoutiqueByUserPerRole(String $role){
+    public function findOneBoutiqueByUserPerRole(String $role)
+    {
         return $this->createQueryBuilder('b')
-                    ->select('b','u')
-                    ->join('b.user', 'u')
-                    ->where('u.roles LIKE :role')
-                    ->setParameter('role', '%'.$role.'%')
-                    ->getQuery()
-                    ->getOneOrNullResult()
-        ;
+            ->select('b', 'u')
+            ->join('b.user', 'u')
+            ->where('u.roles LIKE :role')
+            ->setParameter('role', '%' . $role . '%')
+            ->getQuery()
+            ->getOneOrNullResult();
     }
-    public function findAllBoutiqueByUser(){
+    public function findAllBoutiqueByUser()
+    {
         return $this->createQueryBuilder('b')
-                    ->select('b','u')
-                    ->join('b.user', 'u')
-                    ->getQuery()
-                    ->getResult()
-        ;
+            ->select('b', 'u')
+            ->join('b.user', 'u')
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function findAllBoutiqueWithOutUserRoleSuperAdmin(String $role)
+    {
+        $query = $this->createQueryBuilder('b')
+            ->select('b', 'u', 'h')
+            ->leftJoin('b.user', 'u')
+            ->leftJoin('b.headers', 'h')
+            ->where('u.roles LIKE :role')
+            ->setParameter('role', '%' . $role . '%')
+            ->getQuery()
+            ->getResult();
+
+        return $query;
+    }
+
+    public function getAllShopsBy(Search $data)
+    {
+
+        $query = $this->createQueryBuilder('b')
+            ->select('b', 'u', 'h')
+            ->leftJoin('b.user', 'u')
+            ->leftJoin('b.headers', 'h')
+            ->andWhere('b.type != :SuperAdmin')
+            ->setParameter('SuperAdmin', 'SuperAdmin');
+        if ($data->q) {
+            $query->andWhere('b.name LIKE :q')
+                ->setParameter('q', '%' . $data->q . '%');
+        }
+        if ($data->category) {
+            $query->andWhere('b.type IN (:category)')
+                ->setParameter('category', $data->category);
+        }
+
+
+        return $query->getQuery()->getResult();
     }
     // /**
     //  * @return Boutique[] Returns an array of Boutique objects

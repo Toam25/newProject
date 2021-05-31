@@ -1,0 +1,32 @@
+	<div id="reviews">
+		<ul class="reviews">
+		    {% if votes| length > 0 %}
+				<label class="title_C">
+					<a data-toggle="tab" href="#tab1">Listes des commentaires  ( {{ votes| length }} ) </a>
+				</label>
+			{% for vote in votes %}
+				<li id="li-review-{{vote.id}}" class="li-review">
+					<div class="review-heading">
+						<div class="container_image_user_vote">
+							<img src="{{asset('images/'~vote.user.avatar)}}" />
+							<h5 class="name">{{ vote.user.name}}</h5>
+						</div>
+						
+						<p class="date">{{vote.createdAt|date}}</p>
+						<div class="review-rating">
+							{{my_vote_twig(vote.value)}}
+						</div>
+					</div>
+					<div class="review-body">
+						<p>{{ vote.comment}}</p>
+					</div>
+					
+					{% if app.user is not same as(null) and 'ROLE_SUPER_ADMIN' in app.user.roles or vote.user is same as(app.user) %}
+						<button class="js-delete-vote delete-vote btn btn-danger" data-id="{{vote.id}}">Supprimer</button>
+					{% endif %}
+
+				</li>
+			{% endfor %}
+			{% endif %}
+		</ul>
+	</div>

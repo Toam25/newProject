@@ -1,0 +1,11 @@
+<div class="header-search">
+    <form method="Get" action="{{path('list_product')}}">
+        <input class="input" name="q" placeholder="Recherche dans {{ boutique.name}}" value ="{% if search is defined %}{{search}}{% endif %}">
+        <select style="margin-right: -4px;" name="searchtype">
+            <option value="article" >Produit</option>
+            <option value="blog" {%if type is defined and type is same as('blog')%} selected {% endif %}>Blog</option>
+            <option value="shop"  {%if type is defined and type is same as('shop')%} selected {% endif %}>Boutique</option>
+        </select>
+        <button class="search-btn">Search</button>
+    </form>
+</div>

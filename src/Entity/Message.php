@@ -2,92 +2,87 @@
 
 namespace App\Entity;
 
+use App\Repository\MessageRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity(repositoryClass="App\Repository\MessageRepository")
+ * @ORM\Entity(repositoryClass=MessageRepository::class)
  */
 class Message
 {
     /**
-     * @ORM\Id()
-     * @ORM\GeneratedValue()
+     * @ORM\Id
+     * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
      */
     private $id;
 
     /**
+     * @ORM\ManyToOne(targetEntity=Conversation::class, inversedBy="message")
+     */
+    private $conversation;
+
+    /**
      * @ORM\Column(type="text")
      */
-    private $message;
+    private $content;
 
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="messages")
      */
-    private $id_sender;
-
-    /**
-     * @ORM\Column(type="integer")
-     */
-    private $id_receved;
+    private $user;
 
     /**
      * @ORM\Column(type="datetime")
      */
     private $createdAt;
 
-    /**
-     * @ORM\Column(type="boolean")
-     */
-    private $view;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Bloked", inversedBy="message")
-     */
-    private $bloked;
+    private $times;
 
+    private $my;
+
+    public function __construct()
+    {
+        $this->createdAt = new \DateTime();
+    }
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function __construct()
+    public function getConversation(): ?Conversation
     {
-        $this->createdAt= new \DateTime();
-        $this->view=0;
-    }
-    public function getMessage(): ?string
-    {
-        return $this->message;
+        return $this->conversation;
     }
 
-    public function setMessage(string $message): self
+    public function setConversation(?Conversation $conversation): self
     {
-        $this->message = $message;
+        $this->conversation = $conversation;
 
         return $this;
     }
 
-    public function getIdSender(): ?int
+    public function getContent(): ?string
     {
-        return $this->id_sender;
+        return $this->content;
     }
 
-    public function setIdSender(int $id_sender): self
+    public function setContent(string $content): self
     {
-        $this->id_sender = $id_sender;
+        $this->content = $content;
 
         return $this;
     }
 
-    public function getIdReceved(): ?int
+    public function getUser(): ?User
     {
-        return $this->id_receved;
+        return $this->user;
     }
 
-    public function setIdReceved(int $id_receved): self
+    public function setUser(?User $user): self
     {
-        $this->id_receved = $id_receved;
+        $this->user = $user;
 
         return $this;
     }
@@ -104,26 +99,34 @@ class Message
         return $this;
     }
 
-    public function getView(): ?bool
+    public function getMy()
     {
-        return $this->view;
+        return $this->my;
     }
 
-    public function setView(bool $view): self
+    public function setMy($my)
     {
-        $this->view = $view;
+        $this->my = $my;
 
         return $this;
     }
 
-    public function getBloked(): ?Bloked
+    /**
+     * Get the value of times
+     */
+    public function getTimes()
     {
-        return $this->bloked;
+        return $this->times;
     }
 
-    public function setBloked(?Bloked $bloked): self
+    /**
+     * Set the value of times
+     *
+     * @return  self
+     */
+    public function setTimes($times)
     {
-        $this->bloked = $bloked;
+        $this->times = $times;
 
         return $this;
     }

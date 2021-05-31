@@ -25,6 +25,7 @@
 
     <!-- Custom stlylesheet -->
     <link type="text/css" rel="stylesheet" href="{{ asset('css/style.css') }}"/>
+    <link type="text/css" rel="stylesheet" href="{{ asset('css/boutique.css') }}"/>
     <link type="text/css" rel="stylesheet" href="{{ asset('css/index.css') }}"/>
 	<link rel="stylesheet" href="{{ asset('css/indexmenu.css') }}" />
     <link type="text/css" rel="stylesheet" href="{{ asset('css/slideindexvote.css') }}"/>
@@ -65,9 +66,11 @@
 				<h4 class="title"></h4>
 				<button class="remove btn btn-danger "><span class="fa fa-times"></span></button>
 		</div>
-	     <div class="_container_echatillon">
-	     	<h4 align='center'> Recherche des resultats </h4>
-	     </div>
+		<div id="container_echantillon">
+			<div class="_container_echatillon">
+				<h4 align='center'> Recherche des resultats </h4>
+			</div>
+		</div>
 		 <div id="divider"></div>
 	     <div class="_boutiqueContaintEchantillon">
 	     	
@@ -90,6 +93,7 @@
 				<!--SLIDER -->
 				{% include "boutique/articleslideindex.html.twig" %}
 			</div>
+			
 			<div class="col-sm-3 col-md-3 pub-video">
 				<p id="p_video">Mon pub</p>
 				<div class="pub_video_pub">
@@ -115,20 +119,33 @@
 			{#  list des pube video #}
 			
 		</div>
+
+		<div style="margin-top: 20px;">
+		    <hr>
+		     {% if blogs | length >0  %}
+			      <h4 align ="center">Articles en vogue</h4>
+			 {% endif %}
+			  {% include "boutique/slideblogindex.html.twig" %}
+		</div>
 		{% include "boutique/pubvideo.html.twig" %}
 	</div>
 	<p></p>
+	 
+	{# <div class="message_footer">{% include "boutique/message.twig" %}Nous contacter</div> #}
 	{% if not app.user%}
 		{% include 'boutique/dependancies/connexion.html.twig'%}
 	{% endif %}
-	{% include "boutique/dependancies/footer.html.twig" %}
+	{% include "boutique/dependancies/_footer.html.twig" %}
 {% endblock %}
 {% block javascripts %}
 	{#<script src="{{asset('js/jquery.js')}}"></script>
 	<script src="{{asset('js/bootstrap.min.js')}}"></script>#}
+	<script src="{{ asset('js/slick.min.js') }}"></script>
+	<script src=" {{ asset('js/nouislider.min.js') }}"></script>
 	<script src="{{ asset('js/mousewheel.js') }}"> </script>
 	<script src="{{ asset('js/connexion.js') }}"> </script>
 	<script src="{{asset('js/index.js')}}"></script>
 	<script src="{{asset('js/voteindex.js')}}"></script>
 	<script src="{{asset('js/indexmenu.js')}}"></script>
+	<script src="{{ asset('js/index_main.js') }}"></script>
 {% endblock %}
