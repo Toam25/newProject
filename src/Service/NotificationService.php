@@ -71,6 +71,15 @@ class NotificationService extends AbstractController
                          'createdat' => $notification->getCreatedAt()->getTimesTamp(),
                          'isView' => in_array($this->getUser()->getId(), $notification->getView())
                     ]);
+               } else if ($notification->getSubject() == "NEW USER") {
+                    array_push($notifications, [
+                         "message" => $notification->$notification->getDescription() . "  nous a rejoint",
+                         "idBlog" => "",
+                         'status' => 'NEW USER',
+                         'idNotification' => (int)$notification->getId(),
+                         'createdat' => $notification->getCreatedAt()->getTimesTamp(),
+                         'isView' => in_array($this->getUser()->getId(), $notification->getView())
+                    ]);
                }
           }
           return $notifications;
