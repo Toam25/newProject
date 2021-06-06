@@ -118,6 +118,11 @@ class Article
      */
     private $slide;
 
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $externalDetail;
+
     public function __construct()
     {
         $this->images = new ArrayCollection();
@@ -445,6 +450,18 @@ class Article
     public function setSlide(?int $slide): self
     {
         $this->slide = $slide;
+
+        return $this;
+    }
+
+    public function getExternalDetail(): ?string
+    {
+        return $this->externalDetail;
+    }
+
+    public function setExternalDetail(?string $externalDetail): self
+    {
+        $this->externalDetail = $externalDetail;
 
         return $this;
     }

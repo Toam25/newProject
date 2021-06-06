@@ -83,8 +83,8 @@ button.owl-dot {
 }
 .owl-dots-custom {
     position: absolute;
-    top: 0;
-    bottom: 0;
+    /* top: 0; */
+    bottom: -16px;
     width: 10px;
     display: flex;
     flex-direction: column;

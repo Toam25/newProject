@@ -521,6 +521,7 @@ class APIController extends AbstractController
 
         if ($this->getUser() and $article) {
             $article->setCategory($request->request->get('categorie'));
+            $article->setExternalDetail($request->request->get('external-link'));
             $article->setName($request->request->get('name'));
             $article->setPrice($request->request->get('price'));
             $article->setPriceGlobal($request->request->get('global_price'));
@@ -572,6 +573,7 @@ class APIController extends AbstractController
             $article->setPriceGlobal($request->request->get('global_price'));
             $article->setPricePromo($request->request->get('price_promo'));
             $article->setPromo($request->request->get('promotion'));
+            $article->setExternalDetail($request->request->get('external-link'));
 
             $article->setType($request->request->get('type') ?? $request->request->get('sous_category'));
             $article->setQuantity($request->request->get('quantity'));
@@ -695,6 +697,7 @@ class APIController extends AbstractController
                     'name' => $image[0]->getName(),
                     'id' => $image[0]->getId()
                 ],
+                'view_external_link' => $article->getExternalDetail(),
                 'list_menu' => $list_menu
 
             ];
