@@ -396,7 +396,7 @@ class APIController extends AbstractController
         }
     }
     /**
-     * @Route("/login/update/user/{id}", name="profil_password", methods="POST")
+     * @Route("/login/update/me/user/{id}", name="profil_password", methods={"POST"})
      */
     public function upPassWordUser(Request $request, User $user, $id, InsertFileServices $insertFileServices, UserPasswordEncoderInterface $encoder)
     {
@@ -411,11 +411,13 @@ class APIController extends AbstractController
             }
 
             $em = $this->getDoctrine()->getManager();
+            $em->persist($user);
             $em->flush();
             return new JsonResponse(["status" => "sucess"], Response::HTTP_OK);
         } else {
             return new JsonResponse(["status" => "error", 'message' => "Mot de passe incorect"], Response::HTTP_UNAUTHORIZED);
         }
+        return new JsonResponse(["status" => "error", 'message' => "Mot de passe incorect"], Response::HTTP_UNAUTHORIZED);
     }
     /**
      * @Route("/profil/cv/user/{id}", name="profil_cv", methods="POST")
