@@ -49,7 +49,7 @@ class PromoTwig extends AbstractExtension
         } else {
 
 
-            $promo = ($promo != 'Normal') ? "<div class='ribbon ribbon-top-right  " . $promo . "' ><span>" . $ispromo . "</span></div>" : 'testes';
+            $promo = ($promo != 'Normal') ? "<div class='ribbon ribbon-top-right  " . $promo . "' ><span>" . $ispromo . "</span></div>" : '';
         }
 
         return $this->twig->render('partials/promo.html.twig', [
