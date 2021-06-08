@@ -373,7 +373,7 @@ class APIController extends AbstractController
     }
 
     /**
-     * @Route("/profil/update/user/{id}", name="profil_update_user")
+     * @Route("/profil/update/me/user/{id}", name="profil_update_user")
      */
     public function updateUser(Request $request, User $user, $id, InsertFileServices $insertFileServices)
     {
