@@ -157,7 +157,7 @@ $(function () {
                 data.messages.forEach(message => {
                     my = (message.my) ? "my" : "your";
                     mymessage = `<div class="contaitboutique ` + my + ` ">` + message.content + `
-                              fdf
+                              
                              <div class="time" >
                               `+ getStringDatePerTimestamp(message.times) + `
                               </div>
