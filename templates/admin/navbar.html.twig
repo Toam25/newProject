@@ -125,7 +125,7 @@
         <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
           <a class="dropdown-item" href="{{ path('profil',{'id' : app.user.id,'slug' : slugify(app.user.name) ~"-"~slugify(app.user.firstname)~".html" })}}">
             <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
-            Profile
+            Profil
           </a>
     {% if boutique.type is not same as('SuperAdmin') %}
           <a class="dropdown-item" href="{{ path('parametre_option')}}">
