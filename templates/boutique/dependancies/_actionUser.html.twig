@@ -11,7 +11,7 @@
 							</a>
 							
 					</div>
-					   {% if app.user.boutique is defined and app.user.boutiques[0].getDetailOffer() is not same as('Gratuit') %}
+					   {% if app.user.boutique is defined and app.user.boutiques[0].getDetailOffer() is not same as('Gratuit') or "ROLE_SUPER_ADMIN" in app.user.roles %}
 					<div style="" class="mynotification">
 						<a href="">
 							<i class="fa fa-bell"></i>
