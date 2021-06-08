@@ -60,11 +60,11 @@
                </div>
         {% endfor %}
 
-        {% if boutique.getDetailoffer() is same as ('Gratuit')%}
+        {# {% if boutique.getDetailoffer() is same as ('Gratuit')%}
           <div class="alert alert-danger">
              Votre offre est Gratuit ...
           </div>
-        {% endif %}
+        {% endif %} #}
         {% if pages == 'new' %}
             {% include "admin/dependencies/new_article.html.twig" %}
 
@@ -145,22 +145,24 @@
         
         {# {% if boutique.getDetailOffer is not same as('Gratuit') %} #}
                 {#video #}
-                {% elseif pages == "add_video"%}
-                    {% include 'admin/dependencies/add_video.html.twig' %}
+        {% elseif pages == "add_video"%}
+            {% include 'admin/dependencies/add_video.html.twig' %}
 
-                {% elseif pages == "list_video"%}
-                    {% include 'admin/dependencies/list_video.html.twig' %}
-                {% elseif pages == "edit_video"%}
-                    {% include 'admin/dependencies/edit_video.html.twig' %}
-                
-                {#page #}
-                {% elseif pages == "add_page"%}
-                    {% include 'admin/dependencies/add_page.html.twig' %}
+        {% elseif pages == "list_video"%}
+            {% include 'admin/dependencies/list_video.html.twig' %}
+        {% elseif pages == "edit_video"%}
+            {% include 'admin/dependencies/edit_video.html.twig' %}
+        
+        {#page #}
+        {% elseif pages == "add_page"%}
+            {% include 'admin/dependencies/add_page.html.twig' %}
 
-                {% elseif pages == "list_page" %}
-                    {% include 'admin/dependencies/list_page.html.twig' %}
-                {% elseif pages == "edit_page"%}
-                    {% include 'admin/dependencies/edit_page.html.twig' %}
+        {% elseif pages == "list_page" %}
+            {% include 'admin/dependencies/list_page.html.twig' %}
+        {% elseif pages == "edit_page"%}
+            {% include 'admin/dependencies/edit_page.html.twig' %}
+         {% elseif pages == "user"%}
+            {% include 'admin/dependencies/user.html.twig' %}
         {# {% endif %} #}
      {#########################################################}
             

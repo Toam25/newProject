@@ -396,7 +396,7 @@ class APIController extends AbstractController
         }
     }
     /**
-     * @Route("/login/update/user/{id}", name="profil_password", methods="POST")
+     * @Route("/login/update/me/user/{id}", name="profil_password", methods={"POST"})
      */
     public function upPassWordUser(Request $request, User $user, $id, InsertFileServices $insertFileServices, UserPasswordEncoderInterface $encoder)
     {
@@ -411,11 +411,13 @@ class APIController extends AbstractController
             }
 
             $em = $this->getDoctrine()->getManager();
+            $em->persist($user);
             $em->flush();
             return new JsonResponse(["status" => "sucess"], Response::HTTP_OK);
         } else {
             return new JsonResponse(["status" => "error", 'message' => "Mot de passe incorect"], Response::HTTP_UNAUTHORIZED);
         }
+        return new JsonResponse(["status" => "error", 'message' => "Mot de passe incorect"], Response::HTTP_UNAUTHORIZED);
     }
     /**
      * @Route("/profil/cv/user/{id}", name="profil_cv", methods="POST")
@@ -521,6 +523,7 @@ class APIController extends AbstractController
 
         if ($this->getUser() and $article) {
             $article->setCategory($request->request->get('categorie'));
+            $article->setExternalDetail($request->request->get('external-link'));
             $article->setName($request->request->get('name'));
             $article->setPrice($request->request->get('price'));
             $article->setPriceGlobal($request->request->get('global_price'));
@@ -572,6 +575,7 @@ class APIController extends AbstractController
             $article->setPriceGlobal($request->request->get('global_price'));
             $article->setPricePromo($request->request->get('price_promo'));
             $article->setPromo($request->request->get('promotion'));
+            $article->setExternalDetail($request->request->get('external-link'));
 
             $article->setType($request->request->get('type') ?? $request->request->get('sous_category'));
             $article->setQuantity($request->request->get('quantity'));
@@ -695,6 +699,7 @@ class APIController extends AbstractController
                     'name' => $image[0]->getName(),
                     'id' => $image[0]->getId()
                 ],
+                'view_external_link' => $article->getExternalDetail(),
                 'list_menu' => $list_menu
 
             ];

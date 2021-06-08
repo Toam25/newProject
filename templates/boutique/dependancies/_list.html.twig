@@ -5,7 +5,11 @@
 	<div class="col-md-4 col-sm-4 col-xs-6 col-lg-3 " style="margin-top: 3px;">
 		<div class="cart container_cart">
 		    {{ promo(article.promo,article.price, article.pricePromo) }}
-			<a href="{{path('detail',{'id' : article.id,'slug' : article.name|slug('-')|lower })}}">
+				{% set href = path('detail',{'id' : article.id,'slug' : article.price~"-"~article.name|slug('-') }) %}
+            {% if article.externalDetail is defined and article.externalDetail is not same as("") %}
+			     {% set href = article.externalDetail %}
+			{% endif %}
+			<a href= {{ href }}>
 				<div class="container_image">
 					<img src="{{ asset('images/'~article.images[0].name)}}" alt="">
 					{#

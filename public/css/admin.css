@@ -3,6 +3,30 @@
     margin-top: 7px;
     overflow: hidden;
 }
+.container_user {
+    display: flex;
+    background: white;
+    align-items: center;
+    margin: 10px 0px;
+    box-shadow: 5px 5px 5px #0000005e;
+    padding: 10px;
+    height: 100px;
+}
+._container_image_user{
+    height: 80px;
+    width: 80px;
+}
+.container_detail_user{
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+}
+
+._container_image_user > img {
+    max-height: 100%;
+    width: 100%;
+}
 .switch-field input {
     position: absolute !important;
     clip : rect(0,0,0,0);

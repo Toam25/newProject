@@ -885,6 +885,7 @@ $(function () {
         $('#view_prix').val(data.price);
         $('#view_prix_g').val(data.global_price);
         $('#view_stock').val(data.quantity);
+        $('#view_external-link').val(data.view_external_link);
         $('#slide' + data.slider).prop('checked', true);
         $('._view_simple_article_sous_category').val(data.sous_category)
         $('#view_sous_category').html(list_option(data.list_menu, data.sous_category));

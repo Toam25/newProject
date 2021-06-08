@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Boutique;
+use App\Entity\Notification;
 use App\Entity\User;
 use App\Form\UserType;
 use App\Repository\BoutiqueRepository;
@@ -27,7 +28,7 @@ class SecurityController extends AbstractController
     /**
      * @Route("/inscription", name="registration")
      */
-    public function registration(HttpFoundationRequest $request, MailerInterface $mailer, HttpClientInterface $httpClient, UserRepository $userRepository, EntityManagerInterface $manager, UserPasswordEncoderInterface $encoder)
+    public function registration(HttpFoundationRequest $request, MailerInterface $mailer, Notification $notification, HttpClientInterface $httpClient, UserRepository $userRepository, EntityManagerInterface $manager, UserPasswordEncoderInterface $encoder)
     {
         $user = new User();
         $boutique = new Boutique();
@@ -103,7 +104,15 @@ class SecurityController extends AbstractController
                     } catch (TransportExceptionInterface $e) {
                         return new JsonResponse("Erreur de connexion au serveur", Response::HTTP_UNAUTHORIZED);
                     }
-
+                    $notification = new Notification();
+                    $notification->setSubject('NEW USER');
+                    $notification->setDescription($user->getName() . " " . $user->getFirstname());
+                    $notification->setFromUser("");
+                    $users = $userRepository->findAllWithRoleSuperAdmin("ROLE_SUPER_ADMIN");
+                    foreach ($users as $user) {
+                        $notification->addToUser($user);
+                    };
+                    $manager->persist($notification);
                     $manager->persist($user);
                     $manager->flush();
                 } else {

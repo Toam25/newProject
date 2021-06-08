@@ -92,6 +92,22 @@ class AdminController extends AbstractController
             'boutique' => $boutique,
         ]);
     }
+
+    /**
+     * @Route("/admin/user", name="user")
+     */
+    public function user(BoutiqueRepository $boutiqueRepository, UserRepository $userRepository)
+    {
+
+        // $allArticle = $articleRepository->findBy(['boutique'=>$boutiqueRepository->findOneBy(['user'=>$this->getUser()])] );
+
+        $boutique = $boutiqueRepository->findOneBy(['user' => $this->getUser()]);
+        return $this->render('admin/index.html.twig', [
+            'pages' => 'user',
+            'boutique' => $boutique,
+            'users'  => $userRepository->findAllWithRoleSuperAdmin("ROLE_USER")
+        ]);
+    }
     /**
      * @Route("/admin/edit/video/{id}", name="edit_video")
      */
