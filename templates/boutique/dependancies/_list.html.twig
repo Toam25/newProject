@@ -9,7 +9,7 @@
             {% if article.externalDetail is defined and article.externalDetail is not same as("") %}
 			     {% set href = article.externalDetail %}
 			{% endif %}
-			<a href= {{ href }}>
+			<a href= {{ href }} target = "_blank">
 				<div class="container_image">
 					<img src="{{ asset('images/'~article.images[0].name)}}" alt="">
 					{#
