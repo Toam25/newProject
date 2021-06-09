@@ -14,6 +14,14 @@
   position: absolute;
   top: 7px;
 }
+
+
+._mess_ {
+  width: 44px;
+  height: 44px;
+  border-radius: 100%;
+  padding-left: 8px;
+}
 .container_loader_message{
   position: absolute;
   width: 100%;
@@ -95,8 +103,7 @@ display: block;
 ._mess_ span{
 display: none;
 position: absolute;
-width: 255%;
-background:#5cb85c;
+background: #05c6e5 !important;
 right: 59px;
 padding-bottom: 5px;
 padding-top: 5px;
@@ -108,7 +115,7 @@ display: block;
 position: absolute;
 border-bottom: 9px solid  transparent;
 border-top: 9px solid transparent;
-border-left: 9px solid #5cb85c;
+border-left: 9px solid #05c6e5 ;
 border-right: 9px solid transparent;
 top: 5px;
 right: -16px;
@@ -250,6 +257,7 @@ width: 50%;
   width: 40px;
   border-radius: 100%;
   margin-right: 7px;
+  background: white;
 
 }
 .time{
