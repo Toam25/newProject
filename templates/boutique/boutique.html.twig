@@ -218,6 +218,11 @@
 
 	{% if not app.user%}
 		{% include 'boutique/dependancies/connexion.html.twig'%}
+	{% elseif "ROLE_ADMIN" in app.user.roles and app.user.boutiques[0] is not same as (boutique) or app.user is defined %}
+	    <button class="message-in btn btn-success _mess_" name="{{boutique.id}}" style=";background: #05c6e5 !important;position: fixed;z-index: 1;right: 31px;bottom: 30px;padding: 0;">
+		 <i class="fa fa-envelope" style="font-size: 30PX;"></i>
+		<span>Contacter {{boutique.name}}?</span>
+		</button>
 	{% endif %}
 
 	{% include 'boutique/dependancies/footer.html.twig' %}
