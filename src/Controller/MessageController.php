@@ -86,7 +86,7 @@ class MessageController extends AbstractController
         $content_img = "";
         if ($request->files->get('image_content')) {
             $files = $insertFileServices->insertFile($request->files->get('image_content'));
-            $content_img = "<div class='container_image_message'><img src='images/" . $files . "' alt='image_message'/></div>";
+            $content_img = "<div class='container_image_message'><img src='/images/" . $files . "' alt='image_message'/></div>";
         }
 
         $content = $request->get('content', null);
