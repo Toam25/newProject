@@ -2,6 +2,61 @@ $(function () {
 
     //get conversion
     var id_other_user = null;
+    var my_id = parseInt($('.my_id').val());
+
+    console.log(my_id)
+    var url = new URL("http://localhost:3000/.well-known/mercure");
+    var eventSource = null;
+
+    //getConversation
+    $.ajax({
+        url: "/conversations/",
+        type: 'GET',
+        dataType: 'json',
+        success: (data) => {
+            data.forEach(element => {
+                url.searchParams.append('topic', 'https://intro-mercure.test/users/message/' + parseInt(element.conversationId));
+
+            });
+
+            eventSource = new EventSource(url)
+            eventSource.onmessage = e => {
+                data = JSON.parse(e.data);
+                if (data.type == "newMessage") {
+
+                    let my = "your ";
+                    if (parseInt(data.user) == my_id) {
+                        my = "my "
+                    }
+                    $("#message").append(`<div class="contaitboutique ` + my + ` ">` + data.message.content + `
+                        <div class="time" >
+                        `+ getStringDatePerTimestamp(data.message.times) + `
+                        </div>
+                    <button class="font_b delete_message" name="`+ data.message.id + `">
+                        <span class="fa fa-trash"></span>
+                </button>
+                </div>`)
+
+                    scrollToButton();
+                }
+            }
+
+            window.addEventListener('beforeunload', function (e) {
+                if (eventSource != null) {
+                    eventSource.close();
+                }
+            });
+        }
+    });
+
+
+
+
+
+    // url.searchParams.append('topic', 'https://intro-mercure.test/users/chat');
+
+    //message
+
 
     $('.parametre').on('click', function (e) {
         e.preventDefault();
@@ -139,7 +194,6 @@ $(function () {
         let id = $(this).attr('name');
         $('#container-message').show();
         $('.my_message_and_nofication').removeClass('view_my_notification_and_message')
-
         $.ajax({
             url: "/messages/" + id,
             type: 'GET',
@@ -228,7 +282,7 @@ $(function () {
             },
             success: (data) => {
 
-                getLastmessage();
+                // getLastmessage();
                 // $('._image_').attr('src', '/images/' + data.image)
                 // $('._message_name_boutique').html(data.name);
                 // let mymessage = ``;
@@ -553,5 +607,7 @@ $(function () {
         });
 
     });
+
+
 
 })

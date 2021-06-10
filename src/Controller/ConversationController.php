@@ -17,6 +17,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\WebLink\Link;
 
 /**
  * @Route("/conversations",name="conversations.")
@@ -63,12 +64,15 @@ class ConversationController extends AbstractController
      * @Route("/", name ="getConversations", methods={"GET"})
      */
 
-    public function getConversations()
+    public function getConversations(Request $request)
     {
         if ($this->getUser() != null) {
 
             $conversations = $this->conversationRepository->findConvesationsByUser($this->getUser()->getId());
             $newConversations = [];
+
+            // $hubUrl = $this->getParameter('mercure.default_hub');
+            // $this->addLink($request, new Link('mercure ', $hubUrl));
 
             foreach ($conversations as $conversation) {
                 //  $conversation['createdAt']->getTimestamp();

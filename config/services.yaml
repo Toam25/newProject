@@ -7,6 +7,9 @@ parameters:
     images_directory : "../public/images"
     name_boutique : "Rado"
     pdf_directory : '../public/pdf'
+    mercure_secret_key : '%env(MERCURE_SECRET_KEY)%'
+    jwt_token : '%env(MERCURE_TOKEN)%'
+
 
 services:
     # default configuration for services in *this* file
