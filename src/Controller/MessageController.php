@@ -12,6 +12,7 @@ use App\Repository\MessageRepository;
 use App\Repository\UserRepository;
 use App\Service\CheckConversationService;
 use App\Service\InsertFileServices;
+use App\Service\MercureService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -78,7 +79,7 @@ class MessageController extends AbstractController
      * @Route("/{id}", name="newMessage", methods={"POST"})
      */
 
-    public function newMessage(Request $request, Conversation $conversation, InsertFileServices $insertFileServices)
+    public function newMessage(Request $request, int $id, MercureService $mercureService, Conversation $conversation, InsertFileServices $insertFileServices)
     {
 
 
@@ -101,6 +102,21 @@ class MessageController extends AbstractController
         $this->entityManager->persist($message);
         $this->entityManager->persist($conversation);
         $this->entityManager->flush();
+
+        $topic = "https://intro-mercure.test/users/message/" . $conversation->getId();
+
+        $data = [
+            "user" => $user->getId(),
+            "type" => "newMessage",
+            "message" => [
+                "content" => $content_img . $content,
+                "times" => $message->getCreatedAt()->getTimesTamp(),
+                "id" => $message->getId()
+
+            ]
+        ];
+
+        $mercureService->mercurePost($topic, $data);
 
         return $this->json($message, Response::HTTP_CREATED, [], ['attributes' => self::ATTRIBUTES_TO_SERIALISE]);
 
