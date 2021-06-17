@@ -45,7 +45,7 @@
             
                 <div class="cart_product">
                     <div class="_containt_img_pr">
-                        <a class='containt_image_product' href="{{path('detail',{'id' : cart.articles[0].id }) }}">
+                        <a class='containt_image_product' href="{{path('detail',{'id' : cart.articles[0].id, 'slug' : cart.articles[0].name|slug('-') }) }}">
                             <img class="images_product" src="{{asset('images/'~cart.articles[0].images[0].name)}}" alt=""  loading="easi">
                         </a>
                     </div>
