@@ -120,9 +120,9 @@ class PayementController extends AbstractController
             $payment->execute($execution, $apiContext);
             $boutique = $boutiqueRepository->findOneBy(['user' => $this->getUser()]);
             $offer = "";
-            if ($name == "vip" and $price == 10) {
+            if ($name == "vip" and $price == 25) {
                 $offer = "Vip";
-            } else if ($name == "premium" and $price == 20) {
+            } else if ($name == "premium" and $price == 150) {
                 $offer = "Premium";
             }
             $boutique->setOffer($offer);
