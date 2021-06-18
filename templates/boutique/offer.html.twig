@@ -41,30 +41,53 @@
 	{% include "boutique/dependancies/header.html.twig" %}
 
 
-	<div id="container_offer">
-		<h2>Choisissez votre Offre</h2>
-		<p>Essayer gratuitement sans engagement, Pas de carte de credit nécessaire</p>
+	<div id="container_offer" class="container">
+		<h2>Nos Offres pour les entreprises en croissance.</h2>
+		<p style="margin-bottom: 5rem;font-size: 12px;">Essayer gratuitement sans engagement, Pas de carte de credit nécessaire</p>
+		   {% for message in app.flashes('warning') %}
+               <div class="alert alert-warning">
+                   {{ message }}
+               </div>
+        {% endfor %}
 		<div id="my_offer">
 			<div class="offer">
-				<h4>FREE</h4>
+				<h4>Don</h4>
+				<p class="text-warning text-center">Testez gratuitement votre boutique</p>
+	 			<p align="center"> <span class="fw-bold">0 €</span>/mois</p>
 				<hr>
-				<div class="description"></div>
-                <hr>
-				<div class="detail"></div>
-				<hr>
-				<div class="tarif">
-					0 €/ mois
+				<div class="description">
+				 <p><span class="fa fa-check text-success"></span> &nbsp Une page WEB inclus</p> 
+				 <p><span class="fa fa-check text-success"></span> &nbsp Inserer jusqu'à 10 produits vitrines</p> 
+				 <p><span class="fa fa-check text-success"></span>&nbsp Inserer 2 articles</p> 
+				 <p><span class="fa fa-check text-success"></span>&nbsp Inserer 3 liens dans "nos séléctions"</p> 
+				 <p><span class="fa fa-check text-success"></span>&nbsp Inserer 4 références</p> 
+				 <p><span class="fa fa-check text-success"></span>&nbsp Accès Profil</p> 
+				 <p><span class="fa fa-check text-success"></span>&nbsp Acces back office</p> 
+				 <p><span class="fa fa-check text-success"></span>&nbsp Support client minimum</p> 
+
 				</div>
 			</div>
 			<div class="offer">
 				<h4>VIP</h4>
+				<p class="text-primary text-center">Accès sans limitation</p>
+				<p align="center"> <span class="fw-bold">25 €</span>/mois</p>
                 <hr>
-				<div class="description"></div>
+				<div class="description">
+				   Une page WEB inclus : 
+				 <p><span class="fa fa-check text-success"></span>&nbsp Inserer des produits illimités </p> 
+				 <p><span class="fa fa-check text-success"></span>&nbsp Inserer des articles illimités</p> 
+				 <p><span class="fa fa-check text-success"></span>&nbsp Insertion illimités dans "nos séléctions"</p> 
+				 <p><span class="fa fa-check text-success"></span>&nbsp Inserer des références illimités</p> 
+				 <p><span class="fa fa-check text-success"></span>&nbsp Accès profil</p> 
+				 <p><span class="fa fa-check text-success"></span>&nbsp Accès back office</p> 
+				 <p><span class="fa fa-check text-success"></span>&nbsp Accès à votre propre boite de message et notifications</p> 
+				 <p><span class="fa fa-check text-success"></span>&nbsp Une assistance fera des suivis hebdomadaires de votre page</p> 
+				 <p><span class="fa fa-check text-success"></span>&nbsp Visuel de votre activité dans la galerie marchande avec l'etoile VIP</p> 
+				 <p><span class="fa fa-check text-success"></span>&nbsp Visule de vote activité dans l'accueil</p> 
+				</div>
                 <hr>
-				<div class="detail"></div>
-				<hr>
 				<div class="tarif">
-					10 €/mois
+					
 					<a class="btn_offer" href="{{path('payment', {'offer': 'vip'})}}" style="display: block;">
 						Me convient
 					</a>
@@ -72,18 +95,42 @@
 			</div>
 			<div class="offer">
 				<h4>PREMIUM</h4>
+     <p class="text-success text-center">Accès réferencement SEO et visibilité Premium</p>
+				<p align="center"> <span class="fw-bold">150 €</span>/mois</p>
 				<hr>
-				<div class="description"></div>
+				<div class="description">
+				   Une page WEB inclus : 
+				<p><span class="fa fa-check text-success"></span>&nbsp Inserer des produits illimités </p> 
+				 <p><span class="fa fa-check text-success"></span>&nbsp Inserer des articles illimités</p> 
+				 <p><span class="fa fa-check text-success"></span>&nbsp Insertion illimités dans "nos séléctions"</p> 
+				 <p><span class="fa fa-check text-success"></span>&nbsp Inserer des références illimités</p> 
+				 <p><span class="fa fa-check text-success"></span>&nbsp Accès profil</p> 
+				 <p><span class="fa fa-check text-success"></span>&nbsp Accès back office</p> 
+				 <p><span class="fa fa-check text-success"></span>&nbsp Accès à votre propre boite de message et notifications</p> 
+				 <p><span class="fa fa-check text-success"></span>&nbsp Une assistance fera des suivis hebdomadaires de votre page</p> 
+				 <p><span class="fa fa-check text-success"></span>&nbsp Visuel de votre activité dans la galerie marchande avec l'etoile VIP</p> 
+				 <p><span class="fa fa-check text-success"></span>&nbsp Visule de vote activité dans l'accueil</p> 
+				 <p><span class="fa fa-check text-success"></span>&nbsp Assistance sur les référencement SEO, Création de vidéos youtube, community manage</p> 
+				
+				</div>
                 <hr>
-				<div class="detail"></div>
-				<hr>
 				<div class="tarif">
-					20 € / mois
+					
 					<a class="btn_offer" href="{{path('payment', {'offer': 'premium'})}}" style="display: block;">
 						Me convient
 					</a>
 				</div>
 			</div>
+		</div>
+		<div class="my_security">
+		   <div class="stop info_">
+		   <span class="fa fa-stop-circle" style="font-size: 34PX;"></span >
+		     Arrêtez quant vous voulez
+		   </div>
+		   <div class="paiement info_">
+		   <span class="fa fa-lock" style="font-size: 34PX;"></span >
+		     Paiement sécurisé
+		   </div>
 		</div>
 	</div>
 	{% if not app.user%}
