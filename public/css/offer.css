@@ -2,6 +2,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+    margin-top: 20px;
 }
 
 #my_offer {
@@ -27,4 +28,16 @@
 .tarif {
     margin: 0 0 20px 0;
     text-align: center;
+}
+.info_{
+    display: flex;
+flex-direction: column;
+justify-content: center;
+align-items: center;
+}
+.my_security {
+    width: 100%;
+display: flex;
+justify-content: space-between;
+margin: 45px 0;
 }

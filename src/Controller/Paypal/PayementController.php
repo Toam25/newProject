@@ -23,12 +23,18 @@ class PayementController extends AbstractController
 
     public function index(string $offer)
     {
+        if ($this->getUser() == null) {
+            $this->addFlash("warning", "Veillez vous connecter avec votre boutique");
+
+            return $this->redirectToRoute('my_offer');
+        }
+
         $returnUrl = $this->generateUrl('pay', [], UrlGeneratorInterface::ABSOLUTE_URL);
         $cancelUrl = $this->generateUrl('index', [], UrlGeneratorInterface::ABSOLUTE_URL);
         if ($offer == "premium") {
-            $price = intval(20);
+            $price = intval(150);
         } else if ($offer == "vip") {
-            $price = intval(10);
+            $price = intval(25);
         }
         $apiContext = new ApiContext(
             new \PayPal\Auth\OAuthTokenCredential(
