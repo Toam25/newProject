@@ -27,10 +27,13 @@ use App\Service\NotificationService;
 use App\Service\TypeOptionMenuService;
 use App\Service\UtilsService;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Mailer\Exception\TransportExceptionInterface;
+use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Symfony\Flex\Unpack\Result;
@@ -96,11 +99,30 @@ class AdminController extends AbstractController
     /**
      * @Route("/admin/user", name="user")
      */
-    public function user(BoutiqueRepository $boutiqueRepository, UserRepository $userRepository)
+    public function user(BoutiqueRepository $boutiqueRepository, MailerInterface $mailer, UserRepository $userRepository, Request $request)
     {
 
         // $allArticle = $articleRepository->findBy(['boutique'=>$boutiqueRepository->findOneBy(['user'=>$this->getUser()])] );
+        if ($request->isXmlHttpRequest()) {
+            $description = $request->request->get('description');
+            $mail = $request->request->get('email');
+            $subject = "Merçi d'être parmis nous";
 
+            $email = (new TemplatedEmail())
+                ->from("contact@toutenone.com")
+                ->to($mail)
+                ->subject($subject)
+                ->htmlTemplate('email/email_for_user.html.twig')
+                ->context([
+                    'description' => $description
+                ]);
+            try {
+                $mailer->send($email);
+            } catch (TransportExceptionInterface $e) {
+                return new JsonResponse("Erreur de connexion au serveur", Response::HTTP_UNAUTHORIZED);
+            }
+            return new JsonResponse(['status' => 'ok']);
+        }
         $boutique = $boutiqueRepository->findOneBy(['user' => $this->getUser()]);
         return $this->render('admin/index.html.twig', [
             'pages' => 'user',

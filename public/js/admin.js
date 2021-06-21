@@ -178,6 +178,33 @@ $(function () {
     });
 
   });
+
+  //send mail for user 
+  $('.send_mail').on('submit', function (e) {
+    e.preventDefault();
+    $.ajax({
+      type: 'POST',
+      contentType: false,
+      processData: false,
+      cache: false,
+      dataType: 'json',
+      data: new FormData(this),
+      beforeSend: () => {
+        toastr.info('Enregistrement en cours ;) ');
+        $('.btn-submit').prop('disabled', true)
+      },
+      success: (data) => {
+        toastr.success('Mail envoyée avec success ;) ');
+        $('.btn-submit').prop('disabled', false)
+        $(this)[0].reset();
+        $('#my_offer_').modal('hide');
+      },
+      error: () => {
+        toastr.error('Erreur d\'enregistrement ');
+        $('.btn-submit').prop('disabled', false)
+      }
+    });
+  });
   // add formation
 
   $('.add_formation').on('submit', function (e) {

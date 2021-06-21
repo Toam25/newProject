@@ -11,6 +11,7 @@
     box-shadow: 5px 5px 5px #0000005e;
     padding: 10px;
     height: 100px;
+    justify-content: space-between;
 }
 ._container_image_user{
     height: 80px;
