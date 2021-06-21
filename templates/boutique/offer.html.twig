@@ -133,13 +133,95 @@
 		   </div>
 		</div>
 	</div>
+
 	{% if not app.user%}
 		{% include 'boutique/dependancies/connexion.html.twig'%}
 	{% endif %}
 	{% include "boutique/dependancies/footer.html.twig" %}
+	  
+  	{# Abonnement #}
+  
+
+<div class="modal fade" id="my_offer_" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true"style="z-index: 9999;">
+  <div class="modal-dialog">
+    <div class="modal-content">
+	<form action="">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+        <button type="button" class="btn-close btn-close_modal" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+	   	
+	        <label for="name">Votre nom / Nom de l'entreprise</label>
+			<input type="text" class="form-control" id="name" name="name" required>
+			<label for="name">Email</label>
+			<input type="email" id="name" class="form-control" name="email" required>
+			
+			 <label for="sujet">Sujet</label>
+			 <select name="subject" id="sujet" class="form-control" required>
+			     <option value="L'offre gratuit me convient, je désire m'abonné" class="free" selected>L'offre gratuit me convient, je désire m'abonné</option>
+			     <option value="L'offre VIP me convient, je désire m'abonné" class="vip">L'offre VIP me convient, je désire m'abonné</option>
+			     <option value="L'offre Premium me convient, je désire m'abonné" class="premium">L'offre Premium me convient, je désire m'abonné</option>
+			 </select>
+			 <label for="message" >Votre message</label>
+			<Textarea  class="form-control" id="message"name="message"></Textarea>
+	   	
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary btn-close_modal" data-bs-dismiss="modal">Annulez</button>
+        <button type="submit" class="btn btn-primary btn-submit">Envoyéz</button>
+      </div>
+	 </form>
+	 
+    </div>
+  </div>
+</div>
+	{# #########"" #}
 {% endblock %}
 {% block javascripts %}
 	{#<script src="{{asset('js/jquery.js')}}"></script>
 		<script src="{{asset('js/bootstrap.min.js')}}"></script>#}
 	<script src="{{ asset('js/connexion.js') }}"></script>
+	<script>
+	   $(function() {
+		   $('.btn_offer').on('click',function(e) {
+			    e.preventDefault();
+			    $('#my_offer_').modal('show');
+		   });
+
+		  
+		   $('.btn-close_modal').on('click',function(e) {
+			    e.preventDefault();
+			    $('#my_offer_').modal('hide');
+		   });
+
+		   $('form').on('submit',function(e) {
+			    e.preventDefault();
+
+				 $.ajax({
+					type: 'POST',
+					contentType: false,
+					processData: false,
+					cache: false,
+					dataType: 'json',
+					data: new FormData(this),
+					beforeSend: () => {
+						toastr.info('Enregistrement en cours ;) ');
+						$('.btn-submit').prop('disabled', true)
+					},
+					success: (data) => {
+						toastr.success('Mail envoyée avec success ;) ');
+						$('.btn-submit').prop('disabled', false)
+						$(this)[0].reset();
+						 $('#my_offer_').modal('hide');
+					},
+					error: () => {
+						toastr.error('Erreur d\'enregistrement ');
+						$('.btn-submit').prop('disabled', false)
+					}
+					});
+			   
+		   });
+	   })
+	</script>
 {% endblock %}
