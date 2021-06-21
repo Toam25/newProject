@@ -28,10 +28,13 @@ use App\Service\TypeOptionMenuService;
 use App\Service\UtilsService;
 use App\Service\VotesService;
 use ProxyManager\Factory\RemoteObject\Adapter\JsonRpc;
+use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Mailer\Exception\TransportExceptionInterface;
+use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Validator\Constraints\Length;
 
@@ -245,11 +248,33 @@ class BoutiqueController extends AbstractController
     }
 
     /**
-     * @Route("/myoffer/", name="my_offer", methods={"GET"})
+     * @Route("/myoffer/", name="my_offer", methods={"GET","POST"})
      */
-    public function myOffer(BoutiqueRepository $boutiqueRepository): response
+    public function myOffer(BoutiqueRepository $boutiqueRepository, Request $request, MailerInterface $mailer): response
     {
 
+        if ($request->isXmlHttpRequest()) {
+            $name = $request->request->get('name');
+            $mail = $request->request->get('email');
+            $subject = $request->request->get('subject');
+            $description = $request->request->get('message', '');
+            $email = (new TemplatedEmail())
+                ->from($mail)
+                ->to('contact@toutenone.com')
+                ->subject($subject)
+                ->htmlTemplate('email/offer.html.twig')
+                ->context([
+                    'name' => $name,
+                    'mail' => $mail,
+                    'description' => $description
+                ]);
+            try {
+                $mailer->send($email);
+            } catch (TransportExceptionInterface $e) {
+                return new JsonResponse("Erreur de connexion au serveur", Response::HTTP_UNAUTHORIZED);
+            }
+            return new JsonResponse(['status' => 'Ok']);
+        }
         return $this->render('boutique/offer.html.twig', [
             'boutique' => $boutique = $boutiqueRepository->findOneBoutiqueByUserPerRole('ROLE_SUPER_ADMIN')
         ]);
