@@ -375,8 +375,12 @@ class BoutiqueController extends AbstractController
     /**
      * @Route("/list/other/{id}-{slug}", name="list_other_shop", methods={"GET"})
      */
-    public function viewOther(Page $page): response
+    public function viewOther(PageRepository $pageRepository, $id): response
     {
+        $page = $pageRepository->findOneBy(['id' => $id]);
+        if ($page == null) {
+            return new JsonResponse(['status' => 'ko']);
+        }
         $matches = [];
         $boutique = $page->getBoutique();
         $shopLink = "";
