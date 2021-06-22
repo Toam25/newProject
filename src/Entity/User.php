@@ -136,6 +136,11 @@ class User implements UserInterface
      */
     private $participants;
 
+    /**
+     * @ORM\Column(type="string", length=255, nullable= true)
+     */
+    private $resetToken;
+
 
     public function __construct()
     {
@@ -154,7 +159,6 @@ class User implements UserInterface
         $this->images = new ArrayCollection();
         $this->messages = new ArrayCollection();
         $this->participants = new ArrayCollection();
- 
     }
 
     public function getId(): ?int
@@ -509,200 +513,212 @@ class User implements UserInterface
      * @return Bool whether the user is active or not
      */
 
-     public function isActiveNow(){
-         $delay = new \DateTime("2 minutes ago");
+    public function isActiveNow()
+    {
+        $delay = new \DateTime("2 minutes ago");
 
-         return ($this->getLastActivityAt()>$delay);
-     }
+        return ($this->getLastActivityAt() > $delay);
+    }
 
-     /**
-      * @return Collection|Notification[]
-      */
-     public function getNotifications(): Collection
-     {
-         return $this->notifications;
-     }
+    /**
+     * @return Collection|Notification[]
+     */
+    public function getNotifications(): Collection
+    {
+        return $this->notifications;
+    }
 
-     public function addNotification(Notification $notification): self
-     {
-         if (!$this->notifications->contains($notification)) {
-             $this->notifications[] = $notification;
-             $notification->addToUser($this);
-         }
+    public function addNotification(Notification $notification): self
+    {
+        if (!$this->notifications->contains($notification)) {
+            $this->notifications[] = $notification;
+            $notification->addToUser($this);
+        }
 
-         return $this;
-     }
+        return $this;
+    }
 
-     public function removeNotification(Notification $notification): self
-     {
-         if ($this->notifications->contains($notification)) {
-             $this->notifications->removeElement($notification);
-             $notification->removeToUser($this);
-         }
+    public function removeNotification(Notification $notification): self
+    {
+        if ($this->notifications->contains($notification)) {
+            $this->notifications->removeElement($notification);
+            $notification->removeToUser($this);
+        }
 
-         return $this;
-     }
+        return $this;
+    }
 
-     public function getConfimation(): ?string
-     {
-         return $this->confimation;
-     }
+    public function getConfimation(): ?string
+    {
+        return $this->confimation;
+    }
 
-     public function setConfimation(?string $confimation): self
-     {
-         $this->confimation = $confimation;
+    public function setConfimation(?string $confimation): self
+    {
+        $this->confimation = $confimation;
 
-         return $this;
-     }
+        return $this;
+    }
 
-     /**
-      * @return Collection|ProfilJob[]
-      */
-     public function getProfilJobs(): Collection
-     {
-         return $this->profilJobs;
-     }
+    /**
+     * @return Collection|ProfilJob[]
+     */
+    public function getProfilJobs(): Collection
+    {
+        return $this->profilJobs;
+    }
 
-     public function addProfilJob(ProfilJob $profilJob): self
-     {
-         if (!$this->profilJobs->contains($profilJob)) {
-             $this->profilJobs[] = $profilJob;
-             $profilJob->setUser($this);
-         }
+    public function addProfilJob(ProfilJob $profilJob): self
+    {
+        if (!$this->profilJobs->contains($profilJob)) {
+            $this->profilJobs[] = $profilJob;
+            $profilJob->setUser($this);
+        }
 
-         return $this;
-     }
+        return $this;
+    }
 
-     public function removeProfilJob(ProfilJob $profilJob): self
-     {
-         if ($this->profilJobs->removeElement($profilJob)) {
-             // set the owning side to null (unless already changed)
-             if ($profilJob->getUser() === $this) {
-                 $profilJob->setUser(null);
-             }
-         }
+    public function removeProfilJob(ProfilJob $profilJob): self
+    {
+        if ($this->profilJobs->removeElement($profilJob)) {
+            // set the owning side to null (unless already changed)
+            if ($profilJob->getUser() === $this) {
+                $profilJob->setUser(null);
+            }
+        }
 
-         return $this;
-     }
+        return $this;
+    }
 
-     /**
-      * @return Collection|Page[]
-      */
-     public function getPages(): Collection
-     {
-         return $this->pages;
-     }
+    /**
+     * @return Collection|Page[]
+     */
+    public function getPages(): Collection
+    {
+        return $this->pages;
+    }
 
-     public function addPage(Page $page): self
-     {
-         if (!$this->pages->contains($page)) {
-             $this->pages[] = $page;
-             $page->setUser($this);
-         }
+    public function addPage(Page $page): self
+    {
+        if (!$this->pages->contains($page)) {
+            $this->pages[] = $page;
+            $page->setUser($this);
+        }
 
-         return $this;
-     }
+        return $this;
+    }
 
-     public function removePage(Page $page): self
-     {
-         if ($this->pages->removeElement($page)) {
-             // set the owning side to null (unless already changed)
-             if ($page->getUser() === $this) {
-                 $page->setUser(null);
-             }
-         }
+    public function removePage(Page $page): self
+    {
+        if ($this->pages->removeElement($page)) {
+            // set the owning side to null (unless already changed)
+            if ($page->getUser() === $this) {
+                $page->setUser(null);
+            }
+        }
 
-         return $this;
-     }
+        return $this;
+    }
 
-     /**
-      * @return Collection|Images[]
-      */
-     public function getImages(): Collection
-     {
-         return $this->images;
-     }
+    /**
+     * @return Collection|Images[]
+     */
+    public function getImages(): Collection
+    {
+        return $this->images;
+    }
 
-     public function addImage(Images $image): self
-     {
-         if (!$this->images->contains($image)) {
-             $this->images[] = $image;
-             $image->setUser($this);
-         }
+    public function addImage(Images $image): self
+    {
+        if (!$this->images->contains($image)) {
+            $this->images[] = $image;
+            $image->setUser($this);
+        }
 
-         return $this;
-     }
+        return $this;
+    }
 
-     public function removeImage(Images $image): self
-     {
-         if ($this->images->removeElement($image)) {
-             // set the owning side to null (unless already changed)
-             if ($image->getUser() === $this) {
-                 $image->setUser(null);
-             }
-         }
+    public function removeImage(Images $image): self
+    {
+        if ($this->images->removeElement($image)) {
+            // set the owning side to null (unless already changed)
+            if ($image->getUser() === $this) {
+                $image->setUser(null);
+            }
+        }
 
-         return $this;
-     }
+        return $this;
+    }
 
-     /**
-      * @return Collection|Message[]
-      */
-     public function getMessages(): Collection
-     {
-         return $this->messages;
-     }
+    /**
+     * @return Collection|Message[]
+     */
+    public function getMessages(): Collection
+    {
+        return $this->messages;
+    }
 
-     public function addMessage(Message $message): self
-     {
-         if (!$this->messages->contains($message)) {
-             $this->messages[] = $message;
-             $message->setUser($this);
-         }
+    public function addMessage(Message $message): self
+    {
+        if (!$this->messages->contains($message)) {
+            $this->messages[] = $message;
+            $message->setUser($this);
+        }
 
-         return $this;
-     }
+        return $this;
+    }
 
-     public function removeMessage(Message $message): self
-     {
-         if ($this->messages->removeElement($message)) {
-             // set the owning side to null (unless already changed)
-             if ($message->getUser() === $this) {
-                 $message->setUser(null);
-             }
-         }
+    public function removeMessage(Message $message): self
+    {
+        if ($this->messages->removeElement($message)) {
+            // set the owning side to null (unless already changed)
+            if ($message->getUser() === $this) {
+                $message->setUser(null);
+            }
+        }
 
-         return $this;
-     }
+        return $this;
+    }
 
-     /**
-      * @return Collection|Participant[]
-      */
-     public function getParticipants(): Collection
-     {
-         return $this->participants;
-     }
+    /**
+     * @return Collection|Participant[]
+     */
+    public function getParticipants(): Collection
+    {
+        return $this->participants;
+    }
 
-     public function addParticipant(Participant $participant): self
-     {
-         if (!$this->participants->contains($participant)) {
-             $this->participants[] = $participant;
-             $participant->setUser($this);
-         }
+    public function addParticipant(Participant $participant): self
+    {
+        if (!$this->participants->contains($participant)) {
+            $this->participants[] = $participant;
+            $participant->setUser($this);
+        }
 
-         return $this;
-     }
+        return $this;
+    }
 
-     public function removeParticipant(Participant $participant): self
-     {
-         if ($this->participants->removeElement($participant)) {
-             // set the owning side to null (unless already changed)
-             if ($participant->getUser() === $this) {
-                 $participant->setUser(null);
-             }
-         }
+    public function removeParticipant(Participant $participant): self
+    {
+        if ($this->participants->removeElement($participant)) {
+            // set the owning side to null (unless already changed)
+            if ($participant->getUser() === $this) {
+                $participant->setUser(null);
+            }
+        }
 
-         return $this;
-     }
+        return $this;
+    }
 
+    public function getResetToken(): ?string
+    {
+        return $this->resetToken;
+    }
+
+    public function setResetToken(string $resetToken): self
+    {
+        $this->resetToken = $resetToken;
+
+        return $this;
+    }
 }

@@ -36,6 +36,8 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Mailer\Exception\TransportExceptionInterface;
 use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
+use Symfony\Component\Security\Csrf\TokenGenerator\TokenGeneratorInterface;
 use Symfony\Component\Validator\Constraints\Length;
 
 class BoutiqueController extends AbstractController
@@ -604,6 +606,73 @@ class BoutiqueController extends AbstractController
         ]);
     }
 
+    /**
+     * @Route("/forgetPassword", name="forgetPassword", methods={"GET","POST"})
+     */
+    public function forgetPassword(Request $request, UserRepository $userRepository, MailerInterface $mailer, TokenGeneratorInterface $tokenGeneratorInterface): Response
+    {
+
+        if ($request->isXmlHttpRequest()) {
+            $mail = $request->request->get('recupmessage');
+            $user = $userRepository->findOneBy(['email' => $mail]);
+
+            if ($user !== null) {
+                $token = $tokenGeneratorInterface->generateToken();
+                $user->setResetToken($token);
+
+                $email = (new TemplatedEmail())
+                    ->from('no-reply@toutenone.com')
+                    ->to($mail)
+                    ->subject('Recuperation mot de passe')
+                    ->htmlTemplate('email/send_mail_confirmation.html.twig')
+                    ->context([
+                        'user' => $user
+                    ]);
+
+                try {
+
+                    $mailer->send($email);
+                } catch (TransportExceptionInterface $e) {
+                    return new JsonResponse(["message" => "Erreur de connexion au serveur"], Response::HTTP_UNAUTHORIZED);
+                }
+
+                $em = $this->getDoctrine()->getManager();
+                $em->persist($user);
+                $em->flush();
+                return $this->json(["message" => "Un email de reinitialisation de mot de passe a eté envoyé à " . $user->getEmail()], Response::HTTP_CREATED);
+            } else {
+                return $this->json(['status' => 'ko', 'message' => 'Utilisateur introuvable'], Response::HTTP_UNAUTHORIZED);
+            }
+        }
+        return $this->render('email/forget_password.html.twig', []);
+    }
+
+    /**
+     * @Route("/resetpassword/{token}", name="app_reset_password", methods={"GET","POST"})
+     */
+    public function resetPassWord(UserRepository $userRepository, UserPasswordEncoderInterface $passdecoder, $token = "", Request $request)
+    {
+        $user = $userRepository->findOneBy(['resetToken' => $token]);
+        // dd($request->request->get('new_password'));
+        if ($user !== null and $token != "") {
+            if ($request->isXmlHttpRequest()) {
+
+                $user->setResetToken("");
+                $user->setPassword($passdecoder->encodePassword($user, $request->request->get('new_password')));
+                $em = $this->getDoctrine()->getManager();
+                $em->flush();
+                return $this->json(['status' => 'ok', 'message' => 'Mot de passe changé avec success']);
+            }
+        } else {
+            return $this->render('email/get_new_password.html.twig', [
+                'error' => 'error',
+            ]);
+        }
+
+        return $this->render('email/get_new_password.html.twig', [
+            'token' => $token,
+        ]);
+    }
     private function getlistShop(array $shops, $types)
     {
         $newlistShop = [];

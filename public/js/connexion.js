@@ -80,7 +80,7 @@ $(function () {
 
 
     $.ajax({
-      url: '../app/controller/jaimeController.php',
+      url: '/forgetPassword',
       type: 'POST',
       data: {
         'recupmessage': number,
@@ -136,7 +136,7 @@ $(function () {
           document.location='index.php';
         }*/
         else {
-          toastr.error("Erreur d'identification : "+data.responseJSON.message);
+          toastr.error("Erreur d'identification : " + data.responseJSON.message);
           /* $('.message').css('background','red');
            $('.message').text(data.responseJSON.message);
          */
