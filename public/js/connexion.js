@@ -85,19 +85,17 @@ $(function () {
       data: {
         'recupmessage': number,
       },
-      dataType: 'text',
+      dataType: 'json',
       beforeSend: function () {
         $('.ajax').fadeIn();
       },
       success: function (data) {
-        if (data === "") {
-          $('#container_message').css('display', 'flex');
-          $('#message').text('Votre demande a été prise en compte, un code de recuperation vous sera envoyé par message au ' + number + ', cela peut prendre trois jours, Merci');
-          //setInterval(timers,1000);
-        }
-        else {
-          alert('Le numéro de téléphone n\'existe pas');
-        }
+
+        $('#container_message').css('display', 'flex');
+        $('#message').text(data.message);
+        //setInterval(timers,1000);
+
+
         $('.ajax').fadeOut();
       },
       complete: function () {
