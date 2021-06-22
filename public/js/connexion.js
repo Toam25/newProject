@@ -98,6 +98,10 @@ $(function () {
 
         $('.ajax').fadeOut();
       },
+      error: function () {
+        $('#container_message').css('display', 'flex');
+        $('#message').text('Erreur serveur');
+      },
       complete: function () {
         $('.ajax').fadeOut();
       }
