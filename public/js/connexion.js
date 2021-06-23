@@ -93,6 +93,7 @@ $(function () {
 
         $('#container_message').css('display', 'flex');
         $('#message').text(data.message);
+        toastr.success(data.message)
         //setInterval(timers,1000);
 
 
@@ -101,6 +102,8 @@ $(function () {
       error: function () {
         $('#container_message').css('display', 'flex');
         $('#message').text('Erreur serveur');
+        toastr.error("Erreur de connexion au serveur mail")
+
       },
       complete: function () {
         $('.ajax').fadeOut();
