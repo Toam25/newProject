@@ -644,7 +644,7 @@ class BoutiqueController extends AbstractController
                 return $this->json(['status' => 'ko', 'message' => 'Utilisateur introuvable'], Response::HTTP_UNAUTHORIZED);
             }
         }
-        return $this->render('email/forget_password.html.twig', []);
+        return  $this->json(['status' => 'ko', 'message' => 'Utilisateur introuvable'], Response::HTTP_UNAUTHORIZED);
     }
 
     /**
