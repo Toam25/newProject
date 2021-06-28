@@ -352,7 +352,7 @@ class AdminController extends AbstractController
         $form = $this->createForm(BoutiqueType::class, $boutique);
         $form->handleRequest($request);
 
-        if ($form->isSubmitted()) {
+        if ($request->isXmlHttpRequest()) {
             $image = $form->get('image')->getData();
             if ($image) {
 
