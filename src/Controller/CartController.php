@@ -35,19 +35,22 @@ class CartController extends AbstractController
         if ($user) {
             foreach ($carts as $key => $cart) {
                 $boutique = $cart->getBoutique();
-                $email = (new TemplatedEmail())
-                    ->from($user->getEmail())
-                    ->to($boutique->getMail())
-                    ->subject('Merçi d\'être parmi nous')
-                    ->htmlTemplate('email/cart.html.twig')
-                    ->context([
-                        'boutique' => $boutique,
-                        'cart' => $cart
-                    ]);
-                try {
-                    $mailer->send($email);
-                } catch (TransportExceptionInterface $e) {
-                    return new JsonResponse("Erreur de connexion au serveur", HttpFoundationResponse::HTTP_UNAUTHORIZED);
+
+                if ($boutique->getMail() != 'myBoutiqueAdressMailOf') {
+                    $email = (new TemplatedEmail())
+                        ->from($user->getEmail())
+                        ->to($boutique->getMail())
+                        ->subject('Merçi d\'être parmi nous')
+                        ->htmlTemplate('email/cart.html.twig')
+                        ->context([
+                            'boutique' => $boutique,
+                            'cart' => $cart
+                        ]);
+                    try {
+                        $mailer->send($email);
+                    } catch (TransportExceptionInterface $e) {
+                        return new JsonResponse("Erreur de connexion au serveur", HttpFoundationResponse::HTTP_UNAUTHORIZED);
+                    }
                 }
             }
             return new JsonResponse(['status' => "ok", "message" => "Enregistrer avec success"]);
