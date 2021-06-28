@@ -107,7 +107,7 @@ class SecurityController extends AbstractController
                     $notification = new Notification();
                     $notification->setSubject('NEW USER');
                     $notification->setDescription($user->getName() . " " . $user->getFirstname());
-                    $notification->setFromUser("");
+                    $notification->setFromUser(0);
                     $users = $userRepository->findAllWithRoleSuperAdmin("ROLE_SUPER_ADMIN");
                     foreach ($users as $user) {
                         $notification->addToUser($user);
