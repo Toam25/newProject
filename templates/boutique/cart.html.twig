@@ -45,9 +45,9 @@
             
                 <div class="cart_product">
                     <div class="_containt_img_pr">
-                        <a class='containt_image_product' href="{{path('detail',{'id' : cart.articles[0].id, 'slug' : cart.articles[0].name|slug('-') }) }}">
+                        {# <a class='containt_image_product' href="{{path('detail',{'id' : cart.articles[0].id, 'slug' : cart.articles[0].name|slug('-') }) }}"> #}
                             <img class="images_product" src="{{asset('images/'~cart.articles[0].images[0].name)}}" alt=""  loading="easi">
-                        </a>
+                        {# </a> #}
                     </div>
                     
                     
@@ -116,9 +116,9 @@
 
                  <div>
                      <div>
-                        <button class="btn btn-success validat_command redbutton" style="width: 100%;">Valider les commade</button>
+                        <button class="btn btn-success validat_command redbutton" style="width: 100%;">Valider les commades</button>
                      </div>
-                     <a href="{{path('list_product')}}" style="text-align: center;width: 100%;display: block;padding: 7px;">Continuer les achats</a>
+                     <a href="{{path('index')}}" style="text-align: center;width: 100%;display: block;padding: 7px;">Continuer les achats</a>
                  </div>
                 
             </div>

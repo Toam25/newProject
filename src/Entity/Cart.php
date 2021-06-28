@@ -43,6 +43,11 @@ class Cart
      */
     private $status;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=boutique::class, inversedBy="carts")
+     */
+    private $boutique;
+
     public function __construct()
     {
         $this->articles = new ArrayCollection();
@@ -123,6 +128,18 @@ class Cart
     public function setStatus(string $status): self
     {
         $this->status = $status;
+
+        return $this;
+    }
+
+    public function getBoutique(): ?boutique
+    {
+        return $this->boutique;
+    }
+
+    public function setBoutique(?boutique $boutique): self
+    {
+        $this->boutique = $boutique;
 
         return $this;
     }
