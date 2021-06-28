@@ -178,6 +178,11 @@ class Boutique
      */
     private $offerCreatedAt;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Cart::class, mappedBy="boutique")
+     */
+    private $carts;
+
     public function __construct()
     {
         $this->logo = "images_default/default_logo.png";
@@ -201,6 +206,7 @@ class Boutique
         $this->videos = new ArrayCollection();
         $this->pages = new ArrayCollection();
         $this->images = new ArrayCollection();
+        $this->carts = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -851,5 +857,35 @@ class Boutique
     public function getNbrArticle()
     {
         return sizeof($this->getArticle());
+    }
+
+    /**
+     * @return Collection|Cart[]
+     */
+    public function getCarts(): Collection
+    {
+        return $this->carts;
+    }
+
+    public function addCart(Cart $cart): self
+    {
+        if (!$this->carts->contains($cart)) {
+            $this->carts[] = $cart;
+            $cart->setBoutique($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCart(Cart $cart): self
+    {
+        if ($this->carts->removeElement($cart)) {
+            // set the owning side to null (unless already changed)
+            if ($cart->getBoutique() === $this) {
+                $cart->setBoutique(null);
+            }
+        }
+
+        return $this;
     }
 }

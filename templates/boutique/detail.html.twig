@@ -131,21 +131,23 @@
 						#}
 							
 						</div>
-						{#
-																								<div class="add-to-cart">
-																									<div class="qty-label">
-																										<div class="input-number">
-																											<input type="number" min="1" value="1">
-																											<span class="qty-up">+</span>
-																											<span class="qty-down">-</span>
-																										</div>
-																									</div>
-																		
-																									<button class="add-to-cart-btn">
-																										<i class="fa fa-shopping-cart"></i>
-																										add to cart</button>
-																								</div>
-																							#}
+{# 
+						<div class="add-to-cart">
+							<div class="qty-label">
+								<div class="input-number">
+									<input type="number" min="1" value="1">
+									<span class="qty-up">+</span>
+									<span class="qty-down">-</span>
+								</div>
+							</div>
+
+							<button class="add-to-cart-btn">
+								<i class="fa fa-shopping-cart"></i>
+								add to cart</button>
+						</div>
+					 #}
+					 <button class="add_cart_btn add_cart" data-id-article="{{article.id}}" style="bottom : auto !important; opacity : 1 !important">
+						<i class="fa fa-shopping-cart"></i>&nbsp; Ajouter au panier</button>
 					</div>
 				</div>
 				<!-- /Product details -->
