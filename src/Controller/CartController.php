@@ -40,7 +40,7 @@ class CartController extends AbstractController
                     $email = (new TemplatedEmail())
                         ->from($user->getEmail())
                         ->to($boutique->getMail())
-                        ->subject('Merçi d\'être parmi nous')
+                        ->subject('Merci d\'être parmi nous')
                         ->htmlTemplate('email/cart.html.twig')
                         ->context([
                             'boutique' => $boutique,
