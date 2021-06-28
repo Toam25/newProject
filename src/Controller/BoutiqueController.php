@@ -379,31 +379,32 @@ class BoutiqueController extends AbstractController
      */
     public function viewOther(PageRepository $pageRepository, $id): response
     {
-        $page = $pageRepository->findOneBy(['id' => $id]);
-        if ($page == null) {
-            return new JsonResponse(['status' => 'ko']);
-        }
-        $matches = [];
-        $boutique = $page->getBoutique();
-        $shopLink = "";
-        if ($boutique) {
-            preg_match('%(http[s]?:\/\/|www\/)([a-zA-Z0-9-_\.\/\?=&]+)%i', $boutique->getExternalLink(), $matches);
-        }
-        if ($boutique->getDetailOffer() != "Gratuit") {
-            $shopLink = sizeof($matches) > 2 ? $matches[2] : "";
-        }
-        if ($page) {
-            $page->setView($page->getView() + 1);
-            $em = $this->getDoctrine()->getManager();
-            $em->flush();
-            return $this->render('boutique/page_view.html.twig', [
-                'boutique' => $boutique,
-                'page' => $page,
-                'shopLink' => $shopLink
-            ]);
-        } else {
-            return new Response('', Response::HTTP_NOT_FOUND);
-        }
+        return new JsonResponse(['status' => "OK"]);
+        // $page = $pageRepository->findOneBy(['id' => $id]);
+        // // if ($page == null) {
+        // //     return new JsonResponse(['status' => 'ko']);
+        // // }
+        // $matches = [];
+        // $boutique = $page->getBoutique();
+        // $shopLink = "";
+        // if ($boutique) {
+        //     preg_match('%(http[s]?:\/\/|www\/)([a-zA-Z0-9-_\.\/\?=&]+)%i', $boutique->getExternalLink(), $matches);
+        // }
+        // if ($boutique->getDetailOffer() != "Gratuit") {
+        //     $shopLink = sizeof($matches) > 2 ? $matches[2] : "";
+        // }
+        // if ($page) {
+        //     $page->setView($page->getView() + 1);
+        //     $em = $this->getDoctrine()->getManager();
+        //     $em->flush();
+        //     return $this->render('boutique/page_view.html.twig', [
+        //         'boutique' => $boutique,
+        //         'page' => $page,
+        //         'shopLink' => $shopLink
+        //     ]);
+        // } else {
+        //     return new Response('', Response::HTTP_NOT_FOUND);
+        // }
     }
 
     //////////////////////////////
