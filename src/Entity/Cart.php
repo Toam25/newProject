@@ -48,9 +48,26 @@ class Cart
      */
     private $boutique;
 
+    /**
+     * @ORM\Column(type="integer")
+     */
+    private $totalPrice;
+
+    /**
+     * @ORM\Column(type="datetime")
+     */
+    private $createdAt;
+
+    /**
+     * @ORM\Column(type="datetime")
+     */
+    private $liveredAt;
+
     public function __construct()
     {
         $this->articles = new ArrayCollection();
+        $this->createdAt = new \DateTime();
+        $this->liveredAt = new \DateTime();
     }
 
     public function getId(): ?int
@@ -140,6 +157,42 @@ class Cart
     public function setBoutique(?boutique $boutique): self
     {
         $this->boutique = $boutique;
+
+        return $this;
+    }
+
+    public function getTotalPrice(): ?int
+    {
+        return $this->totalPrice;
+    }
+
+    public function setTotalPrice(int $totalPrice): self
+    {
+        $this->totalPrice = $totalPrice;
+
+        return $this;
+    }
+
+    public function getCreatedAt(): ?\DateTimeInterface
+    {
+        return $this->createdAt;
+    }
+
+    public function setCreatedAt(\DateTimeInterface $createdAt): self
+    {
+        $this->createdAt = $createdAt;
+
+        return $this;
+    }
+
+    public function getLiveredAt(): ?\DateTimeInterface
+    {
+        return $this->liveredAt;
+    }
+
+    public function setLiveredAt(\DateTimeInterface $liveredAt): self
+    {
+        $this->liveredAt = $liveredAt;
 
         return $this;
     }
