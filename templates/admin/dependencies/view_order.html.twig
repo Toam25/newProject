@@ -1,0 +1,24 @@
+<div class="card border-left-success shadow py-2 px-2 ">
+<label>Utilisateur</label><br>
+Nom : {{ order.user.name }} <br>
+Prénom : {{ order.user.firstname }}<br>
+Email : {{ order.user.email }} <br>
+Quantité total : {{ order.quantity}} <br>
+Prix total : {{ order.totalPrice}} €<br>
+</div>
+<hr>
+<div class="card border-left-success shadow py-2 px-2 ">
+<label>Détail</label>
+<div id="container_view_article">
+{% for article in order.articles %}
+   <div class="view_article">
+    Réf : {{ article.referency }} <br>
+    Nom : {{ article.name }} <br>
+    Categories : {{ article.category }}<br>
+    Quantité : {{ article.quantity }} <br>
+    Prix : {{ article.price }} <br>
+    Déscription : {{ article.description }} <br>
+   </div>
+{% endfor %}
+
+</div>

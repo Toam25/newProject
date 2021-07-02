@@ -164,6 +164,14 @@
          {% elseif pages == "user"%}
             {% include 'admin/dependencies/user.html.twig' %}
         {# {% endif %} #}
+
+        {# ########order########## #}
+
+         {% elseif pages == "order"%}
+            {% include 'admin/dependencies/order.html.twig' %}
+          {% elseif pages == "view_order"%}
+            {% include 'admin/dependencies/view_order.html.twig' %}
+
      {#########################################################}
             
          {% elseif pages == "list_socialNetwork"%}

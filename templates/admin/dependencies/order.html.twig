@@ -1,0 +1,16 @@
+Total : {{ orders|length }}
+{% for order in orders %}
+     <a class="card border-left-warning shadow h-100 my-2" href="{{path('detail',{'id' : order.id, 'slug': order.user.name|slug('-')})}}">
+				<div class="row no-gutters align-items-center">
+					<div class="col mr-2" style="display: flex;">
+					    <div class="container-image py-2 px-2"style="width: 100px;height: 100px; display:flex; justify-content:center; align-items:center">
+						    <img src="{{ asset('images/'~order.user.avatar )}}" alt="" style="width: 100%;max-height: 100%;">
+						</div>
+						<div class="text-xs  d-flex flex-column justify-content-center">
+						    <p>Commande du : <strong>{{ order.user.name}}  {{ order.user.firstName}}</strong></p>
+							<p style="color: black;font-size: 11px;">mail : {{ order.user.email}}  </p>
+						</div>
+					</div>
+				</div>
+</a>
+{% endfor %}

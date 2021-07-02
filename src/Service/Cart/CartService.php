@@ -19,24 +19,30 @@ class CartService
         $this->manager = $manager;
         $this->cartRepository = $cartRepository;
     }
-    public function addCart(Article $article, User $user, string $type, string $status)
+    public function addCart(Article $article, User $user, string $type, string $status, $quantity = 1)
     {
 
 
         $cart = $this->cartRepository->findOneByArticleWithUser($user, $article, $type);
         $boutique = $article->getBoutique();
         if ($cart) {
-            $cart->setQuantity($cart->getQuantity() + 1);
+            $cart->setQuantity($cart->getQuantity() + $quantity);
+            $totalPrice = $cart->getTotalPrice() + $quantity * $article->getPrice();
+            $cart->setTotalPrice($totalPrice);
             $this->manager->flush();
         } else {
             $cart = new Cart;
+            $totalPrice = $quantity * $article->getPrice();
             $cart->addArticle($article)
                 ->setUser($user)
                 ->setQuantity(1)
                 ->setStatus($status)
                 ->setType($type)
-                ->setBoutique($boutique);
+                ->setBoutique($boutique)
+                ->setTotalPrice($totalPrice);
+
             $this->manager->persist($cart);
+
             $this->manager->flush();
         }
 

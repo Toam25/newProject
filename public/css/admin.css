@@ -1,3 +1,16 @@
+.container_view_article{
+    background: white;
+    padding: 5px;
+    border-radius: 6px;
+    min-width: 200px;
+}
+.view_article{
+    background: white;
+    padding: 5px;
+    border-radius: 6px;
+    min-width: 200px;
+    max-width: 300px;
+}
 .switch-field{
     display: flex;
     margin-top: 7px;
