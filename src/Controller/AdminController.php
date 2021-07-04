@@ -339,9 +339,17 @@ class AdminController extends AbstractController
             'boutique' => $boutique
         ]);
     }
-
     /**
-     * @Route("/admin/boutique", name="admin_boutique")
+     * @Route("/admin/boutique/edit", name="admin_boutique_edit", methods={"GET","POST"})
+     */
+
+    public function editBoutiqueEdit(BoutiqueRepository $boutiqueRepository, Request $request)
+    {
+
+         dd($request);
+    }
+    /**
+     * @Route("/admin/boutique", name="admin_boutique", methods={"GET","POST"})
      */
 
     public function editBoutique(BoutiqueRepository $boutiqueRepository, Request $request)
@@ -351,7 +359,8 @@ class AdminController extends AbstractController
 
         $form = $this->createForm(BoutiqueType::class, $boutique);
         $form->handleRequest($request);
-
+         
+       // dd($boutique->getUserCondition());
         if ($form->isSubmitted()  and $form->isValid()) {
             $image = $form->get('image')->getData();
             if ($image) {
