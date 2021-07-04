@@ -703,7 +703,7 @@ $(function () {
   //edition shop
   $('.shop_edit').on('submit', function (e) {
     e.preventDefault();
-    url = "/admin/boutique";
+    url = "/admin/boutique/edit";
     $.ajax({
       url,
       type: 'POST',

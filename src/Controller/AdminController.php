@@ -376,6 +376,50 @@ class AdminController extends AbstractController
             'boutique' => $boutique
         ]);
     }
+
+    /**
+     * @Route("/admin/boutique/edit", name="admin_boutique_edit")
+     */
+
+    public function editMyBoutique(BoutiqueRepository $boutiqueRepository, Request $request)
+    {
+
+        $boutique = $boutiqueRepository->findOneBy(['user' => $this->getUser()]);
+
+        $myBoutique = $request->request->get('boutique');
+        $form = $this->createForm(BoutiqueType::class, $boutique);
+        $form->handleRequest($request);
+
+
+        $boutique->setName($myBoutique['name'])
+            ->setAddress($myBoutique['address'])
+            ->setSlogan($myBoutique['slogan'])
+            ->setLink($myBoutique['link'])
+            ->setExternalLink($myBoutique['externalLink'])
+            ->setMail($myBoutique['mail'])
+            ->setContact($myBoutique['contact'])
+            ->setResume($myBoutique['resume'])
+            ->setApropos($myBoutique['apropos'])
+            ->setUserCondition($myBoutique['user_condition']);
+
+
+
+        $image = $request->files->get('image');
+        if ($image) {
+            $image->getData();
+            $fichier = md5(uniqid()) . '.' . $image->guessExtension();
+            $image->move(
+                $this->getParameter('images_directory'),
+                $fichier
+            );
+            $boutique->setLogo($fichier);
+        }
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($boutique);
+        $em->flush();
+
+        return new JsonResponse(['status=>success']);
+    }
     /**
      * @Route("/admin/boutique/list", name="list_boutique")
      */
