@@ -9,7 +9,10 @@ Total : {{ orders|length }}
 						<div class="text-xs  d-flex flex-column justify-content-center">
 						    <p>Commande du : <strong>{{ order.user.name}}  {{ order.user.firstName}}</strong></p>
 							<p style="color: black;font-size: 11px;">mail : {{ order.user.email}}  </p>
+							<p style="color: black;font-size: 11px;">date : {{ order.createdAt|date('d/m/y H:i:s') }}</p>
 						</div>
+
+						<button class = "delete_cart btn btn-danger" data-value="3">Supprimer</button> 
 					</div>
 				</div>
 </a>
