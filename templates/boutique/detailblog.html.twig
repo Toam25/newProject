@@ -71,14 +71,14 @@
          <div class="astuce_blog" >
             <h1>Astuce récente</h1>
             {% for astuce in astuces %}
-            <div class="contaier_astuce">
+            <a class="contaier_astuce" href="{{ path('showBlog',{'id': astuce.id, 'slug': astuce.link})}}">
                 <div class="container_image_astuce">
                    <img src="/images/images_default/default_logo.png">
                 </div>
                 <div>
                   <p><span class="title_astuce"> {{ cutWorld(astuce.title,50)}} </span> {{ cutWorld(astuce.resume, 100)}} </p>
                 </div>
-            </div>
+            </a>
             {% endfor %}
          </div>
          <div class="astuce_blog">
