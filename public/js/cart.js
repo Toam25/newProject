@@ -190,22 +190,52 @@ $(function () {
   }
 
   function removeCart(that, idCart) {
-    $.ajax({
-      url: "/cart/remove/" + idCart,
-      type: 'POST',
-      beforeSend: () => {
+
+
+    Lobibox.confirm({
+      msg: 'Voulez vous supprimez  ?',
+      buttons: {
+        yes: {
+          text: 'Oui',
+
+        },
+        no: {
+          text: 'Non',
+
+        },
 
       },
-      error: () => {
 
-      },
-      success: (data) => {
+      callback: ($this, type) => {
 
-      },
-      complete: () => {
+        if (type === "yes") {
 
+          $.ajax({
+            url: "/cart/remove/" + idCart,
+            type: 'POST',
+            beforeSend: () => {
+              toastr.info('Suppression en cours...')
+              that.prop('disabled', true)
+            },
+            error: () => {
+              toastr.error('Erreur de suppression.')
+              that.prop('disabled', false)
+
+
+            },
+            success: (data) => {
+              toastr.success('Suppression terminer.')
+              that.parent('div').parent('div').remove();
+            },
+            complete: () => {
+
+            }
+          });
+        }
       }
+
     });
+
   }
   function removeOneItems(that, id) {
     $.ajax({

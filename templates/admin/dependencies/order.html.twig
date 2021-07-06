@@ -1,8 +1,8 @@
 Total : {{ orders|length }}
 {% for order in orders %}
-     <a class="card border-left-warning shadow h-100 my-2" href="{{path('detail',{'id' : order.id, 'slug': order.user.name|slug('-')})}}">
+     <div class="card border-left-warning shadow h-100 my-2" href="{{path('detail',{'id' : order.id, 'slug': order.user.name|slug('-')})}}">
 				<div class="row no-gutters align-items-center">
-					<div class="col mr-2" style="display: flex;">
+					<div class="col mr-2" style="display: flex;justify-content: space-between;">
 					    <div class="container-image py-2 px-2"style="width: 100px;height: 100px; display:flex; justify-content:center; align-items:center">
 						    <img src="{{ asset('images/'~order.user.avatar )}}" alt="" style="width: 100%;max-height: 100%;">
 						</div>
@@ -11,9 +11,14 @@ Total : {{ orders|length }}
 							<p style="color: black;font-size: 11px;">mail : {{ order.user.email}}  </p>
 							<p style="color: black;font-size: 11px;">date : {{ order.createdAt|date('d/m/y H:i:s') }}</p>
 						</div>
-
-						<button class = "delete_cart btn btn-danger" data-value="3">Supprimer</button> 
+						<div style="width: 35%;display: flex;justify-content: space-around;align-items: center;">
+							<a href="{{path('detail',{'id' : order.id, 'slug': order.user.name|slug('-')})}}">
+							détail
+							</a>	
+							<button class = "delete_cart btn btn-danger" data-value="{{order.id}}">Supprimer</button> 
+						</div>
+						
 					</div>
 				</div>
-</a>
+</div>
 {% endfor %}
