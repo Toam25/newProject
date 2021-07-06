@@ -71,7 +71,7 @@
          <div class="astuce_blog" >
             <h1>Astuce récente</h1>
             {% for astuce in astuces %}
-            <a class="contaier_astuce" href="{{ path('showBlog',{'id': astuce.id, 'slug': astuce.link})}}">
+            <a class="contaier_astuce" href="{{ path('showBlog',{'id': astuce.id, 'slug': astuce.title|slug('-')})}}">
                 <div class="container_image_astuce">
                    <img src="/images/images_default/default_logo.png">
                 </div>
@@ -87,7 +87,7 @@
                {% set break = 0 %}
               {% for view in views  %}
                  {% if break < 3  %}
-                  <a href="{{ path('showBlog',{'id': view.id, 'slug': view.link})}}" class="view_on_title">
+                  <a href="{{ path('showBlog',{'id': view.id, 'slug': view.title|slug('-')})}}" class="view_on_title">
                         <p>{{ cutWorld(view.title,40)}}</p><span class="fa fa-arrow-circle-right"></span>
                   </a>
                   <hr/>
@@ -99,7 +99,7 @@
          <div class="astuce_blog">
             <h1>Article le plus partagé</h1>
             {% for share in shares %}
-                  <a href="{{ path('showBlog',{'id': share.id, 'slug': share.link})}}" class="view_on_title">
+                  <a href="{{ path('showBlog',{'id': share.id, 'slug': share.title|slug('-')})}}" class="view_on_title">
                         <p>{{ cutWorld(share.title,40)}}</p><span class="fa fa-arrow-circle-right"></span>
                   </a>
                   <hr/>
