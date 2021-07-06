@@ -8,6 +8,15 @@ background: #d02222;
 color: white;
 padding: 5px;
 }
+#container_echantillon{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+._container_echatillon{
+  display: flex;
+  overflow-x : auto;
+}
 .container_preview_images_boutique {
   height: 50px;
   width: 50px;
@@ -811,10 +820,9 @@ nav {
 
 .liste_categorie_vetement {
   border: 1px solid rgba(0, 0, 0, 0.3);
-
   margin-right: 7px;
-
   cursor: pointer;
+  min-width: 145px;
 }
 
 .fets:hover {
