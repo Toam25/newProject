@@ -183,6 +183,11 @@ class Boutique
      */
     private $carts;
 
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $cover;
+
     public function __construct()
     {
         $this->logo = "images_default/default_logo.png";
@@ -885,6 +890,18 @@ class Boutique
                 $cart->setBoutique(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getCover(): ?string
+    {
+        return $this->cover;
+    }
+
+    public function setCover(?string $cover): self
+    {
+        $this->cover = $cover;
 
         return $this;
     }

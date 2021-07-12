@@ -55,7 +55,7 @@ body {
     align-items: center;
     position : relative;
 }
-.container_detail_shop_logo > img {
+.container_detail_shop_logo > div {
     position: absolute;
     bottom: 2px;
     left: 2px;

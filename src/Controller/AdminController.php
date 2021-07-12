@@ -390,7 +390,7 @@ class AdminController extends AbstractController
      * @Route("/admin/boutique/edit", name="admin_boutique_edit")
      */
 
-    public function editMyBoutique(BoutiqueRepository $boutiqueRepository, Request $request)
+    public function editMyBoutique(BoutiqueRepository $boutiqueRepository, Request $request, InsertFileServices $insertFileServices)
     {
 
         $boutique = $boutiqueRepository->findOneBy(['user' => $this->getUser()]);
@@ -413,15 +413,24 @@ class AdminController extends AbstractController
 
 
 
-        $image = $request->files->get('image');
-        if ($image) {
-            $image->getData();
-            $fichier = md5(uniqid()) . '.' . $image->guessExtension();
-            $image->move(
-                $this->getParameter('images_directory'),
-                $fichier
-            );
+
+        $files  = $request->files->get('boutique');
+        $image = $files['image'];
+
+        $cover = $files['cover'];
+        // dd($image);
+
+        // $cover = $request->files->get($myBoutique['cover']);
+
+
+        if ($image != null) {
+            $fichier = $insertFileServices->insertFile($image);
+
             $boutique->setLogo($fichier);
+        }
+        if ($cover != null) {
+            $fichier = $insertFileServices->insertFile($cover);
+            $boutique->setCover($fichier);
         }
         $em = $this->getDoctrine()->getManager();
         $em->persist($boutique);

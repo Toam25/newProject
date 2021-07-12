@@ -1,5 +1,12 @@
 <div id="container_class">
-  <div class="photo_edit_boutique">
+       {%  set cover = "images_default/default_logo.png" %} 
+  {% if boutique.cover is not same  as(null) %}
+       {%  set cover = boutique.cover %} 
+  
+  {% endif %}
+  <div class="photo_edit_boutique" style = " background-image : url({{ asset('images/'~ cover)}}) ; background-position: center;
+background-size: contain;
+background-repeat: no-repeat;">
     <img id="preview_image" src="{{ asset("images/"~ boutique.logo) }}"/>
   </div>
 	<div class="container-fluid form_edit_boutique">
@@ -17,6 +24,7 @@
     <div class="col-md-6">{{ form_row(form.mail)}}</div>
     <div class="col-md-6">{{ form_row(form.contact)}}</div>
     <div class="col-md-6">{{ form_row(form.image)}}</div>
+    <div class="col-md-12">{{ form_row(form.cover)}}</div>
     <div class="col-md-12">{{ form_row(form.resume)}}</div>
     <div class="col-md-12">{{ form_row(form.apropos)}}</div>
     <div class="col-md-12"> {{ form_row(form.user_condition)}}</div>
