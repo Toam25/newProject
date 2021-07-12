@@ -69,8 +69,12 @@
 					{% for shop in slideShop %}
 						<a class="container_wallpaper_shop splide__slide" href="{{ path('shop',{'id': shop.id, 'type' : shop.type })}}">
 							<div class="container_detail_shop js-blurred-target">
-								<div class="container_detail_shop_logo">
-									<img src="{{asset('images/'~ shop.logo )}}" alt="">
+							  {% set cover = "images_default/default_logo.png"%}
+							  {% if shop.cover is defined %}
+							     {% set cover = shop.conver %}
+							  {% endif %}
+								<div class="container_detail_shop_logo" style="background-image : url({{asset('images/'~ cover)}})">
+									<img src="{{asset('images/'~ shop.logo )}}" alt="" onerror="this.onerror=null;this.src='https://placeimg.com/200/300/animals';">
 								</div>
 								<div style="text-overflow: ellipsis;overflow: hidden;">
 									<h4 style="font-size: 13px;color: white;">{{ shop.name }}</h4>

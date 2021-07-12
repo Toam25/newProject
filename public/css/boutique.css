@@ -53,6 +53,15 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
+    position : relative;
+}
+.container_detail_shop_logo > img {
+    position: absolute;
+    bottom: 2px;
+    left: 2px;
+    width: 55px !important;
+    background: white;
+    border-radius: 50%;
 }
 .container_detail_shop {
     height: 100%;

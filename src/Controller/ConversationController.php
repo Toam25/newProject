@@ -71,8 +71,8 @@ class ConversationController extends AbstractController
             $conversations = $this->conversationRepository->findConvesationsByUser($this->getUser()->getId());
             $newConversations = [];
 
-            // $hubUrl = $this->getParameter('mercure.default_hub');
-            // $this->addLink($request, new Link('mercure ', $hubUrl));
+            $hubUrl = $this->getParameter('mercure.default_hub');
+            $this->addLink($request, new Link('mercure ', $hubUrl));
 
             foreach ($conversations as $conversation) {
                 //  $conversation['createdAt']->getTimestamp();

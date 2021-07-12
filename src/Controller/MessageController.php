@@ -103,20 +103,20 @@ class MessageController extends AbstractController
         $this->entityManager->persist($conversation);
         $this->entityManager->flush();
 
-        // $topic = "https://intro-mercure.test/users/message/" . $conversation->getId();
+        $topic = "https://intro-mercure.test/users/message/" . $conversation->getId();
 
-        // $data = [
-        //     "user" => $user->getId(),
-        //     "type" => "newMessage",
-        //     "message" => [
-        //         "content" => $content_img . $content,
-        //         "times" => $message->getCreatedAt()->getTimesTamp(),
-        //         "id" => $message->getId()
+        $data = [
+            "user" => $user->getId(),
+            "type" => "newMessage",
+            "message" => [
+                "content" => $content_img . $content,
+                "times" => $message->getCreatedAt()->getTimesTamp(),
+                "id" => $message->getId()
 
-        //     ]
-        // ];
+            ]
+        ];
 
-        // $mercureService->mercurePost($topic, $data);
+        $mercureService->mercurePost($topic, $data);
 
         return $this->json($message, Response::HTTP_CREATED, [], ['attributes' => self::ATTRIBUTES_TO_SERIALISE]);
 
