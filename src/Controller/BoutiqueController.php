@@ -695,8 +695,6 @@ class BoutiqueController extends AbstractController
             if ($shop->isActiveNow()) {
                 $shopSli .= '<div class="onLigne"></div>';
             }
-
-            dump($shop->getDetailOffer());
             $shopSli .= '<div class="' . $shop->getDetailOffer() . '"></div></div>
          <br> 
          <p class="nom_boutique" style="display: block;"> ' . $shop->getName() . '</p></a>';
