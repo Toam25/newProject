@@ -17,13 +17,14 @@
     </head>
     <body>
         {% block body %}{% endblock %}
-        {% if app.user is not same as(null) %}
-        	{% include "messageAndMembre/messageAndMembre.html.twig" %}
-        {% endif %}
+     
         <script src=" {{ asset ('vendor/jquery/jquery.min.js') }}"></script>
         <script src="{{ asset ('vendor/bootstrap/js/bootstrap.bundle.min.js ') }}"></script>
         <script src="{{ asset ('toastr/toastr.min.js')}}"></script>
-        <script src="{{ asset ('js/contact.js')}}"></script>
+           {% if app.user is not same as(null) %}
+        	{% include "messageAndMembre/messageAndMembre.html.twig" %}
+           <script src="{{ asset ('js/contact.js')}}"></script>
+        {% endif %}
         {% block javascripts %}{% endblock %}
     </body>
 </html>
