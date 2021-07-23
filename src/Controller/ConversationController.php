@@ -71,18 +71,22 @@ class ConversationController extends AbstractController
             $conversations = $this->conversationRepository->findConvesationsByUser($this->getUser()->getId());
             $newConversations = [];
 
-            $hubUrl = $this->getParameter('mercure.default_hub');
-            $this->addLink($request, new Link('mercure ', $hubUrl));
+            // $hubUrl = $this->getParameter('mercure.default_hub');
+            // $this->addLink($request, new Link('mercure ', $hubUrl));
 
             foreach ($conversations as $conversation) {
                 //  $conversation['createdAt']->getTimestamp();
                 if ($conversation['createdAt'] != null) {
 
-
                     $conversation = array_merge($conversation, [
                         "times" => $conversation['createdAt']->getTimesTamp()
                     ]);
                 }
+                $deleteFrom = $conversation['deleteFrom'] != null ? $conversation['deleteFrom'] : [];
+                if (in_array($this->getUser()->getId(), $deleteFrom)) {
+                    $conversation['content'] = "<i>Message supprimé</i>";
+                }
+
                 array_push($newConversations, $conversation);
             }
 

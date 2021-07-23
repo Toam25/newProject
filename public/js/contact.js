@@ -5,50 +5,50 @@ $(function () {
     var my_id = parseInt($('.my_id').val());
 
     //mercure
-    var url = new URL("http://localhost:3000/.well-known/mercure");
-    var eventSource = null;
+    // var url = new URL("http://localhost:3000/.well-known/mercure");
+    // var eventSource = null;
 
     //getConversation
-    $.ajax({
-        url: "/conversations/",
-        type: 'GET',
-        dataType: 'json',
-        success: (data) => {
-            data.forEach(element => {
-                //mercure
-                url.searchParams.append('topic', 'https://intro-mercure.test/users/message/' + parseInt(element.conversationId));
+    // $.ajax({
+    //     url: "/conversations/",
+    //     type: 'GET',
+    //     dataType: 'json',
+    //     success: (data) => {
+    //         data.forEach(element => {
+    //             //mercure
+    //             url.searchParams.append('topic', 'https://intro-mercure.test/users/message/' + parseInt(element.conversationId));
 
-            });
+    //         });
 
-            eventSource = new EventSource(url)
-            eventSource.onmessage = e => {
-                data = JSON.parse(e.data);
-                if (data.type == "newMessage") {
+    //         eventSource = new EventSource(url)
+    //         eventSource.onmessage = e => {
+    //             data = JSON.parse(e.data);
+    //             if (data.type == "newMessage") {
 
-                    let my = "your ";
-                    if (parseInt(data.user) == my_id) {
-                        my = "my "
-                    }
-                    $("#message").append(`<div class="contaitboutique ` + my + ` ">` + data.message.content + `
-                        <div class="time" >
-                        `+ getStringDatePerTimestamp(data.message.times) + `
-                        </div>
-                    <button class="font_b delete_message" name="`+ data.message.id + `">
-                        <span class="fa fa-trash"></span>
-                </button>
-                </div>`)
+    //                 let my = "your ";
+    //                 if (parseInt(data.user) == my_id) {
+    //                     my = "my "
+    //                 }
+    //                 $("#message").append(`<div class="contaitboutique ` + my + ` ">` + data.message.content + `
+    //                     <div class="time" >
+    //                     `+ getStringDatePerTimestamp(data.message.times) + `
+    //                     </div>
+    //                 <button class="font_b delete_message" name="`+ data.message.id + `">
+    //                     <span class="fa fa-trash"></span>
+    //             </button>
+    //             </div>`)
 
-                    scrollToButton();
-                }
-            }
+    //                 scrollToButton();
+    //             }
+    //         }
 
-            window.addEventListener('beforeunload', function (e) {
-                if (eventSource != null) {
-                    eventSource.close();
-                }
-            });
-        }
-    });
+    //         window.addEventListener('beforeunload', function (e) {
+    //             if (eventSource != null) {
+    //                 eventSource.close();
+    //             }
+    //         });
+    //     }
+    // });
 
 
 
@@ -211,15 +211,19 @@ $(function () {
 
                 data.messages.forEach(message => {
                     my = (message.my) ? "my" : "your";
-                    mymessage = `<div class="contaitboutique ` + my + ` ">` + message.content + `
+
+                    mymessage = `<div class="contaitboutique ` + my + ` ">
+                                    <div class="content_my_message">`
+                        + message.content + `
                               
-                             <div class="time" >
-                              `+ getStringDatePerTimestamp(message.times) + `
-                              </div>
-                          <button class="font_b delete_message" name="`+ message.id + `">
-                               <span class="fa fa-trash"></span>
-                        </button>
-                        </div>`+ mymessage;
+                                     </div>
+                                    <div class="time" >
+                                         `+ getStringDatePerTimestamp(message.times) + `
+                                    </div>
+                                    <button class="font_b delete_message" name="`+ message.id + `">
+                                        <span class="fa fa-trash"></span>
+                                    </button>
+                                </div>`+ mymessage;
                 });;
                 id_other_user = data.id;
                 $('.block_message').attr('name', id_other_user);
@@ -538,7 +542,32 @@ $(function () {
     //     })
     // }
 
+    //delete message 
 
+    $('body').on('click', '.delete_message', function (e) {
+        let id = parseInt($(this).attr('name'));
+        $.ajax({
+            url: "/messages/delete/" + id,
+            type: 'POST',
+            dataType: 'json',
+            beforeSend: () => {
+                $(this).prop('disabled', true);
+            },
+            success: (data) => {
+
+                $(this).prop('disabled', false);
+                toastr.success('Supprimer avec success');
+                $(this).parent('div').children('.content_my_message').html('<i>Message supprimé</i>');
+
+            },
+            error: () => {
+                $(this).prop('disabled', false);
+                toastr.success('Erreur de suppression');
+
+                // $('#message .container_loader_message').remove();
+            }
+        })
+    });
     let getLastmessage = () => {
         $.ajax({
             url: "/messages/last/" + id_other_user,

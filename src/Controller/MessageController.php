@@ -55,6 +55,10 @@ class MessageController extends AbstractController
                 );
 
                 array_map(function ($message) {
+                    $deleteFrom = $message->getDeleteFrom() != null ? $message->getDeleteFrom() : [];
+                    if (in_array($this->getUser()->getId(), $deleteFrom)) {
+                        $message->setContent("<i>Message supprimé</i>");
+                    }
                     $message->setMy(
                         $message->getUser()->getId() === $this->getUser()->getId() ? true : false
                     );
@@ -198,5 +202,28 @@ class MessageController extends AbstractController
             "times" => $conversation['createdAt']->getTimesTamp()
         ]);
         return $this->json($conversation);
+    }
+
+    /**
+     * @Route("/delete/{id}", name="deleteMessage", methods={"POST"})
+     */
+    public function deleteMessage($id, MessageRepository $messageRepository)
+    {
+
+        $message = $messageRepository->findOneBy(['id' => $id]);
+        $deleteFrom = $message->getDeleteFrom();
+        $deleteFrom = ($deleteFrom != null) ? $deleteFrom : [];
+        if (in_array($this->getUser()->getId(), $deleteFrom)) {
+            return $this->json(['status' => 'ok', 'message' => 'delete yet']);
+        } else {
+
+            array_push($deleteFrom, $this->getUser()->getId());
+            $message->setDeleteFrom($deleteFrom);
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($message);
+            $em->flush();
+        }
+
+        return $this->json(['status' => 'ok']);
     }
 }

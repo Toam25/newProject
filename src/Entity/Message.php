@@ -42,6 +42,11 @@ class Message
 
     private $my;
 
+    /**
+     * @ORM\Column(type="array", nullable=true)
+     */
+    private $deleteFrom = [];
+
     public function __construct()
     {
         $this->createdAt = new \DateTime();
@@ -127,6 +132,18 @@ class Message
     public function setTimes($times)
     {
         $this->times = $times;
+
+        return $this;
+    }
+
+    public function getDeleteFrom(): ?array
+    {
+        return $this->deleteFrom;
+    }
+
+    public function setDeleteFrom(?array $deleteFrom): self
+    {
+        $this->deleteFrom = $deleteFrom;
 
         return $this;
     }

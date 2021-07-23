@@ -693,11 +693,11 @@ class BoutiqueController extends AbstractController
             <div class="_container_image_shop">
                  <img class="logo_image_boutique_header" src="/images/' . $shop->getLogo() . '" alt="' . $shop->getName() . '">';
             if ($shop->isActiveNow()) {
-                $shopSli .= '<div class="onLigne"></div><div class="' . $shop->getDetailOffer() . '"></div>';
+                $shopSli .= '<div class="onLigne"></div>';
             }
 
-
-            $shopSli .= '</div>
+            dump($shop->getDetailOffer());
+            $shopSli .= '<div class="' . $shop->getDetailOffer() . '"></div></div>
          <br> 
          <p class="nom_boutique" style="display: block;"> ' . $shop->getName() . '</p></a>';
 
