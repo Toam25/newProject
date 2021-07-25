@@ -190,6 +190,45 @@ $(function () {
         $('#container-message').fadeOut();
 
     });
+
+    $('.block_message').on('click', function (e) {
+        e.preventDefault();
+        let id = $(this).attr('name');
+
+        $.ajax({
+            url: '/messages/blocked/' + id,
+            type: 'POST',
+            beforeSend: () => {
+                // $('#message').html(loader);
+            },
+            success: (data) => {
+            },
+            error: () => {
+                $('#message .container_loader_message').remove();
+            }
+
+        });
+
+    });
+    $('.delete_all_message').on('click', function (e) {
+        e.preventDefault();
+        let id = $(this).attr('name');
+
+        $.ajax({
+            url: '/messages/deleteAll/' + id,
+            type: 'POST',
+            beforeSend: () => {
+                // $('#message').html(loader);
+            },
+            success: (data) => {
+            },
+            error: () => {
+                $('#message .container_loader_message').remove();
+            }
+
+        });
+
+    });
     $('body').on('click', '.message-in', function (e) {
         e.preventDefault();
         let id = $(this).attr('name');
@@ -208,7 +247,7 @@ $(function () {
                 $('._message_name_boutique').html(data.name);
                 let mymessage = ``;
 
-
+                console.log(data.messages);
                 data.messages.forEach(message => {
                     my = (message.my) ? "my" : "your";
 
@@ -227,9 +266,10 @@ $(function () {
                 });;
                 id_other_user = data.id;
                 $('.block_message').attr('name', id_other_user);
-                $('.block_message').attr('name', id_other_user);
+                // $('.block_message').attr('name', id_other_user);
                 $('.link_shop_or_user').attr('href', data.link);
                 $('#conversation_id').val(data.id_conversation);
+                $('.delete_all_message').attr('name', id_other_user);
                 $('.me_me').val(data.id);
 
                 $("#message").html(mymessage);

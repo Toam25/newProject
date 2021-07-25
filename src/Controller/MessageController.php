@@ -36,7 +36,7 @@ class MessageController extends AbstractController
     /**
      * @Route("/{id}", name="getMessage", methods={"GET"})
      */
-    public function index(int $id, CheckConversationService $checkConversationService): Response
+    public function index(int $id, CheckConversationService $checkConversationService, Request $request): Response
     {
 
         //  $this->denyAccessUnlessGranted('view', $conversation);
@@ -54,17 +54,31 @@ class MessageController extends AbstractController
                     $conversationId
                 );
 
-                array_map(function ($message) {
+                $newMessage = [];
+
+                foreach ($messages as $key => $message) {
                     $deleteFrom = $message->getDeleteFrom() != null ? $message->getDeleteFrom() : [];
-                    if (in_array($this->getUser()->getId(), $deleteFrom)) {
-                        $message->setContent("<i>Message supprimé</i>");
+                    if (!in_array($this->getUser()->getId(), $deleteFrom)) {
+                        array_push($newMessage, $message);
                     }
+                }
+                $messages = $newMessage;
+                // $messages = array_filter($messages, function ($message, $key) {
+                //     $deleteFrom = $message->getDeleteFrom() != null ? $message->getDeleteFrom() : [];
+                //     return in_array($this->getUser()->getId(), $deleteFrom) ? false : true;
+                //     //return true;
+                // }, ARRAY_FILTER_USE_BOTH);
+                // dump($messages);
+                array_map(function ($message) {
+                    // $deleteFrom = $message->getDeleteFrom() != null ? $message->getDeleteFrom() : [];
+                    // if (in_array($this->getUser()->getId(), $deleteFrom)) {
+                    //     $message->setContent("<i>Message supprimé</i>");
+                    // }
                     $message->setMy(
                         $message->getUser()->getId() === $this->getUser()->getId() ? true : false
                     );
                     $message->setTimes($message->getCreatedAt()->getTimesTamp());
                 }, $messages);
-
 
                 return $this->json([
                     'id' => $conversation['user_id'],
@@ -107,7 +121,7 @@ class MessageController extends AbstractController
         $this->entityManager->persist($conversation);
         $this->entityManager->flush();
 
-        $topic = "https://intro-mercure.test/users/message/" . $conversation->getId();
+        //  $topic = "https://intro-mercure.test/users/message/" . $conversation->getId();
 
         $data = [
             "user" => $user->getId(),
@@ -120,7 +134,7 @@ class MessageController extends AbstractController
             ]
         ];
 
-        $mercureService->mercurePost($topic, $data);
+        //    $mercureService->mercurePost($topic, $data);
 
         return $this->json($message, Response::HTTP_CREATED, [], ['attributes' => self::ATTRIBUTES_TO_SERIALISE]);
 
@@ -213,6 +227,9 @@ class MessageController extends AbstractController
         $message = $messageRepository->findOneBy(['id' => $id]);
         $deleteFrom = $message->getDeleteFrom();
         $deleteFrom = ($deleteFrom != null) ? $deleteFrom : [];
+
+        //$message->setCreatedAt(new \DateTime());
+
         if (in_array($this->getUser()->getId(), $deleteFrom)) {
             return $this->json(['status' => 'ok', 'message' => 'delete yet']);
         } else {
@@ -224,6 +241,56 @@ class MessageController extends AbstractController
             $em->flush();
         }
 
+        return $this->json(['status' => 'ok']);
+    }
+
+    /**
+     * @Route("/deleteAll/{id}", name="deleteAllMessage", methods={"POST"})
+     */
+    public function deleteAllMessage($id, CheckConversationService $checkConversationService)
+    {
+
+        //  $this->denyAccessUnlessGranted('view', $conversation);
+
+        //   $message = $conversation->getMessage();
+        if ($this->getUser()) {
+
+
+            $conversation = $checkConversationService->checkConversation($id);
+            $conversationId = $conversation['conversation_id'];
+
+            if (intval($conversation) !== -1) {
+
+                $messages = $this->messageRepository->findMessageByConversationId(
+                    $conversationId
+                );
+                $em = $this->getDoctrine()->getManager();
+
+                foreach ($messages as $key => $message) {
+                    $deleteFrom = $message->getDeleteFrom();
+                    $deleteFrom = ($deleteFrom != null) ? $deleteFrom : [];
+                    if (!in_array($this->getUser()->getId(), $deleteFrom)) {
+
+                        array_push($deleteFrom, $this->getUser()->getId());
+                        $message->setDeleteFrom($deleteFrom);
+                        $em->persist($message);
+                    }
+                }
+
+
+                $em->flush();
+
+                return $this->json([], Response::HTTP_OK, [], ['attributes' => self::ATTRIBUTES_TO_SERIALISE]);
+            }
+        }
+        return $this->json(['status' => "KO"], Response::HTTP_UNAUTHORIZED);
+    }
+
+    /**
+     * @Route("/blocked/{id}", name="blockedMessage", methods={"POST"})
+     */
+    public function blocked($id, MessageRepository $messageRepository)
+    {
         return $this->json(['status' => 'ok']);
     }
 }
