@@ -36,7 +36,7 @@ class MessageController extends AbstractController
     /**
      * @Route("/{id}", name="getMessage", methods={"GET"})
      */
-    public function index(int $id, CheckConversationService $checkConversationService, Request $request): Response
+    public function index(int $id, CheckConversationService $checkConversationService): Response
     {
 
         //  $this->denyAccessUnlessGranted('view', $conversation);
@@ -289,8 +289,99 @@ class MessageController extends AbstractController
     /**
      * @Route("/blocked/{id}", name="blockedMessage", methods={"POST"})
      */
-    public function blocked($id, MessageRepository $messageRepository)
+    public function blocked(int $id, CheckConversationService $checkConversationService)
     {
+
+        $conversation = $checkConversationService->checkConversation($id);
+        $conversationId = $conversation['conversation_id'];
+        $blocked = $this->getUser()->getBlocked() != null ? $this->getUser()->getBlocked() : [];
+        $blocked1 = [
+            'conversation_id' => 1,
+            'blocked' =>
+            [
+                'id_blocker' => $this->getUser()->getId(),
+                'id_blocked' => $id
+            ]
+        ];
+        $blocked2 =
+
+            [
+                'conversation_id' => 2,
+                'id_blocker' => $this->getUser()->getId(),
+                'id_blocked' => $id
+            ];
+        array_push($blocked, $blocked2);
+
+        // foreach ($blocked as $value) {
+        //     [
+
+        //     ]
+        // }
+
+        dd($blocked);
+
         return $this->json(['status' => 'ok']);
+    }
+
+    /**
+     * @Route("/lastest/{id}-{last_id_message}", name="getLastTestMessages", methods={"GET"})
+     */
+
+    public function getLastMessages(int $id, int $last_id_message, CheckConversationService $checkConversationService)
+    {
+        //  $this->denyAccessUnlessGranted('view', $conversation);
+
+        //   $message = $conversation->getMessage();
+        if ($this->getUser()) {
+
+
+            $conversation = $checkConversationService->checkConversation($id);
+            $conversationId = $conversation['conversation_id'];
+
+            if (intval($conversation) !== -1) {
+
+                $messages = $this->messageRepository->findLastMessageByConversationId(
+                    $conversationId,
+                    $last_id_message
+                );
+
+                $newMessage = [];
+
+                foreach ($messages as $key => $message) {
+                    $deleteFrom = $message->getDeleteFrom() != null ? $message->getDeleteFrom() : [];
+                    if (!in_array($this->getUser()->getId(), $deleteFrom)) {
+                        array_push($newMessage, $message);
+                    }
+                }
+                $messages = $newMessage;
+                // $messages = array_filter($messages, function ($message, $key) {
+                //     $deleteFrom = $message->getDeleteFrom() != null ? $message->getDeleteFrom() : [];
+                //     return in_array($this->getUser()->getId(), $deleteFrom) ? false : true;
+                //     //return true;
+                // }, ARRAY_FILTER_USE_BOTH);
+                // dump($messages);
+                array_map(function ($message) {
+                    // $deleteFrom = $message->getDeleteFrom() != null ? $message->getDeleteFrom() : [];
+                    // if (in_array($this->getUser()->getId(), $deleteFrom)) {
+                    //     $message->setContent("<i>Message supprimé</i>");
+                    // }
+                    $message->setMy(
+                        $message->getUser()->getId() === $this->getUser()->getId() ? true : false
+                    );
+                    $message->setTimes($message->getCreatedAt()->getTimesTamp());
+                }, $messages);
+
+                return $this->json(
+                    [
+                        'nbr_notification' => 0,
+                        'nbr_message' => 0,
+                        'messages' => $messages
+                    ],
+                    Response::HTTP_OK,
+                    [],
+                    ['attributes' => self::ATTRIBUTES_TO_SERIALISE]
+                );
+            }
+        }
     }
 }

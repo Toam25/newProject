@@ -4,6 +4,9 @@ $(function () {
     var id_other_user = null;
     var my_id = parseInt($('.my_id').val());
 
+    var get_message = setInterval(getLastmessage, 10000);
+
+
     //mercure
     // var url = new URL("http://localhost:3000/.well-known/mercure");
     // var eventSource = null;
@@ -148,7 +151,6 @@ $(function () {
             url: "/api/v1/user/?q=" + text,
             type: 'GET',
             dataType: 'json',
-            timeout: 3000,
             beforeSend: () => {
                 $('.js_member').append(loader)
             },
@@ -247,7 +249,7 @@ $(function () {
                 $('._message_name_boutique').html(data.name);
                 let mymessage = ``;
 
-                console.log(data.messages);
+
                 data.messages.forEach(message => {
                     my = (message.my) ? "my" : "your";
 
@@ -263,7 +265,7 @@ $(function () {
                                         <span class="fa fa-trash"></span>
                                     </button>
                                 </div>`+ mymessage;
-                });;
+                });
                 id_other_user = data.id;
                 $('.block_message').attr('name', id_other_user);
                 // $('.block_message').attr('name', id_other_user);
@@ -608,38 +610,68 @@ $(function () {
             }
         })
     });
-    let getLastmessage = () => {
-        $.ajax({
-            url: "/messages/last/" + id_other_user,
-            type: 'GET',
-            dataType: 'json',
-            beforeSend: () => {
-            },
-            success: (message) => {
+    function getLastmessage() {
 
-                my = (message.my) ? "my" : "your";
+        let last_id_message = $('#container-message').children('.head_message').children('#message').children('.contaitboutique:last-child').children('.delete_message').attr('name');
+        last_id_message = parseInt(last_id_message) ? parseInt(last_id_message) : 0;
+        //id_other_user =
+        if (id_other_user) {
 
 
-                $("#message").append(`<div class="contaitboutique ` + my + ` ">` + message.content + `
-               <div class="time" >
-                `+ getStringDatePerTimestamp(message.times) + `
-                </div>
-            <button class="font_b delete_message" name="`+ message.id + `">
-                 <span class="fa fa-trash"></span>
-          </button>
-          </div>`);
-                // let html = ``;
-                // data.forEach(element => {
-                //     html += listShop(element.image, element.id, element.name)
-                // });
-                // $('.js_member').html(html);
-                // $('#message .container_loader_message').remove();
-                scrollToButton();
-            },
-            error: () => {
-                $('#message .container_loader_message').remove();
-            }
-        })
+            $.ajax({
+                url: "/messages/lastest/" + id_other_user + '-' + last_id_message,
+                type: 'GET',
+                dataType: 'json',
+                beforeSend: () => {
+                },
+                success: (data) => {
+
+                    //             my = (message.my) ? "my" : "your";
+
+
+                    //             $("#message").append(`<div class="contaitboutique ` + my + ` ">` + message.content + `
+                    //        <div class="time" >
+                    //         `+ getStringDatePerTimestamp(message.times) + `
+                    //         </div>
+                    //     <button class="font_b delete_message" name="`+ message.id + `">
+                    //          <span class="fa fa-trash"></span>
+                    //   </button>
+                    //   </div>`);
+
+                    let mymessage = ``;
+                    data.messages.forEach(message => {
+                        my = (message.my) ? "my" : "your";
+
+                        mymessage = `<div class="contaitboutique ` + my + ` ">
+                            <div class="content_my_message">`
+                            + message.content + `
+                      
+                             </div>
+                            <div class="time" >
+                                 `+ getStringDatePerTimestamp(message.times) + `
+                            </div>
+                            <button class="font_b delete_message" name="`+ message.id + `">
+                                <span class="fa fa-trash"></span>
+                            </button>
+                        </div>`+ mymessage;
+                    });
+
+                    $('#message').append(mymessage);
+                    $('#my_nbr_message').data.nbr_message;
+                    $('#my_nbr_notification').data.nbr_notification;
+                    // let html = ``;
+                    // data.forEach(element => {
+                    //     html += listShop(element.image, element.id, element.name)
+                    // });
+                    // $('.js_member').html(html);
+                    // $('#message .container_loader_message').remove();
+                    scrollToButton();
+                },
+                error: () => {
+                    $('#message .container_loader_message').remove();
+                }
+            })
+        }
     }
 
     let scrollToButton = () => {

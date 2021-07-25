@@ -32,6 +32,17 @@ class MessageRepository extends ServiceEntityRepository
             ->orderBy('m.id', 'DESC');
         return $qb->getQuery()->getResult();
     }
+
+    public function findLastMessageByConversationId($conversationId, $last_id_message)
+    {
+        $qb =  $this->createQueryBuilder('m');
+        $qb->where('m.conversation = :conversationId')
+            ->setParameter('conversationId', $conversationId)
+            ->andWhere('m.id > :last_id_message')
+            ->setParameter('last_id_message', $last_id_message)
+            ->orderBy('m.id', 'DESC');
+        return $qb->getQuery()->getResult();
+    }
     // /**
     //  * @return Message[] Returns an array of Message objects
     //  */
