@@ -729,7 +729,7 @@ class User implements UserInterface
 
     public function getBlocked(): ?array
     {
-        return $this->blocked;
+        return $this->blocked != null ? $this->blocked : [];
     }
 
     public function setBlocked(?array $blocked): self

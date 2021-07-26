@@ -36,7 +36,7 @@ class MessageController extends AbstractController
     /**
      * @Route("/{id}", name="getMessage", methods={"GET"})
      */
-    public function index(int $id, CheckConversationService $checkConversationService): Response
+    public function index(int $id, CheckConversationService $checkConversationService, UserRepository $userRepository): Response
     {
 
         //  $this->denyAccessUnlessGranted('view', $conversation);
@@ -47,6 +47,19 @@ class MessageController extends AbstractController
 
             $conversation = $checkConversationService->checkConversation($id);
             $conversationId = $conversation['conversation_id'];
+
+            $blockedMe  = $this->getUser()->getBlocked();
+            $blocked = false;
+
+            if (isset($blockedMe[$conversationId])) {
+                $blocked = true;
+            } else {
+                $blockedOther = $userRepository->findOneBy(['id' => $id]);
+                $blockedMe =  $blockedOther->getBlocked();
+                if (isset($blockedMe[$conversationId])) {
+                    $blocked = true;
+                }
+            }
 
             if (intval($conversation) !== -1) {
 
@@ -80,12 +93,15 @@ class MessageController extends AbstractController
                     $message->setTimes($message->getCreatedAt()->getTimesTamp());
                 }, $messages);
 
+
+
                 return $this->json([
                     'id' => $conversation['user_id'],
                     'name' => $conversation['user_name'],
                     'image' => $conversation['images'],
                     'id_conversation' => $conversationId,
                     'link' => $conversation['link'],
+                    'blocked' => $blocked,
                     'messages' => $messages
                 ], Response::HTTP_OK, [], ['attributes' => self::ATTRIBUTES_TO_SERIALISE]);
             }
@@ -289,40 +305,47 @@ class MessageController extends AbstractController
     /**
      * @Route("/blocked/{id}", name="blockedMessage", methods={"POST"})
      */
-    public function blocked(int $id, CheckConversationService $checkConversationService)
+    public function blocked(int $id, CheckConversationService $checkConversationService, UserRepository $userRepository)
     {
 
         $conversation = $checkConversationService->checkConversation($id);
         $conversationId = $conversation['conversation_id'];
         $blocked = $this->getUser()->getBlocked() != null ? $this->getUser()->getBlocked() : [];
-        $blocked1 = [
-            'conversation_id' => 1,
-            'blocked' =>
-            [
-                'id_blocker' => $this->getUser()->getId(),
-                'id_blocked' => $id
-            ]
-        ];
-        $blocked2 =
+        $otherUser = $userRepository->findOneBy(['id' => $id]);
+        $name = $otherUser->getBoutiques()[0] != null ? $otherUser->getBoutiques()[0]->getName() : $otherUser->getName() . " " . $otherUser->getFirstName();
+        $logo = ($otherUser->getBoutiques()[0] != null) ? $otherUser->getBoutiques()[0]->getLogo() : $otherUser->getAvatar();
 
-            [
-                'conversation_id' => 2,
+        if (!isset($blocked[$conversationId])) {
+            $blocked[$conversationId] = [
                 'id_blocker' => $this->getUser()->getId(),
-                'id_blocked' => $id
+                'id_blocked' => $id,
+                'id_conversation' => $conversationId,
+                'name' => $name,
+                'logo' => $logo
             ];
-        array_push($blocked, $blocked2);
+        }
 
-        // foreach ($blocked as $value) {
-        //     [
-
-        //     ]
-        // }
-
-        dd($blocked);
-
+        $em = $this->getDoctrine()->getManager();
+        $user = $this->getUser();
+        $user->setBlocked($blocked);
+        $em->flush();
         return $this->json(['status' => 'ok']);
     }
 
+    /**
+     * @Route("/deblocked/{id}", name="deblockedMessage", methods={"POST"})
+     */
+    public function deblocked(int $id)
+    {
+
+        $blocked = $this->getUser()->getBlocked();
+        unset($blocked[intVal($id)]);
+        $em = $this->getDoctrine()->getManager();
+        $user = $this->getUser();
+        $user->setBlocked($blocked);
+        $em->flush();
+        return $this->json(['status' => 'ok']);
+    }
     /**
      * @Route("/lastest/{id}-{last_id_message}", name="getLastTestMessages", methods={"GET"})
      */

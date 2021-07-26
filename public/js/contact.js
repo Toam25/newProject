@@ -4,7 +4,7 @@ $(function () {
     var id_other_user = null;
     var my_id = parseInt($('.my_id').val());
 
-    var get_message = setInterval(getLastmessage, 10000);
+    var get_message = setInterval(getLastmessage, 5000);
 
 
     //mercure
@@ -202,11 +202,15 @@ $(function () {
             type: 'POST',
             beforeSend: () => {
                 // $('#message').html(loader);
+                toastr.info('Blockage en cours...');
             },
             success: (data) => {
+                toastr.success('Bloqué avec success');
+                $('.parametre_message_in').hide()
             },
             error: () => {
                 $('#message .container_loader_message').remove();
+                toastr.error('Erreur serveur');
             }
 
         });
@@ -221,11 +225,15 @@ $(function () {
             type: 'POST',
             beforeSend: () => {
                 // $('#message').html(loader);
+                toastr.info('Supression en cours');
             },
             success: (data) => {
+                toastr.success('Supprimer avec success');
+                $('.parametre_message_in').hide()
             },
             error: () => {
                 $('#message .container_loader_message').remove();
+                toastr.error('Erreur serveur');
             }
 
         });
@@ -273,6 +281,14 @@ $(function () {
                 $('#conversation_id').val(data.id_conversation);
                 $('.delete_all_message').attr('name', id_other_user);
                 $('.me_me').val(data.id);
+                $('.___send_message').prop('disabled', false);
+                $('.send_message ').prop('disabled', false)
+                $('.parametre_message_in').hide();
+
+                if (data.blocked == true) {
+                    $('.___send_message').prop('disabled', true)
+                    $('.send_message ').prop('disabled', true)
+                }
 
                 $("#message").html(mymessage);
                 scrollToButton();
@@ -436,7 +452,30 @@ $(function () {
             });
         }
     });
+    //deploque un utilisateur
 
+    $('.debloque').on('click', function (e) {
+        e.preventDefault();
+        let id = parseInt($(this).attr('name'));
+        let that = $(this);
+        $.ajax({
+            url: "/messages/deblocked/" + id,
+            type: 'POST',
+            dataType: 'json',
+            beforeSend: () => {
+                toastr.info('Déplocage en cours')
+            },
+            success: (data) => {
+                that.parent('div').remove();
+                toastr.success('Déploqué avec success')
+
+            },
+            error: () => {
+                toastr.error('Erreur serveur')
+
+            }
+        });
+    });
     $('#container_message').on('click', '.notview', function (e) {
 
         let id = parseInt($(this).attr('id').split('-')['1'])
@@ -594,12 +633,14 @@ $(function () {
             dataType: 'json',
             beforeSend: () => {
                 $(this).prop('disabled', true);
+                toastr.info('Suppression en cours');
             },
             success: (data) => {
 
                 $(this).prop('disabled', false);
                 toastr.success('Supprimer avec success');
                 $(this).parent('div').children('.content_my_message').html('<i>Message supprimé</i>');
+                toastr.success('Suppremée avec success');
 
             },
             error: () => {
