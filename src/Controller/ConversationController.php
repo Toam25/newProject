@@ -83,10 +83,11 @@ class ConversationController extends AbstractController
                     ]);
                 }
                 $deleteFrom = $conversation['deleteFrom'] != null ? $conversation['deleteFrom'] : [];
-                if (in_array($this->getUser()->getId(), $deleteFrom)) {
-                    $conversation['content'] = "<i>Message supprimé</i>";
-                }
 
+                if (in_array($this->getUser()->getId(), $deleteFrom)) {
+
+                    $conversation['content'] = "<i>Vous avez supprimer la derniere message</i>";
+                }
                 array_push($newConversations, $conversation);
             }
 

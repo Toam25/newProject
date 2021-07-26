@@ -141,6 +141,11 @@ class User implements UserInterface
      */
     private $resetToken;
 
+    /**
+     * @ORM\Column(type="array", nullable=true)
+     */
+    private $blocked = [];
+
 
     public function __construct()
     {
@@ -718,6 +723,18 @@ class User implements UserInterface
     public function setResetToken(string $resetToken): self
     {
         $this->resetToken = $resetToken;
+
+        return $this;
+    }
+
+    public function getBlocked(): ?array
+    {
+        return $this->blocked != null ? $this->blocked : [];
+    }
+
+    public function setBlocked(?array $blocked): self
+    {
+        $this->blocked = $blocked;
 
         return $this;
     }

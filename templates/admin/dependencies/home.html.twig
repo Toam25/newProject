@@ -225,22 +225,23 @@
 
 
 <div class="col-xl-12 col-md-12 mb-4">
-      <div class="card border-bottom-warning shadow h-100 py-2">
-        <div class="card-body">
-          <div class="row no-gutters align-items-center">
-            <div class="col mr-2">
-              <span class="text-xs font-weight-bold text-success text-uppercase mb-1">Votre offre  est 
-                 {{ boutique.getDetailOffer()}}
-              </span>
-            &nbsp<a href="{{path('my_offer')}}" target="_blank">Changer d'offre ?</a>
-            </div>
-            <div class="col-auto">
-              <i class="fas fa-calendar fa-2x text-gray-300"></i>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
+	<div class="card border-bottom-warning shadow h-100 py-2">
+		<div class="card-body">
+			<div class="row no-gutters align-items-center">
+				<div class="col mr-2">
+					<span class="text-xs font-weight-bold text-success text-uppercase mb-1">Votre offre  est
+						{{ boutique.getDetailOffer()}}
+					</span>
+					&nbsp<a href="{{path('my_offer')}}" target="_blank">Changer d'offre ?</a>
+				</div>
+				<div class="col-auto">
+					<i class="fas fa-calendar fa-2x text-gray-300"></i>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
 
 {# <div id="header_show_menu" class="card border-left-success shadow h-100 py-2 images_header_admin">
        <img src="{{asset('images/'~header_menu)}}" />
@@ -362,4 +363,24 @@
       <div id ="map">
       </div>
   </div>
+</div>
+
+<hr>
+<div class="col-xl-12 col-md-12 mb-4">
+	<div class="card border-bottom-warning shadow h-100 py-2">
+		<div class="card-body">
+			<div class="row no-gutters align-items-center">
+				<div class="col mr-2">
+					<span class="text-xs font-weight-bold text-success text-uppercase mb-1">Liste des personnes bloqué 
+					</span>
+          {% if app.user.blocked is defined %}
+            {% for item in app.user.blocked %}
+                <div>
+                    {{ item.name }}  <button class="debloque border-0 badge badge-warning" name ="{{item.id_conversation}}">Débloquer </button>
+                </div>
+            {% endfor %}
+          {% endif %}
+			</div>
+		</div>
+	</div>
 </div>

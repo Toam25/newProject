@@ -18,12 +18,28 @@ class MessageRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Message::class);
     }
-
+    /**
+     * Undocumented function
+     *
+     * @param integer $conversationId
+     * @return array
+     */
     public function findMessageByConversationId(int $conversationId)
     {
         $qb =  $this->createQueryBuilder('m');
         $qb->where('m.conversation = :conversationId')
             ->setParameter('conversationId', $conversationId)
+            ->orderBy('m.id', 'DESC');
+        return $qb->getQuery()->getResult();
+    }
+
+    public function findLastMessageByConversationId($conversationId, $last_id_message)
+    {
+        $qb =  $this->createQueryBuilder('m');
+        $qb->where('m.conversation = :conversationId')
+            ->setParameter('conversationId', $conversationId)
+            ->andWhere('m.id > :last_id_message')
+            ->setParameter('last_id_message', $last_id_message)
             ->orderBy('m.id', 'DESC');
         return $qb->getQuery()->getResult();
     }

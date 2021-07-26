@@ -4,6 +4,9 @@ $(function () {
     var id_other_user = null;
     var my_id = parseInt($('.my_id').val());
 
+    var get_message = setInterval(getLastmessage, 5000);
+
+
     //mercure
     // var url = new URL("http://localhost:3000/.well-known/mercure");
     // var eventSource = null;
@@ -148,7 +151,6 @@ $(function () {
             url: "/api/v1/user/?q=" + text,
             type: 'GET',
             dataType: 'json',
-            timeout: 3000,
             beforeSend: () => {
                 $('.js_member').append(loader)
             },
@@ -190,6 +192,53 @@ $(function () {
         $('#container-message').fadeOut();
 
     });
+
+    $('.block_message').on('click', function (e) {
+        e.preventDefault();
+        let id = $(this).attr('name');
+
+        $.ajax({
+            url: '/messages/blocked/' + id,
+            type: 'POST',
+            beforeSend: () => {
+                // $('#message').html(loader);
+                toastr.info('Blockage en cours...');
+            },
+            success: (data) => {
+                toastr.success('Bloqué avec success');
+                $('.parametre_message_in').hide()
+            },
+            error: () => {
+                $('#message .container_loader_message').remove();
+                toastr.error('Erreur serveur');
+            }
+
+        });
+
+    });
+    $('.delete_all_message').on('click', function (e) {
+        e.preventDefault();
+        let id = $(this).attr('name');
+
+        $.ajax({
+            url: '/messages/deleteAll/' + id,
+            type: 'POST',
+            beforeSend: () => {
+                // $('#message').html(loader);
+                toastr.info('Supression en cours');
+            },
+            success: (data) => {
+                toastr.success('Supprimer avec success');
+                $('.parametre_message_in').hide()
+            },
+            error: () => {
+                $('#message .container_loader_message').remove();
+                toastr.error('Erreur serveur');
+            }
+
+        });
+
+    });
     $('body').on('click', '.message-in', function (e) {
         e.preventDefault();
         let id = $(this).attr('name');
@@ -224,13 +273,22 @@ $(function () {
                                         <span class="fa fa-trash"></span>
                                     </button>
                                 </div>`+ mymessage;
-                });;
+                });
                 id_other_user = data.id;
                 $('.block_message').attr('name', id_other_user);
-                $('.block_message').attr('name', id_other_user);
+                // $('.block_message').attr('name', id_other_user);
                 $('.link_shop_or_user').attr('href', data.link);
                 $('#conversation_id').val(data.id_conversation);
+                $('.delete_all_message').attr('name', id_other_user);
                 $('.me_me').val(data.id);
+                $('.___send_message').prop('disabled', false);
+                $('.send_message ').prop('disabled', false)
+                $('.parametre_message_in').hide();
+
+                if (data.blocked == true) {
+                    $('.___send_message').prop('disabled', true)
+                    $('.send_message ').prop('disabled', true)
+                }
 
                 $("#message").html(mymessage);
                 scrollToButton();
@@ -394,7 +452,30 @@ $(function () {
             });
         }
     });
+    //deploque un utilisateur
 
+    $('.debloque').on('click', function (e) {
+        e.preventDefault();
+        let id = parseInt($(this).attr('name'));
+        let that = $(this);
+        $.ajax({
+            url: "/messages/deblocked/" + id,
+            type: 'POST',
+            dataType: 'json',
+            beforeSend: () => {
+                toastr.info('Déplocage en cours')
+            },
+            success: (data) => {
+                that.parent('div').remove();
+                toastr.success('Déploqué avec success')
+
+            },
+            error: () => {
+                toastr.error('Erreur serveur')
+
+            }
+        });
+    });
     $('#container_message').on('click', '.notview', function (e) {
 
         let id = parseInt($(this).attr('id').split('-')['1'])
@@ -552,12 +633,14 @@ $(function () {
             dataType: 'json',
             beforeSend: () => {
                 $(this).prop('disabled', true);
+                toastr.info('Suppression en cours');
             },
             success: (data) => {
 
                 $(this).prop('disabled', false);
                 toastr.success('Supprimer avec success');
                 $(this).parent('div').children('.content_my_message').html('<i>Message supprimé</i>');
+                toastr.success('Suppremée avec success');
 
             },
             error: () => {
@@ -568,38 +651,68 @@ $(function () {
             }
         })
     });
-    let getLastmessage = () => {
-        $.ajax({
-            url: "/messages/last/" + id_other_user,
-            type: 'GET',
-            dataType: 'json',
-            beforeSend: () => {
-            },
-            success: (message) => {
+    function getLastmessage() {
 
-                my = (message.my) ? "my" : "your";
+        let last_id_message = $('#container-message').children('.head_message').children('#message').children('.contaitboutique:last-child').children('.delete_message').attr('name');
+        last_id_message = parseInt(last_id_message) ? parseInt(last_id_message) : 0;
+        //id_other_user =
+        if (id_other_user) {
 
 
-                $("#message").append(`<div class="contaitboutique ` + my + ` ">` + message.content + `
-               <div class="time" >
-                `+ getStringDatePerTimestamp(message.times) + `
-                </div>
-            <button class="font_b delete_message" name="`+ message.id + `">
-                 <span class="fa fa-trash"></span>
-          </button>
-          </div>`);
-                // let html = ``;
-                // data.forEach(element => {
-                //     html += listShop(element.image, element.id, element.name)
-                // });
-                // $('.js_member').html(html);
-                // $('#message .container_loader_message').remove();
-                scrollToButton();
-            },
-            error: () => {
-                $('#message .container_loader_message').remove();
-            }
-        })
+            $.ajax({
+                url: "/messages/lastest/" + id_other_user + '-' + last_id_message,
+                type: 'GET',
+                dataType: 'json',
+                beforeSend: () => {
+                },
+                success: (data) => {
+
+                    //             my = (message.my) ? "my" : "your";
+
+
+                    //             $("#message").append(`<div class="contaitboutique ` + my + ` ">` + message.content + `
+                    //        <div class="time" >
+                    //         `+ getStringDatePerTimestamp(message.times) + `
+                    //         </div>
+                    //     <button class="font_b delete_message" name="`+ message.id + `">
+                    //          <span class="fa fa-trash"></span>
+                    //   </button>
+                    //   </div>`);
+
+                    let mymessage = ``;
+                    data.messages.forEach(message => {
+                        my = (message.my) ? "my" : "your";
+
+                        mymessage = `<div class="contaitboutique ` + my + ` ">
+                            <div class="content_my_message">`
+                            + message.content + `
+                      
+                             </div>
+                            <div class="time" >
+                                 `+ getStringDatePerTimestamp(message.times) + `
+                            </div>
+                            <button class="font_b delete_message" name="`+ message.id + `">
+                                <span class="fa fa-trash"></span>
+                            </button>
+                        </div>`+ mymessage;
+                    });
+
+                    $('#message').append(mymessage);
+                    $('#my_nbr_message').data.nbr_message;
+                    $('#my_nbr_notification').data.nbr_notification;
+                    // let html = ``;
+                    // data.forEach(element => {
+                    //     html += listShop(element.image, element.id, element.name)
+                    // });
+                    // $('.js_member').html(html);
+                    // $('#message .container_loader_message').remove();
+                    scrollToButton();
+                },
+                error: () => {
+                    $('#message .container_loader_message').remove();
+                }
+            })
+        }
     }
 
     let scrollToButton = () => {
