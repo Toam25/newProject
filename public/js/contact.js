@@ -761,6 +761,12 @@ $(function () {
                     $('#message').append(mymessage);
                     $('#my_nbr_message').data.nbr_message;
                     $('#my_nbr_notification').data.nbr_notification;
+
+                    if (data.blocked == true) {
+                        $('.___send_message').prop('disabled', true)
+                        $('.send_message ').prop('disabled', true)
+                        // $('#message_blocked_by_user').html('debloquer');
+                    }
                     // let html = ``;
                     // data.forEach(element => {
                     //     html += listShop(element.image, element.id, element.name)
