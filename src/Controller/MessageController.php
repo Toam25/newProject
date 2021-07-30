@@ -350,7 +350,7 @@ class MessageController extends AbstractController
      * @Route("/lastest/{id}-{last_id_message}", name="getLastTestMessages", methods={"GET"})
      */
 
-    public function getLastMessages(int $id, int $last_id_message, CheckConversationService $checkConversationService)
+    public function getLastMessages(int $id, int $last_id_message, UserRepository $userRepository, CheckConversationService $checkConversationService)
     {
         //  $this->denyAccessUnlessGranted('view', $conversation);
 
@@ -394,11 +394,25 @@ class MessageController extends AbstractController
                     $message->setTimes($message->getCreatedAt()->getTimesTamp());
                 }, $messages);
 
+                $blockedMe  = $this->getUser()->getBlocked();
+                $blocked = false;
+
+                if (isset($blockedMe[$conversationId])) {
+                    $blocked = true;
+                } else {
+                    $blockedOther = $userRepository->findOneBy(['id' => $id]);
+                    $blockedMe =  $blockedOther->getBlocked();
+                    if (isset($blockedMe[$conversationId])) {
+                        $blocked = true;
+                    }
+                }
+
                 return $this->json(
                     [
                         'nbr_notification' => 0,
                         'nbr_message' => 0,
-                        'messages' => $messages
+                        'messages' => $messages,
+                        'blocked' => $blocked,
                     ],
                     Response::HTTP_OK,
                     [],
