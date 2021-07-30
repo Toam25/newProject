@@ -90,7 +90,8 @@
 				
       </ul>
       <ul class="nav navbar-nav navbar-right">
-        <li>
+       	 <li>
+		 	{% if app.user %}
 			 <a href="#" id="" class="_my_message_" style="color: white !important;">
 							
 								<i class="fa fa-envelope"></i>
@@ -99,6 +100,7 @@
 									0
 								</div> #}
 			 </a>
+			 {% endif %}
 			</li>
       </ul>
     </div><!-- /.navbar-collapse -->
