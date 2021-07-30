@@ -761,7 +761,8 @@ $(function () {
                     $('#message').append(mymessage);
                     $('#my_nbr_message').data.nbr_message;
                     $('#my_nbr_notification').data.nbr_notification;
-
+                    $('.___send_message').prop('disabled',false)
+                    $('.send_message ').prop('disabled', false)
                     if (data.blocked == true) {
                         $('.___send_message').prop('disabled', true)
                         $('.send_message ').prop('disabled', true)
