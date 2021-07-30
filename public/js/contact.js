@@ -196,48 +196,80 @@ $(function () {
     $('.block_message').on('click', function (e) {
         e.preventDefault();
         let id = $(this).attr('name');
+        let message = $('this').html();
+        let that = $('this')
 
-        $.ajax({
-            url: '/messages/blocked/' + id,
-            type: 'POST',
-            beforeSend: () => {
-                // $('#message').html(loader);
-                toastr.info('Blockage en cours...');
-            },
-            success: (data) => {
-                toastr.success('Bloqué avec success');
-                $('.parametre_message_in').hide()
-            },
-            error: () => {
-                $('#message .container_loader_message').remove();
-                toastr.error('Erreur serveur');
+        $.confirm({
+            title: 'Confirmation !',
+            content: 'Vous confirmez ?',
+            buttons: {
+                Oui: function () {
+                    $.ajax({
+                        url: '/messages/blocked/' + id,
+                        type: 'POST',
+                        beforeSend: () => {
+                            // $('#message').html(loader);
+                            toastr.info('Patientez...');
+                        },
+                        success: (data) => {
+                            toastr.success('Operation reussite');
+                            // $('#message_blocked_by_user').text($('#message_blocked_by_user').text() != "debloquer" ? "debloquer" : "bloquer");
+                            // $('.parametre_message_in').hide()
+                            $('.___send_message').prop('disabled', true);
+
+                        },
+
+                        error: () => {
+                            $('#message .container_loader_message').remove();
+                            toastr.error('Erreur serveur');
+                        }
+
+                    });
+                },
+                Non: function () {
+
+                },
             }
-
         });
-
     });
     $('.delete_all_message').on('click', function (e) {
         e.preventDefault();
         let id = $(this).attr('name');
 
-        $.ajax({
-            url: '/messages/deleteAll/' + id,
-            type: 'POST',
-            beforeSend: () => {
-                // $('#message').html(loader);
-                toastr.info('Supression en cours');
-            },
-            success: (data) => {
-                toastr.success('Supprimer avec success');
-                $('.parametre_message_in').hide()
-            },
-            error: () => {
-                $('#message .container_loader_message').remove();
-                toastr.error('Erreur serveur');
+        $.confirm({
+            title: 'Confirmation !',
+            content: 'Vous confirmez ?',
+            buttons: {
+                Oui: function () {
+
+
+
+                    url = '/api/delete/boutique/' + $(this).data('id');
+                    $(this).parents('.js-container-shop').remove()
+                    $.ajax({
+                        url: '/messages/deleteAll/' + id,
+                        type: 'POST',
+                        beforeSend: () => {
+                            // $('#message').html(loader);
+                            toastr.info('Supression en cours');
+                        },
+                        success: (data) => {
+                            toastr.success('Supprimer avec success');
+                            $('#message').html('');
+                            $('.parametre_message_in').hide()
+                        },
+                        error: () => {
+                            $('#message .container_loader_message').remove();
+                            toastr.error('Erreur serveur');
+                        }
+
+                    });
+                },
+                Non: function () {
+
+                },
             }
-
         });
-
     });
     $('body').on('click', '.message-in', function (e) {
         e.preventDefault();
@@ -284,10 +316,12 @@ $(function () {
                 $('.___send_message').prop('disabled', false);
                 $('.send_message ').prop('disabled', false)
                 $('.parametre_message_in').hide();
+                $('#message_blocked_by_user').html('bloquer');
 
                 if (data.blocked == true) {
                     $('.___send_message').prop('disabled', true)
                     $('.send_message ').prop('disabled', true)
+                    // $('#message_blocked_by_user').html('debloquer');
                 }
 
                 $("#message").html(mymessage);
@@ -378,9 +412,6 @@ $(function () {
 
     });
 
-
-    //Notification 
-
     $(".mynotification").on('click', function (e) {
         e.preventDefault();
 
@@ -458,23 +489,37 @@ $(function () {
         e.preventDefault();
         let id = parseInt($(this).attr('name'));
         let that = $(this);
-        $.ajax({
-            url: "/messages/deblocked/" + id,
-            type: 'POST',
-            dataType: 'json',
-            beforeSend: () => {
-                toastr.info('Déplocage en cours')
-            },
-            success: (data) => {
-                that.parent('div').remove();
-                toastr.success('Déploqué avec success')
 
-            },
-            error: () => {
-                toastr.error('Erreur serveur')
+        $.confirm({
+            title: 'Confirmation',
+            content: 'Vous confirmez',
+            buttons: {
+                Oui: function () {
 
+                    $.ajax({
+                        url: "/messages/deblocked/" + id,
+                        type: 'POST',
+                        dataType: 'json',
+                        beforeSend: () => {
+                            toastr.info('Déplocage en cours')
+                        },
+                        success: (data) => {
+                            that.parent('div').remove();
+                            toastr.success('Déploqué avec success')
+
+                        },
+                        error: () => {
+                            toastr.error('Erreur serveur')
+
+                        }
+                    });
+                },
+                Non: function () {
+
+                },
             }
         });
+
     });
     $('#container_message').on('click', '.notview', function (e) {
 
@@ -627,29 +672,45 @@ $(function () {
 
     $('body').on('click', '.delete_message', function (e) {
         let id = parseInt($(this).attr('name'));
-        $.ajax({
-            url: "/messages/delete/" + id,
-            type: 'POST',
-            dataType: 'json',
-            beforeSend: () => {
-                $(this).prop('disabled', true);
-                toastr.info('Suppression en cours');
-            },
-            success: (data) => {
+        let that = $(this);
 
-                $(this).prop('disabled', false);
-                toastr.success('Supprimer avec success');
-                $(this).parent('div').children('.content_my_message').html('<i>Message supprimé</i>');
-                toastr.success('Suppremée avec success');
+        $.confirm({
+            title: 'Confirmation !',
+            content: 'Vous confirmez ?',
+            buttons: {
+                Oui: function () {
 
-            },
-            error: () => {
-                $(this).prop('disabled', false);
-                toastr.success('Erreur de suppression');
 
-                // $('#message .container_loader_message').remove();
+
+                    $.ajax({
+                        url: "/messages/delete/" + id,
+                        type: 'POST',
+                        dataType: 'json',
+                        beforeSend: () => {
+                            that.prop('disabled', true);
+                            toastr.info('Suppression en cours');
+                        },
+                        success: (data) => {
+
+                            that.prop('disabled', false);
+                            toastr.success('Supprimer avec success');
+                            that.parent('div').children('.content_my_message').html('<i>Message supprimé</i>');
+
+                        },
+                        error: () => {
+                            that.prop('disabled', false);
+                            toastr.success('Erreur de suppression');
+
+                            // $('#message .container_loader_message').remove();
+                        }
+                    })
+                },
+                Non: function () {
+
+                },
             }
-        })
+        });
+
     });
     function getLastmessage() {
 

@@ -11,6 +11,9 @@
 
 }
 
+header {
+    background: #202340;
+}
 .add_cart_btn{
     width: 100%;
     position: absolute;

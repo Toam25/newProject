@@ -13,7 +13,6 @@
         {% block stylesheets %}{% endblock %}
         <link rel="stylesheet" href="{{asset('css/connexion.css')}}">
         <link type="text/css" rel="stylesheet" href="{{ asset('css/contact.css') }}"/>
-
     </head>
     <body>
         {% block body %}{% endblock %}
@@ -21,6 +20,7 @@
         <script src=" {{ asset ('vendor/jquery/jquery.min.js') }}"></script>
         <script src="{{ asset ('vendor/bootstrap/js/bootstrap.bundle.min.js ') }}"></script>
         <script src="{{ asset ('toastr/toastr.min.js')}}"></script>
+        <script src="{{ asset('js/lobibox.js') }}"> </script>
            {% if app.user is not same as(null) %}
         	{% include "messageAndMembre/messageAndMembre.html.twig" %}
            <script src="{{ asset ('js/contact.js')}}"></script>

@@ -1,3 +1,113 @@
+<nav id="GrandEcran1"class="navbar" style="background: #202340; margin-bottom:2px !important">
+  <div class="container-fluid">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      {# <a class="navbar-brand" href="#">Brand</a> #}
+    </div>
+
+    <!-- Collect the nav links, forms, and other content for toggling -->
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      <ul class="nav navbar-nav" id="menulistshop">
+        <li class="mode" >
+					<a href="{{ path('index')}}">Accueil</a>
+				</li>
+				<li class="mode">
+					<a 
+					 href="{{ path('shop')}}"
+					  {%
+					 if menu is same as ("g_marchande") %}
+						class = "menu_selected"
+					{% endif %}
+					>Galerie Marchande</a>
+				</li>
+				<li class='mode js-category'>
+					<a href="#" {%
+					 if menu is same as ("Habillement") or menu is same as ("beaute_et_bien_etre") or menu is same as ("accessoires") %}
+						class = "menu_selected"
+					{% endif %}
+					>
+					 Mode
+					  </a>
+					<ul class="submenu">
+						<li>
+							<a href="{{ path('shop',{'type':'Habillement'})}}"
+								{% if menu is same as ("Habillement") %}
+									class = "menu_selected"
+								{% endif %}
+							>Habillement</a>
+						</li>
+						<li>
+							<a href="{{ path('shop',{'type':'beaute-et-bien-etre'})}}"
+							 {% if menu is same as ("beaute-et-bien-etre") %}
+									class = "menu_selected"
+							 {% endif %}
+							>Beauté Bien-être</a>
+						</li>
+						<li>
+							<a href="{{ path('shop',{'type':'accessoires'})}}"
+							  {% if menu is same as ("accessoires") %}
+									class = "menu_selected"
+							 {% endif %}
+							>Accessoires</a>
+						</li>
+						
+						<!--li>
+							<a href="artmalagasy.html">Art Malagasy</a>
+						</li-->
+					</ul>
+				</li>
+				<li class="mode">
+					<a href="{{ path('shop',{'type':'high-tech'})}}"
+					  {% if menu is same as ("High-tech") %}
+									class = "menu_selected"
+					 {% endif %}
+					>High-tech</a>
+				</li>
+				<li class="mode">
+					<a href="{{ path('shop',{'type':'Maison'})}}" 
+					 {% if menu is same as ("Maison") %}
+									class = "menu_selected"
+					{% endif %}
+					>Maison</a>
+				</li>
+				<li class="mode">
+					<a href="{{ path('shop',{'type':'Services'})}}"
+					 {% if menu is same as ("Services") %}
+									class = "menu_selected"
+					{% endif %}
+					>Services</a>
+				</li>
+
+				<li class='ConnecterMembre'>
+				
+				</li>
+				
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li>
+			 <a href="#" id="" class="_my_message_" style="color: white !important;">
+							
+								<i class="fa fa-envelope"></i>
+								<span>Message</span>
+								{# <div class="qty qtymess" id="my_nbr_message">
+									0
+								</div> #}
+			 </a>
+			</li>
+      </ul>
+    </div><!-- /.navbar-collapse -->
+  </div><!-- /.container-fluid -->
+</nav>
+{# ddddddddddddd #}
+
+{# 
+
 <nav class="navbar navbar-default" id="GrandEcran1" style="background: #1875bc; margin-bottom:0px !important">
 
 	<div class="container-fluid">
@@ -83,12 +193,18 @@
 					>Services</a>
 				</li>
 
-				<li class='ConnecterMembre'></li>
+				<li class='ConnecterMembre'>
 				
+				</li>
+				
+			</ul>
+
+			<ul class="mobile-header--right">
+			  
 			</ul>
 				
 		</div>
 	 </div>
 		<!-- /.navbar-collapse -->
 		<!-- /.container-fluid -->
-	</nav>
+	</nav> #}

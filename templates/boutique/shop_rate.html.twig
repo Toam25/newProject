@@ -1,0 +1,102 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+	{% if boutique %}
+		{{ boutique.name }}
+	{% else %}
+		Pas de resultat :(
+	{% endif %}
+{% endblock %}
+
+{% block meta%}{% endblock %}
+{% block stylesheets %}
+	<link href="https://fonts.googleapis.com/css?family=Montserrat:400,500,700" rel="stylesheet">
+	<link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A==" crossorigin=""/>
+	<link
+	href="{{ asset('css/bootstrap3.3.css')}}" rel="stylesheet" type="text/css">
+	<!-- Slick -->
+
+
+
+	<!-- Font Awesome Icon -->
+	<link
+	rel="stylesheet" href="{{ asset('css/font-awesome.min.css') }}">
+
+	<!-- Custom stlylesheet -->
+	<link type="text/css" rel="stylesheet" href="{{ asset('css/style.css') }}"/>
+	<link
+	type="text/css" rel="stylesheet" href="{{ asset('css/boutique.css') }}"/>
+	{# link type="text/css" rel="stylesheet" href="{{ asset('css/index.css') }}" #}
+	<link type="text/css" rel="stylesheet" href="{{ asset('css/jssor.slider.css') }}"/>
+	<link type="text/css" rel="stylesheet" href="{{ asset('css/cart.css') }}"/>
+	<link type="text/css" rel="stylesheet" href="{{ asset('css/page.css') }}"/>
+	<link rel="icon" type="image/png" href="{{asset('images/'~boutique.logo)}}">
+{% endblock %}
+{% block body %}
+{% include "boutique/dependancies/_headershop.html.twig" %}
+
+    <div class="container" style="height : 100vh">
+        
+       <h4>Donnez votre avis sur {{boutique.name}} /  <span> Avis Total 5<i class="fa fa-star" style="color: #ff0000cf;font-size: 23px;"></i> (2000)</h4></span>
+        <div class="container">
+           <div class="col-md-7">
+              Liste vote
+           </div>
+           <div class="col-md-5">
+              {% if users['isComment'] %}
+                <div id="review-form">
+                    <form id="{{ boutique.id }}" class="review-form-blog review-form edit-review-form">
+                        <input name="id-vote" value="{{users['id']}}" type="hidden"/>
+                        <div class="input-rating">
+                            <span>Votre satisfaction :
+                            </span>
+                            <br>
+                            <div class="myvoting">
+                                {{my_vote_twig(users['value'], true)}}
+                            </div>
+                                <textarea class="input comment" placeholder="Commentaire">{{users['comment']}}</textarea>					
+                        </div>
+                            <button class="js-delete-vote secondary-btn" data-id="{{users['id']}}">Supprimer</button>
+                            <button class="primary-btn btn-submit">Enregistrer</button>
+                    </form>
+
+                </div>
+        {% elseif app.user %}
+            
+                <div id="review-form">
+                    <form id="{{ boutique.id }}" class="review-form-blog review-form">
+                        <div class="input-rating">
+                            <span>Votre satisfaction :
+                            </span>
+                            <br>
+                            <div class="stars">
+                                <input id="star5" name="rating" value="5" type="radio"><label for="star5"></label>
+                                <input id="star4" name="rating" value="4" type="radio"><label for="star4"></label>
+                                <input id="star3" name="rating" value="3" type="radio"><label for="star3"></label>
+                                <input id="star2" name="rating" value="2" type="radio"><label for="star2"></label>
+                                <input id="star1" name="rating" value="1" type="radio"><label for="star1"></label>
+                            </div>
+                            <textarea class="input comment" placeholder="Commentaire" required></textarea>
+                        </div>
+                        <button class="primary-btn btn-submit">Enregistrer</button>
+                    </form>
+                </div>
+        {% else %}
+            <button class="btn btn-success _connexion">Connectez vous pour donner un avis</button>
+        {% endif %}
+           </div>
+        </div>
+    </div>
+
+	{% if not app.user%}
+		{% include 'boutique/dependancies/connexion.html.twig'%}
+	{% endif %}
+
+	{% include 'boutique/dependancies/footer.html.twig' %}
+
+{% endblock %}
+
+{% block javascripts %}
+
+	<script src="{{ asset('js/connexion.js') }}"></script>
+{% endblock %}
