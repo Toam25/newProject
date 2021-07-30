@@ -13,6 +13,8 @@
         {% block stylesheets %}{% endblock %}
         <link rel="stylesheet" href="{{asset('css/connexion.css')}}">
         <link type="text/css" rel="stylesheet" href="{{ asset('css/contact.css') }}"/>
+        <link  type="text/css"  rel="stylesheet" href="{{ asset('css/jquery-confirm.css') }}">
+
     </head>
     <body>
         {% block body %}{% endblock %}
@@ -25,6 +27,8 @@
         	{% include "messageAndMembre/messageAndMembre.html.twig" %}
            <script src="{{ asset ('js/contact.js')}}"></script>
         {% endif %}
+        <script src="{{ asset('js/jquery-confirm.js') }}"></script>
+        <script src="{{ asset('js/jquery-confirm-config.js') }}"></script
         {% block javascripts %}{% endblock %}
     </body>
 </html>
