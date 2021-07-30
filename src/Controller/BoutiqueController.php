@@ -347,7 +347,7 @@ class BoutiqueController extends AbstractController
     }
 
     /**
-     * @Route("/view/formation/{id}-{slug}", name="view_formation_shop", methods={"GET"})
+     * @Route("/view/formation/{id}-{slug}", name="view_formation", methods={"GET"})
      */
     public function viewFormation(Page $page): response
     {
@@ -377,34 +377,46 @@ class BoutiqueController extends AbstractController
     /**
      * @Route("/list/other/{id}-{slug}", name="list_other_shop", methods={"GET"})
      */
-    public function viewOther(PageRepository $pageRepository, $id): response
+    public function viewOther(BoutiqueRepository $boutiqueRepository, VotesRepository $votesRepository, VotesService $votesService,  $id): response
     {
-        return new JsonResponse(['status' => "OK"]);
-        // $page = $pageRepository->findOneBy(['id' => $id]);
-        // // if ($page == null) {
-        // //     return new JsonResponse(['status' => 'ko']);
-        // // }
-        // $matches = [];
-        // $boutique = $page->getBoutique();
-        // $shopLink = "";
-        // if ($boutique) {
-        //     preg_match('%(http[s]?:\/\/|www\/)([a-zA-Z0-9-_\.\/\?=&]+)%i', $boutique->getExternalLink(), $matches);
+
+
+
+
+
+
+
+
+
+        // return new JsonResponse(['status' => "OK"]);
+        //$page = $pageRepository->findOneBy(['id' => $id]);
+        // if ($page == null) {
+        //     return new JsonResponse(['status' => 'ko']);
         // }
-        // if ($boutique->getDetailOffer() != "Gratuit") {
-        //     $shopLink = sizeof($matches) > 2 ? $matches[2] : "";
-        // }
-        // if ($page) {
-        //     $page->setView($page->getView() + 1);
-        //     $em = $this->getDoctrine()->getManager();
-        //     $em->flush();
-        //     return $this->render('boutique/page_view.html.twig', [
-        //         'boutique' => $boutique,
-        //         'page' => $page,
-        //         'shopLink' => $shopLink
-        //     ]);
-        // } else {
-        //     return new Response('', Response::HTTP_NOT_FOUND);
-        // }
+        $matches = [];
+        $boutique = $boutiqueRepository->findOneBy(['id' => $id]);
+        $votes = $votesRepository->findBy(['boutique' => $boutique]);
+        $getNumberVote = $votesService->getNumberTotalVote($votes);
+
+        $shopLink = "";
+        if ($boutique) {
+            preg_match('%(http[s]?:\/\/|www\/)([a-zA-Z0-9-_\.\/\?=&]+)%i', $boutique->getExternalLink(), $matches);
+        }
+        if ($boutique->getDetailOffer() != "Gratuit") {
+            $shopLink = sizeof($matches) > 2 ? $matches[2] : "";
+        }
+
+
+        $em = $this->getDoctrine()->getManager();
+        $em->flush();
+        return $this->render('boutique/shop_rate.html.twig', [
+            'boutique' => $boutique,
+            'shopLink' => $shopLink,
+            'boutique' => $boutique,
+            'votes' => $votes,
+            'users' => $getNumberVote["user"],
+            'valuevote' => $getNumberVote["votes"]
+        ]);
     }
 
     //////////////////////////////

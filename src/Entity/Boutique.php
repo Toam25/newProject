@@ -188,6 +188,11 @@ class Boutique
      */
     private $cover;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Votes::class, mappedBy="boutique")
+     */
+    private $votes;
+
     public function __construct()
     {
         $this->logo = "images_default/default_logo.png";
@@ -212,6 +217,7 @@ class Boutique
         $this->pages = new ArrayCollection();
         $this->images = new ArrayCollection();
         $this->carts = new ArrayCollection();
+        $this->votes = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -904,5 +910,13 @@ class Boutique
         $this->cover = $cover;
 
         return $this;
+    }
+
+    /**
+     * @return Collection|Votes[]
+     */
+    public function getVotes(): Collection
+    {
+        return $this->votes;
     }
 }
