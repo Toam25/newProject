@@ -1,37 +1,74 @@
 <div id="container_class">
-       {%  set cover = "images_default/default_logo.png" %} 
-  {% if boutique.cover is not same  as(null) %}
-       {%  set cover = boutique.cover %} 
-  
+	{%  set cover = "images_default/default_logo.png" %}
+	{%  set coverContrib = "images_default/default_logo.png" %}
+	{%  set coverOther = "images_default/default_logo.png" %}
+	{% if boutique.cover is not same  as(null) %}
+		{%  set cover = boutique.cover %}
   {% endif %}
-  <div class="photo_edit_boutique" style = " background-image : url({{ asset('images/'~ cover)}}) ; background-position: center;
-background-size: contain;
-background-repeat: no-repeat;">
-    <img id="preview_image" src="{{ asset("images/"~ boutique.logo) }}"/>
-  </div>
+	{% if boutique.coverContrib is not same  as(null) %}
+		{%  set coverContrib = boutique.coverContrib %}
+{% endif %}
+  	{% if boutique.coverOther is not same  as(null) %}
+		{%  set coverOther = boutique.coverOther %}
+	{% endif %}
+<div style="width: 100%;display: flex;justify-content: center;">
+	<div>
+		<p align = "center" >Couverture</p>
+		<div class="photo_edit_boutique" style=" background-image : url({{ asset('images/'~ cover)}}) ; background-position: center;
+														background-size: contain;
+														background-repeat: no-repeat;">
+
+			<img id="preview_image" src="{{ asset("images/"~ boutique.logo) }}"/>
+		</div>
+	</div>
+	<div>
+		<p align="center">Couverture page contributeur</p>
+
+		<div class="photo_edit_boutique" style=" background-image : url({{ asset('images/'~ coverContrib)}}) ; background-position: center;
+													background-size: contain;
+													background-repeat: no-repeat;">
+		</div>
+		</div>
+		<div>
+			<p align="center">Couverture page autre</p>
+
+			<div class="photo_edit_boutique" style=" background-image : url({{ asset('images/'~ coverOther)}}) ; background-position: center;
+															background-size: contain;
+															background-repeat: no-repeat;">
+			</div>
+		</div>
+	</div>
+
+
+
 	<div class="container-fluid form_edit_boutique">
 		{{form_start(form, {'attr' : {'class': 'row shop_edit'}})}}
-    
-    <div class="col-md-6">{{ form_row(form.name)}}</div>
-    <div class="col-md-6"> {{ form_row(form.address)}}</div>
-    <div class="col-md-6"> {{ form_row(form.slogan)}}</div>
-    <div class="col-md-6">{{ form_row(form.link)}}</div>
-     {% set disabled = false %}
-     {% if boutique.getDetailOffer is same as ("Gratuit") %}
-        {% set disabled = false %}
-     {% endif %}
-    <div class="col-md-6">{{ form_row(form.externalLink,{'disabled': disabled })}}</div>
-    <div class="col-md-6">{{ form_row(form.mail)}}</div>
-    <div class="col-md-6">{{ form_row(form.contact)}}</div>
-    <div class="col-md-6">{{ form_row(form.image)}}</div>
-    <div class="col-md-12">{{ form_row(form.cover)}}</div>
-    <div class="col-md-12">{{ form_row(form.resume)}}</div>
-    <div class="col-md-12">{{ form_row(form.apropos)}}</div>
-    <div class="col-md-12"> {{ form_row(form.user_condition)}}</div>
+
+		<div class="col-md-6">{{ form_row(form.name)}}</div>
+		<div class="col-md-6">
+			{{ form_row(form.address)}}</div>
+		<div class="col-md-6">
+			{{ form_row(form.slogan)}}</div>
+		<div class="col-md-6">{{ form_row(form.link)}}</div>
+		{% set disabled = false %}
+		{% if boutique.getDetailOffer is same as ("Gratuit") %}
+			{% set disabled = false %}
+		{% endif %}
+		<div class="col-md-6">{{ form_row(form.externalLink,{'disabled': disabled })}}</div>
+		<div class="col-md-6">{{ form_row(form.mail)}}</div>
+		<div class="col-md-6">{{ form_row(form.contact)}}</div>
+		<div class="col-md-6">{{ form_row(form.image)}}</div>
+		<div class="col-md-12">{{ form_row(form.cover)}}</div>
+		<div class="col-md-12">{{ form_row(form.coverOther)}}</div>
+		<div class="col-md-12">{{ form_row(form.coverContrib)}}</div>
+		<div class="col-md-12">{{ form_row(form.resume)}}</div>
+		<div class="col-md-12">{{ form_row(form.apropos)}}</div>
+		<div class="col-md-12">
+			{{ form_row(form.user_condition)}}</div>
 		<div class="container_btn_shop_edit">
 			<button class="btn btn-success btn-submit" type="submit" class="btn_shop_edit">Enregistrer</button>
 		</div>
 		{{form_end(form)}}
 	</div>
-	
+
 </div>

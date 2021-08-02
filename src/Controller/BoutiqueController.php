@@ -381,13 +381,6 @@ class BoutiqueController extends AbstractController
     {
 
 
-
-
-
-
-
-
-
         // return new JsonResponse(['status' => "OK"]);
         //$page = $pageRepository->findOneBy(['id' => $id]);
         // if ($page == null) {

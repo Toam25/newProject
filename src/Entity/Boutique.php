@@ -193,6 +193,16 @@ class Boutique
      */
     private $votes;
 
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $coverOther;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $coverContrib;
+
     public function __construct()
     {
         $this->logo = "images_default/default_logo.png";
@@ -918,5 +928,29 @@ class Boutique
     public function getVotes(): Collection
     {
         return $this->votes;
+    }
+
+    public function getCoverOther(): ?string
+    {
+        return $this->coverOther;
+    }
+
+    public function setCoverOther(string $coverOther): self
+    {
+        $this->coverOther = $coverOther;
+
+        return $this;
+    }
+
+    public function getCoverContrib(): ?string
+    {
+        return $this->coverContrib;
+    }
+
+    public function setCoverContrib(string $coverContrib): self
+    {
+        $this->coverContrib = $coverContrib;
+
+        return $this;
     }
 }

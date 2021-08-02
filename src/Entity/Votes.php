@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -55,10 +57,16 @@ class Votes
      * @ORM\ManyToOne(targetEntity=Boutique::class, inversedBy="votes")
      */
     private $boutique;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Comments::class, mappedBy="votes")
+     */
+    private $comments;
     
     public function __construct()
     {
         $this->created_at= new \DateTime();
+        $this->comments = new ArrayCollection();
     }
     public function getId(): ?int
     {
@@ -157,6 +165,36 @@ class Votes
     public function setBoutique(?Boutique $boutique): self
     {
         $this->boutique = $boutique;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Comments[]
+     */
+    public function getComments(): Collection
+    {
+        return $this->comments;
+    }
+
+    public function addComment(Comments $comment): self
+    {
+        if (!$this->comments->contains($comment)) {
+            $this->comments[] = $comment;
+            $comment->setVotes($this);
+        }
+
+        return $this;
+    }
+
+    public function removeComment(Comments $comment): self
+    {
+        if ($this->comments->removeElement($comment)) {
+            // set the owning side to null (unless already changed)
+            if ($comment->getVotes() === $this) {
+                $comment->setVotes(null);
+            }
+        }
 
         return $this;
     }

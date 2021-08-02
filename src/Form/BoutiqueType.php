@@ -93,6 +93,26 @@ class BoutiqueType extends AbstractType
                     'class' => 'form-control'
                 ]
             ])
+            ->add('coverOther', FileType::class, [
+                'label' => 'Couverture page autre',
+                'required' => true,
+                'mapped' => false,
+                'required' => false,
+                'attr' => [
+                    'required' => false,
+                    'class' => 'form-control'
+                ]
+            ])
+            ->add('coverContrib', FileType::class, [
+                'label' => 'Couverture page contributeur',
+                'required' => true,
+                'mapped' => false,
+                'required' => false,
+                'attr' => [
+                    'required' => false,
+                    'class' => 'form-control'
+                ]
+            ])
             ->add('user_condition', CKEditorType::class, [
 
                 'input_sync' => true

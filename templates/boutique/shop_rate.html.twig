@@ -12,17 +12,13 @@
 {% block stylesheets %}
 	<link href="https://fonts.googleapis.com/css?family=Montserrat:400,500,700" rel="stylesheet">
 	<link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A==" crossorigin=""/>
-	<link
-	href="{{ asset('css/bootstrap3.3.css')}}" rel="stylesheet" type="text/css">
+	<link href="{{ asset('css/bootstrap3.3.css')}}" rel="stylesheet" type="text/css">
 	<!-- Slick -->
-
 
 
 	<!-- Font Awesome Icon -->
 	<link
-	rel="stylesheet" href="{{ asset('css/font-awesome.min.css') }}">
-
-	<!-- Custom stlylesheet -->
+	rel="stylesheet" href="{{ asset('css/font-awesome.min.css') }}"> <!-- Custom stlylesheet -->
 	<link type="text/css" rel="stylesheet" href="{{ asset('css/style.css') }}"/>
 	<link
 	type="text/css" rel="stylesheet" href="{{ asset('css/boutique.css') }}"/>
@@ -33,60 +29,156 @@
 	<link rel="icon" type="image/png" href="{{asset('images/'~boutique.logo)}}">
 {% endblock %}
 {% block body %}
-{% include "boutique/dependancies/_headershop.html.twig" %}
+	{% include "boutique/dependancies/_headershop.html.twig" %}
 
-    <div class="container" style="height : 100vh">
-        
-       <h4>Donnez votre avis sur {{boutique.name}} /  <span> Avis Total 5<i class="fa fa-star" style="color: #ff0000cf;font-size: 23px;"></i> (2000)</h4></span>
-        <div class="container">
-           <div class="col-md-7">
-              Liste vote
-           </div>
-           <div class="col-md-5">
-              {% if users['isComment'] %}
-                <div id="review-form">
-                    <form id="{{ boutique.id }}" class="review-form-blog review-form edit-review-form">
-                        <input name="id-vote" value="{{users['id']}}" type="hidden"/>
-                        <div class="input-rating">
-                            <span>Votre satisfaction :
-                            </span>
-                            <br>
-                            <div class="myvoting">
-                                {{my_vote_twig(users['value'], true)}}
-                            </div>
-                                <textarea class="input comment" placeholder="Commentaire">{{users['comment']}}</textarea>					
-                        </div>
-                            <button class="js-delete-vote secondary-btn" data-id="{{users['id']}}">Supprimer</button>
-                            <button class="primary-btn btn-submit">Enregistrer</button>
-                    </form>
+	<div class="container" style="height : 100vh">
+		{% set totalVote = votes|length==0 ? 1 : votes|length %}
+		<h4>
+			{# Donnez votre avis sur
+									{{boutique.name}}
+									/ #}
 
-                </div>
-        {% elseif app.user %}
-            
-                <div id="review-form">
-                    <form id="{{ boutique.id }}" class="review-form-blog review-form">
-                        <div class="input-rating">
-                            <span>Votre satisfaction :
-                            </span>
-                            <br>
-                            <div class="stars">
-                                <input id="star5" name="rating" value="5" type="radio"><label for="star5"></label>
-                                <input id="star4" name="rating" value="4" type="radio"><label for="star4"></label>
-                                <input id="star3" name="rating" value="3" type="radio"><label for="star3"></label>
-                                <input id="star2" name="rating" value="2" type="radio"><label for="star2"></label>
-                                <input id="star1" name="rating" value="1" type="radio"><label for="star1"></label>
-                            </div>
-                            <textarea class="input comment" placeholder="Commentaire" required></textarea>
-                        </div>
-                        <button class="primary-btn btn-submit">Enregistrer</button>
-                    </form>
-                </div>
-        {% else %}
-            <button class="btn btn-success _connexion">Connectez vous pour donner un avis</button>
-        {% endif %}
-           </div>
-        </div>
-    </div>
+			<div class="rating-avg">
+				Avis Total   <span>{{ (valuevote['total']/ totalVote) | number_format(1,'.',' ') }}</span>
+				<div class="rating-stars">
+					{{my_vote_twig(votes)}}
+					{# ({{ votes| length }}) #}
+				</div>
+			</div>
+		</h4>
+
+
+		<div class="container">
+			<div class="col-md-7">
+				<label class="title_C">
+					<a data-toggle="tab" href="#tab1">Nombre d'avis (
+						{{votes|length }}
+						)</a>
+				</label>
+				{# <div class="rating-avg">
+					<ul class="rating">
+						<li>
+							<div class="rating-stars">
+								{{ my_vote_twig(5) }}
+
+							</div>
+							<div class="rating-progress">
+								<div style="width: {{ valuevote['five']/totalVote*100}}%"></div>
+							</div>
+							<span class="sum">{{valuevote['five']}}</span>
+						</li>
+						<li>
+							<div class="rating-stars">
+								{{ my_vote_twig(4) }}
+							</div>
+							<div class="rating-progress">
+								<div style="width: {{ valuevote['four']/totalVote*100}}%"></div>
+							</div>
+							<span class="sum">{{valuevote['four']}}</span>
+						</li>
+						<li>
+							<div class="rating-stars">
+								{{ my_vote_twig(3) }}
+							</div>
+							<div class="rating-progress">
+								<div style="width: {{ valuevote['tree']/totalVote*100}}%"></div>
+							</div>
+							<span class="sum">{{valuevote['tree']}}</span>
+						</li>
+						<li>
+							<div class="rating-stars">
+								{{ my_vote_twig(2) }}
+							</div>
+							<div class="rating-progress">
+								<div style="width: {{ valuevote['two']/totalVote*100}}%"></div>
+							</div>
+							<span class="sum">{{valuevote['two']}}</span>
+						</li>
+						<li>
+							<div class="rating-stars">
+								{{ my_vote_twig(1) }}
+							</div>
+							<div class="rating-progress">
+								<div style="width: {{ valuevote['one']/totalVote*100}}%"></div>
+							</div>
+							<span class="sum">{{valuevote['one']}}</span>
+						</li>
+					</ul>
+				</div> #}
+				<div id="reviews">
+					<ul class="reviews">
+						{% for vote in votes %}
+							<li id="li-review-{{vote.id}}" class="li-review">
+								<div class="review-heading">
+									<h5 class="name">{{ vote.user.name}}</h5>
+                                    {{ vote.comment }}</p>
+									<p class="date">{{vote.createdAt|date}}</p>
+									{# <div class="review-rating">
+										{{my_vote_twig(vote.value)}}
+									</div> #}
+								</div>
+								{# <div class="review-body">
+									<p>{{ vote.comment }}</p>
+								</div> #}
+
+								{% if app.user is not same as(null) and 'ROLE_SUPER_ADMIN' in app.user.roles or vote.user is same as(app.user) %}
+									<button class="js-delete-vote delete-vote btn btn-danger" data-id="{{vote.id}}">Supprimer</button>
+								{% endif %}
+
+							</li>
+						{% endfor %}
+					</ul>
+				</div>
+			</div>
+			<div class="col-md-5">
+				{% if users['isComment'] %}
+                    <div id="review-form">
+                     <button class="btn btn-success">Merci pour votre commentaire</button>
+                    </div>
+					{# <div id="review-form">
+						<form id="{{ boutique.id }}" class="review-form-blog review-form edit-review-form">
+							<input name="id-vote" value="{{users['id']}}" type="hidden"/>
+							<div class="input-rating">
+								<span>Votre satisfaction :
+								</span>
+								<br>
+								<div class="myvoting">
+									{{my_vote_twig(users['value'], true)}}
+								</div>
+								<textarea class="input comment" placeholder="Commentaire" name="comment">{{users['comment']}}</textarea>
+							</div>
+							<button class="js-delete-vote secondary-btn" data-id="{{users['id']}}">Supprimer</button>
+							<button class="primary-btn btn-submit">Enregistrer</button>
+						</form>
+
+					</div> #}
+				{% elseif app.user %}
+
+					<div id="review-form">
+						<form id="{{ boutique.id }}" class="review-form-blog review-form">
+							<div class="input-rating">
+								<span>Votre satisfaction :
+								</span>
+								<br>
+								<div class="stars">
+									<input id="star5" name="rating" value="5" type="radio"><label for="star5"></label>
+									<input id="star4" name="rating" value="4" type="radio"><label for="star4"></label>
+									<input id="star3" name="rating" value="3" type="radio"><label for="star3"></label>
+									<input id="star2" name="rating" value="2" type="radio"><label for="star2"></label>
+									<input id="star1" name="rating" value="1" type="radio"><label for="star1"></label>
+								</div>
+								<input type="hidden" name="boutique_id" value="{{ boutique.id }}">
+								<textarea class="input comment" placeholder="Commentaire" name="comment" required></textarea>
+							</div>
+							<button class="primary-btn btn-submit">Enregistrer</button>
+						</form>
+					</div>
+				{% else %}
+					<button class="btn btn-success _connexion">Connectez vous pour donner un avis</button>
+				{% endif %}
+			</div>
+		</div>
+	</div>
 
 	{% if not app.user%}
 		{% include 'boutique/dependancies/connexion.html.twig'%}
@@ -97,6 +189,8 @@
 {% endblock %}
 
 {% block javascripts %}
-
 	<script src="{{ asset('js/connexion.js') }}"></script>
+	<script src="{{ asset('js/comment.js') }}"></script>
+
 {% endblock %}
+

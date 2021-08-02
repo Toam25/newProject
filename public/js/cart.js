@@ -192,23 +192,11 @@ $(function () {
   function removeCart(that, idCart) {
 
 
-    Lobibox.confirm({
-      msg: 'Voulez vous supprimez  ?',
+    $.confirm({
+      title: 'Confirmation',
+      content: 'Vous confirmez',
       buttons: {
-        yes: {
-          text: 'Oui',
-
-        },
-        no: {
-          text: 'Non',
-
-        },
-
-      },
-
-      callback: ($this, type) => {
-
-        if (type === "yes") {
+        Oui: function () {
 
           $.ajax({
             url: "/cart/remove/" + idCart,
@@ -231,11 +219,12 @@ $(function () {
 
             }
           });
-        }
+        },
+        Non: function () {
+
+        },
       }
-
     });
-
   }
   function removeOneItems(that, id) {
     $.ajax({

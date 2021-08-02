@@ -317,10 +317,12 @@ $(function () {
                 $('.send_message ').prop('disabled', false)
                 $('.parametre_message_in').hide();
                 $('#message_blocked_by_user').html('bloquer');
+                $('___send_message').text('');
 
                 if (data.blocked == true) {
                     $('.___send_message').prop('disabled', true)
                     $('.send_message ').prop('disabled', true)
+                    $('___send_message').text('Message bloquée');
                     // $('#message_blocked_by_user').html('debloquer');
                 }
 
@@ -761,10 +763,12 @@ $(function () {
                     $('#message').append(mymessage);
                     $('#my_nbr_message').data.nbr_message;
                     $('#my_nbr_notification').data.nbr_notification;
-                    $('.___send_message').prop('disabled',false)
+                    $('.___send_message').prop('disabled', false)
                     $('.send_message ').prop('disabled', false)
+                    $('___send_message').text('');
                     if (data.blocked == true) {
                         $('.___send_message').prop('disabled', true)
+                        $('___send_message').text('Message bloquée');
                         $('.send_message ').prop('disabled', true)
                         // $('#message_blocked_by_user').html('debloquer');
                     }
