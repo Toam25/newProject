@@ -409,6 +409,8 @@ class AdminController extends AbstractController
         $image = $files['image'];
 
         $cover = $files['cover'];
+        $coverOther = $files['coverOther'];
+        $coverContrib = $files['coverContrib'];
         // dd($image);
 
         // $cover = $request->files->get($myBoutique['cover']);
@@ -422,6 +424,14 @@ class AdminController extends AbstractController
         if ($cover != null) {
             $fichier = $insertFileServices->insertFile($cover);
             $boutique->setCover($fichier);
+        }
+        if ($coverOther != null) {
+            $fichier = $insertFileServices->insertFile($coverOther);
+            $boutique->setCoverOther($fichier);
+        }
+        if ($coverContrib != null) {
+            $fichier = $insertFileServices->insertFile($coverContrib);
+            $boutique->setCoverContrib($fichier);
         }
         $em = $this->getDoctrine()->getManager();
         $em->persist($boutique);

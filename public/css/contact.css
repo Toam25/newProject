@@ -248,7 +248,7 @@ width: 50%;
 #all{
   display: inline-block;
   width: 100%;
-  color:#1C1C1C;
+  color:white;
   font-size: 12px;
 }
 ._image_{
@@ -511,7 +511,7 @@ position:relative;
   background: #e6e6e6;
 }
 .my_message_and_nofication>div:first-child{
-  background: #05c6e5;
+  background: #202340 ;/*#05c6e5;*/
   padding: 10px 5px;
   display: flex;
   justify-content: center;
