@@ -57,7 +57,7 @@ class CartService
     public function removeCart(User $user, int $idCart)
     {
         $cart = $this->cartRepository->findOneByIdCartWithUser($user, $idCart);
-        $_cart = ($cart != Null) ? $cart : null;
+        $_cart = ($cart != Null) ? $cart : Null;
         if ($_cart != Null) {
             $this->manager->remove($_cart);
             $this->manager->flush();

@@ -5,17 +5,17 @@
     * Commons Variables
     *****************************/
     var $window = $(window),
-    $body = $('body');
-    
+        $body = $('body');
+
     /****************************
     * Sticky Menu
     *****************************/
-    $(window).on('scroll',function() {    
+    $(window).on('scroll', function () {
         var scroll = $(window).scrollTop();
         if (scroll < 100) {
-         $(".sticky-header").removeClass("sticky");
-        }else{
-         $(".sticky-header").addClass("sticky");
+            $(".sticky-header").removeClass("sticky");
+        } else {
+            $(".sticky-header").addClass("sticky");
         }
     });
 
@@ -24,28 +24,33 @@
     * Off Canvas Function
     *****************************/
     (function () {
+
+        $('._view_toogle_menu').on('click', function (e) {
+            e.preventDefault()
+            $('#my_content').toggleClass('view_menu')
+        });
         var $offCanvasToggle = $('.offcanvas-toggle'),
             $offCanvas = $('.offcanvas'),
             $offCanvasOverlay = $('.offcanvas-overlay'),
             $mobileMenuToggle = $('.mobile-menu-toggle');
-            $offCanvasToggle.on('click', function (e) {
-                e.preventDefault();
-                var $this = $(this),
-                    $target = $this.attr('href');
-                $body.addClass('offcanvas-open');
-                $($target).addClass('offcanvas-open');
-                $offCanvasOverlay.fadeIn();
-                if ($this.parent().hasClass('mobile-menu-toggle')) {
-                    $this.addClass('close');
-                }
-            });
-            $('.offcanvas-close, .offcanvas-overlay, .remove ').on('click', function (e) {
-                e.preventDefault();
-                $body.removeClass('offcanvas-open');
-                $offCanvas.removeClass('offcanvas-open');
-                $offCanvasOverlay.fadeOut();
-                $mobileMenuToggle.find('a').removeClass('close');
-            });
+        $offCanvasToggle.on('click', function (e) {
+            e.preventDefault();
+            var $this = $(this),
+                $target = $this.attr('href');
+            $body.addClass('offcanvas-open');
+            $($target).addClass('offcanvas-open');
+            $offCanvasOverlay.fadeIn();
+            if ($this.parent().hasClass('mobile-menu-toggle')) {
+                $this.addClass('close');
+            }
+        });
+        $('.offcanvas-close, .offcanvas-overlay, .remove ').on('click', function (e) {
+            e.preventDefault();
+            $body.removeClass('offcanvas-open');
+            $offCanvas.removeClass('offcanvas-open');
+            $offCanvasOverlay.fadeOut();
+            $mobileMenuToggle.find('a').removeClass('close');
+        });
     })();
 
 
@@ -80,6 +85,6 @@
     }
     mobileOffCanvasMenu();
 
- 
+
 })(jQuery);
 

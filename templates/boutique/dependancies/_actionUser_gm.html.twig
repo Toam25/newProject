@@ -7,7 +7,7 @@
 					<div style="" class="membre">
 							<a href="">
 								<i class="fa fa-user"></i>
-								<span>Boutiques</span>
+								<span class="action_name">Boutiques</span>
 							</a>
 							
 					</div>
@@ -15,7 +15,7 @@
 					<div style="" class="mynotification">
 						<a href="">
 							<i class="fa fa-bell"></i>
-							 <span>Notification</span>
+							 <span class="action_name">Notification</span>
 							{# <div class="qty qtymess" id="my_nbr_notification">
 								0
 							</div> #}
@@ -25,7 +25,7 @@
 					<div id="" style="" class="message-in" name="{{boutique.id}}">
 							<a href="">
 								<i class="fa fa-envelope"></i>
-								<span>Message</span>
+								<span class="action_name">Message</span>
 								{# <div class="qty qtymess" id="my_nbr_message">
 									0
 								</div> #}
@@ -112,7 +112,7 @@
 										{% if app.user%}
 											<a href="{{ path('show_cart',{'type':'panier'})}}">
 												<i class="fa fa-shopping-cart"></i>
-												<span>
+												<span class="action_name">
 													Panier
 												</span>
 												<div class="qty cart-qty">

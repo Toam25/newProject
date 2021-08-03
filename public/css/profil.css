@@ -35,6 +35,11 @@
     min-width: 250px;
     position: relative;
 }
+@media (max-width: 760px) {
+    .info-user{
+        width: 90%;
+   }
+  }
 .profil_user_name button, .profil_password button, .profil_cv button {
     margin : 5px 0;
 }

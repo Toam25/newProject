@@ -383,6 +383,7 @@ nav {
   box-shadow: 0px 0px 14px black;
   top: 3px;
   height: 99vh;
+  overflow: hidden;
 }
 .liste_categorie_vetement {
   cursor: pointer;
@@ -1491,6 +1492,9 @@ nav {
       width: 62vw !important;
       min-width: 18vw !important;
     }
+    .view_menu {
+      grid-template-columns: 150px auto !important;
+     }
   .containt_image_vote {
     height: 136px !important;
   }

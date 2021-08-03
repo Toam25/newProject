@@ -49,38 +49,60 @@
 	{% include "boutique/menu.twig" %}
 	{#{% include "boutique/index.navbar.html.twig" %}#}
 
-	<div id="container_echatillon"> 
-	<div class="inother-ajax">
-               <div class="div-inother"></div>
-    </div>
-  	{#<div class="col-md-2">
-	   <div id="menu_detail">
-	   </div>
-	</div>
-	#}
-	<div class="_container_all_echantillon">
-		<div class="manu-close-bnt">
-				<div class="mobile-header--left">
-                            <a href="#mobile-menu-offcanvas" class="mobile-menu offcanvas-toggle">
-                                <span class="mobile-menu-dash-index"></span>
-                                <span class="mobile-menu-dash-index"></span>
-                                <span class="mobile-menu-dash-index"></span>
-                            </a>
-                        </div>
-				<h4 class="title"></h4>
-				<button class="remove btn btn-danger "><span class="fa fa-times"></span></button>
-		</div>
-		<div id="container_echantillon">
-			<div class="_container_echatillon">
-				<h4 align='center'> Recherche des resultats </h4>
+<div id="container_echatillon">
+    <div id="my_content">
+	<div class="containt_menu____">
+		<div class="">
+			{# <div class="offcanvas-header text-right">
+				<button class="offcanvas-close">
+					<i class="fa fa-times"></i>
+				</button>
+			</div> #}
+			<div>
+				<div class="offcanvas-mobile-menu-wrapper">
+					<div class="mobile-menu-center">
+						<div class="offcanvas-menu">
+							<ul class="ul-mobil">
+								{% include "boutique/dependancies/_index_menu_mobil.html.twig"%}
+							</ul>
+						</div>
+					</div>
+				</div>
 			</div>
 		</div>
-		 <div id="divider"></div>
-	     <div class="_boutiqueContaintEchantillon">
-	     	
-	     </div>
+	</div>
+	<div class="container_recherche___">
+		<div class="inother-ajax">
+			<div class="div-inother"></div>
+		</div>
+		<div class="_container_all_echantillon">
+			<div class="manu-close-bnt">
+				<div class="mobile-header--left">
+					<a href="#" class="_view_toogle_menu">
+						<span class="mobile-menu-dash-index"></span>
+						<span class="mobile-menu-dash-index"></span>
+						<span class="mobile-menu-dash-index"></span>
+					</a>
+				</div>
+				<h4 class="title"></h4>
+				<button class="remove btn btn-danger ">
+					<span class="fa fa-times"></span>
+				</button>
+			</div>
+			<div id="container_echantillon">
+				<div class="_container_echatillon">
+					<h4 align='center'>
+						Recherche des resultats
+					</h4>
+				</div>
+			</div>
+			<div id="divider"></div>
+			<div class="_boutiqueContaintEchantillon"></div>
+		</div>
+	</div>
 	</div>
 </div>
+
 
 	{% include "boutique/menumode.html.twig" %}
 	<div class="container-fluid">

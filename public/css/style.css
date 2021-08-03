@@ -515,9 +515,10 @@ textarea.input {
 .header-ctn > div > a {
   display: block;
   position: relative;
-  width: 90px;
+  /* width: 90px; */
   text-align: center;
   color: #FFF;
+  margin: 0 12px;
 }
 ._mylogo{
     height: 31px;
