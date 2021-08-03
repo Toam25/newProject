@@ -904,11 +904,16 @@ nav li:hover .submenu{
     font-size: 14px;
 
 }
+@media (max-width: 760px){
+    .__ , .__2 {
+        width: 95vw !important;
+    }
+}
 .__2{
     display: grid;
     grid-template-columns: 1fr 2fr;
     border: 1px solid rgba(0,0,0,0.1);
-    width: 50vw !important;
+    width: 50vw ;
     z-index: 1;
     background: white;
     padding: 5px;
@@ -918,13 +923,14 @@ nav li:hover .submenu{
     display: grid;
     grid-template-columns: 2fr 1fr;
     border: 1px solid rgba(0,0,0,0.1);
-    width: 50vw !important;
+    width: 50vw;
     border-top: none;
     z-index: 1;
     background: white;
     padding: 5px;
 
 }
+
 .image_echatillon_shop > img {
     width: 100%;
     height: 100%;
