@@ -23,9 +23,8 @@
 			<div class="detail">
 				<div class="product-rating">
 					{{blog.votes|length|number_format(1,'.',' ') }} {{ my_vote_twig(blog.votes) }}
-                    <div> 
-                      <span class="fa fa-comment" style="font-size: 20px;"></span>  {{blog.votes|length }} commentaires
-                    </div>
+                    / <span class="fa fa-comment" style="font-size: 20px;"></span>  {{blog.votes|length }} commentaires
+                    
 				</div>
                 <a class="container_preview_images_boutique" href="{{path('shop',{'id': blog.boutique.id,'type' : blog.boutique.type})}}" target="_blank">
                     <img src="{{ asset('images/'~blog.boutique.logo) }}" />

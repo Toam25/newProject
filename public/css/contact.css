@@ -10,6 +10,13 @@
 
 }
 
+@media (max-width: 760px) {
+  .action_name{
+    display: none;
+ }
+}
+
+
 .fermer_membre {
   position: absolute;
   top: 7px;
@@ -208,11 +215,11 @@ display: none;
 width: 50%;
 }
 .membre {
-  border: 1px solid
+  /* border: 1px solid
   rgba(0,0,0,0.1);
   padding: 3px;
   width: 27%;
-  margin-bottom: 5px;
+  margin-bottom: 5px; */
 }
 .membre_in{
  border: 1px solid

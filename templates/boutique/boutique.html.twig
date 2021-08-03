@@ -281,7 +281,11 @@
 					dots:false,
 					autoplay :true,
 					autoplayTimeout : 6000,
-					responsive : {0 : {margin : 14, items: 2},470 : {margin : 14, items : 3}, 730 : {margin: 14, items : 4 }, 1220 : {margin : 30, items : 4}},
+					responsive : {
+						0 : {margin : 14, items: 1},
+						470 : {margin : 14, items : 2}, 
+						730 : {margin: 14, items : 3 }, 
+						1220 : {margin : 30, items : 4}},
 					onInitialized : sliderInit,
 					onChanged : sliderNextPrev
 				});
@@ -329,11 +333,11 @@
 	<script src=" {{ asset('js/nouislider.min.js') }}"></script>
 	<script src="{{ asset('js/jquery.zoom.min.js') }}"></script>
 	<script src="{{ asset('js/index.js') }}"></script>
-	<script src="{{ asset('js/jssor.slider.min.js') }}"></script>
-	<script src="{{ asset('js/jssor.config.js') }}"></script>
 	<script src="{{ asset('js/cart.js') }}"></script>
 	<script src="{{ asset('js/connexion.js') }}"></script>
 	<script src="{{ asset('js/shop.js') }}"></script>
 	<script src="{{ asset('js/main.js') }}"></script>
+	<script src="{{ asset('js/jssor.slider.min.js') }}"></script>
+	<script src="{{ asset('js/jssor.config.js') }}"></script>
 {% endblock %}
 

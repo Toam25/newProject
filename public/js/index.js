@@ -1,7 +1,7 @@
-$(function(){
+$(function () {
 
-    
-    var ESS_ARTICLE = "";
+
+  var ESS_ARTICLE = "";
 
   $('.modenav').on('click', function (e) {
     e.preventDefault();
@@ -10,10 +10,10 @@ $(function(){
     $('.liste_high_teck').hide();
     $('.maison').hide();
     ESS_ARTICLE = "MODE";
-  
+
   })
 
-  $('body').on('click', '.hightechnav',function (e) {
+  $('body').on('click', '.hightechnav', function (e) {
     e.preventDefault();
     //$('.menu_index').hide();
     $('.liste_high_teck').toggle();
@@ -21,9 +21,9 @@ $(function(){
     $('.maison').hide();
 
     ESS_ARTICLE = "HIGH-TECH";
-    
+
   });
-  $('body').on('click', '.maisonnav',function (e) {
+  $('body').on('click', '.maisonnav', function (e) {
     e.preventDefault();
     //$('.menu_index').hide();
     $('.liste_high_teck').hide();
@@ -31,7 +31,7 @@ $(function(){
     $('.maison').toggle();
 
     ESS_ARTICLE = "MAISON";
-    
+
   });
 
   $('.hd').on('click', function (e) {
@@ -100,9 +100,9 @@ $(function(){
   })
   $('body').on('click', '.echantillon_image', function (e) {
     e.preventDefault();
-   $('.title').text($(this).text());
-  // $('#mobile-menu-offcanvas').removeClass('offcanvas-open');
-    
+    $('.title').text($(this).text());
+    $('#mobile-menu-offcanvas').removeClass('offcanvas-open');
+
     var habillement = ["Vetements_homme", "Chaussures_homme", "Lingeries_homme", "Vetements_femme", "Chaussures_femmme", "Lingeries_femme", "enfant_garcon", "enfant_fille", "Chaussures_enfant", "bebe_garcons", "bebe_chaussure", "bebe_filles"];
     var accessoires = ["acc_cheveux", "acc_bijoux_montre", "acc_sacs_maroquinerie", "acc_fashion_plus"];
     var beaute_bien = ["acc_soins_cheveux", "acc_soins_ongle", "acc_soins_corps_visage", "acc_beaute_bio", "acc_parfums"];
@@ -146,18 +146,18 @@ $(function(){
     }
     $('.listeMode').hide();
     $('._boutiqueContaintEchantillon').html("");
-    
-    $('li').children('a').removeClass('redSelected');
-    $('.mobil-'+categorie).children('a').addClass('redSelected');
-    $('.ul-mobil').children('li').removeClass('active');
-    $('.ul-mobil').children('li').children('ul').css('display','none');
-    $('.ul-mobil').children('li').children('ul').children('li').removeClass('active');
-    $('.ul-mobil').children('li').children('ul').children('li').children('ul').css('display','none');
 
-    $('.mobil-'+categorie).parent('ul').css('display','block');
-    $('.mobil-'+categorie).parent('ul').parent('li').addClass('active');
-    $('.mobil-'+categorie).parent('ul').parent('li').parent('ul').css('display','block');
-    $('.mobil-'+categorie).parent('ul').parent('li').parent('ul').parent('li').addClass('active');
+    $('li').children('a').removeClass('redSelected');
+    $('.mobil-' + categorie).children('a').addClass('redSelected');
+    $('.ul-mobil').children('li').removeClass('active');
+    $('.ul-mobil').children('li').children('ul').css('display', 'none');
+    $('.ul-mobil').children('li').children('ul').children('li').removeClass('active');
+    $('.ul-mobil').children('li').children('ul').children('li').children('ul').css('display', 'none');
+
+    $('.mobil-' + categorie).parent('ul').css('display', 'block');
+    $('.mobil-' + categorie).parent('ul').parent('li').addClass('active');
+    $('.mobil-' + categorie).parent('ul').parent('li').parent('ul').css('display', 'block');
+    $('.mobil-' + categorie).parent('ul').parent('li').parent('ul').parent('li').addClass('active');
     $.ajax({
       url: '/api/es_article/get/' + categorie,
       type: 'POST',
@@ -206,37 +206,37 @@ $(function(){
         $('.div-inother').css('display', 'block');
       },
       success: function (data) {
-       
+
         if (data.length > 0) {
           var message = " ";
-         /* for (var i = 0; i < data.length; i++) {
-            message += `
-              <div class="container_boutique">
-                  <a href="/shop/`+ data[i].type + `/` + data[i].id + `" target="blank">
-                     <p class="nom_boutique_vetement">` + data[i].name+ `</p>
-                  </a>
-                  <div class="boutique">`
-
-            for (let j = 0; j < data[i].article.length; j++) {
-              $prix = (data[i].article[j].price == 0) ? "<span class='prix_ala'>Prix : A la demande</span>" : 'Prix : ' + data[i].article[j].price;
-              message += ` <div class="_my_aricle_in">
-                                 <input type="hidden" value='.$resultat['id'].'>
-                                 <img class="image_vetement_boutique" id="`+ data[i].article[j].images + `" src="/images/`+ data[i].article[j].images + `" value="'.$resultat['name'].'">
-                                 <span class="separe"></span>
-                                 <p class="prix"> `+ $prix + `</p>
-                                 <p>
-                                 <span class="ref">Ref : `+ data[i].article[j].referency+ `</span>
-                                 </p>
-                          </div>`;
-            }
-
-
-
-
-            message += `</div>
-               </div>`
-
-          }*/
+          /* for (var i = 0; i < data.length; i++) {
+             message += `
+               <div class="container_boutique">
+                   <a href="/shop/`+ data[i].type + `/` + data[i].id + `" target="blank">
+                      <p class="nom_boutique_vetement">` + data[i].name+ `</p>
+                   </a>
+                   <div class="boutique">`
+ 
+             for (let j = 0; j < data[i].article.length; j++) {
+               $prix = (data[i].article[j].price == 0) ? "<span class='prix_ala'>Prix : A la demande</span>" : 'Prix : ' + data[i].article[j].price;
+               message += ` <div class="_my_aricle_in">
+                                  <input type="hidden" value='.$resultat['id'].'>
+                                  <img class="image_vetement_boutique" id="`+ data[i].article[j].images + `" src="/images/`+ data[i].article[j].images + `" value="'.$resultat['name'].'">
+                                  <span class="separe"></span>
+                                  <p class="prix"> `+ $prix + `</p>
+                                  <p>
+                                  <span class="ref">Ref : `+ data[i].article[j].referency+ `</span>
+                                  </p>
+                           </div>`;
+             }
+ 
+ 
+ 
+ 
+             message += `</div>
+                </div>`
+ 
+           }*/
 
           $('._boutiqueContaintEchantillon').html(data);
         }
