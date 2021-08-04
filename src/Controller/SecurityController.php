@@ -83,8 +83,8 @@ class SecurityController extends AbstractController
             // $response_json = json_encode($response);
             // $success=$response_json['success'];
 
-            if ($responseData->success) {
-                // if ($datatrue) {
+            // if ($responseData->success) {
+            if ($datatrue) {
                 $allUsers = $userRepository->findOneBy(['email' => $user->getEmail()]);
                 if ($allUsers == NULL) {
                     $hash = $encoder->encodePassword($user, $user->getPassword());
