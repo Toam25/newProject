@@ -49,32 +49,42 @@ class SecurityController extends AbstractController
                 'response' => $htoken
             ];
 
-            $curlconfig = [
-                CURLOPT_URL => $VERIFY_URL,
-                CURLOPT_POST => true,
-                CURLOPT_RETURNTRANSFER => true,
-                CURLOPT_POSTFIELDS => $data,
-                CURLOPT_HEADER => false
-            ];
+            // $curlconfig = [
+            //     CURLOPT_URL => $VERIFY_URL,
+            //     CURLOPT_POST => true,
+            //     CURLOPT_RETURNTRANSFER => true,
+            //     CURLOPT_POSTFIELDS => $data,
+            //     CURLOPT_HEADER => false
+            // ];
             //$response= $httpClient->request('POST',$VERIFY_URL,[
             //  'query'=>$data
             //  ]
             //  );
-
-            $ch = curl_init();
-            curl_setopt_array($ch, $curlconfig);
-            $response = curl_exec($ch);
-            curl_close($ch);
-
+            ///
+            $verify = curl_init();
+            curl_setopt($verify, CURLOPT_URL, "https://hcaptcha.com/siteverify");
+            curl_setopt($verify, CURLOPT_POST, true);
+            curl_setopt($verify, CURLOPT_POSTFIELDS, http_build_query($data));
+            curl_setopt($verify, CURLOPT_RETURNTRANSFER, true);
+            curl_setopt($verify, CURLOPT_SSL_VERIFYHOST, 0);
+            curl_setopt($verify, CURLOPT_SSL_VERIFYPEER, 0);
+            $response = curl_exec($verify); // 
             $responseData = json_decode($response);
+            ///
+            // $ch = curl_init();
+            // curl_setopt_array($ch, $curlconfig);
+            // $response = curl_exec($ch);
+            // curl_close($ch);
+
+            // $responseData = json_decode($response);
 
             $datatrue = true;
             // dd($response);
             // $response_json = json_encode($response);
             // $success=$response_json['success'];
 
-            // if ($responseData->success) {
-            if ($datatrue) {
+            if ($responseData->success) {
+                // if ($datatrue) {
                 $allUsers = $userRepository->findOneBy(['email' => $user->getEmail()]);
                 if ($allUsers == NULL) {
                     $hash = $encoder->encodePassword($user, $user->getPassword());
