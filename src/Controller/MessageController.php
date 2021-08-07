@@ -42,6 +42,7 @@ class MessageController extends AbstractController
         //  $this->denyAccessUnlessGranted('view', $conversation);
 
         //   $message = $conversation->getMessage();
+
         if ($this->getUser()) {
 
 
@@ -110,19 +111,31 @@ class MessageController extends AbstractController
     }
 
     /**
-     * @Route("/{id}", name="newMessage", methods={"POST"})
+     * @Route("/{id}-{other}", name="newMessage", methods={"POST"})
      */
 
-    public function newMessage(Request $request, int $id, MercureService $mercureService, Conversation $conversation, InsertFileServices $insertFileServices)
+    public function newMessage(Request $request, int $other, UserRepository $userRepository, MercureService $mercureService, Conversation $conversation, InsertFileServices $insertFileServices)
     {
 
 
         $user = $this->getUser();
+        $otherUser = $userRepository->findOneBy(['id' => $other]);
         $content_img = "";
         if ($request->files->get('image_content')) {
             $files = $insertFileServices->insertFile($request->files->get('image_content'));
             $content_img = "<div class='container_image_message'><img src='/images/" . $files . "' alt='image_message'/></div>";
         }
+
+        $data = $otherUser->getData() != Null ? $otherUser->getData() : ['message' => []];
+
+        if (!in_array($other, $data['message'])) {
+            array_push($data['message'], $other);
+            $otherUser->setData($data);
+            $nbrMessage = sizeof($data);
+            $otherUser->setNbrMessage(intval($nbrMessage));
+            $this->entityManager->persist($otherUser);
+        }
+
 
         $content = $request->get('content', null);
         $message = new Message();
@@ -132,7 +145,6 @@ class MessageController extends AbstractController
 
         $conversation->addMessage($message);
         $conversation->setLastMessage($message);
-
         $this->entityManager->persist($message);
         $this->entityManager->persist($conversation);
         $this->entityManager->flush();
@@ -356,13 +368,11 @@ class MessageController extends AbstractController
 
         //   $message = $conversation->getMessage();
         if ($this->getUser()) {
-
-
             if (!is_numeric($id)) {
                 return $this->json(
                     [
                         'nbr_notification' => $this->getUser()->getNbrNotification() != null ? $this->getUser()->getNbrNotification() : 0,
-                        'nbr_message' => $this->getUser()->getNbrMessage() != null ? $this->getUser()->getNbrMessage() : 0,
+                        'nbr_message' =>  $this->getUser()->getNbrMessage() != null ? $this->getUser()->getNbrMessage() : 0,
                         'messages' => [],
                         'blocked' => "",
                     ],
@@ -433,5 +443,10 @@ class MessageController extends AbstractController
                 );
             }
         }
+        return $this->json(
+            [],
+            Response::HTTP_UNAUTHORIZED,
+            []
+        );
     }
 }

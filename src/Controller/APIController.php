@@ -59,10 +59,12 @@ use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 class APIController extends AbstractController
 {
     private $em;
+    private $entityManager;
 
     public function __construct(EntityManagerInterface $em)
     {
         $this->em = $em;
+        $this->entityManager = $em;
     }
     /**
      * @Route("/v1/blog/delete/{id}", name=".delete_blog", methods={"POST"})
@@ -879,6 +881,15 @@ class APIController extends AbstractController
 
     public function getNotification(NotificationService $notificationService)
     {
+        $data = $this->getUser()->getData();
+
+        if ($data != null && sizeof($data) > 0) {
+            $data['message'] = [];
+            $this->getUser()->setData($data);
+            $this->getUser()->setNbrMessage(0);
+            $this->entityManager->persist($this->getUser());
+            $this->entityManager->flush();
+        }
         return new JsonResponse($notificationService->getMessageNotification(), Response::HTTP_OK);
     }
 
@@ -959,7 +970,16 @@ class APIController extends AbstractController
             $users = $userRepository->findAllWithRoleSuperAdmin("ROLE_SUPER_ADMIN");
             foreach ($users as $user) {
                 $notification->addToUser($user);
+                $data = $user->getData() != Null ? $user->getData() : ['notification' => []];
+                if (!in_array($user->getId(), $data['notification'])) {
+                    array_push($data['notification'], $user->getId());
+                    $user->setData($data);
+                    $nbrNotification = sizeof($data);
+                    $user->setNbrNotification(intval($nbrNotification));
+                    $this->entityManager->persist($user);
+                }
             }
+
             $em->persist($notification);
             $em->flush();
             return new JsonResponse(["status" => "Success"], Response::HTTP_OK);
@@ -995,6 +1015,14 @@ class APIController extends AbstractController
             $users = $userRepository->findAllWithRoleSuperAdmin("ROLE_SUPER_ADMIN");
             foreach ($users as $user) {
                 $notification->addToUser($user);
+                $data = $user->getData() != Null ? $user->getData() : ['notification' => []];
+                if (!in_array($user->getId(), $data['notification'])) {
+                    array_push($data['notification'], $user->getId());
+                    $user->setData($data);
+                    $nbrNotification = sizeof($data);
+                    $user->setNbrNotification(intval($nbrNotification));
+                    $this->entityManager->persist($user);
+                }
             }
             $em->persist($notification);
             $em->flush();

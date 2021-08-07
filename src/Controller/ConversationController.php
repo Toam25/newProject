@@ -70,6 +70,15 @@ class ConversationController extends AbstractController
 
             $conversations = $this->conversationRepository->findConvesationsByUser($this->getUser()->getId());
             $newConversations = [];
+            $data = $this->getUser()->getData();
+
+            if ($data != null && sizeof($data) > 0) {
+                $data['message'] = [];
+                $this->getUser()->setData($data);
+                $this->getUser()->setNbrMessage(0);
+                $this->entityManager->persist($this->getUser());
+                $this->entityManager->flush();
+            }
 
             // $hubUrl = $this->getParameter('mercure.default_hub');
             // $this->addLink($request, new Link('mercure ', $hubUrl));
