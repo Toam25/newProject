@@ -16,6 +16,9 @@
 						<a href="">
 							<i class="fa fa-bell"></i>
 							 <span class="action_name">Notification</span>
+							 {% if app.user.nbrNotification != 0 %} 
+									<span class="badge badge-danger badge-counter nbr_notification">{{ app.user.nbrNotification }}</span>
+							 {% endif %}
 							{# <div class="qty qtymess" id="my_nbr_notification">
 								0
 							</div> #}
@@ -26,6 +29,9 @@
 							<a href="">
 								<i class="fa fa-envelope"></i>
 								<span class="action_name">Message</span>
+								{% if app.user.nbrMessage != 0 %} 
+										<span class="badge badge-danger badge-counter nbr_notification">{{ app.user.nbrMessage }}</span>
+								{% endif %}
 								{# <div class="qty qtymess" id="my_nbr_message">
 									0
 								</div> #}

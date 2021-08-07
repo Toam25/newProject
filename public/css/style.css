@@ -558,6 +558,21 @@ textarea.input {
   color: #FFF;
   background-color: #D10024;
 }
+.qtyN{
+  position: absolute;
+  left: 23px;
+  top: -7px;
+  width: 20px;
+  height: 20px;
+  line-height: 20px;
+  text-align: center;
+  border-radius: 50%;
+  font-size: 10px;
+  color: #FFF;
+}
+.newNotification{
+  background-color: #D10024;
+}
 
 .header-ctn .menu-toggle {
   display: none;

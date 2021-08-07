@@ -4,7 +4,7 @@ $(function () {
     var id_other_user = null;
     var my_id = parseInt($('.my_id').val());
 
-    var get_message = setInterval(getLastmessage, 5000);
+    var get_message = setInterval(getLastmessage, 6000);
 
 
     //mercure
@@ -719,36 +719,59 @@ $(function () {
         let last_id_message = $('#container-message').children('.head_message').children('#message').children('.contaitboutique:last-child').children('.delete_message').attr('name');
         last_id_message = parseInt(last_id_message) ? parseInt(last_id_message) : 0;
         //id_other_user =
-        if (id_other_user) {
+        if (!id_other_user) {
+            id_other_user = "nbrNotification";
+            last_id_message = "nbrMessage";
+        }
 
 
-            $.ajax({
-                url: "/messages/lastest/" + id_other_user + '-' + last_id_message,
-                type: 'GET',
-                dataType: 'json',
-                beforeSend: () => {
-                },
-                success: (data) => {
-
-                    //             my = (message.my) ? "my" : "your";
+        $.ajax({
+            url: "/messages/lastest/" + id_other_user + '-' + last_id_message,
+            type: 'GET',
+            dataType: 'json',
+            beforeSend: () => {
+            },
+            success: (data) => {
 
 
-                    //             $("#message").append(`<div class="contaitboutique ` + my + ` ">` + message.content + `
-                    //        <div class="time" >
-                    //         `+ getStringDatePerTimestamp(message.times) + `
-                    //         </div>
-                    //     <button class="font_b delete_message" name="`+ message.id + `">
-                    //          <span class="fa fa-trash"></span>
-                    //   </button>
-                    //   </div>`);
+                if (data.nbr_notification) {
+                    $('.qtynotif').html(parseInt(data.nbr_notification));
+                    $('.qtynotif').addClass('newNotification');
+                }
+                else {
+                    $('.qtynotif').html("");
+                    $('.qtynotif').removeClass('newNotification');
+                }
 
-                    let mymessage = ``;
-                    data.messages.forEach(message => {
-                        my = (message.my) ? "my" : "your";
+                if (data.nbr_message) {
+                    $('.qtymess').html(parseInt(data.nbr_message));
+                    $('.qtymess').addClass('newNotification');
+                }
+                else {
+                    $('.qtymess').html("");
+                    $('.qtymess').removeClass('newNotification');
+                }
 
-                        mymessage = `<div class="contaitboutique ` + my + ` ">
+
+                //             my = (message.my) ? "my" : "your";
+
+
+                //             $("#message").append(`<div class="contaitboutique ` + my + ` ">` + message.content + `
+                //        <div class="time" >
+                //         `+ getStringDatePerTimestamp(message.times) + `
+                //         </div>
+                //     <button class="font_b delete_message" name="`+ message.id + `">
+                //          <span class="fa fa-trash"></span>
+                //   </button>
+                //   </div>`);
+
+                let mymessage = ``;
+                data.messages.forEach(message => {
+                    my = (message.my) ? "my" : "your";
+
+                    mymessage = `<div class="contaitboutique ` + my + ` ">
                             <div class="content_my_message">`
-                            + message.content + `
+                        + message.content + `
                       
                              </div>
                             <div class="time" >
@@ -758,33 +781,33 @@ $(function () {
                                 <span class="fa fa-trash"></span>
                             </button>
                         </div>`+ mymessage;
-                    });
+                });
 
-                    $('#message').append(mymessage);
-                    $('#my_nbr_message').data.nbr_message;
-                    $('#my_nbr_notification').data.nbr_notification;
-                    $('.___send_message').prop('disabled', false)
-                    $('.send_message ').prop('disabled', false)
-                    $('___send_message').text('');
-                    if (data.blocked == true) {
-                        $('.___send_message').prop('disabled', true)
-                        $('___send_message').text('Message bloquée');
-                        $('.send_message ').prop('disabled', true)
-                        // $('#message_blocked_by_user').html('debloquer');
-                    }
-                    // let html = ``;
-                    // data.forEach(element => {
-                    //     html += listShop(element.image, element.id, element.name)
-                    // });
-                    // $('.js_member').html(html);
-                    // $('#message .container_loader_message').remove();
-                    scrollToButton();
-                },
-                error: () => {
-                    $('#message .container_loader_message').remove();
+                $('#message').append(mymessage);
+                $('#my_nbr_message').data.nbr_message;
+                $('#my_nbr_notification').data.nbr_notification;
+                $('.___send_message').prop('disabled', false)
+                $('.send_message ').prop('disabled', false)
+                $('___send_message').text('');
+                if (data.blocked == true) {
+                    $('.___send_message').prop('disabled', true)
+                    $('___send_message').text('Message bloquée');
+                    $('.send_message ').prop('disabled', true)
+                    // $('#message_blocked_by_user').html('debloquer');
                 }
-            })
-        }
+                // let html = ``;
+                // data.forEach(element => {
+                //     html += listShop(element.image, element.id, element.name)
+                // });
+                // $('.js_member').html(html);
+                // $('#message .container_loader_message').remove();
+                scrollToButton();
+            },
+            error: () => {
+                $('#message .container_loader_message').remove();
+            }
+        })
+
     }
 
     let scrollToButton = () => {
