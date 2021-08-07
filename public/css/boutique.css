@@ -173,6 +173,7 @@ button.owl-dot {
 .container_page1 {
     display: grid;
     grid-gap: 5px;
+    max-height: 400px;
 }
 .pageView, .pageview_pricipal{
     box-shadow: 0 0px 4px rgba(0,0,0,0.1);
@@ -180,7 +181,7 @@ button.owl-dot {
     position : relative;
 }
 .pageview_pricipal {
-   height: 100%;
+   max-height: 406px;
    width: 100%;
 }
 .popular-caption h2 {
