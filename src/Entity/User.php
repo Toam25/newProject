@@ -151,6 +151,16 @@ class User implements UserInterface
      */
     private $comments;
 
+    /**
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    private $nbrNotification;
+
+    /**
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    private $nbrMessage;
+
 
     public function __construct()
     {
@@ -771,6 +781,30 @@ class User implements UserInterface
                 $comment->setUser(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getNbrNotification(): ?int
+    {
+        return $this->nbrNotification;
+    }
+
+    public function setNbrNotification(?int $nbrNotification): self
+    {
+        $this->nbrNotification = $nbrNotification;
+
+        return $this;
+    }
+
+    public function getNbrMessage(): ?int
+    {
+        return $this->nbrMessage;
+    }
+
+    public function setNbrMessage(?int $nbrMessage): self
+    {
+        $this->nbrMessage = $nbrMessage;
 
         return $this;
     }

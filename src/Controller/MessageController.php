@@ -350,7 +350,7 @@ class MessageController extends AbstractController
      * @Route("/lastest/{id}-{last_id_message}", name="getLastTestMessages", methods={"GET"})
      */
 
-    public function getLastMessages(int $id, int $last_id_message, UserRepository $userRepository, CheckConversationService $checkConversationService)
+    public function getLastMessages(string $id, string $last_id_message, UserRepository $userRepository, CheckConversationService $checkConversationService)
     {
         //  $this->denyAccessUnlessGranted('view', $conversation);
 
@@ -358,14 +358,27 @@ class MessageController extends AbstractController
         if ($this->getUser()) {
 
 
-            $conversation = $checkConversationService->checkConversation($id);
+            if (!is_numeric($id)) {
+                return $this->json(
+                    [
+                        'nbr_notification' => $this->getUser()->getNbrNotification() != null ? $this->getUser()->getNbrNotification() : 0,
+                        'nbr_message' => $this->getUser()->getNbrMessage() != null ? $this->getUser()->getNbrMessage() : 0,
+                        'messages' => [],
+                        'blocked' => "",
+                    ],
+                    Response::HTTP_OK,
+                    [],
+                    ['attributes' => self::ATTRIBUTES_TO_SERIALISE]
+                );
+            }
+            $conversation = $checkConversationService->checkConversation(intVal($id));
             $conversationId = $conversation['conversation_id'];
 
             if (intval($conversation) !== -1) {
 
                 $messages = $this->messageRepository->findLastMessageByConversationId(
                     $conversationId,
-                    $last_id_message
+                    intVal($last_id_message)
                 );
 
                 $newMessage = [];
@@ -409,8 +422,8 @@ class MessageController extends AbstractController
 
                 return $this->json(
                     [
-                        'nbr_notification' => 0,
-                        'nbr_message' => 0,
+                        'nbr_notification' => $this->getUser()->getNbrNotification() != null ? $this->getUser()->getNbrNotification() : 0,
+                        'nbr_message' => $this->getUser()->getNbrMessage() != null ? $this->getUser()->getNbrMessage() : 0,
                         'messages' => $messages,
                         'blocked' => $blocked,
                     ],
