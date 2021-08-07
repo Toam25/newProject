@@ -204,6 +204,7 @@ button.owl-dot {
     grid-template-columns: 1fr 1fr;
     grid-gap: 5px;
     margin: 27px 0PX;
+    width: 60%;
 
 }
 .leaflet-popup.marker.leaflet-zoom-animated:hover {
@@ -779,6 +780,9 @@ nav li:hover .submenu{
     }
     .link_my_shop{
         display: none;
+    }
+    #container_page {
+        width: 100%;
     }
 }
 

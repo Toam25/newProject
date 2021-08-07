@@ -161,6 +161,11 @@ class User implements UserInterface
      */
     private $nbrMessage;
 
+    /**
+     * @ORM\Column(type="array", nullable=true)
+     */
+    private $data = [];
+
 
     public function __construct()
     {
@@ -805,6 +810,18 @@ class User implements UserInterface
     public function setNbrMessage(?int $nbrMessage): self
     {
         $this->nbrMessage = $nbrMessage;
+
+        return $this;
+    }
+
+    public function getData(): ?array
+    {
+        return $this->data;
+    }
+
+    public function setData(?array $data): self
+    {
+        $this->data = $data;
 
         return $this;
     }

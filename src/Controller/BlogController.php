@@ -116,19 +116,30 @@ class BlogController extends AbstractController
         $users = $userRepository->findAll();
         if ($blog->getValidate() == false or $blog->getValidateInHomePage() == false) {
 
+            $otherUser = $blog->getBoutique()->getUser();
             $notification = new Notification();
             $notification->setSubject($type);
-            $notification->addToUser($blog->getBoutique()->getUser());
+            $notification->addToUser($otherUser);
             $notification->setFromUser($this->getUser()->getId());
             $notification->setCreatedAt(new \DateTime());
             $notification->setDescription($blog->getId());
+
+            $em = $this->getDoctrine()->getManager();
+            $data = $otherUser->getData() != Null ? $otherUser->getData() : ['notification' => []];
+            if (!in_array($otherUser->getId(), $data['notification'])) {
+                array_push($data['notification'], $otherUser->getId());
+                $otherUser->setData($data);
+                $nbrNotification = sizeof($data);
+                $otherUser->setNbrNotification(intval($nbrNotification));
+                $em->persist($otherUser);
+            }
             if ($type == "APPROUVED") {
                 $blog->setValidate(true);
             } else {
                 $blog->setValidateInHomePage(true);
             }
 
-            $em = $this->getDoctrine()->getManager();
+
             $em->persist($notification);
             $em->flush();
 

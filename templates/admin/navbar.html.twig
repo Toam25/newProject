@@ -46,14 +46,17 @@
         <a class="nav-link dropdown-toggle mynotification" href="#" id="alertsDropdown " role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
           <i class="fas fa-bell fa-fw"></i>
           <!-- Counter - Alerts -->
-           {% if notification() != 0 %} <span class="badge badge-danger badge-counter nbr_notification">{{ notification() }}</span>{% endif %}
+           {% if notification() != 0 %} 
+           <span class="badge badge-danger badge-counter nbr_notification qtynotif">
+                {{ app.user.nbrNotification }}
+           </span>{% endif %}
         </a>
       </li>
       <li class="nav-item dropdown no-arrow mx-1 ">
         <a class="nav-link dropdown-toggle _my_message_" href="#" id="messagesDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
           <i class="fas fa-envelope fa-fw"></i>
           <!-- Counter - Messages -->
-          {# <span class="badge badge-danger badge-counter">7</span> #}
+          <span class="badge badge-danger badge-counter qtymess">{{ app.user.nbrMessage }}</span>
         </a>
       </li>
     {#

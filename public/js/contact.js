@@ -366,8 +366,9 @@ $(function () {
         e.preventDefault();
 
         let id = $('#conversation_id').val();
+        let other_id = $('.me_me').val();
         $.ajax({
-            url: "/messages/" + id,
+            url: "/messages/" + id + "-" + other_id,
             type: 'POST',
             data: new FormData(this),
             contentType: false,
@@ -420,6 +421,7 @@ $(function () {
         $('._h4_type_').html('Ma Notification');
         $('.my_message_and_nofication').addClass('view_my_notification_and_message');
         $(".my_conversation").append(loader);
+        $('.js_my_conversation').html("");
 
         if ($('.notify').children('.view_notification').html()) {
             $('.notify').children('.view_notification').remove();
