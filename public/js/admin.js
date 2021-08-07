@@ -323,9 +323,10 @@ $(function () {
 
   });
   /////////////
-  $('.save_blog').on('click', function (e) {
+  $('.add_blog_').on('submit', function (e) {
     e.preventDefault();
-    let form = $('.save_blog').parent('div').parent('form')[0];
+    // let form = $('.save_blog').parent('div').parent('form')[0];
+    let form = $(this)[0];
     $('.status').val('CLOSED');
     $(this).prop('disabled', true);
     $.ajax({
@@ -340,7 +341,11 @@ $(function () {
         toastr.info('Enregistrement en cours ;) ');
       },
       success: (data) => {
-        toastr.success('Enregistrer avec success ;) ');
+        $.alert({
+          title: 'Info',
+          content: 'Enregistrer avec succes, Votre blog est en attante de confirmation',
+        });
+        form.reset();
         $(this).prop('disabled', false);
 
       },

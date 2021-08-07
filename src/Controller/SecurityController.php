@@ -42,13 +42,15 @@ class SecurityController extends AbstractController
 
             $SECRET_KEY = "0x026EF02b5283Bf6656BFb0D67E06fF70a610395a";
             $VERIFY_URL = "https://hcaptcha.com/siteverify";
-            $htoken = $request->request->get('h-captcha-response');
+            $htoken = $request->request->get('h-captcha-response', null);
 
             $data = [
                 'secret' => $SECRET_KEY,
                 'response' => $htoken
             ];
-
+            if ($htoken == null) {
+                return new JsonResponse('hCaptchat vide', 301);
+            }
             // $curlconfig = [
             //     CURLOPT_URL => $VERIFY_URL,
             //     CURLOPT_POST => true,
@@ -77,14 +79,14 @@ class SecurityController extends AbstractController
             // curl_close($ch);
 
             // $responseData = json_decode($response);
-
-            $datatrue = true;
+            // dd($responseData);
+            // $datatrue = true;
             // dd($response);
             // $response_json = json_encode($response);
             // $success=$response_json['success'];
 
-            // if ($responseData->success) {
-            if ($datatrue) {
+            if ($responseData != null && $responseData->success) {
+                // if ($responseData) {
                 $allUsers = $userRepository->findOneBy(['email' => $user->getEmail()]);
                 if ($allUsers == NULL) {
                     $hash = $encoder->encodePassword($user, $user->getPassword());
@@ -135,7 +137,7 @@ class SecurityController extends AbstractController
 
                 return new JsonResponse($user->getEmail(), 200);
             }
-            return new JsonResponse('Erreur d\'enregistrement', 301);
+            return new JsonResponse('Inscription impossible, veuillez essayer plus tard', 301);
         }
 
         return $this->render('security/inscription.html.twig', [
