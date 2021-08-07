@@ -464,7 +464,7 @@ $(function () {
                         $('.js_my_conversation').html(newelement);
                     }
                     else {
-                        $('#container_message').html(`
+                        $('.js_my_conversation').html(`
           <a class="dropdown-item d-flex align-items-center" href="#">
           <div class="mr-3">
             <div class="icon-circle bg-success">
