@@ -17,14 +17,14 @@ class BlogType extends AbstractType
     {
         $builder
             ->add('title', TextType::class, [
-                'label' => 'Titre',
+                'label' => 'Titre*',
                 'attr' => [
                     'class' => "form-control",
                     'required' => true
                 ]
             ])
             ->add('category', ChoiceType::class, [
-                'label' => 'Categorie',
+                'label' => 'Categorie*',
                 'attr' => [
                     'class' => 'form-control',
                     'required' => true
@@ -39,7 +39,7 @@ class BlogType extends AbstractType
                 ]
             ])
             ->add('resume', TextType::class, [
-                'label' => 'Résumé',
+                'label' => 'Résumé*',
                 'attr' => [
                     'class' => 'form-control',
                     'required' => true
@@ -47,7 +47,7 @@ class BlogType extends AbstractType
             ])
 
             ->add('keywords', TextType::class, [
-                'label' => 'Mots clé',
+                'label' => 'Mots clé*',
                 'attr' => [
                     'class' => 'form-control',
                     'required' => true
@@ -55,14 +55,14 @@ class BlogType extends AbstractType
             ])
 
             ->add('metaDescription', TextareaType::class, [
-                'label' => 'Meta déscription',
+                'label' => 'Meta déscription*',
                 'attr' => [
                     'class' => 'form-control',
                     'required' => true
                 ]
             ])
             ->add('link', TextType::class, [
-                'label' => 'Lien',
+                'label' => 'Lien*',
                 'attr' => [
                     'class' => 'form-control',
                     'required' => true
@@ -70,7 +70,7 @@ class BlogType extends AbstractType
                 ]
             ])
             ->add('description', CKEditorType::class, [
-                'label' => 'Déscription',
+                'label' => 'Déscription*',
                 'attr' => [
                     'class' => 'form-control',
                     'required' => true
