@@ -886,7 +886,7 @@ class APIController extends AbstractController
         if ($data != null && sizeof($data) > 0) {
             $data['message'] = [];
             $this->getUser()->setData($data);
-            $this->getUser()->setNbrMessage(0);
+            $this->getUser()->setNbrNotification(0);
             $this->entityManager->persist($this->getUser());
             $this->entityManager->flush();
         }
