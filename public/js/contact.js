@@ -420,8 +420,9 @@ $(function () {
 
         $('._h4_type_').html('Ma Notification');
         $('.my_message_and_nofication').addClass('view_my_notification_and_message');
-        $(".my_conversation").append(loader);
         $('.js_my_conversation').html("");
+
+        $(".my_conversation").append(loader);
 
         if ($('.notify').children('.view_notification').html()) {
             $('.notify').children('.view_notification').remove();
@@ -436,7 +437,7 @@ $(function () {
                     let newelement = ""
                     let link = ""
                     let view = "";
-                    if (data.length != 0) {
+                    if (data.length > 0) {
 
                         data.forEach(element => {
                             if (element.status == "APPROUVED_BLOG") {
