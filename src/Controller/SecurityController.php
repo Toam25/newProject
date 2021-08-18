@@ -124,17 +124,18 @@ class SecurityController extends AbstractController
                     $notification->setDescription($user->getName() . " " . $user->getFirstname());
                     $notification->setFromUser(0);
                     $users = $userRepository->findAllWithRoleSuperAdmin("ROLE_SUPER_ADMIN");
-                    foreach ($users as $user) {
-                        $notification->addToUser($user);
-                        $data = $user->getData() != Null ? $user->getData() : ['notification' => []];
-                        if (!in_array($user->getId(), $data['notification'])) {
-                            array_push($data['notification'], $user->getId());
-                            $user->setData($data);
-                            $nbrNotification = sizeof($data);
-                            $user->setNbrNotification(intval($nbrNotification));
-                            $this->entityManager->persist($user);
-                        }
-                    };
+                    // foreach ($users as $user) {
+                    //     $notification->addToUser($user);
+                    //     $data = isset($user->getData()['notification']) ? $user->getData() : ['notification' => []];
+                    //   //  dd($data);
+                    //     if (!in_array($user->getId(), $data['notification'])) {
+                    //         array_push($data['notification'], $user->getId());
+                    //         $user->setData($data);
+                    //         $nbrNotification = sizeof($data);
+                    //         $user->setNbrNotification(intval($nbrNotification));
+                    //         $this->entityManager->persist($user);
+                    //     }
+                    // };
                     $manager->persist($notification);
                     $manager->persist($user);
                     $manager->flush();
