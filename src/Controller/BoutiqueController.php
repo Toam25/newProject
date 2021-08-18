@@ -88,6 +88,7 @@ class BoutiqueController extends AbstractController
         $first = intval($request->cookies->get($type));
         $boutiques = [];
         $slideShops = [];
+        $isShopExist = true;
 
         if ($type != "") {
 
@@ -97,7 +98,13 @@ class BoutiqueController extends AbstractController
 
 
             if ($boutique == null) {
-                $boutique = $boutiqueRepository->findOneByWithHeaderReference($type, intval($boutiques[0]->getId()));
+                if (count($boutiques) > 0) {
+                    $boutique = $boutiqueRepository->findOneByWithHeaderReference($type, intval($boutiques[0]->getId()));
+                } else {
+                    $isShopExist = false;
+                    $this->addFlash('unshop', 'Boutique ' . $type . ' n\'est pas encore disponnible.');
+                    return  $this->redirectToRoute('shop');
+                }
             }
 
             if (!$pageWasRefreshed) {
@@ -150,6 +157,7 @@ class BoutiqueController extends AbstractController
             'shops' => $boutiques,
             'slideShop' => $slideShops,
             'shopLink' => $shopLink,
+            'isShopExist' => $isShopExist,
             'rangeEchantillon' => $this->uniqueRandomNumbersWithinRange(0, sizeof($boutiques) - 1, 4)
 
         ]);

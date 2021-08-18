@@ -51,12 +51,17 @@
 		    Site mode gratuit 
 </div>
 {% endif %} #}
-
+    
 	{% if isHomeShop is same as (false) %}
 		{% include "boutique/dependancies/articleInShop.html.twig" %}
 	{% else %}
 <div id="echantillon_shop" style="background: #000000c4;">
-
+{% for message in app.flashes('unshop') %}
+	<div class="alert alert-warning">  
+	    {{message}}
+	</div>
+{% endfor %}
+	
 	<div class="container-fluid" style="background: #000000c4;padding-top: 28px;position: relative;overflow: hidden;">
 		{% set wallpaper =  "#05c6e5" %}
 		{% if shop.headers[0].name is defined %}
