@@ -4,7 +4,7 @@ $(function () {
     var id_other_user = null;
     var my_id = parseInt($('.my_id').val());
 
-    var get_message = setInterval(getLastmessage, 6000);
+    let get_message = setInterval(getLastmessage, 6000);
 
 
     //mercure
@@ -367,6 +367,7 @@ $(function () {
 
         let id = $('#conversation_id').val();
         let other_id = $('.me_me').val();
+        clearInterval(get_message);
         $.ajax({
             url: "/messages/" + id + "-" + other_id,
             type: 'POST',
@@ -381,7 +382,7 @@ $(function () {
                 $('.preview_img').attr('src', '');
             },
             success: (data) => {
-
+                get_message = setInterval(getLastmessage, 6000);
                 // getLastmessage();
                 // $('._image_').attr('src', '/images/' + data.image)
                 // $('._message_name_boutique').html(data.name);
@@ -410,6 +411,7 @@ $(function () {
             },
             error: () => {
                 $('#message .container_loader_message').remove();
+                // let get_message = setInterval(getLastmessage, 6000);
             }
         });
 

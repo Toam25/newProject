@@ -137,6 +137,7 @@ class MessageController extends AbstractController
         }
 
 
+
         $content = $request->get('content', null);
         $message = new Message();
         $message->setContent($content_img . $content);
@@ -154,6 +155,7 @@ class MessageController extends AbstractController
         $data = [
             "user" => $user->getId(),
             "type" => "newMessage",
+            "nbm" => $nbrMessage,
             "message" => [
                 "content" => $content_img . $content,
                 "times" => $message->getCreatedAt()->getTimesTamp(),
