@@ -729,9 +729,13 @@ nav li:hover .submenu{
 	color  : white;
 	width: 200px ;
 }
+.nav > li > a:focus, .nav > li > a:hover {
+    text-decoration: none;
+    background-color: rgba(228,77,38,.5) !important;
+}
 .mode:hover{
 	/* border-top: 5px solid #202340; */
-	background-color: rgba(228,77,38,.5);
+	background-color: rgba(228,77,38,.5) !important;
 }
 .supermarcher:hover{
 	/* border-top: 5px solid #202340; */
@@ -770,7 +774,7 @@ nav li:hover .submenu{
 }
 
 .menu_selected{
-    color: #931717c9 !important;
+    /* color: #931717c9 !important; */
     font-weight: bold;
 }
 @media (max-width: 700px){
