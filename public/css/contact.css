@@ -373,8 +373,9 @@ border-color: #eea236;
 }
 .send_message, .file_image_uploid{
   color:#fff;
-  background-color: #337ab7;
+  background-color: #4D506D;
   border: none;
+  padding: 2px 42px;
 }
 .send_message, .block_message, .delete_all_message, .file_image_uploid{
  height: 25px !important;
