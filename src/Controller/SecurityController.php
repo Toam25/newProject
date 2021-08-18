@@ -85,16 +85,16 @@ class SecurityController extends AbstractController
             // $response_json = json_encode($response);
             // $success=$response_json['success'];
 
-            if ($responseData != null && $responseData->success) {
-                // if ($responseData) {
-                $allUsers = $userRepository->findOneBy(['email' => $user->getEmail()]);
-                if ($allUsers == NULL) {
-                    $hash = $encoder->encodePassword($user, $user->getPassword());
-                    $user->setPassword($hash);
-                    $user->setRoles(["ROLE_USER"]);
-                    $user->setConfimation(md5(uniqid('ta')));
+            // if ($responseData != null && $responseData->success) {
+            // if ($responseData) {
+            $allUsers = $userRepository->findOneBy(['email' => $user->getEmail()]);
+            if ($allUsers == NULL) {
+                $hash = $encoder->encodePassword($user, $user->getPassword());
+                $user->setPassword($hash);
+                $user->setRoles(["ROLE_USER"]);
+                $user->setConfimation(md5(uniqid('ta')));
 
-                    /* $boutique->setName('myBoutiqueName')
+                /* $boutique->setName('myBoutiqueName')
                     ->setType("SuperAdmin")
                     ->setAddress('myBoutiqueAdress')
                     ->setLink('myLinkForSiteWeb')
@@ -106,47 +106,47 @@ class SecurityController extends AbstractController
 
                 */
 
-                    $email = (new TemplatedEmail())
-                        ->from('toutenone@toutenone.com')
-                        ->to($user->getEmail())
-                        ->subject('Merci d\'être parmi nous')
-                        ->htmlTemplate('email/confirmation.html.twig')
-                        ->context([
-                            'user' => $user
-                        ]);
-                    try {
-                        $mailer->send($email);
-                    } catch (TransportExceptionInterface $e) {
-                        return new JsonResponse("Erreur de connexion au serveur", Response::HTTP_UNAUTHORIZED);
-                    }
-                    $notification = new Notification();
-                    $notification->setSubject('NEW USER');
-                    $notification->setDescription($user->getName() . " " . $user->getFirstname());
-                    $notification->setFromUser(0);
-                    $users = $userRepository->findAllWithRoleSuperAdmin("ROLE_SUPER_ADMIN");
-                    // foreach ($users as $user) {
-                    //     $notification->addToUser($user);
-                    //     $data = isset($user->getData()['notification']) ? $user->getData() : ['notification' => []];
-                    //   //  dd($data);
-                    //     if (!in_array($user->getId(), $data['notification'])) {
-                    //         array_push($data['notification'], $user->getId());
-                    //         $user->setData($data);
-                    //         $nbrNotification = sizeof($data);
-                    //         $user->setNbrNotification(intval($nbrNotification));
-                    //         $this->entityManager->persist($user);
-                    //     }
-                    // };
-                    $manager->persist($notification);
-                    $manager->persist($user);
-                    $manager->flush();
-                } else {
-
-                    return new JsonResponse('Adresse mail existe', Response::HTTP_UNAUTHORIZED);
+                $email = (new TemplatedEmail())
+                    ->from('toutenone@toutenone.com')
+                    ->to($user->getEmail())
+                    ->subject('Merci d\'être parmi nous')
+                    ->htmlTemplate('email/confirmation.html.twig')
+                    ->context([
+                        'user' => $user
+                    ]);
+                try {
+                    $mailer->send($email);
+                } catch (TransportExceptionInterface $e) {
+                    return new JsonResponse("Erreur de connexion au serveur", Response::HTTP_UNAUTHORIZED);
                 }
+                $notification = new Notification();
+                $notification->setSubject('NEW USER');
+                $notification->setDescription($user->getName() . " " . $user->getFirstname());
+                $notification->setFromUser(0);
+                $users = $userRepository->findAllWithRoleSuperAdmin("ROLE_SUPER_ADMIN");
+                // foreach ($users as $user) {
+                //     $notification->addToUser($user);
+                //     $data = isset($user->getData()['notification']) ? $user->getData() : ['notification' => []];
+                //   //  dd($data);
+                //     if (!in_array($user->getId(), $data['notification'])) {
+                //         array_push($data['notification'], $user->getId());
+                //         $user->setData($data);
+                //         $nbrNotification = sizeof($data);
+                //         $user->setNbrNotification(intval($nbrNotification));
+                //         $this->entityManager->persist($user);
+                //     }
+                // };
+                $manager->persist($notification);
+                $manager->persist($user);
+                $manager->flush();
+            } else {
 
-                return new JsonResponse($user->getEmail(), 200);
+                return new JsonResponse('Adresse mail existe', Response::HTTP_UNAUTHORIZED);
             }
-            return new JsonResponse('Inscription impossible, veuillez essayer plus tard', 301);
+
+            return new JsonResponse($user->getEmail(), 200);
+            // }
+            // return new JsonResponse('Inscription impossible, veuillez essayer plus tard', 301);
         }
 
         return $this->render('security/inscription.html.twig', [
