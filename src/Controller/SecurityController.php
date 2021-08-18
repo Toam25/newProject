@@ -48,9 +48,9 @@ class SecurityController extends AbstractController
                 'secret' => $SECRET_KEY,
                 'response' => $htoken
             ];
-            if ($htoken == null) {
-                return new JsonResponse('hCaptchat vide', 301);
-            }
+            // if ($htoken == null) {
+            //     return new JsonResponse('hCaptchat vide', 301);
+            // }
             // $curlconfig = [
             //     CURLOPT_URL => $VERIFY_URL,
             //     CURLOPT_POST => true,
