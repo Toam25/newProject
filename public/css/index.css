@@ -142,8 +142,9 @@ nav {
   overflow-y: auto;
   margin-top: 0px;
   padding: 0px;
+  padding-left: 28px;
   height: 250px !important;
-  border-top: 2px solid red;
+  border-top: 2px solid #3ea1c5;
 }
 .list_video {
   width: 95%;
@@ -467,7 +468,7 @@ nav {
   color: #d93b3b !important;
 }
 .div-inother {
-  background-color: green;
+  background-color: #3ea1c5;
   display: none;
 }
 ._container_all_echantillon {

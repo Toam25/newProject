@@ -14,9 +14,9 @@
                  <button class="btn btn-success validate_blog" data-id= "{{blog.id}}" data-validate="APPROUVED">Approuver</button>
                 {% endif %}
                 {% if blog.validateInHomePage is same as (false)%}
-                    {% if blog.getDetailOffer() is not same as('Gratuit') %}
+                    
                            <button class="btn btn-secondary  validate_blog" data-id= "{{blog.id}}" data-validate="APROUVED_IN_HOME_PAGE">Approuver dans l'accueil</button>
-                    {% endif %}
+                    
                 {% endif %}
                   <button class="delete_blog btn btn-danger" data-id="{{ blog.id }}">Supprimer</button>
             </div>

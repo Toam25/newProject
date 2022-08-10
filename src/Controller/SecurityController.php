@@ -34,7 +34,6 @@ class SecurityController extends AbstractController
         $boutique = new Boutique();
 
 
-
         $form = $this->createForm(UserType::class, $user);
         $form->handleRequest($request);
 
@@ -117,7 +116,7 @@ class SecurityController extends AbstractController
                 try {
                     $mailer->send($email);
                 } catch (TransportExceptionInterface $e) {
-                    return new JsonResponse("Erreur de connexion au serveur", Response::HTTP_UNAUTHORIZED);
+                    return new JsonResponse("Erreur de connexion au serveur".$e, Response::HTTP_UNAUTHORIZED);
                 }
                 $notification = new Notification();
                 $notification->setSubject('NEW USER');

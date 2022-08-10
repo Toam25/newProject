@@ -73,9 +73,12 @@ h1, h2, h3, h4, h5, h6 {
 
 a {
   color: #2B2D42;
-  font-weight: 500;
+  text-decoration: none;
   -webkit-transition: 0.2s color;
   transition: 0.2s color;
+}
+a:hover{
+  text-decoration: none !important;
 }
 ._header {
   display: grid;
@@ -2103,8 +2106,10 @@ textarea.input {
 ===========================================================*/
 
 #footer {
-  background: #15161D;
-  color: #B9BABC;
+  background: #e0e0e0;
+  color: #000000;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 400;
 }
 
 #bottom-footer {
@@ -2115,20 +2120,26 @@ textarea.input {
   margin: 30px 0px;
 }
 
-.footer .footer-title {
-  color: #FFF;
+
+.footer-title {
+  color: rgb(0, 0, 0);
   text-transform: uppercase;
-  font-size: 18px;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 15px;
+  font-weight: 400;
   margin: 0px 0px 30px;
+  text-align: center;
 }
 
 .footer-links li+li {
   margin-top: 15px;
+  font-size: 12px;
+  
 }
 
-.footer-links li a {
-  color: #B9BABC;
-}
+/*.footer-links li a {
+  color: #000000;
+}*/
 
 .footer-links li i {
   margin-right: 15px;
@@ -2292,4 +2303,9 @@ textarea.input {
     float: none;
     margin-top: 10px;
   }
+}
+
+/*tix*/
+#cart{
+  display: none;
 }

@@ -1,0 +1,31 @@
+{{ form_start(forms, {'attr':{
+    'id':'add_user_admin',
+    'action' : path('admin_registration')
+}})}}
+    {{form_row(forms.name)}}
+    {{form_row(forms.firstname)}}
+    {{form_row(forms.birthday)}}
+    {{form_row(forms.genre)}}
+    {{form_row(forms.email)}}
+    {{form_row(forms.password)}}
+    <label>Type de boutique : </label>
+    <select class="form-control" name="shop_type">
+     <optgroup label="High-tech">
+             <option value="High-tech" selected="selected">High-tech</option>
+     </optgroup>
+     <optgroup label="Mode">
+        <option value="Habillement">Habillement</option>
+        {#<option value="Art Malagasy">Art Malagasy</option>#}
+        <option value="accessoires">Accessoires</option>
+        <option value="beaute-et-bien-etre">Beauté et bien-être</option>
+     </optgroup>
+     <optgroup label="Maison">
+        <option value="Maison">Maison</option>
+     </optgroup>
+     <optgroup label="Services">
+        <option value="Services">Services</option>
+     </optgroup>
+    </select>
+    <p></p>
+    <button id="bouton_inscr" class="btn btn-danger btn-submit" type="submit">Inscription <img class="loader" src="{{asset ('images/images_default/ajax-loader.gif')}}" alt=""></button>
+{{form_end(forms)}}

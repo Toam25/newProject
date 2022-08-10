@@ -37,6 +37,9 @@ use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Symfony\Flex\Unpack\Result;
+use Symfony\Component\Debug\Debug;
+Debug::enable();
+
 
 class AdminController extends AbstractController
 {

@@ -47,13 +47,13 @@ h3 {
 
 .line>.btn-success {
     color: #FFF;
-    background-color: #05c6e5 !important;
-    border-color: #05c6e5  !important;
+    background-color: #4c4d4f !important;
+    border-color: #4c4d4f !important;
 }
 .line>.btn-success:hover {
     color: #FFF;
-    background-color: #05c6e5 !important;
-    border-color: #05c6e5  !important;
+    background-color: #3ea1c5 !important;
+    border-color: #3ea1c5  !important;
 }
 .my-carousel-item  li{
     display: inline-block;

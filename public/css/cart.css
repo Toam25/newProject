@@ -12,7 +12,7 @@
 }
 
 header {
-    background: #202340;
+    background: #3ea1c5;
 }
 .add_cart_btn{
     width: 100%;
@@ -56,7 +56,7 @@ header {
 }
 .title_C::after{
     content: "";
-	border-bottom: 4px solid #ce4646;
+	border-bottom: 4px solid #3ea1c5;
 	width: 59%;
 	display: block; 
 }

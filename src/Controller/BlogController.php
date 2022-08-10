@@ -111,6 +111,7 @@ class BlogController extends AbstractController
     /**
      * @Route("/superadmin/validate/blog/{type}-{id}", name="superadminvalidateBlog", methods="POST")
      */
+    /*tix*/
     public function validateBlog(Blog $blog, string $type, UserRepository $userRepository)
     {
         $users = $userRepository->findAll();
@@ -125,14 +126,7 @@ class BlogController extends AbstractController
             $notification->setDescription($blog->getId());
 
             $em = $this->getDoctrine()->getManager();
-            $data = $otherUser->getData() != Null ? $otherUser->getData() : ['notification' => []];
-            if (!in_array($otherUser->getId(), $data['notification'])) {
-                array_push($data['notification'], $otherUser->getId());
-                $otherUser->setData($data);
-                $nbrNotification = sizeof($data);
-                $otherUser->setNbrNotification(intval($nbrNotification));
-                $em->persist($otherUser);
-            }
+            
             if ($type == "APPROUVED") {
                 $blog->setValidate(true);
             } else {
