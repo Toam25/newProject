@@ -36,10 +36,6 @@ use Symfony\Component\Mailer\Exception\TransportExceptionInterface;
 use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
-use Symfony\Flex\Unpack\Result;
-use Symfony\Component\Debug\Debug;
-Debug::enable();
-
 
 class AdminController extends AbstractController
 {
@@ -349,7 +345,7 @@ class AdminController extends AbstractController
     public function editBoutiqueEdit(BoutiqueRepository $boutiqueRepository, Request $request)
     {
 
-         dd($request);
+        dd($request);
     }
     /**
      * @Route("/admin/boutique", name="admin_boutique", methods={"GET","POST"})
@@ -362,8 +358,8 @@ class AdminController extends AbstractController
 
         $form = $this->createForm(BoutiqueType::class, $boutique);
         $form->handleRequest($request);
-         
-       // dd($boutique->getUserCondition());
+
+        // dd($boutique->getUserCondition());
         if ($form->isSubmitted()  and $form->isValid()) {
             $image = $form->get('image')->getData();
             if ($image) {
