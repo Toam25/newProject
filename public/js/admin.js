@@ -1238,9 +1238,11 @@ $(function () {
             data-parent="category-`+ data.parentId + `"
            class="listcategory"
           >
-          <p>`+ data.name + `</p>
-          <button  data-parent = `+ data.id + ` class="btn btn-primary add_category">Ajout</button>
-          </div>`;
+          <p>`+ data.name + `</p>`;
+        if (parseInt(data.parentId) == 0) {
+          category += `<button  data-parent = ` + data.id + ` class="btn btn-primary add_category">Ajout</button>`
+          category += `</div>`;
+        }
         if (parseInt(data.parentId) != 0) {
           category = `<div style="margin-left:40px">` + category + `</div>`;
           $category.after(category);
