@@ -1,137 +1,25 @@
-{#{% if type is same as("High-tech")%}
-<li class="nav-item">
-      <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#telephonie_" aria-expanded="true" aria-controls="collapsePages">
-        <i class="fas fa-fw fa-folder"></i>
-        <span>Téléphonie</span>
-      </a>
-      <div id="telephonie_" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
-        <div class="bg-white py-2 collapse-inner rounded">
-          <a class="collapse-item" href="{{path('article_list',{'category':'telephone'})}}">Téléphone</a>
-          <a class="collapse-item" href="{{path('article_list',{'category':'accessoire'})}}">Accessoire</a>
-        </div>
-      </div>
-</li>
-<li class="nav-item">
-      <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#informatique_" aria-expanded="true" aria-controls="collapsePages">
-        <i class="fas fa-fw fa-folder"></i>
-        <span>Informatique</span>
-      </a>
-      <div id="informatique_" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
-        <div class="bg-white py-2 collapse-inner rounded">
-          <a class="collapse-item" href="{{path('article_list',{'category':'materiels_informatique'})}}">Matériels informatique</a>
-          <a class="collapse-item" href="{{path('article_list',{'category':'diagnostiques'})}}">Diagnostiques</a>
-        </div>
-      </div>
-</li><li class="nav-item">
-      <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#images_et_son" aria-expanded="true" aria-controls="collapsePages">
-        <i class="fas fa-fw fa-folder"></i>
-        <span>Images et son</span>
-      </a>
-      <div id="images_et_son" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
-        <div class="bg-white py-2 collapse-inner rounded">
-          <a class="collapse-item" href="{{path('article_list',{'category':'tv'})}}">TV</a>
-          <a class="collapse-item" href="{{path('article_list',{'category':'video_projecteur'})}}">Video projecteur</a>
-          <a class="collapse-item" href="{{path('article_list',{'category':'son'})}}">Son</a>
-          <a class="collapse-item" href="{{path('article_list',{'category':'photos_et_camera'})}}">Photos et caméra</a>
-          <a class="collapse-item" href="{{path('article_list',{'category':'tous_les_accessoire'})}}">Tous les accessoires</a>
-        </div>
-      </div>
-</li>
-<li class="nav-item">
-      <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages" aria-expanded="true" aria-controls="collapsePages">
-        <i class="fas fa-fw fa-folder"></i>
-        <span>Système domotique</span>
-      </a>
-      <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
-        <div class="bg-white py-2 collapse-inner rounded">
-          <a class="collapse-item" href="{{path('article_list',{'category':'telephone'})}}">Téléphone</a>
-          <a class="collapse-item" href="{{path('article_liste')}}">Accessoires</a>
-        </div>
-      </div>
-<li class="nav-item">
-        <a class="nav-link" href="{{path('article_list',{'category':'systeme_domotique'})}}">
-          <i class="fas fa-fw fa-fw fa-folder"></i>
-          <span>Système domotique</span></a>
-      </li>
-<li class="nav-item">
-        <a class="nav-link" href="{{path('article_list',{'category':'impression'})}}">
-          <i class="fas fa-fw fa-fw fa-folder"></i>
-          <span>Impression</span></a>
-</li>
-
-{%  elseif type is same as("Habillement")%}
-<li class="nav-item">
-      <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#habillement" aria-expanded="true" aria-controls="collapsePages">
-        <i class="fas fa-fw fa-folder"></i>
-        <span>Habillement</span>
-      </a>
-      <div id="habillement" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
-        <div class="bg-white py-2 collapse-inner rounded">
-          <a class="collapse-item" href="{{path('article_list',{'category':'habillement_homme'})}}">Habillement homme</a>
-          <a class="collapse-item" href="{{path('article_list',{'category':'habillement_femme'})}}">Habillement femme</a>
-          <a class="collapse-item" href="{{path('article_list',{'category':'habillement_enfant'})}}">Habillement enfant</a>
-          <a class="collapse-item" href="{{path('article_list',{'category':'habillement_bebe'})}}">Habillement bébé</a>
-        </div>
-      </div>
-</li>
-{% elseif type is same as('accessoire')%}
-<li class="nav-item">
-      <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#accessoire" aria-expanded="true" aria-controls="collapsePages">
-        <i class="fas fa-fw fa-folder"></i>
-        <span>Accessoire</span>
-      </a>
-      <div id="accessoire" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
-        <div class="bg-white py-2 collapse-inner rounded">
-          <a class="collapse-item" href="{{path('article_list',{'category':'accessoire_cheveux'})}}">Accessoire des cheveux</a>
-          <a class="collapse-item" href="{{path('article_list',{'category':'bijoux et montre'})}}">Bijoux et montre</a>
-          <a class="collapse-item" href="{{path('article_list',{'category':'sacs_et_maroquineries'})}}">Sacs et maroquineries</a>
-          <a class="collapse-item" href="{{path('article_list',{'category':'fashion_plus'})}}">Fashion +</a>
-        </div>
-      </div>
-</li>
-{% elseif type is same as('beaute_et_bien_etre')%}
-<li class="nav-item">
-      <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#bbe" aria-expanded="true" aria-controls="collapsePages">
-        <i class="fas fa-fw fa-folder"></i>
-        <span>Beauté et bien-être</span>
-      </a>
-      <div id="bbe" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
-        <div class="bg-white py-2 collapse-inner rounded">
-          <a class="collapse-item" href="{{path('article_list',{'category':'parfums'})}}">Parfums</a>
-          <a class="collapse-item" href="{{path('article_list',{'category':'beaute_bio'})}}">Beaute bio</a>
-          <a class="collapse-item" href="{{path('article_list',{'category':'cosmetique'})}}">Cosmetique</a>
-        </div>
-      </div>
-</li>
-{% elseif type is same as("art_malagasy")%}
-<li class="nav-item">
-      <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#art_malagasy" aria-expanded="true" aria-controls="collapsePages">
-        <i class="fas fa-fw fa-folder"></i>
-        <span>Art malagasy</span>
-      </a>
-      <div id="art_malagasy" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
-        <div class="bg-white py-2 collapse-inner rounded">
-          <a class="collapse-item" href="{{path('article_list',{'category':'bijoux_et_pierre_precieuse'})}}">Bijoux et pierre précieuse</a>
-          <a class="collapse-item" href="{{path('article_list',{'category':'accessoire_et_decoration'})}}">Accessoire et décoration</a>
-          <a class="collapse-item" href="{{path('article_list',{'category':'soie_raphie_sisal_broderie'})}}">Soie, Raphia, Sisal <br>et Broderies</a>
-        </div>
-      </div>
-</li>
-{% else %}
-#}
-   {{ menu_super_admin(type ,"ADMIN")}} 
-{#{% endif %}#}
-<li class="nav-item">
-      <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#images_et_son" aria-expanded="true" aria-controls="collapsePages">
-        <i class="fas fa-fw fa-folder"></i>
-        <span>Blog</span>
-      </a>
-      <div id="images_et_son" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
-        <div class="bg-white py-2 collapse-inner rounded">
-          <a class="collapse-item" href="{{path('listBlog')}}">Liste</a>
-          <a class="collapse-item" href="{{path('addBlog')}}">Ajout</a>
-        </div>
-</li>
+        <li class="nav-item">
+              <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#product" aria-expanded="true" aria-controls="collapsePages">
+                <i class="fas fa-fw fa-folder"></i>
+                <span>Produits</span>
+              </a>
+              <div id="product" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
+                <div class="bg-white py-2 collapse-inner rounded">
+                  <a class="collapse-item" href="{{path('listBlog')}}">Liste</a>
+                  <a class="collapse-item" href="{{path('addBlog')}}">Ajout</a>
+                </div>
+        </li>
+        <li class="nav-item">
+              <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#blogs" aria-expanded="true" aria-controls="collapsePages">
+                <i class="fas fa-fw fa-folder"></i>
+                <span>Blog</span>
+              </a>
+              <div id="blogs" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
+                <div class="bg-white py-2 collapse-inner rounded">
+                  <a class="collapse-item" href="{{path('listBlog')}}">Liste</a>
+                  <a class="collapse-item" href="{{path('addBlog')}}">Ajout</a>
+                </div>
+        </li>
 
 {% if boutique.getDetailOffer is not same as ('Gratuit') %}
 
@@ -159,6 +47,40 @@
 </li> 
 {% endif %}
 <li class="nav-item">
+        <a class="nav-link" href="{{ path('vote_list') }}">
+          <i class="fas fa-fw fa-tachometer-alt"></i>
+          <span>Vote</span></a>
+</li>
+<hr class="sidebar-divider">
+    <!-- Heading -->
+    <div class="sidebar-heading">
+      Gestion categories
+    </div>
+    <li class="nav-item">
+            <a class="nav-link" href="{{ path('category',{'type':'product'}) }}">
+              <i class="fas fa-fw fa-tachometer-alt"></i>
+              <span>Produits</span></a>
+    </li>
+       <li class="nav-item">
+            <a class="nav-link" href="{{ path('category',{'type':'blog'}) }}">
+              <i class="fas fa-fw fa-tachometer-alt"></i>
+              <span>Blog</span></a>
+    </li>
+       <li class="nav-item">
+            <a class="nav-link" href="{{ path('category',{'type':'video'}) }}">
+              <i class="fas fa-fw fa-tachometer-alt"></i>
+              <span>Videos</span></a>
+    </li>
+       <li class="nav-item">
+            <a class="nav-link" href="{{ path('category',{'type':'formation'}) }}">
+              <i class="fas fa-fw fa-tachometer-alt"></i>
+              <span>Formation</span></a>
+    </li>
+<hr class="sidebar-divider">
+  <div class="sidebar-heading">
+      utils
+  </div>
+<li class="nav-item">
       <a class="nav-link" href="{{ path('social_network_index')}}">
         <i class="fas fa-fw fa-tachometer-alt"></i>
         <span>Lien sur les réseaux sociaux</span></a>
@@ -168,22 +90,5 @@
         <i class="fas fa-fw fa-tachometer-alt"></i>
         <span>Références</span></a>
 </li>
-<li class="nav-item">
-        <a class="nav-link" href="{{ path('vote_list') }}">
-          <i class="fas fa-fw fa-tachometer-alt"></i>
-          <span>Vote</span></a>
-</li>
-{#
- <li class="nav-item">
-      <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseboutique" aria-expanded="true" aria-controls="collapseheader">
-        <i class="fas fa-fw fa-folder"></i>
-        <span>Boutique</span>
-      </a>
-      <div id="collapseboutique" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
-        <div class="bg-white py-2 collapse-inner rounded">
-          <a class="collapse-item" href="{{path('admin_registration')}}">Ajout</a>
-          <a class="collapse-item" href="{{ path('list_boutique') }}">Liste</a>
-        </div>
-      </div>
-    </li>
-#}
+
+
