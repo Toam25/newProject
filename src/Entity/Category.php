@@ -40,6 +40,11 @@ class Category
      * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="categories")
      */
     private $user;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=Boutique::class, inversedBy="categories")
+     */
+    private $boutique;
     public function __construct()
     {
         $this->created_at = new \DateTime();
@@ -107,6 +112,18 @@ class Category
     public function setUser(?User $user): self
     {
         $this->user = $user;
+
+        return $this;
+    }
+
+    public function getBoutique(): ?Boutique
+    {
+        return $this->boutique;
+    }
+
+    public function setBoutique(?Boutique $boutique): self
+    {
+        $this->boutique = $boutique;
 
         return $this;
     }

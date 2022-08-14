@@ -203,6 +203,11 @@ class Boutique
      */
     private $coverContrib;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Category::class, mappedBy="boutique")
+     */
+    private $categories;
+
     public function __construct()
     {
         $this->logo = "images_default/default_logo.png";
@@ -228,6 +233,7 @@ class Boutique
         $this->images = new ArrayCollection();
         $this->carts = new ArrayCollection();
         $this->votes = new ArrayCollection();
+        $this->categories = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -950,6 +956,36 @@ class Boutique
     public function setCoverContrib(string $coverContrib): self
     {
         $this->coverContrib = $coverContrib;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Category[]
+     */
+    public function getCategories(): Collection
+    {
+        return $this->categories;
+    }
+
+    public function addCategory(Category $category): self
+    {
+        if (!$this->categories->contains($category)) {
+            $this->categories[] = $category;
+            $category->setBoutique($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCategory(Category $category): self
+    {
+        if ($this->categories->removeElement($category)) {
+            // set the owning side to null (unless already changed)
+            if ($category->getBoutique() === $this) {
+                $category->setBoutique(null);
+            }
+        }
 
         return $this;
     }
