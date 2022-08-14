@@ -13,44 +13,51 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * @Route("superadmin/category")
+ * @Route("gestion/category")
  */
 class CategoryController extends AbstractController
 {
     /**
-     * @Route("/", name="category", methods={"GET","POST"})
+     * @Route("/{type}", name="category", methods={"GET","POST"})
      */
-    public function index(BoutiqueRepository $boutiqueRepository,Request $request, CategoryRepository $categoryRepository): Response
-    {    
-        $boutique = $boutiqueRepository->findOneBy(['user' => $this->getUser()]);
-        $listCategories=$this->category($categoryRepository->findAll());
-        $category = new Category();
-        $form = $this->createForm(CategoryType::class, $category);
-        $form->handleRequest($request);
-        
-        if ($form->isSubmitted()) {
-            $category->setUser($this->getUser());
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($category);
-            $entityManager->flush();
-            $array=[
-                'id'=>$category->getId(),
-                'parentId'=>$category->getParentId(),
-                'name'=>$category->getName(),
-                'type'=>$category->getType(),
-                'user'=>$category->getUser(),
-                'status'=>"success"
+    public function index(string $type, BoutiqueRepository $boutiqueRepository, Request $request, CategoryRepository $categoryRepository): Response
+    {
+        if ($type == "product" || $type == "blog" || $type == "video"  || $type == "formation") {
 
-            ];
-            return new  JsonResponse($array,Response::HTTP_OK);
+            $boutique = $boutiqueRepository->findOneBy(['user' => $this->getUser()]);
+            $listCategories = $this->category($categoryRepository->findBy(['boutique' => $boutique, 'type' => $type]));
+            $listCategories = $this->category($categoryRepository->findBy(['boutique' => $boutique, 'type' => $type]));
+            $category = new Category();
+            $form = $this->createForm(CategoryType::class, $category);
+            $form->handleRequest($request);
+
+            if ($form->isSubmitted()) {
+                $category->setUser($this->getUser());
+                $category->setBoutique($boutique);
+                $category->setType($type);
+                $entityManager = $this->getDoctrine()->getManager();
+                $entityManager->persist($category);
+                $entityManager->flush();
+                $array = [
+                    'id' => $category->getId(),
+                    'parentId' => $category->getParentId(),
+                    'name' => $category->getName(),
+                    'type' => $category->getType(),
+                    'user' => $category->getUser(),
+                    'status' => "success"
+
+                ];
+                return new  JsonResponse($array, Response::HTTP_OK);
+            }
+            return $this->render('admin/index.html.twig', [
+                'categories' => $listCategories,
+                'pages' => "category",
+                'boutique' => $boutique,
+                'form' => $form->createView()
+            ]);
+        } else {
+            $this->redirectToRoute('home');
         }
-        
-        return $this->render('admin/index.html.twig', [
-            'categories' => $listCategories,
-            'pages'=>"category",
-            'boutique' => $boutique,
-            'form'=>$form->createView()
-        ]);
     }
 
     /**
@@ -61,24 +68,23 @@ class CategoryController extends AbstractController
         $category = new Category();
         $form = $this->createForm(CategoryType::class, $category);
         $form->handleRequest($request);
-        
+
         if ($form->isSubmitted()) {
             $category->setUser($this->getUser());
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($category);
             $entityManager->flush();
-            $array=[
-                'id'=>$category->getId(),
-                'parentId'=>$category->getParentId(),
-                'name'=>$category->getName(),
-                'type'=>$category->getType(),
-                'user'=>$category->getUser(),
+            $array = [
+                'id' => $category->getId(),
+                'parentId' => $category->getParentId(),
+                'name' => $category->getName(),
+                'type' => $category->getType(),
+                'user' => $category->getUser(),
 
             ];
-            return new  JsonResponse(['status'=>"success",['response']=>$array],Response::HTTP_OK);
+            return new  JsonResponse(['status' => "success", ['response'] => $array], Response::HTTP_OK);
         }
-        return new  JsonResponse(['status'=>"error"],Response::HTTP_BAD_REQUEST);
-
+        return new  JsonResponse(['status' => "error"], Response::HTTP_BAD_REQUEST);
     }
 
     /**
@@ -116,7 +122,7 @@ class CategoryController extends AbstractController
      */
     public function delete(Request $request, Category $category): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$category->getId(), $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete' . $category->getId(), $request->request->get('_token'))) {
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->remove($category);
             $entityManager->flush();
@@ -124,17 +130,18 @@ class CategoryController extends AbstractController
 
         return $this->redirectToRoute('category_index');
     }
-    private function category(array $listCategories){
-         $list=[];
-         foreach ($listCategories as $category) {
-              $list[$category->getId()]=$category;
-         }
-         foreach ($listCategories as $key => $category) {
-             if($category->getParentId() !=0){
-                    $list[$category->getParentId()]->children[]=$category;
-                    unset($listCategories[$key]);
-             }
-         }
-         return $listCategories;
+    private function category(array $listCategories)
+    {
+        $list = [];
+        foreach ($listCategories as $category) {
+            $list[$category->getId()] = $category;
+        }
+        foreach ($listCategories as $key => $category) {
+            if ($category->getParentId() != 0) {
+                $list[$category->getParentId()]->children[] = $category;
+                unset($listCategories[$key]);
+            }
+        }
+        return $listCategories;
     }
 }
