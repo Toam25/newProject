@@ -4,10 +4,12 @@
    class="listcategory"
  >
  <p>{{ category.name }}</p>
-    <div>
+     <div>
           <button  data-parent = {{ category.id }} class="btn btn-warning edit_category"><i class="fa fa-edit"></i></button>
+   {% if category.parentid is same as(0)%}
           <button  data-parent = {{ category.id }} class="btn btn-primary add_category"><i class="fa fa-plus"></i></button>
-          <a href="{{ path('category_delete',{'id': category.id })}}" class="btn btn-danger delete_category"><i class="fa fa-trash"></i></a>
+    {% endif %}
+              <a href="{{ path('category_delete',{'id': category.id })}}" class="btn btn-danger delete_category"><i class="fa fa-trash"></i></a>
     </div>
  </div>
  
