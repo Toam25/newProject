@@ -1,0 +1,19 @@
+<div class="recherche_article_list_admin">
+   <form class="recherche_form_article_list d-none d-sm-inline-block form-inline">
+      <div class="input-group">
+        <input type="text" name="q" id="search_article_list"class="form-control bg-light border-0 small" placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2">
+        <input type="hidden" name="shop_id" id="id_boutique_list" value="{{boutique.id}}">
+        <div class="input-group-append">
+          <button class="btn btn-primary" type="submit">
+            <i class="fas fa-search fa-sm"></i>
+          </button>
+        </div>
+      </div>
+    </form>
+</div>
+<div>
+    {% include "loader.html.twig" %}
+    <div  id="container_all_list_article_admin" class="container_all_list_article_admin">
+        {% include "admin/dependencies/_list_articles.html.twig" with {"articles" : articles} only %}
+    </div>
+<div>

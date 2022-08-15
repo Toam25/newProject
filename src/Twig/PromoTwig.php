@@ -23,12 +23,11 @@ class PromoTwig extends AbstractExtension
         ];
     }
 
-    public function getPromo(string $promo, $price, $price_promo, $detail = null)
+    public function getPromo(string $promo, $price, $price_promo, $detail = null, $justPromotionValue = false)
     {
 
         $ispromo = "";
-
-        $old_price = $price;
+        $promoValue = "";
         if ($promo == "Vendu") {
             $ispromo = "Vendu";
         }
@@ -39,6 +38,7 @@ class PromoTwig extends AbstractExtension
         if ($promo == "Promo") {
             $price = $price != 0 ? $price : 1;
             $remise = ($price_promo - $price) / $price * 100;
+            $promoValue = round($remise, 2) . ' %';
             $ispromo = $promo . " " . round($remise, 2) . ' %';
         }
 
@@ -53,7 +53,9 @@ class PromoTwig extends AbstractExtension
         }
 
         return $this->twig->render('partials/promo.html.twig', [
-            'promo' => $promo
+            'promo' => $promo,
+            'isJusPromotionValue' => $justPromotionValue,
+            'isPromo' => $promoValue
         ]);
     }
 }

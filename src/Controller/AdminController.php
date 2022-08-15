@@ -24,6 +24,7 @@ use App\Service\CategoryOptionService;
 use App\Service\CategoryService;
 use App\Service\InsertFileServices;
 use App\Service\NotificationService;
+use App\Service\SearchService;
 use App\Service\TypeOptionMenuService;
 use App\Service\UtilsService;
 use Doctrine\ORM\EntityManagerInterface;
@@ -215,6 +216,64 @@ class AdminController extends AbstractController
             'add_button' => $categoryService->getAddButton($this->typeOptionMenuService->getTypeOptionMenu($boutique->getType(), $category), "btn btn-success ajout_article_ev"),
             'form' => $form->createView(),
             'category' => $sous_category
+        ]);
+    }
+
+    /**
+     * @Route("admin/new-articles",name="new-articles", methods={"GET"})
+     */
+
+    public function newArticle(ArticleRepository $articleRepository, Request $request, SearchService $search, BoutiqueRepository $boutiqueRepository)
+    {
+
+        $boutique = $boutiqueRepository->findOneBy(['user' => $this->getUser()]);
+        if ($request->isXmlHttpRequest()) {
+            return $this->render('admin/dependencies/_list_articles.html.twig', [
+                'articles' => $search->getResultSearch($request)
+            ]);
+        }
+        return $this->render('admin/index.html.twig', [
+            'pages' => 'list_articles',
+            'articles' => $articleRepository->findBy(['boutique' => $boutique]),
+            'boutique' => $boutique,
+        ]);
+    }
+    /**
+     * @Route("admin/edit-articles/{id}",name="edit-articles", methods={"GET"})
+     */
+
+    public function editArticle(ArticleRepository $articleRepository, Request $request, SearchService $search, BoutiqueRepository $boutiqueRepository)
+    {
+
+        $boutique = $boutiqueRepository->findOneBy(['user' => $this->getUser()]);
+        if ($request->isXmlHttpRequest()) {
+            return $this->render('admin/dependencies/_list_articles.html.twig', [
+                'articles' => $search->getResultSearch($request)
+            ]);
+        }
+        return $this->render('admin/index.html.twig', [
+            'pages' => 'list_articles',
+            'articles' => $articleRepository->findBy(['boutique' => $boutique]),
+            'boutique' => $boutique,
+        ]);
+    }
+    /**
+     * @Route("admin/list-articles",name="list-articles", methods={"GET"})
+     */
+
+    public function listArticle(ArticleRepository $articleRepository, Request $request, SearchService $search, BoutiqueRepository $boutiqueRepository)
+    {
+
+        $boutique = $boutiqueRepository->findOneBy(['user' => $this->getUser()]);
+        if ($request->isXmlHttpRequest()) {
+            return $this->render('admin/dependencies/_list_articles.html.twig', [
+                'articles' => $search->getResultSearch($request)
+            ]);
+        }
+        return $this->render('admin/index.html.twig', [
+            'pages' => 'list_articles',
+            'articles' => $articleRepository->findBy(['boutique' => $boutique]),
+            'boutique' => $boutique,
         ]);
     }
     /**

@@ -1,1 +1,5 @@
-{{ promo | raw }}
+{% if isJusPromotionValue is same as(false)%}
+ {{ promo | raw }}
+{% else %}
+   {{isPromo}}
+{% endif %}

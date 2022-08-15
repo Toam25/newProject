@@ -22,12 +22,12 @@ class ArticleController extends AbstractController
     /**
      * @Route("/admin/list", name="article_liste", methods={"GET"})
      */
-    public function index(ArticleRepository $articleRepository,BoutiqueRepository $boutiqueRepository): Response
+    public function index(ArticleRepository $articleRepository, BoutiqueRepository $boutiqueRepository): Response
     {
         return $this->render('admin/index.html.twig', [
             'articles' => $articleRepository->findAll(),
             'pages' => 'list',
-            'boutique' => $boutiqueRepository->findOneBy(['user'=>$this->getUser()])
+            'boutique' => $boutiqueRepository->findOneBy(['user' => $this->getUser()])
         ]);
     }
 
@@ -74,32 +74,32 @@ class ArticleController extends AbstractController
     /**
      * @Route("/admin/article/{id}", name="article_show", methods={"GET","POST"})
      */
-    public function show($id,Request $request,InsertFileServices $insertFileServices, ArticleRepository $articleRepository, BoutiqueRepository $boutiqueRepository): Response
-    {   
-        $boutique = $boutiqueRepository->findOneBy(['user'=>$this->getUser()]);
-        $article= $articleRepository->findOneArticleByBoutiqueWithImage($id, $boutique);
-        $form=$this->createForm(ArticleType::class,$article);
+    public function show($id, Request $request, InsertFileServices $insertFileServices, ArticleRepository $articleRepository, BoutiqueRepository $boutiqueRepository): Response
+    {
+        $boutique = $boutiqueRepository->findOneBy(['user' => $this->getUser()]);
+        $article = $articleRepository->findOneArticleByBoutiqueWithImage($id, $boutique);
+        $form = $this->createForm(ArticleType::class, $article);
         $form->handleRequest($request);
-        if($form->isSubmitted()){
-            if($form->get('images')->getData()!=null){
-                $images=$form->get('images')->getData();
-                $newfile = $insertFileServices->insertFile($images[0],['png','jpeg','jpg','gif']);
-                $image=$article->getImages()[0];
-                $file=$image->getName();
+        if ($form->isSubmitted()) {
+            if ($form->get('images')->getData() != null) {
+                $images = $form->get('images')->getData();
+                $newfile = $insertFileServices->insertFile($images[0], ['png', 'jpeg', 'jpg', 'gif']);
+                $image = $article->getImages()[0];
+                $file = $image->getName();
                 $image->setName($newfile);
-                unlink('images/'.$file);
+                unlink('images/' . $file);
                 $this->getDoctrine()->getManager()->persist($image);
             }
             $this->getDoctrine()->getManager()->flush();
 
-            return new JsonResponse(['status'=>'success'],Response::HTTP_OK);
+            return new JsonResponse(['status' => 'success'], Response::HTTP_OK);
         }
         return $this->render('admin/index.html.twig', [
             'article' => $article,
             'form' => $form->createView(),
             'pages' => 'detail_article',
-            'article'=>$article,
-            'boutique'=>$boutique
+            'article' => $article,
+            'boutique' => $boutique
 
         ]);
     }
@@ -107,7 +107,7 @@ class ArticleController extends AbstractController
     /**
      * @Route("/admin/article/edit/{id}", name="article_edit", methods={"GET","POST"})
      */
-    public function edit(Request $request, Article $article,BoutiqueRepository $boutiqueRepository ): Response
+    public function edit(Request $request, Article $article, BoutiqueRepository $boutiqueRepository): Response
     {
         $form = $this->createForm(ArticleType::class, $article);
         $form->handleRequest($request);
@@ -117,12 +117,12 @@ class ArticleController extends AbstractController
 
             return $this->redirectToRoute('article_liste');
         }
-        
+
         return $this->render('admin/index.html.twig', [
             'article' => $article,
             'form' => $form->createView(),
             'pages' => 'edit',
-            'boutique' => $boutiqueRepository->findOneBy(['user'=>$this->getUser()])
+            'boutique' => $boutiqueRepository->findOneBy(['user' => $this->getUser()])
         ]);
     }
 
@@ -139,14 +139,17 @@ class ArticleController extends AbstractController
             $entityManager = $this->getDoctrine()->getManager();
             foreach ($images as $image) {
                 $entityManager->remove($image);
-                unlink('images/' . $image->getName());
+                try {
+                    unlink('images/' . $image->getName());
+                } catch (\Throwable $th) {
+                    //throw $th;
+                }
             }
             $entityManager->remove($article);
             $entityManager->flush();
-            return new JsonResponse(['status'=>'success'],Response::HTTP_OK);
-        }
-        else{
-            return new JsonResponse(['status'=>'error'],Response::HTTP_UNAUTHORIZED);
+            return new JsonResponse(['status' => 'success'], Response::HTTP_OK);
+        } else {
+            return new JsonResponse(['status' => 'error'], Response::HTTP_UNAUTHORIZED);
         }
     }
 }

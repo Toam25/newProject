@@ -21,7 +21,9 @@
     {# <link href="{{ asset('css/contact.css') }}" rel="stylesheet" type="text/css">
     <link href="{{ asset('css/notificationandmessage.css') }}" rel="stylesheet" type="text/css"> #}
     <link href="{{ asset('css/ck_image.css') }}" rel="stylesheet" type="text/css">
+    <link href="{{ asset('css/loader.css') }}" rel="stylesheet" type="text/css">
     <link rel="icon" type="image/png" href="{{asset('images/'~boutique.logo)}}">
+
   
 {% endblock %}
 {% block body %}
@@ -186,15 +188,14 @@
              {% include ("admin/dependencies/home.html.twig") %}
              {% include "admin/dependencies/add_header_modal.html.twig" %}
              {% include "admin/dependencies/view_header_modal.html.twig" %}
+        {% else %}
+             {% include "admin/dependencies/"~ pages ~".html.twig" %}
         {% endif %}
          
         </div>
         <!-- /.container-fluid -->
 
       </div>
-      <!-- End of Main Content -->
-
-      <!-- Footer -->
        {% include("admin/footer.html.twig") %}
       <!-- End of Footer -->
 

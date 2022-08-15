@@ -4,6 +4,33 @@ $(function () {
   var $category;
 
 
+  //search article
+  $('.recherche_form_article_list').on('submit', function (e) {
+    e.preventDefault();
+    let q = $('#search_article_list').val();
+    let shop_id = $('#id_boutique_list').val();
+    $.ajax({
+      type: 'GET',
+      url: '/admin/list-articles',
+      dataType: 'html',
+      data: {
+        'q': q,
+        'shop_id': shop_id
+      },
+      beforeSend: () => {
+        $('#spinner').addClass('showLoader');
+      },
+      success: (data) => {
+        $('#container_all_list_article_admin').html(data);
+        $('#spinner').removeClass('showLoader');
+      },
+      error: () => {
+        $('.btn-submit').prop('disabled', false)
+        $('#spinner').removeClass('showLoader');
+      }
+    });
+
+  })
   // delete page 
   $('body').on('click', '.delete_page', function (e) {
     e.preventDefault();
@@ -788,7 +815,8 @@ $(function () {
 
   $('body').on('click', '.article_delete', function (e) {
     e.preventDefault();
-    url = '/admin/article/delete/' + $(this).data('id');
+    let id = $(this).data('id');
+    url = '/admin/article/delete/' + id;
     Lobibox.confirm({
       msg: 'Voulez vous supprimer?',
       buttons: {
@@ -819,7 +847,7 @@ $(function () {
             },
             success: function (data) {
               toastr.success('Supprimer avec success');
-
+              $('#article_container_list_' + id).remove()
             },
             error: function () {
               toastr.error('Il y a un erreur');

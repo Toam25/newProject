@@ -44,6 +44,8 @@ class ArticleRepository extends ServiceEntityRepository
                 ->orWhere('a.category LIKE :q')
                 ->orWhere('a.wordKey LIKE :q')
                 ->orWhere('a.description LIKE :q')
+                ->orWhere('a.price LIKE :q')
+                ->orWhere('a.type LIKE :q')
                 ->setParameter('q', '%' . $data->q . '%');
         }
         if ($data->category) {
@@ -66,7 +68,7 @@ class ArticleRepository extends ServiceEntityRepository
             $query->andWhere('b.id = :boutiqueId')
                 ->setParameter('boutiqueId', $data->boutique_id);
         }
-        if(isset($data->type)) {
+        if (isset($data->type)) {
             $query->andWhere('a.type In (:type)')
                 ->setParameter('type', $data->type);
         }
@@ -91,52 +93,55 @@ class ArticleRepository extends ServiceEntityRepository
         }
         return [];
     }
-    public function findOneArticleByBoutiqueWithImage(int $id, Boutique $boutique=null){
-        $query= $this->createQueryBuilder('a')
-        ->select('a', 'b', 'v', 'i', 'c','u')
-        ->leftJoin('a.votes', 'v')
-        ->leftJoin('v.user', 'u')
-        ->leftJoin('a.boutique', 'b')
-        ->leftJoin('a.images', 'i')
-        ->leftJoin('a.carts', 'c')
-        ->andwhere('a.id = :id')
-        ->setParameter('id', $id);
-    if($boutique != null){
-       $query->andwhere('a.boutique = :boutiqueid')
-            ->setParameter('boutiqueid', $boutique->getId());
-    }
-        
-    return  $query ->getQuery()->getOneOrNullResult();
-}
-public function findAllArticleBySousCategory(string $category, string $sous_category){
-    $query= $this->createQueryBuilder('a')
-    ->select('a', 'b', 'v', 'i', 'c','u')
-    ->leftJoin('a.votes', 'v')
-    ->leftJoin('v.user', 'u')
-    ->leftJoin('a.boutique', 'b')
-    ->leftJoin('a.images', 'i')
-    ->leftJoin('a.carts', 'c')
-    ->andwhere('a.sous_category = :sous_category')
-    ->andwhere('a.category = :category')
-    ->setParameter('sous_category', $sous_category)
-    ->setParameter('category', $category);
-    return  $query ->getQuery()->getResult();
-}
+    public function findOneArticleByBoutiqueWithImage(int $id, Boutique $boutique = null)
+    {
+        $query = $this->createQueryBuilder('a')
+            ->select('a', 'b', 'v', 'i', 'c', 'u')
+            ->leftJoin('a.votes', 'v')
+            ->leftJoin('v.user', 'u')
+            ->leftJoin('a.boutique', 'b')
+            ->leftJoin('a.images', 'i')
+            ->leftJoin('a.carts', 'c')
+            ->andwhere('a.id = :id')
+            ->setParameter('id', $id);
+        if ($boutique != null) {
+            $query->andwhere('a.boutique = :boutiqueid')
+                ->setParameter('boutiqueid', $boutique->getId());
+        }
 
-public function findAllArticleSliderByBoutique($boutique){
-     $query= $this->createQueryBuilder('a')
-    ->select('a', 'b', 'v', 'i', 'c','u')
-    ->leftJoin('a.votes', 'v')
-    ->leftJoin('v.user', 'u')
-    ->leftJoin('a.boutique', 'b')
-    ->leftJoin('a.images', 'i')
-    ->leftJoin('a.carts', 'c')
-    ->andwhere('a.boutique = :boutiqueId')
-    ->andwhere('a.slide = :slide')
-    ->setParameter('boutiqueId', $boutique->getId())
-    ->setParameter('slide', 1);
-    return  $query ->getQuery()->getResult();
-}
+        return  $query->getQuery()->getOneOrNullResult();
+    }
+    public function findAllArticleBySousCategory(string $category, string $sous_category)
+    {
+        $query = $this->createQueryBuilder('a')
+            ->select('a', 'b', 'v', 'i', 'c', 'u')
+            ->leftJoin('a.votes', 'v')
+            ->leftJoin('v.user', 'u')
+            ->leftJoin('a.boutique', 'b')
+            ->leftJoin('a.images', 'i')
+            ->leftJoin('a.carts', 'c')
+            ->andwhere('a.sous_category = :sous_category')
+            ->andwhere('a.category = :category')
+            ->setParameter('sous_category', $sous_category)
+            ->setParameter('category', $category);
+        return  $query->getQuery()->getResult();
+    }
+
+    public function findAllArticleSliderByBoutique($boutique)
+    {
+        $query = $this->createQueryBuilder('a')
+            ->select('a', 'b', 'v', 'i', 'c', 'u')
+            ->leftJoin('a.votes', 'v')
+            ->leftJoin('v.user', 'u')
+            ->leftJoin('a.boutique', 'b')
+            ->leftJoin('a.images', 'i')
+            ->leftJoin('a.carts', 'c')
+            ->andwhere('a.boutique = :boutiqueId')
+            ->andwhere('a.slide = :slide')
+            ->setParameter('boutiqueId', $boutique->getId())
+            ->setParameter('slide', 1);
+        return  $query->getQuery()->getResult();
+    }
 
 
 
