@@ -220,7 +220,7 @@ class AdminController extends AbstractController
     }
 
     /**
-     * @Route("admin/new-articles",name="new-articles", methods={"GET"})
+     * @Route("admin/list-articles",name="list-articles", methods={"GET"})
      */
 
     public function newArticle(ArticleRepository $articleRepository, Request $request, SearchService $search, BoutiqueRepository $boutiqueRepository)

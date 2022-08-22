@@ -48,8 +48,8 @@ class Category
     public function __construct()
     {
         $this->created_at = new \DateTime();
-        $this->parent_id=0;
-        $this->type= "";
+        $this->parent_id = 0;
+        $this->type = "";
     }
     public function getId(): ?int
     {
@@ -126,5 +126,9 @@ class Category
         $this->boutique = $boutique;
 
         return $this;
+    }
+    public function __toString()
+    {
+        return $this->getName();
     }
 }

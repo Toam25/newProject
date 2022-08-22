@@ -7,6 +7,7 @@ use App\Entity\User;
 use App\Repository\ArticleRepository;
 use App\Repository\BoutiqueRepository;
 use Doctrine\ORM\Query\AST\Functions\LowerFunction;
+use phpDocumentor\Reflection\Types\Boolean;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class CategoryService
@@ -17,17 +18,47 @@ class CategoryService
    private $typeBoutique;
    private $utilsService;
 
-   public function __construct(ArticleRepository $articleRepository,UtilsService $utilsService)
+   public function __construct(ArticleRepository $articleRepository, UtilsService $utilsService)
    {
       $this->articleRepository = $articleRepository;
       $this->typeBoutique = "high-tech";
-      $this->utilsService=$utilsService;
+      $this->utilsService = $utilsService;
+   }
+   function  getCategoryFormat(array $listCategories, $simple = false)
+   {
+      $list = [];
+      if ($simple == false) {
+         foreach ($listCategories as $category) {
+            $list[$category->getId()] = $category;
+         }
+         foreach ($listCategories as $key => $category) {
+            if ($category->getParentId() != 0) {
+               $list[$category->getParentId()]->children[] = $category;
+               unset($listCategories[$key]);
+            }
+         }
+      } else {
+
+         foreach ($listCategories as $category) {
+            $list[$category->getId()] = $category;
+         }
+         dump($list);
+         foreach ($listCategories as $key => $category) {
+            if ($category->getParentId() != 0) {
+               $list[$category->getParentId()]->children = $category;
+               unset($listCategories[$key]);
+            }
+         }
+      }
+
+      return $listCategories;
    }
 
-   public function getAddButton(array $options,string $class){
-      $button ="";
+   public function getAddButton(array $options, string $class)
+   {
+      $button = "";
       foreach ($options as $option) {
-         $button.='<button id="' .$this->utilsService->getSlug($option['name']). '"class="' . $class . '">'.$option['name'].'</button>';
+         $button .= '<button id="' . $this->utilsService->getSlug($option['name']) . '"class="' . $class . '">' . $option['name'] . '</button>';
       }
       return $button;
    }
@@ -218,7 +249,7 @@ class CategoryService
       return $html;
    }
    private  $type = [
-      'Chemise', 'Jeans','Outils de jardin','Outillage à main', 'Outillage éléctroportatif', 'Machines equipements', 'Eléctricité', 'Quincallerie','Outils à main', 'Outils divers', 'Outils multifonctions', 'Outils éléctriques', 'Accessoires', 'Electricité', 'Pièces détachées','Barettes', 'Bandeau', 'T-shirts', 'Polos', 'Pulls', 'Gilets', 'Sweats-Shirts', 'Manteaux', 'Costumes', 'Vestes', 'Pantalons', 'Short', 'Bermudas', 'Tenues de Sports', 'Vetement de nuit', 'Impermeable', 'Maillots de Bains', 'Chaussettes', 'Ensemble', 'Jogging', 'Blousons', 'Derbies', 'Chaussures de ville', 'Slippers', 'Derbie', 'Basket', 'Bottes', 'Boots', 'Chaussons', 'Chaussures bateau', 'Chaussures de Securité', 'Chaussures de sports', 'Espadrilles', 'Mocassins', 'Mulle', 'Sabot', ' Sandales', 'Tongs', 'Caleço', 'Boxeur', 'Slips', 'Shorty', 'Jock strap', 'Chaussette', 'Pantie', 'Robe de ceremonie', 'Robe de mariée', 'Robe de fiançaille', 'Cardigans', 'Body', 'Blouse', 'Débardeur', 'Tailleurs ', 'Jupes', 'Salopettes', 'Short et Bermudas', 'Leggins', 'Robes', 'Combi-short', 'Collants', 'Vêtements de Grossess', 'Vêtement de nuit', 'Vêtement de Sports', 'Imperméable', 'Maillots de Bains', 'Ballerines', 'Baskets', 'Botte', 'Dentelle côté', 'Tanga', 'Boxer',  'Accessoires', 'Bas', 'Jarretières', 'Bodys', 'Bustiers', 'Corsets', 'Caracos', 'Combinaisons', 'Jupons', 'Culottes', 'Shorties', 'Strings', 'Ensembles de Lingeries', 'Lingeries', 'Nuisettes', 'Deshabillés', 'Vêtements Thérmiques', 'Soutiens Gorges', 'Pantalon', 'Cardigans', 'Jean', 'Bermuda', 'Sous vêtements', 'Joggins', 'Salopette', 'Sweat-Shirt', 'Tailleur', 'Escarpins', 'Babies', 'Baskets mode', 'Couverture Bébé', 'Peluches', 'Veste', 'Salopettes', 'Combinaison', 'Sweat-Shirt', 'Grenoullière', 'Pyjamas', 'Couverture Bébé', 'Botillon', 'Sac à main', 'Sac à dos', 'Sac de voyage', 'Sac bandoulière', 'Portefeuilles et porte-cartes', 'Cabas', 'Pochettes', 'Sacs portes épaule', 'Alliances', 'Montre', 'Parure de bague', 'Boutons de manchette', 'Bagues', 'Pendentifs', 'Boucles d\'oreilles', 'Bracelet', 'Broches', 'Colliers', 'Sautoir', 'Parures de bijoux', 'Chaîne', 'Citrine', 'Quartz', 'Jade', 'Rubis', 'Diamant', 'Eméraude', 'Vannerie', 'Poterie', 'Miniature', 'Fruits / corbeilles à pain', 'Sets de table en bambou', 'Boîte à épices', 'Cadre photo', 'Support de pot de fleur', 'Pots de fleur', 'Décoration murale', 'Objet design fer forge', 'Embout', 'Montre mural en fer forgé', 'Bougeoir', 'Photophore', 'Applique & Luminaires', 'Cornes de zébu', 'Literie', 'Penderie', 'Table', 'Porte cintre', 'Chaise', 'Table avec chaise', 'Range chaussures', 'Sacs', 'Panier', 'Chapeaux', 'Nappe', 'Smoc', 'Couvre lit', 'Richelieu', 'Crochet', 'Châle', 'Malabary', 'Lambamena', 'Sacs', 'Panier', 'Chapeaux', 'Noeud', 'Serre tête', 'Pince à cheveux', 'Brousse', 'Elastique de cheveux', 'bandeau', 'Boucle d’oreilles', 'Colliers', 'Pendentif', 'Gourmettes', 'Alliances', 'Boutons de manchette', 'Bracelets', 'Bague', 'Parure de bague', 'Chaine', 'Sautoir', 'Montres', 'Sacs bowling', 'Ceinture', 'Gants', 'Casquettes', 'Echarpes', 'Foulards', 'Bonnets', 'Headband', 'Cravates', 'Lunettes', 'Petite Flowerbox', 'Moyenne Fowerbox', 'Grande Flowerbox', 'Flowerbox personnalisée', 'Eaux de toilettes', 'Déodorants homme', 'Déodorants femme', 'Parfums homme', 'Parfum femme', 'Eaux de Cologne', 'Huile essentielle', 'Huile végétale', 'Huile massage', 'Produits naturels amincissant', 'Crayons et eyeliners', 'Mascaras', 'Ombres à paupières', 'Palettes et coffrets', 'Blush et poudres', 'Fonds de teint et BB crème', 'Rouges à lèvres', 'Primers et correcteurs', 'pilateurs sourcils', 'Dépilatoires', 'Accessoires maquillage', 'Anti-rides et anti-âges', 'Masques et gommages', 'Nettoyants et démaquillants', 'Purifiants et matifiants', 'Soins des lèvres et des yeux', 'Crèmes', 'Lotions', 'Baume', 'Emulsions', 'Huiles pour la peau', 'Produits de bronzage', 'produits pour le rasage', 'Produits d\’hygiène dentaire et buccale', 'Produits d’hygiène  intime externe', 'Bain & douche', 'Savons de toilette', 'Soins hydratants et nourrissants', 'Base protectrice Clean', 'Vernis', 'DDissolvant', 'Faux ongles', 'Lime', 'Pack de produits', 'Vaporisateurs', 'Fixateurs', 'Shampooings', 'Après-shampooings', 'Masques', 'Gel', 'Colorants', 'Produit pour l\'ondulation', 'Produit de coiffage', 'Huiles', 'Soins traitements', 'Coques', 'Batteries, Batteries externes', 'Ecouteurs bleutooth', 'Enceintes bleutooth', 'Chargeurs', 'Oreillette bleutooth', 'Kits mains libres', 'Protection ecran', 'Carte mémoire', 'Téléphone fixe', 'Téléphone avec touche', 'Smartphone', 'I-phone', 'TV LED-LCD', 'TV 4K-UHD', 'Support TV', 'TV connectée', 'Smart TV', 'HD Ready', 'Full HD', '4K/UHD', 'Accessoires', 'Casque auto', 'Enceintes bleutooth, MP3, MP4', 'Radio', 'Dictaphone', 'Hifi', 'Bare de son', 'Flash photo', 'Filtre', 'Caméscope caméra', 'Objectif reflex', 'Objectif caméra', 'GoPro', 'Autre', 'Câble et connectique', 'Accessoires audio et video', 'Accessoires photos', 'Accessoires caméra', 'Ordinateurs de bureau', 'ordinateurs portables', 'Tablette', 'Univers gaming', 'Composants - périférique', 'Stockage', 'Réseaux', 'Hardware', 'Software', 'Imprimante jet d\'encre', 'Imprimante laser', 'Scaner', 'Cartouches', 'Toners', 'Motorisation', 'portails et volets', 'Accessoires', 'Interphone video', 'Alerme-Détecteur', 'Caméra de surveillance', 'Sécurité  incendie', 'Comprime', 'Gellule', 'Liquide', 'Injectable', 'Visage', 'Corps', 'Cheveux', 'Autres', 'Bébé', 'Enfant', 'Femme enceinte', 'adulte', 'Rectale', 'Plantes médicinales', 'Produits de santé naturels', 'Complément alimentaire', 'Argile verte', 'Huile d\'amande douce ', 'Huile d\'arachide', 'Femme enceinte', 'Huile d\'argan', 'Huile d\'avocat', 'Huile de baobab', 'Huile de calendula', 'Huile de cameline', 'Huile de coco', 'Huile de colza', 'Huile de germe de blé', 'Beurre de Karité', 'Huile de Moutarde', 'Huile d\'Olive', 'Huile de Palme', 'Huile de Ricin', 'Huile de Tournesol', 'Huile de Sésame', 'Huile de Lorenzo', 'Huile de poisson'
+      'Chemise', 'Jeans', 'Outils de jardin', 'Outillage à main', 'Outillage éléctroportatif', 'Machines equipements', 'Eléctricité', 'Quincallerie', 'Outils à main', 'Outils divers', 'Outils multifonctions', 'Outils éléctriques', 'Accessoires', 'Electricité', 'Pièces détachées', 'Barettes', 'Bandeau', 'T-shirts', 'Polos', 'Pulls', 'Gilets', 'Sweats-Shirts', 'Manteaux', 'Costumes', 'Vestes', 'Pantalons', 'Short', 'Bermudas', 'Tenues de Sports', 'Vetement de nuit', 'Impermeable', 'Maillots de Bains', 'Chaussettes', 'Ensemble', 'Jogging', 'Blousons', 'Derbies', 'Chaussures de ville', 'Slippers', 'Derbie', 'Basket', 'Bottes', 'Boots', 'Chaussons', 'Chaussures bateau', 'Chaussures de Securité', 'Chaussures de sports', 'Espadrilles', 'Mocassins', 'Mulle', 'Sabot', ' Sandales', 'Tongs', 'Caleço', 'Boxeur', 'Slips', 'Shorty', 'Jock strap', 'Chaussette', 'Pantie', 'Robe de ceremonie', 'Robe de mariée', 'Robe de fiançaille', 'Cardigans', 'Body', 'Blouse', 'Débardeur', 'Tailleurs ', 'Jupes', 'Salopettes', 'Short et Bermudas', 'Leggins', 'Robes', 'Combi-short', 'Collants', 'Vêtements de Grossess', 'Vêtement de nuit', 'Vêtement de Sports', 'Imperméable', 'Maillots de Bains', 'Ballerines', 'Baskets', 'Botte', 'Dentelle côté', 'Tanga', 'Boxer',  'Accessoires', 'Bas', 'Jarretières', 'Bodys', 'Bustiers', 'Corsets', 'Caracos', 'Combinaisons', 'Jupons', 'Culottes', 'Shorties', 'Strings', 'Ensembles de Lingeries', 'Lingeries', 'Nuisettes', 'Deshabillés', 'Vêtements Thérmiques', 'Soutiens Gorges', 'Pantalon', 'Cardigans', 'Jean', 'Bermuda', 'Sous vêtements', 'Joggins', 'Salopette', 'Sweat-Shirt', 'Tailleur', 'Escarpins', 'Babies', 'Baskets mode', 'Couverture Bébé', 'Peluches', 'Veste', 'Salopettes', 'Combinaison', 'Sweat-Shirt', 'Grenoullière', 'Pyjamas', 'Couverture Bébé', 'Botillon', 'Sac à main', 'Sac à dos', 'Sac de voyage', 'Sac bandoulière', 'Portefeuilles et porte-cartes', 'Cabas', 'Pochettes', 'Sacs portes épaule', 'Alliances', 'Montre', 'Parure de bague', 'Boutons de manchette', 'Bagues', 'Pendentifs', 'Boucles d\'oreilles', 'Bracelet', 'Broches', 'Colliers', 'Sautoir', 'Parures de bijoux', 'Chaîne', 'Citrine', 'Quartz', 'Jade', 'Rubis', 'Diamant', 'Eméraude', 'Vannerie', 'Poterie', 'Miniature', 'Fruits / corbeilles à pain', 'Sets de table en bambou', 'Boîte à épices', 'Cadre photo', 'Support de pot de fleur', 'Pots de fleur', 'Décoration murale', 'Objet design fer forge', 'Embout', 'Montre mural en fer forgé', 'Bougeoir', 'Photophore', 'Applique & Luminaires', 'Cornes de zébu', 'Literie', 'Penderie', 'Table', 'Porte cintre', 'Chaise', 'Table avec chaise', 'Range chaussures', 'Sacs', 'Panier', 'Chapeaux', 'Nappe', 'Smoc', 'Couvre lit', 'Richelieu', 'Crochet', 'Châle', 'Malabary', 'Lambamena', 'Sacs', 'Panier', 'Chapeaux', 'Noeud', 'Serre tête', 'Pince à cheveux', 'Brousse', 'Elastique de cheveux', 'bandeau', 'Boucle d’oreilles', 'Colliers', 'Pendentif', 'Gourmettes', 'Alliances', 'Boutons de manchette', 'Bracelets', 'Bague', 'Parure de bague', 'Chaine', 'Sautoir', 'Montres', 'Sacs bowling', 'Ceinture', 'Gants', 'Casquettes', 'Echarpes', 'Foulards', 'Bonnets', 'Headband', 'Cravates', 'Lunettes', 'Petite Flowerbox', 'Moyenne Fowerbox', 'Grande Flowerbox', 'Flowerbox personnalisée', 'Eaux de toilettes', 'Déodorants homme', 'Déodorants femme', 'Parfums homme', 'Parfum femme', 'Eaux de Cologne', 'Huile essentielle', 'Huile végétale', 'Huile massage', 'Produits naturels amincissant', 'Crayons et eyeliners', 'Mascaras', 'Ombres à paupières', 'Palettes et coffrets', 'Blush et poudres', 'Fonds de teint et BB crème', 'Rouges à lèvres', 'Primers et correcteurs', 'pilateurs sourcils', 'Dépilatoires', 'Accessoires maquillage', 'Anti-rides et anti-âges', 'Masques et gommages', 'Nettoyants et démaquillants', 'Purifiants et matifiants', 'Soins des lèvres et des yeux', 'Crèmes', 'Lotions', 'Baume', 'Emulsions', 'Huiles pour la peau', 'Produits de bronzage', 'produits pour le rasage', 'Produits d\’hygiène dentaire et buccale', 'Produits d’hygiène  intime externe', 'Bain & douche', 'Savons de toilette', 'Soins hydratants et nourrissants', 'Base protectrice Clean', 'Vernis', 'DDissolvant', 'Faux ongles', 'Lime', 'Pack de produits', 'Vaporisateurs', 'Fixateurs', 'Shampooings', 'Après-shampooings', 'Masques', 'Gel', 'Colorants', 'Produit pour l\'ondulation', 'Produit de coiffage', 'Huiles', 'Soins traitements', 'Coques', 'Batteries, Batteries externes', 'Ecouteurs bleutooth', 'Enceintes bleutooth', 'Chargeurs', 'Oreillette bleutooth', 'Kits mains libres', 'Protection ecran', 'Carte mémoire', 'Téléphone fixe', 'Téléphone avec touche', 'Smartphone', 'I-phone', 'TV LED-LCD', 'TV 4K-UHD', 'Support TV', 'TV connectée', 'Smart TV', 'HD Ready', 'Full HD', '4K/UHD', 'Accessoires', 'Casque auto', 'Enceintes bleutooth, MP3, MP4', 'Radio', 'Dictaphone', 'Hifi', 'Bare de son', 'Flash photo', 'Filtre', 'Caméscope caméra', 'Objectif reflex', 'Objectif caméra', 'GoPro', 'Autre', 'Câble et connectique', 'Accessoires audio et video', 'Accessoires photos', 'Accessoires caméra', 'Ordinateurs de bureau', 'ordinateurs portables', 'Tablette', 'Univers gaming', 'Composants - périférique', 'Stockage', 'Réseaux', 'Hardware', 'Software', 'Imprimante jet d\'encre', 'Imprimante laser', 'Scaner', 'Cartouches', 'Toners', 'Motorisation', 'portails et volets', 'Accessoires', 'Interphone video', 'Alerme-Détecteur', 'Caméra de surveillance', 'Sécurité  incendie', 'Comprime', 'Gellule', 'Liquide', 'Injectable', 'Visage', 'Corps', 'Cheveux', 'Autres', 'Bébé', 'Enfant', 'Femme enceinte', 'adulte', 'Rectale', 'Plantes médicinales', 'Produits de santé naturels', 'Complément alimentaire', 'Argile verte', 'Huile d\'amande douce ', 'Huile d\'arachide', 'Femme enceinte', 'Huile d\'argan', 'Huile d\'avocat', 'Huile de baobab', 'Huile de calendula', 'Huile de cameline', 'Huile de coco', 'Huile de colza', 'Huile de germe de blé', 'Beurre de Karité', 'Huile de Moutarde', 'Huile d\'Olive', 'Huile de Palme', 'Huile de Ricin', 'Huile de Tournesol', 'Huile de Sésame', 'Huile de Lorenzo', 'Huile de poisson'
    ];
 
    public function getTypeArticle(): ?array
@@ -231,136 +262,137 @@ class CategoryService
       return $output;
    }
 
-   public function getNameMenu($categorie){
-      
+   public function getNameMenu($categorie)
+   {
+
       switch ($categorie) {
          case 'outils_de_jardin':
-             return 'Outils de jardin';
-             break;
+            return 'Outils de jardin';
+            break;
          case 'outillages':
-             return 'Outillages';
-             break;
+            return 'Outillages';
+            break;
          case 'outillages_pro':
-             return 'Outillages pro';
-             break;
+            return 'Outillages pro';
+            break;
          case 'habillement_homme':
-             return 'Habillement homme';
-             break;
+            return 'Habillement homme';
+            break;
          case 'habillement_femme':
-             return 'Habillement femme';
-             break;
+            return 'Habillement femme';
+            break;
          case 'habillement_enfant':
-             return 'Habillement enfant';
-             break;
+            return 'Habillement enfant';
+            break;
          case 'habillement_bebe':
-             return 'Habillement bébé';
-             break;
+            return 'Habillement bébé';
+            break;
          case 'acc_parfums':
-             return 'Parfums';
-             break;
+            return 'Parfums';
+            break;
          case 'acc_beaute_bio':
-             return 'Beauté_bio';
+            return 'Beauté_bio';
 
          case 'acc_cosmetique':
-             return 'Cosmetique';
+            return 'Cosmetique';
 
-             break;
+            break;
          case 'bijoux_pierre':
-             return 'Bijoux et pierre précieuse';
-             break;
+            return 'Bijoux et pierre précieuse';
+            break;
          case 'accessoire_decoration':
-             return 'Accessoire décoration';
-             break;
+            return 'Accessoire décoration';
+            break;
          case 'maroquineries':
-             return 'Maroquineries';
-             break;
+            return 'Maroquineries';
+            break;
          case 'produit_soie_raphia':
-             return 'Produit en soie, raphia';
+            return 'Produit en soie, raphia';
 
-             break;
+            break;
          case 'acc_cheveux':
-             return 'Accessoire cheveux';
-             break;
+            return 'Accessoire cheveux';
+            break;
          case 'acc_bijoux_montre':
-             return 'Bijoux et montre';
-             break;
+            return 'Bijoux et montre';
+            break;
          case 'acc_sacs_maroquinerie':
-             return 'Sacs, maroquinerie';
-             break;
+            return 'Sacs, maroquinerie';
+            break;
          case 'acc_flowerbox':
-             return 'Fashion +';
-             break;
+            return 'Fashion +';
+            break;
 
 
          case 'telephone':
-             return 'Téléphone';
-             break;
+            return 'Téléphone';
+            break;
          case 'Accessoires_tele':
 
-             return 'Accessoire télé';
+            return 'Accessoire télé';
 
-             break;
+            break;
          case 'tous_accessoires':
 
-             return 'Tous les accessoires';
+            return 'Tous les accessoires';
 
-             break;
+            break;
          case 'systeme_domotique':
 
-             return 'Système domotique';
+            return 'Système domotique';
 
-             break;
+            break;
          case 'impression':
 
-             return 'Impression';
+            return 'Impression';
 
-             break;
+            break;
 
          case 'accessoires':
-             return 'Accessoire';
-             break;
+            return 'Accessoire';
+            break;
 
          case 'matierels_informatique':
-             return 'Matiériel informatique';
-             break;
+            return 'Matiériel informatique';
+            break;
          case 'diagnotiques':
-             return 'Diagnostique';
-             break;
+            return 'Diagnostique';
+            break;
          case 'tv':
-             return 'Tv';
-             break;
+            return 'Tv';
+            break;
          case 'videoprojecteur':
-             return 'Video projecteur';
+            return 'Video projecteur';
 
-             break;
+            break;
          case 'son':
-             return 'Son';
-             break;
+            return 'Son';
+            break;
          case 'photo_et_camera':
-             return 'Photo et caméra';
-             break;
+            return 'Photo et caméra';
+            break;
 
          case 'huille_essentiel_et_vegetale':
-             return 'Huille essentiel et végetale';
-             break;
+            return 'Huille essentiel et végetale';
+            break;
          case 'voies_orale':
-             return 'Voies orale';
-             break;
+            return 'Voies orale';
+            break;
          case 'injectable':
-             return 'Injectable';
-             break;
+            return 'Injectable';
+            break;
          case 'dermique':
-             return 'Dermique';
-             break;
+            return 'Dermique';
+            break;
          case 'inhalee':
-             return 'Inhalée';
-             break;
+            return 'Inhalée';
+            break;
          case 'rectale':
-             return 'Rectale';
-             break;
+            return 'Rectale';
+            break;
          default:
-             return '.....Page introuvable';
-             break;
-     }
+            return '.....Page introuvable';
+            break;
+      }
    }
 }

@@ -466,6 +466,14 @@
     overflow: hidden;
 }
 
+.container_detail_article_edit {
+    background: white;
+    padding: 5px 10px;
+    margin: 10px 0;
+    box-shadow: 0px 0px 5px #00000026;
+    border-radius: 8px !important;
+}
+
 .loader_ajax_ {
     position: absolute;
     z-index: 1;
