@@ -24,36 +24,42 @@ class CategoryService
       $this->typeBoutique = "high-tech";
       $this->utilsService = $utilsService;
    }
-   function  getCategoryFormat(array $listCategories, $simple = false)
+   public function getCategoryFormat(array $listCategories, $islist = false)
    {
       $list = [];
-      if ($simple == false) {
-         foreach ($listCategories as $category) {
-            $list[$category->getId()] = $category;
-         }
-         foreach ($listCategories as $key => $category) {
-            if ($category->getParentId() != 0) {
-               $list[$category->getParentId()]->children[] = $category;
-               unset($listCategories[$key]);
-            }
-         }
-      } else {
-
-         foreach ($listCategories as $category) {
-            $list[$category->getId()] = $category;
-         }
-         dump($list);
-         foreach ($listCategories as $key => $category) {
-            if ($category->getParentId() != 0) {
-               $list[$category->getParentId()]->children = $category;
-               unset($listCategories[$key]);
-            }
+      foreach ($listCategories as $category) {
+         $list[$category->getId()] = $category;
+      }
+      foreach ($listCategories as $key => $category) {
+         if ($category->getParentId() != 0) {
+            $list[$category->getParentId()]->children[] = $category;
+            unset($listCategories[$key]);
          }
       }
-
-      return $listCategories;
+      if (!$islist) {
+         return $listCategories;
+      } else {
+         return $this->formatForListCategory($listCategories);
+      }
    }
-
+   private function formatForListCategory($listCategories)
+   {
+      $newCategory = [];
+      $validateCategory = null;
+      foreach ($listCategories as $key => $category) {
+         if (isset($category->children)) {
+            $newValidateCategory = [];
+            foreach ($category->children as $categoryChilgren) {
+               $newValidateCategory = array_merge($newValidateCategory, [$categoryChilgren->getName() => $categoryChilgren->getName()]);
+            }
+            $validateCategory = $newValidateCategory;
+         } else {
+            $validateCategory = $category->getName();
+         }
+         $newCategory[$category->getName()] = $validateCategory;
+      }
+      return $newCategory;
+   }
    public function getAddButton(array $options, string $class)
    {
       $button = "";

@@ -27,9 +27,8 @@ class ArticleType extends AbstractType
     public function __construct(CategoryService $categoryService, Security $security, CategoryRepository $categoryRepository, BoutiqueRepository $boutiqueRepository)
     {
         $boutique = $boutiqueRepository->findOneBy(['user' => $security->getUser()]);
-        $category = $categoryRepository->findBy(['boutique' => $boutique/*, 'type' => 'product'*/]);
+        $category = $categoryRepository->findBy(['boutique' => $boutique, 'type' => 'product']);
         $this->category = $categoryService->getCategoryFormat($category, true);
-        dd($this->category);
     }
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
@@ -110,7 +109,7 @@ class ArticleType extends AbstractType
             ->add('category', HiddenType::class)
             ->add('type', ChoiceType::class, [
                 'label' => 'type',
-                'choices' => $this->getCategoryArticle(),
+                'choices' => $this->category,
                 'attr' => [
                     'class' => 'form-control'
                 ]
