@@ -3,6 +3,9 @@
 namespace App\Form;
 
 use App\Entity\Blog;
+use App\Repository\BoutiqueRepository;
+use App\Repository\CategoryRepository;
+use App\Service\CategoryService;
 use FOS\CKEditorBundle\Form\Type\CKEditorType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
@@ -10,9 +13,18 @@ use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Security\Core\Security;
 
 class BlogType extends AbstractType
 {
+
+    private $category;
+    public function __construct(CategoryService $categoryService, Security $security, CategoryRepository $categoryRepository, BoutiqueRepository $boutiqueRepository)
+    {
+        $boutique = $boutiqueRepository->findOneBy(['user' => $security->getUser()]);
+        $category = $categoryRepository->findBy(['boutique' => $boutique, 'type' => 'blog']);
+        $this->category = $categoryService->getCategoryFormat($category, true);
+    }
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
@@ -29,14 +41,7 @@ class BlogType extends AbstractType
                     'class' => 'form-control',
                     'required' => true
                 ],
-                'choices' => [
-                    'Actualités' => 'Actualités',
-                    'Atouts' => 'Atouts',
-                    'Astuces' => 'Astuces',
-                    'Conseils' => 'Conseils',
-                    'Tests' => 'Tests',
-                    'Tutoriels' => 'Tutoriels'
-                ]
+                'choices' => $this->category
             ])
             ->add('resume', TextType::class, [
                 'label' => 'Résumé*',

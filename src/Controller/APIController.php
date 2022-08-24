@@ -944,7 +944,7 @@ class APIController extends AbstractController
             $page = new Page();
             $title = $pagedate['title'];
             $price = $pagedate['price'] ? $pagedate['price'] : "";
-            $category = $pagedate['category'] ? $pagedate['category'] : "formation";
+            $category = isset($pagedate['category']) ? $pagedate['category'] : "formation";
             $resume = $pagedate['resume'];
             $description = $pagedate['description'];
             $file = $request->files->get('image');
@@ -971,7 +971,7 @@ class APIController extends AbstractController
             foreach ($users as $user) {
                 $notification->addToUser($user);
                 $data = $user->getData() != Null ? $user->getData() : ['notification' => []];
-                if (!in_array($user->getId(), $data['notification'])) {
+                if (isset($data['notification']) and !in_array($user->getId(), $data['notification'])) {
                     array_push($data['notification'], $user->getId());
                     $user->setData($data);
                     $nbrNotification = sizeof($data);
