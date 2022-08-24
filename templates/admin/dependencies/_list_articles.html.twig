@@ -3,6 +3,7 @@
    {% for article in articles %}
     {% set price= article.price %}
     {% set old_price= article.pricePromo %}
+    {%  set image =  article.images[0].name is defined ? article.images[0].name  : ""%}
     {# {% set price_global= article.price_global %} #}
     {% if article.promo is same as ("Promo")%}
          {% set price= article.pricePromo %}
@@ -11,7 +12,7 @@
     {% endif %}
     <div id={{"article_container_list_"~article.id}} class="col-ls-12 col-sm-6 col-md-4 ">
       <div class="container_list_article">
-            <div class="container_image_list" style="background-image: url({{asset('images/'~article.images[0].name)}})">
+            <div class="container_image_list" {% if image is defined %} style="background-image: url({{asset('images/'~image)}})" {% endif %}>
               <div>
                 <span class="star">{{article.votesarticle|length}} <i class="fa fa-star"></i></span>
                 {% if article.promo is not same as('Normal')%}

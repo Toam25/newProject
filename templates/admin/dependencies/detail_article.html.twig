@@ -65,7 +65,8 @@
 		  <div class="container_detail_article_edit">
 				<label>Image</label>
 				<div class="preview_image">
-					<img id="preview_image" src="{{ asset('images/'~article.images[0].name) }}">
+				 
+					<img id="preview_image" {% if article.images[0] is defined %}src="{{ asset('images/'~article.images[0].name) }}" {% endif %}>
 				</div>
 				<div class="">
 					{{ form_row(form.images)}}

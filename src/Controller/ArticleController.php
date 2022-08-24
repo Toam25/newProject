@@ -45,8 +45,6 @@ class ArticleController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager = $this->getDoctrine()->getManager();
-
-
             foreach ($images as $image) {
                 $fichier = $insertFileServices->insertFile($image);
                 $img = new Images();
@@ -56,11 +54,12 @@ class ArticleController extends AbstractController
 
 
             $article->setBoutique($boutique);
+            $article->setCategory('None');
+            $article->setSousCategory('None');
 
             $entityManager->persist($article);
             $entityManager->flush();
-
-            return $this->redirectToRoute('article_liste');
+            return new JsonResponse(['status' => 'success'], Response::HTTP_OK);
         }
 
         return $this->render('admin/index.html.twig', [
@@ -85,9 +84,16 @@ class ArticleController extends AbstractController
                 $images = $form->get('images')->getData();
                 $newfile = $insertFileServices->insertFile($images[0], ['png', 'jpeg', 'jpg', 'gif']);
                 $image = $article->getImages()[0];
-                $file = $image->getName();
-                $image->setName($newfile);
-                unlink('images/' . $file);
+                if ($image !== null) {
+                    $file = $image->getName();
+                    $image->setName($newfile);
+                    unlink('images/' . $file);
+                } else {
+                    $image = new Images();
+                    $image->setName($newfile);
+                    $article->addImage($image);
+                }
+
                 $this->getDoctrine()->getManager()->persist($image);
             }
             $this->getDoctrine()->getManager()->flush();
@@ -97,7 +103,7 @@ class ArticleController extends AbstractController
         return $this->render('admin/index.html.twig', [
             'article' => $article,
             'form' => $form->createView(),
-            'pages' => 'detail_article',
+            'pages' => 'new_article',
             'article' => $article,
             'boutique' => $boutique
 

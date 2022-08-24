@@ -1292,9 +1292,8 @@ $(function () {
   // edit article
   $('.edit_article_in_shop').on('submit', function (e) {
     e.preventDefault()
-    let url = $(this).attr('action');
+
     $.ajax({
-      url,
       type: 'POST',
       data: new FormData(this),
       contentType: false,
