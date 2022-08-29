@@ -1,8 +1,10 @@
-<button class="btn btn-success add_category_racine add_category" id="category-0" data-parent=0>
-	Ajouter une nouvele categorie</button>
+<div class="all-category">
+    <button class="btn btn-success add_category_racine btn-action-cat add_category" id="category-0" data-parent=0>
+        Ajouter une nouvele categorie</button>
 
-    {% include "admin/dependencies/add_category_modal.html.twig" with {'form' : form } only %}
-
- {% for category in categories %}
-        {% include "admin/dependencies/_category.html.twig" with {'category': category } only %}
-{% endfor %}
+        {% include "admin/dependencies/add_category_modal.html.twig" with {'form' : form } only %}
+        {% include "loader.html.twig" %}
+    <div id="my_list_category">
+        {% include "admin/dependencies/categoryList.html.twig" with {"categories" : categories} only %}
+  </div>
+  </div>

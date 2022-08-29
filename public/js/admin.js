@@ -1232,17 +1232,88 @@ $(function () {
     e.preventDefault();
     var $form = $('.form_add_category');
     var parentId = $(this).data('parent');
-    $('#name_category').text("");
-    let namecategory = $(this).parent('div').children('p').text();
+    let namecategory = $(this).parents('.listcategory').children('p').text();
     $('#name_category').text(namecategory);
+    $('#editoradd').val('add');
     $form.find('#category_parent_id').val(parentId);
     $category = $('#category-' + parentId);
+    $('#category_name').val("")
+    if (parentId == 0) {
+      $('.modal-title').text('Ajout categorie');
+    }
+    else {
+      $('.modal-title').text('Ajout sous categorie');
+    }
     $("#ajout_category").modal('show');
   });
+
+  $('body').on('click', '.edit_category', function (e) {
+    e.preventDefault();
+    var $form = $('.form_add_category');
+    var parentId = $(this).data('parent');
+    $('#name_category').text("");
+    let namecategory = $(this).parents('.listcategory').children('p').text();
+    $('#name_category').text(namecategory);
+    $('#editoradd').val('edit');
+    $form.find('#category_parent_id').val(parentId);
+    $category = $('#category-' + parentId);
+    $('.modal-title').text('Modification categorie');
+    $('#category_name').val(namecategory)
+    $("#ajout_category").modal('show');
+  });
+
+  $('body').on('click', '.delete_category', function (e) {
+    e.preventDefault();
+    Lobibox.confirm({
+      msg: 'Voulez vous supprimer cette Video ?',
+      title: "Confirmation",
+      buttons: {
+        yes: {
+          text: 'Oui, je confirme',
+
+        },
+        no: {
+          text: 'Annulez',
+
+        },
+
+      },
+
+      callback: ($this, type) => {
+        $('#spinner').addClass('showLoader')
+        if (type === "yes") {
+          $.ajax({
+            url: $(this).attr('href'),
+            type: 'POST',
+            dataType: 'html',
+            beforeSend: () => {
+            },
+            success: (data) => {
+              toastr.success('Enregistrer avec success');
+              $('#spinner').removeClass('showLoader')
+              $('#my_list_category').html(data)
+            },
+            error: () => {
+              toastr.error('Une error à été survenue');
+              $('.btn-submit').children('.loader_ajax').remove();
+              $('.btn-submit').prop('disabled', false)
+              $('#spinner').removeClass('showLoader')
+            },
+            complete: function () {
+
+            }
+          });
+        }
+      }
+
+    });
+
+  })
 
   $('body').on('submit', '.form_add_category ', function (e) {
     e.preventDefault();
     let url = $(this).attr('action');
+    $('#spinner').addClass('.showLoader')
     $.ajax({
       url,
       type: 'POST',
@@ -1250,39 +1321,46 @@ $(function () {
       contentType: false,
       processData: false,
       cache: false,
-      dataType: 'json',
+      dataType: 'html',
       beforeSend: () => {
         $('.btn-submit').append('<span class="loader_ajax" style="height: 20px;width: 20px;display: inline-block;"><img src="/images/images_default/ajax-loader.gif" style="height: 100%;width: 100%;"></span>');
         $('.btn-submit').prop('disabled', true)
       },
       success: (data) => {
+        $('#spinner').removeClass('showLoader')
         toastr.success('Enregistrer avec success');
         $('.btn-submit').children('.loader_ajax').remove();
         $('.btn-submit').prop('disabled', false)
+        $(this)[0].reset();
+        $('#my_list_category').html(data)
+        $("#ajout_category").modal('hide');
 
-        let category = `
-           <div 
-            id="category-`+ data.id + `"
-            data-parent="category-`+ data.parentId + `"
-           class="listcategory"
-          >
-          <p>`+ data.name + `</p>`;
-        if (parseInt(data.parentId) == 0) {
-          category += `<button  data-parent = ` + data.id + ` class="btn btn-primary add_category">Ajout</button>`
-          category += `</div>`;
-        }
-        if (parseInt(data.parentId) != 0) {
-          category = `<div style="margin-left:40px">` + category + `</div>`;
-          $category.after(category);
-        }
-        else {
-          $('.container-fluid').append(category)
-        }
+        // let category = `
+        //    <div 
+        //     id="category-`+ data.id + `"
+        //     data-parent="category-`+ data.parentId + `"
+        //    class="listcategory"
+        //   >
+        //   <p>`+ data.name + `</p>`;
+        // if (parseInt(data.parentId) == 0) {
+        //   category += `<button  data-parent = ` + data.id + ` class="btn btn-primary add_category">Ajout</button>`
+        //   category += `</div>`;
+        // }
+        // if (parseInt(data.parentId) != 0) {
+        //   category = `<div style="margin-left:40px">` + category + `</div>`;
+        //   $category.after(category);
+        // }
+        // else {
+        //   $('.container-fluid').append(category)
+        // }
       },
       error: () => {
         toastr.error('Une error à été survenue');
+        $('#spinner').removeClass('showLoader')
         $('.btn-submit').children('.loader_ajax').remove();
         $('.btn-submit').prop('disabled', false)
+        $("#ajout_category").modal('hide');
+
       },
       complete: function () {
 

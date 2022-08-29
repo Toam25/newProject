@@ -452,6 +452,36 @@
     width: 20px;
 }
 
+.btn-action-cat {
+    border: none;
+    background: transparent;
+}
+
+.all-category {
+    position: relative;
+}
+
+.edit_category {
+    color: #f6c23e
+}
+
+.add_category {
+    color: #4e73df;
+}
+
+.delete_category {
+    color: #e74a3b;
+}
+
+.listcategory>p {
+    margin: 0;
+}
+
+.delete_category:hover {
+    color: #e74a3b !important;
+    text-decoration: none !important;
+}
+
 .list_produit {
     position: relative;
     height: 200px;

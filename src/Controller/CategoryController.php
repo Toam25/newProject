@@ -26,28 +26,30 @@ class CategoryController extends AbstractController
 
             $boutique = $boutiqueRepository->findOneBy(['user' => $this->getUser()]);
             $listCategories = $this->category($categoryRepository->findBy(['boutique' => $boutique, 'type' => $type]));
-            $listCategories = $this->category($categoryRepository->findBy(['boutique' => $boutique, 'type' => $type]));
+            // dump($request->request->get("type"));
+            // dd($request);
             $category = new Category();
             $form = $this->createForm(CategoryType::class, $category);
             $form->handleRequest($request);
 
             if ($form->isSubmitted()) {
-                $category->setUser($this->getUser());
-                $category->setBoutique($boutique);
-                $category->setType($type);
+                if ($request->request->get("type") == "add") {
+                    $category->setUser($this->getUser());
+                    $category->setBoutique($boutique);
+                    $category->setType($type);
+                } else {
+
+                    $parentId = $category->getParentId();
+                    $name = $category->getName();
+                    $category = $categoryRepository->findOneBy(['id' => $parentId]);
+                    $category->setName($name);
+                }
                 $entityManager = $this->getDoctrine()->getManager();
                 $entityManager->persist($category);
                 $entityManager->flush();
-                $array = [
-                    'id' => $category->getId(),
-                    'parentId' => $category->getParentId(),
-                    'name' => $category->getName(),
-                    'type' => $category->getType(),
-                    'user' => $category->getUser(),
-                    'status' => "success"
-
-                ];
-                return new  JsonResponse($array, Response::HTTP_OK);
+                return  $this->render('admin/dependencies/categoryList.html.twig', [
+                    'categories' => $this->category($categoryRepository->findBy(['boutique' => $boutique, 'type' => $type]))
+                ]);
             }
             return $this->render('admin/index.html.twig', [
                 'categories' => $listCategories,
@@ -118,17 +120,18 @@ class CategoryController extends AbstractController
     }
 
     /**
-     * @Route("/{id}", name="category_delete", methods={"DELETE"})
+     * @Route("/delete/{type}/{id}", name="category_delete", methods={"POST"})
      */
-    public function delete(Request $request, Category $category): Response
+    public function delete(Request $request, string $type, int $id, Category $category, BoutiqueRepository $boutiqueRepository, CategoryRepository $categoryRepository): Response
     {
-        if ($this->isCsrfTokenValid('delete' . $category->getId(), $request->request->get('_token'))) {
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->remove($category);
-            $entityManager->flush();
-        }
+        $boutique = $boutiqueRepository->findOneBy(['user' => $this->getUser()]);
 
-        return $this->redirectToRoute('category_index');
+        $entityManager = $this->getDoctrine()->getManager();
+        $entityManager->remove($category);
+        $entityManager->flush();
+        return  $this->render('admin/dependencies/categoryList.html.twig', [
+            'categories' => $this->category($categoryRepository->findBy(['boutique' => $boutique, 'type' => $type]))
+        ]);
     }
     private function category(array $listCategories)
     {
