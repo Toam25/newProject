@@ -12,5 +12,6 @@ framework:
 
     #esi: true
     #fragments: true
+    disallow_search_engine_index: false
     php_errors:
         log: true
